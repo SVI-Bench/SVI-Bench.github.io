@@ -1,0 +1,20 @@
+cliff.txt
+.DS_Store
+__pycache__/
+*.pyc
+node_modules/
+
+# Heavy paper artifacts — keep local only, not on public repo
+Figures/
+SVI_ECCV_2026.pdf
+SVI_Supplementary.pdf
+
+# Heavy media assets — keep local only, page only needs cliff_placeholder.mp4
+assets/data/
+assets/figures/
+assets/posters/
+assets/qa_posters/
+assets/qa_videos/
+assets/videos/basketball/
+assets/videos/hockey/
+assets/videos/soccer/

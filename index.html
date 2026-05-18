@@ -101,7 +101,7 @@ const TASKS = [{
   metric: '2.59 / 5',
   metricLabel: 'judge score',
   bestModel: 'LLaVA-Video-7B (ft)',
-  blurb: 'Describe a 10-second play. Models name actions but mix up jersey numbers and player identities.'
+  blurb: 'Describe a 10-second play. Models name actions but mix up jersey numbers, player names.'
 }, {
   id: 'T2',
   name: 'Fine-Grained Action QA',
@@ -110,7 +110,7 @@ const TASKS = [{
   metric: '73.9%',
   metricLabel: 'accuracy',
   bestModel: 'LLaVA-Video-7B (ft)',
-  blurb: 'Multiple-choice questions about who did what. Fine-tuned models clear 70% — the field can see.'
+  blurb: 'Multiple-choice questions about who did what. Fine-tuned models clear 74% — the field can see, but still confuses 2-pt with 3-pt and similar fine-grained details.'
 }, {
   id: 'T3',
   name: 'Compositional Video Retrieval',
@@ -118,7 +118,7 @@ const TASKS = [{
   score: 12,
   metric: '12.3%',
   metricLabel: 'R@10',
-  bestModel: 'best baseline',
+  bestModel: 'InternVideo2 (ft)',
   blurb: 'Find the clip matching a fine-grained query. Models retrieve the right scene but the wrong detail.'
 }, {
   id: 'T4',
@@ -145,7 +145,7 @@ const TASKS = [{
   score: 7,
   metric: '7.3%',
   metricLabel: 'saliency',
-  bestModel: 'best baseline',
+  bestModel: 'Gemini 3.1 Pro',
   blurb: 'Summarize a full game. Facts are mostly right (73%). Almost none of the salient events appear.'
 }, {
   id: 'T7',
@@ -154,7 +154,7 @@ const TASKS = [{
   score: 51,
   metric: '0.513',
   metricLabel: 'video mIoU',
-  bestModel: 'best baseline',
+  bestModel: 'Wan 2.1 (ft)',
   blurb: 'Generate video that follows prescribed trajectories. About half of player positions drift.'
 }, {
   id: 'T8',
@@ -163,7 +163,7 @@ const TASKS = [{
   score: 50,
   metric: '50.2%',
   metricLabel: 'goal accuracy',
-  bestModel: 'best baseline',
+  bestModel: 'Wan 2.1 (ft)',
   blurb: 'Generate the action that scores. Goal-conditioned planning sits barely above chance.'
 }, {
   id: 'T9',
@@ -175,6 +175,104 @@ const TASKS = [{
   bestModel: 'GPT-5.2',
   blurb: 'Plan, search, and synthesize across video and text. Frontier agents reach 6% — the floor of the cliff.'
 }];
+
+const TASK_MEDIA = {
+  T1: 'assets/videos/cliff_placeholder.mp4',
+  T2: 'assets/videos/cliff_placeholder.mp4',
+  T3: 'assets/videos/cliff_placeholder.mp4',
+  T4: 'assets/videos/cliff_placeholder.mp4',
+  T5: 'assets/videos/cliff_placeholder.mp4',
+  T6: 'assets/videos/cliff_placeholder.mp4',
+  T7: 'assets/videos/cliff_placeholder.mp4',
+  T8: 'assets/videos/cliff_placeholder.mp4',
+  T9: 'assets/videos/cliff_placeholder.mp4'
+};
+
+const TASK_TEXT = {
+  T1: {
+    layout: 'caption',
+    gt: [
+      { t: 'Jamille Reynolds', ok: true },
+      ', wearing ',
+      { t: '#4', ok: true },
+      ', attempted a ',
+      { t: 'post 2-pt layup', ok: true },
+      ' while contested by ',
+      { t: 'Kalu Ezikpe', ok: true },
+      ' (',
+      { t: '#1', ok: true },
+      '). ',
+      { t: 'Ezikpe', ok: true },
+      ' grabbed the rebound.'
+    ],
+    pred: [
+      { t: 'Nick Jourdain', wrong: true },
+      ' attempted a ',
+      { t: 'hook shot', wrong: true },
+      ' while contested by ',
+      { t: 'Mika Adams-Woods', wrong: true },
+      '. ',
+      { t: 'Davenport', wrong: true },
+      ' secured the rebound.'
+    ]
+  },
+  T2: {
+    layout: 'mcq',
+    q: 'What is the sequence of actions that takes place in this video clip?',
+    options: [
+      { letter: 'A', text: 'rebound, 2-pt made, assisting' },
+      { letter: 'B', text: '2-pt missed, rebound, foul' },
+      { letter: 'C', text: '2-pt missed, rebound, turnover' },
+      { letter: 'D', text: '3-pt missed, rebound, steal' },
+      { letter: 'E', text: 'rebound, 3-pt missed, rebound' }
+    ],
+    gt: 'E',
+    pred: 'B'
+  },
+  T3: {
+    layout: 'caption',
+    q: 'Retrieve a video where a defender contests for the ball on the ground in a game between the Fordham Rams and the Saint Louis Billikens.',
+    gt: [
+      'A ',
+      { t: 'defender', ok: true },
+      ' ',
+      { t: 'contests for the ball on the ground', ok: true },
+      ' in a game between the Fordham Rams and the Saint Louis Billikens.'
+    ],
+    pred: [
+      'A ',
+      { t: 'midfielder', wrong: true },
+      ' ',
+      { t: 'committing a foul', wrong: true },
+      ' in a match between the Fordham Rams and the Saint Louis Billikens.'
+    ]
+  },
+  T4: {
+    layout: 'caption',
+    q: 'In the fourth quarter, what change does Milano make in how they defend White, and how does that change affect White’s options?',
+    gt: [
+      'Milano ',
+      { t: 'no longer sends the quick double-team to the post', ok: true },
+      '. White can ',
+      { t: 'hold his position and take a controlled one-on-one shot from the block', ok: true },
+      ' instead of being forced into kick-outs.'
+    ],
+    pred: [
+      'Milano ',
+      { t: 'starts blitzing/trapping White on high ball screens', wrong: true },
+      '. His ',
+      { t: 'driving lane is cut off', wrong: true },
+      ', and his ',
+      { t: 'scoring impact drops', wrong: true },
+      '.'
+    ]
+  },
+  T5: {
+    layout: 'caption',
+    kicker: 'predict next outcome',
+    q: 'Analyze the 7-minute segment from the 2nd half. Focus on the player who makes a three-point attempt between 6:15 and 6:25. How many total made three-pointers will this player record from the end of this segment until the end of this half?'
+  }
+};
 
 // ============================================================
 // DATA: CLIPS (Ask the play)
@@ -519,7 +617,7 @@ const FAILURES = [{
   mode: 'right answer, wrong trigger',
   excerpt: 'Identified the defensive change correctly. Attributed it to an injury, not the adjustment.'
 }];
-const TOTAL_FAILURES = 287;
+const TOTAL_FAILURES = FAILURES.length;
 
 // ============================================================
 // HELPERS
@@ -2291,7 +2389,7 @@ function CliffBroadcastViewport({
     style: {
       position: 'relative',
       width: '100%',
-      aspectRatio: '4 / 3',
+      aspectRatio: '16 / 9',
       background: '#0c0d10',
       border: '1px solid #27272a',
       borderRadius: 4,
@@ -2344,16 +2442,29 @@ function CliffBroadcastViewport({
       position: 'absolute',
       inset: 0
     }
-  }, isT9 ? /*#__PURE__*/React.createElement(ToolCallTree, {
-    pillar: task.pillar
-  }) : /*#__PURE__*/React.createElement(HalfCourt, null, /*#__PURE__*/React.createElement(PlayLoop, {
-    t: t,
-    pillarColor: c.base,
-    glow: c.glow
-  }))), /*#__PURE__*/React.createElement(TaskOverlay, {
-    taskId: task.id,
-    pillar: task.pillar
-  }), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("video", {
+    key: task.id,
+    src: TASK_MEDIA[task.id],
+    autoPlay: true,
+    muted: true,
+    loop: true,
+    playsInline: true,
+    preload: 'auto',
+    ref: el => {
+      if (!el) return;
+      el.muted = true;
+      el.defaultMuted = true;
+      const p = el.play();
+      if (p && p.catch) p.catch(() => {});
+    },
+    style: {
+      width: '100%',
+      height: '100%',
+      objectFit: 'cover',
+      background: '#0c0d10',
+      display: 'block'
+    }
+  })), /*#__PURE__*/React.createElement("div", {
     style: {
       position: 'absolute',
       bottom: 0,
@@ -2456,7 +2567,86 @@ function ScenePanel({
   }, task.bestModel)), /*#__PURE__*/React.createElement(CliffBroadcastViewport, {
     task: task,
     t: t
-  }), /*#__PURE__*/React.createElement("div", {
+  }), TASK_TEXT[task.id] ? /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginTop: 14,
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 6
+    }
+  }, (() => {
+    const data = TASK_TEXT[task.id];
+    let rows;
+    if (data.layout === 'mcq') {
+      rows = [{ label: 'Q', labelColor: c.base, body: data.q, bodyStyle: null }];
+      for (const opt of data.options) {
+        const isGt = opt.letter === data.gt;
+        const isPred = opt.letter === data.pred;
+        rows.push({
+          label: opt.letter,
+          labelColor: isGt ? c.base : isPred ? '#C0392B' : '#52525b',
+          body: opt.text,
+          bodyStyle: isGt
+            ? { color: '#e4e4e7', fontWeight: 500 }
+            : isPred
+              ? { color: '#C0392B', textDecoration: 'line-through' }
+              : { color: '#71717a' }
+        });
+      }
+    } else {
+      rows = [];
+      if (data.q) rows.push({ label: 'Q', labelColor: c.base, body: data.q, bodyStyle: null });
+      if (data.gt) rows.push({ label: 'GT', labelColor: c.base, body: data.gt, bodyStyle: null });
+      if (data.pred) rows.push({ label: 'PRED', labelColor: '#71717a', body: data.pred, bodyStyle: null });
+    }
+    const renderedRows = rows.map((row, idx) => /*#__PURE__*/React.createElement("div", {
+      key: idx,
+      style: {
+        display: 'flex',
+        alignItems: 'baseline',
+        gap: 10,
+        fontFamily: '"IBM Plex Sans", sans-serif',
+        fontSize: 12,
+        lineHeight: 1.55
+      }
+    }, /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontFamily: '"IBM Plex Mono", monospace',
+        fontSize: 10,
+        letterSpacing: '0.15em',
+        color: row.labelColor,
+        textTransform: 'uppercase',
+        minWidth: 36,
+        flexShrink: 0
+      }
+    }, row.label), /*#__PURE__*/React.createElement("span", {
+      style: Object.assign({ color: '#e4e4e7', flex: 1, minWidth: 0 }, row.bodyStyle || {})
+    }, (typeof row.body === 'string' ? [row.body] : row.body).map((seg, i) => {
+      if (typeof seg === 'string') return seg;
+      const segStyle = seg.wrong
+        ? { color: '#C0392B', textDecoration: 'line-through' }
+        : seg.ok
+          ? { color: c.base, fontWeight: 500 }
+          : null;
+      return /*#__PURE__*/React.createElement("span", {
+        key: 'seg' + i,
+        style: segStyle
+      }, seg.t);
+    }))));
+    return data.kicker
+      ? [/*#__PURE__*/React.createElement("div", {
+          key: '__kicker',
+          style: {
+            fontFamily: '"IBM Plex Mono", monospace',
+            fontSize: 10,
+            letterSpacing: '0.18em',
+            color: c.base,
+            textTransform: 'uppercase',
+            marginBottom: 2
+          }
+        }, data.kicker)].concat(renderedRows)
+      : renderedRows;
+  })()) : null, /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
       alignItems: 'baseline',
@@ -2523,7 +2713,16 @@ function CliffBars({
       width: '100%',
       height: '100%'
     }
-  }, [0, 25, 50, 75, 100].map(y => /*#__PURE__*/React.createElement("g", {
+  }, [10, 20, 30, 40, 60, 70, 80, 90].map(y => /*#__PURE__*/React.createElement("line", {
+    key: 'minor' + y,
+    x1: 70,
+    x2: 970,
+    y1: 540 - y / 100 * 480,
+    y2: 540 - y / 100 * 480,
+    stroke: "#1c1c1f",
+    strokeWidth: 1,
+    strokeDasharray: '1 8'
+  })), [0, 25, 50, 75, 100].map(y => /*#__PURE__*/React.createElement("g", {
     key: y
   }, /*#__PURE__*/React.createElement("line", {
     x1: 70,
@@ -2553,7 +2752,7 @@ function CliffBars({
       position: 'absolute',
       left: '7%',
       right: '3%',
-      top: '8%',
+      top: '10%',
       bottom: '10%',
       display: 'grid',
       gridTemplateColumns: `repeat(${N}, 1fr)`,
@@ -2600,7 +2799,11 @@ function CliffBars({
       }
     }), /*#__PURE__*/React.createElement("div", {
       style: {
-        marginTop: 10,
+        position: 'absolute',
+        top: 'calc(100% + 10px)',
+        left: 0,
+        right: 0,
+        textAlign: 'center',
         fontFamily: '"IBM Plex Mono", monospace',
         fontSize: 12,
         color: isActive ? c.base : isPast ? '#a1a1aa' : '#52525b',
@@ -3431,14 +3634,15 @@ function HeroSection() {
       letterSpacing: '-0.03em',
       margin: 0,
       marginBottom: 36,
-      maxWidth: 1100
+      maxWidth: 1100,
+      textWrap: 'balance'
     }
-  }, "Models can see the play.", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("span", {
+  }, "Models can see", /*#__PURE__*/React.createElement("br", null), "the play.", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("span", {
     style: {
       color: '#71717a',
       fontStyle: 'italic'
     }
-  }, "They can't read it.")), /*#__PURE__*/React.createElement("p", {
+  }, "They can't understand it.")), /*#__PURE__*/React.createElement("p", {
     style: {
       fontFamily: '"IBM Plex Sans", sans-serif',
       fontSize: 19,
@@ -3448,14 +3652,14 @@ function HeroSection() {
       margin: 0,
       marginBottom: 56
     }
-  }, "SVI-Bench evaluates video AI across four cognitive pillars \u2014 perception, reasoning, simulation, and agency \u2014 instantiated in 35,000 hours of professional basketball, soccer, and hockey. The field has made remarkable progress on seeing. Everything past that falls off a cliff."), /*#__PURE__*/React.createElement("div", {
+  }, "SVI-Bench is a unified benchmark for evaluating the full cognitive stack of video intelligence \u2014 perception, reasoning, simulation, and agency. Built on 38,000 hours of broadcast basketball, soccer, and hockey footage. Models handle perception well. Reasoning, simulation, and agency are where current systems break down."), /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
       gap: 14,
       flexWrap: 'wrap',
       marginBottom: 80
     }
-  }, ['ECCV 2026', 'Paper #2744', 'UNC Chapel Hill', '9 tasks · 4 pillars · 3 sports'].map(c => /*#__PURE__*/React.createElement("span", {
+  }, ['ECCV 2026', 'UNC Chapel Hill', 'Northeastern', '9 tasks · 4 pillars · 3 sports'].map(c => /*#__PURE__*/React.createElement("span", {
     key: c,
     style: {
       padding: '8px 14px',
@@ -3504,31 +3708,7 @@ function VideoSection() {
       color: '#71717a',
       marginBottom: 16
     }
-  }, "02 \xB7 The story in 2:30"), /*#__PURE__*/React.createElement("h2", {
-    style: {
-      fontFamily: '"IBM Plex Serif", serif',
-      fontSize: 'clamp(40px, 6vw, 76px)',
-      fontWeight: 400,
-      lineHeight: 1,
-      letterSpacing: '-0.02em',
-      margin: 0,
-      marginBottom: 18
-    }
-  }, "Watch first. ", /*#__PURE__*/React.createElement("span", {
-    style: {
-      color: '#71717a',
-      fontStyle: 'italic'
-    }
-  }, "Dive in after.")), /*#__PURE__*/React.createElement("p", {
-    style: {
-      fontFamily: '"IBM Plex Sans", sans-serif',
-      fontSize: 16,
-      lineHeight: 1.5,
-      color: '#a1a1aa',
-      maxWidth: 580,
-      margin: '0 auto'
-    }
-  }, "Two minutes thirty seconds covers the cliff, the four pillars, and what this means for the field. The rest of the page is the evidence.")), /*#__PURE__*/React.createElement("div", {
+  }, "02 \xB7 Overview")), /*#__PURE__*/React.createElement("div", {
     style: {
       width: '100%',
       maxWidth: 960,
@@ -3804,7 +3984,7 @@ function AskThePlaySection() {
       marginBottom: 18,
       maxWidth: 1000
     }
-  }, "Where does the model crack?"), /*#__PURE__*/React.createElement("p", {
+  }, "Where do the models fail?"), /*#__PURE__*/React.createElement("p", {
     style: {
       fontFamily: '"IBM Plex Sans", sans-serif',
       fontSize: 16,
@@ -3813,7 +3993,7 @@ function AskThePlaySection() {
       maxWidth: 680,
       margin: 0
     }
-  }, "Pick a clip. Watch three frontier video models answer beside the human expert. The judge verdict reveals on a beat.")), /*#__PURE__*/React.createElement("div", {
+  }, "Pick a clip. Watch frontier video models respond, then see the ground truth.")), /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'grid',
       gridTemplateColumns: '1.35fr 1fr',
@@ -3882,7 +4062,7 @@ function TapeArchiveSection() {
       color: '#71717a',
       marginBottom: 16
     }
-  }, "05 \xB7 Tape archive"), /*#__PURE__*/React.createElement("h2", {
+  }, "05 \xB7 Failures"), /*#__PURE__*/React.createElement("h2", {
     style: {
       fontFamily: '"IBM Plex Serif", serif',
       fontSize: 'clamp(40px, 6vw, 76px)',
@@ -3893,7 +4073,7 @@ function TapeArchiveSection() {
       marginBottom: 18,
       maxWidth: 1000
     }
-  }, TOTAL_FAILURES, " ways the field falls short."), /*#__PURE__*/React.createElement("p", {
+  }, "[X] ways the models fall short."), /*#__PURE__*/React.createElement("p", {
     style: {
       fontFamily: '"IBM Plex Sans", sans-serif',
       fontSize: 16,
@@ -3902,7 +4082,7 @@ function TapeArchiveSection() {
       maxWidth: 720,
       margin: 0
     }
-  }, "Every entry is a real failure from a frontier video model. Filter by pillar to see where each class of capability breaks. The aggregate is the argument.")), /*#__PURE__*/React.createElement("div", {
+  }, "Every entry is a real failure from a frontier video model. Filter by pillar to see where each class of capability breaks.")), /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
       flexWrap: 'wrap',
@@ -3959,15 +4139,7 @@ function TapeArchiveSection() {
       letterSpacing: '0.12em',
       color: '#71717a'
     }
-  }, /*#__PURE__*/React.createElement("span", null, "Showing ", filtered.length, " of ", TOTAL_FAILURES, " \xB7 ", pillarFilter !== 'All' ? pillarFilter.toLowerCase() + ' only' : 'all pillars'), /*#__PURE__*/React.createElement("a", {
-    href: "#",
-    style: {
-      color: '#fafafa',
-      textDecoration: 'none',
-      borderBottom: '1px solid #3f3f46',
-      paddingBottom: 2
-    }
-  }, "Explore all ", TOTAL_FAILURES, " failures \u2192")));
+  }, /*#__PURE__*/React.createElement("span", null, "Showing ", filtered.length, " of ", TOTAL_FAILURES, " \xB7 ", pillarFilter !== 'All' ? pillarFilter.toLowerCase() + ' only' : 'all pillars')));
 }
 function OutroSection() {
   return /*#__PURE__*/React.createElement("section", {
@@ -3999,12 +4171,7 @@ function OutroSection() {
       marginBottom: 36,
       maxWidth: 1000
     }
-  }, "The next bottleneck isn't seeing.", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("span", {
-    style: {
-      color: '#71717a',
-      fontStyle: 'italic'
-    }
-  }, "It's understanding what's been seen.")), /*#__PURE__*/React.createElement("p", {
+  }, "From seeing to understanding."), /*#__PURE__*/React.createElement("p", {
     style: {
       fontFamily: '"IBM Plex Sans", sans-serif',
       fontSize: 17,
@@ -4012,7 +4179,7 @@ function OutroSection() {
       color: '#a1a1aa',
       maxWidth: 720
     }
-  }, "When we hand the strongest model perfect textual descriptions of every frame, T9 accuracy jumps from 6% to 51%. Visual perception is a major limitation. But the 51% ceiling tells us multi-step planning, cross-modal reasoning, and strategic synthesis are equally unsolved. Sports gives us the structured, verifiable testbed for that work \u2014 the way math gives one to formal reasoning."), /*#__PURE__*/React.createElement("div", {
+  }, "Today's video AI can describe what it sees. It can't explain why events unfold, predict what comes next, or decide how to respond. SVI-Bench provides a structured, verifiable testbed for closing that gap."), /*#__PURE__*/React.createElement("div", {
     style: {
       marginTop: 96,
       paddingTop: 32,
@@ -4022,20 +4189,20 @@ function OutroSection() {
       gap: 32
     }
   }, [{
-    v: '35,000',
+    v: '38K',
     l: 'hours of broadcast video'
   }, {
-    v: '15M',
-    l: 'annotated actions'
+    v: '23K',
+    l: 'scouting reports'
+  }, {
+    v: '103K',
+    l: 'stat records'
   }, {
     v: '9',
     l: 'evaluation tasks'
   }, {
     v: '4',
     l: 'cognitive pillars'
-  }, {
-    v: '3',
-    l: 'sports'
   }].map(s => /*#__PURE__*/React.createElement("div", {
     key: s.l
   }, /*#__PURE__*/React.createElement("div", {
@@ -4097,14 +4264,31 @@ function FooterSection() {
       color: '#e4e4e7',
       lineHeight: 1.8
     }
-  }, "Gedas Bertasius \xB7 Mohaiminul Islam \xB7 Yulu Pan \xB7 Seongsu Ha \xB7 Benjamin Zhang \xB7 Han Yi \xB7 Lorenzo Torresani"), /*#__PURE__*/React.createElement("div", {
+  }, [
+    { n: "Yulu Pan",            u: "https://openreview.net/profile?id=~Yulu_Pan1",            a: "1" },
+    { n: "Han Yi",              u: "https://openreview.net/profile?id=~Han_Yi1",              a: "1" },
+    { n: "Seongsu Ha",          u: "https://openreview.net/profile?id=~Seongsu_Ha1",          a: "1" },
+    { n: "Md Mohaiminul Islam", u: "https://openreview.net/profile?id=~Md_Mohaiminul_Islam1", a: "1" },
+    { n: "Benjamin Zhang",      u: "https://openreview.net/profile?id=~Benjamin_Zhang2",      a: "1" },
+    { n: "Lorenzo Torresani",   u: "https://openreview.net/profile?id=~Lorenzo_Torresani1",   a: "2" },
+    { n: "Gedas Bertasius",     u: "https://openreview.net/profile?id=~Gedas_Bertasius1",     a: "1" }
+  ].map((au, i) => /*#__PURE__*/React.createElement("span", { key: au.n },
+    i > 0 ? " \xB7 " : null,
+    /*#__PURE__*/React.createElement("a", {
+      href: au.u, target: "_blank", rel: "noopener",
+      style: { color: 'inherit', textDecoration: 'underline', textDecorationColor: '#3f3f46', textUnderlineOffset: 3 }
+    }, au.n),
+    /*#__PURE__*/React.createElement("sup", {
+      style: { fontSize: 9, color: '#71717a', marginLeft: 1 }
+    }, au.a)
+  ))), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: '"IBM Plex Mono", monospace',
       fontSize: 11,
       color: '#71717a',
       marginTop: 8
     }
-  }, "UNC Chapel Hill \xB7 MVPG")), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("sup", null, "1"), " UNC Chapel Hill \xA0\xB7\xA0 ", /*#__PURE__*/React.createElement("sup", null, "2"), " Northeastern University")), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: '"IBM Plex Mono", monospace',
       fontSize: 10,
@@ -4239,13 +4423,13 @@ function Header() {
     label: 'Video',
     href: '#video'
   }, {
-    label: 'Cliff',
+    label: 'Results',
     href: '#cliff'
   }, {
     label: 'Ask',
     href: '#ask'
   }, {
-    label: 'Archive',
+    label: 'Failures',
     href: '#archive'
   }, {
     label: 'About',
