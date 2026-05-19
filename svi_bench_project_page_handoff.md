@@ -10,7 +10,7 @@
 
 This is the handoff for the SVI-Bench public project page. One unified single-page prototype plus four standalone section prototypes, built around the central scientific claim of the paper — the **Performance Cliff**: models do well on Perception (~74% on T2) and collapse on Reasoning, Simulation, and Agency (down to 6% on T9).
 
-The unified page renders all seven sections in one continuous scroll and runs in any browser by double-clicking the HTML file. All section content is live; only the promotional video and the authors footer are placeholders that need final content swapped in. Eval data throughout the page is sketched from the paper's framing — it needs replacement with real model traces, judge verdicts, and failure logs before public release.
+The unified page renders all seven sections in one continuous scroll and runs in any browser by double-clicking the HTML file. All section content is live and copy has been written; only the promotional video (placeholder frame) and a handful of resource links in the authors footer need final content. Eval data throughout the page is still sketched from the paper's framing — it needs replacement with real model traces, judge verdicts, and failure logs before public release.
 
 The framing principle to preserve at every level: this is **a general AI benchmark instantiated in sports**, not a sports benchmark. Every label, blurb, and visual decision was made with that distinction in mind. Maintain it.
 
@@ -25,7 +25,7 @@ Eight files are included in this handoff. One is the unified production candidat
 | `svi_bench_project_page.html` | **Primary deliverable** | Unified single-page integration of all seven sections. Pre-compiled JavaScript embedded directly in the file — no in-browser Babel step. Open in a browser and the whole page renders. |
 | `svi_bench_cliff.html` | Section prototype | Hero + The performance cliff + What this means (outro). Source-readable JSX via in-browser Babel. Use this when iterating on the cliff specifically. |
 | `svi_bench_ask_the_play.html` | Section prototype | Ask the play interactive clip explorer. Source-readable JSX. |
-| `svi_bench_tape_archive.html` | Section prototype | Tape archive failure gallery. Source-readable JSX. |
+| `svi_bench_tape_archive.html` | Section prototype | Failure gallery (the section is now titled "Failures" on the page; the file keeps its original name for stability). Source-readable JSX. |
 | `svi_bench_cliff.jsx`<br>`svi_bench_ask_the_play.jsx`<br>`svi_bench_tape_archive.jsx` | React components | Default-export React components corresponding to each prototype. Use these if/when migrating to a Vite/Next.js production project. |
 | `svi_bench_project_page_handoff.md` | This document | Engineering handoff and design notes. |
 
@@ -54,7 +54,7 @@ The unified page renders seven sections in narrative order, each with an anchor 
 2. **Promotional video** (`#video`) — 2:30 explainer film placeholder
 3. **The performance cliff** (`#cliff`) — quantitative evidence (scrollytelling)
 4. **Ask the play** (`#ask`) — felt experience on one clip
-5. **Tape archive** (`#archive`) — aggregate scale of failures
+5. **Failures** (`#archive`) — aggregate scale of failure examples
 6. **What this means** (`#meaning`) — interpretation, the oracle gap
 7. **Authors / paper / code / data** (`#about`) — resources, citation, contact
 
@@ -64,7 +64,7 @@ The arc:
 
 Each section earns its place because the section before couldn't carry the next beat. Cliff is quantitative; Ask the play makes it visceral; archive shows it's everywhere. Together they argue something text alone wouldn't.
 
-The fixed header at the top of the page contains a logo (returns to hero) and five anchor links: `Video · Cliff · Ask · Archive · About`. Smooth scrolling is enabled globally; each section has `scroll-margin-top: 72px` so anchor targets land below the fixed header rather than behind it.
+The fixed header at the top of the page contains a logo (returns to hero) and five anchor links: `Video · Results · Ask · Failures · About`. Smooth scrolling is enabled globally; each section has `scroll-margin-top: 72px` so anchor targets land below the fixed header rather than behind it.
 
 ---
 
@@ -127,11 +127,13 @@ The **animated basketball pick-and-roll schematic** (defined in the `PLAY` const
 
 **Location:** Top of `svi_bench_project_page.html` and `svi_bench_cliff.html`.
 
-**Headline:** "Models can see the play. They can't read it." — second sentence italic in `#71717a` gray, on its own line.
+**Headline:** "Models can see the play. They can't understand it." — second sentence italic in `#71717a` gray, on its own line.
 
-**Subtitle paragraph:** Three sentences setting up the four-pillar framework and the cliff finding.
+**Subtitle paragraph:** "SVI-Bench is a unified benchmark for evaluating the full cognitive stack of video intelligence — perception, reasoning, simulation, and agency. Built on 38,000 hours of broadcast basketball, soccer, and hockey footage. Models handle perception well. Reasoning, simulation, and agency are where current systems break down."
 
-**Chips below subtitle:** ECCV 2026, Paper #2744, UNC Chapel Hill, 9 tasks · 4 pillars · 3 sports.
+The headline is set with `text-wrap: balance` and an explicit `<br>` after "see" to force the line break before "the play." — without this, "play." orphans on its own line at most viewport widths.
+
+**Chips below subtitle:** ECCV 2026 · UNC Chapel Hill · Northeastern · 9 tasks · 4 pillars · 3 sports.
 
 **Visual decoration:** Four small pillar-color dots top-right; "scroll to see the cliff" affordance at the bottom with a subtle 2.5-second opacity pulse.
 
@@ -145,7 +147,7 @@ The **animated basketball pick-and-roll schematic** (defined in the `PLAY` const
 
 **Location:** `#video` section of `svi_bench_project_page.html`.
 
-**Current state:** The section is fully built with the same dark aesthetic as the rest of the page. A 16:9 frame at ~960px wide sits centered with broadcast monitor chrome (REC indicator, "SVI-BENCH · Explainer" label, "00:00 / 02:30" timecode placeholder, bottom progress bar). The center of the frame shows a large circular play button with hover feedback. A caption beneath the frame reads "placeholder · final cut from rewatchable goes here". Below the player are three chapter labels: "01 the cliff · 02 why sports · 03 what's next" matching the script structure.
+**Current state:** The section is fully built with the same dark aesthetic as the rest of the page. Kicker reads "02 · Overview" — no headline or caption above the video, per the deliberate minimalism (the section label and the video itself are sufficient). A 16:9 frame at ~960px wide sits centered with broadcast monitor chrome (REC indicator, "SVI-BENCH · Explainer" label, "00:00 / 02:30" timecode placeholder, bottom progress bar). The center of the frame shows a large circular play button with hover feedback. A caption inside the frame reads "placeholder · final cut from rewatchable goes here". Below the player are three chapter labels: "01 the cliff · 02 why sports · 03 what's next".
 
 **Position rationale:** Right after the hero, before the depth dive. The video is the 2:30 TL;DR of the entire claim. A visitor who lands, watches, and bounces still walks away with the full story. Anyone deeper in the funnel scrolls past into the cliff and demos.
 
@@ -160,6 +162,7 @@ The **animated basketball pick-and-roll schematic** (defined in the `PLAY` const
 - Receive final cut from Rewatchable (Ryan Reed, `rreed@rewatchable.com`)
 - Decide hosting platform
 - Swap placeholder for real video
+- Verify the three chapter labels ("the cliff / why sports / what's next") match scenes in the final cut. If the actual cut has different scenes (the script has five), update or drop the chapter labels accordingly.
 
 ---
 
@@ -211,6 +214,10 @@ Clicking a different clip while one is mid-reveal cancels the current animation 
 
 **Data structure (`CLIPS` constant):** Each clip has `id`, `taskId`, `pillar`, `teaser` (one-word picker label), `title`, `context` (game/period/time), `question`, `models` (array of 3 with `name`/`score`/`wrong`/`text`), `gt`, `verdictHeadline`.
 
+**Current headline and subtitle:**
+> "Where do the models fail?"
+> "Pick a clip. Watch frontier video models respond, then see the ground truth."
+
 **Current 7 clips and pillar coverage:**
 1. T1 — Structured Play Description ("jersey mix") — Perception
 2. T2 — Fine-Grained Action QA ("wrong action") — Perception
@@ -229,14 +236,20 @@ Clicking a different clip while one is mid-reveal cancels the current animation 
 
 ---
 
-### 5. Tape archive (built — needs real failure logs)
+### 5. Failures (built — needs real failure logs)
 
 **Location:** `#archive` section.
 
 **Layout:** Section header at top, filter row below, responsive grid in the middle, footer line at the bottom.
 - **Filter row:** Pillar chips (All, Perception, Reasoning, Simulation, Agency) on the left, "Surprise me" dashed-border button on the right
 - **Grid:** `grid-template-columns: repeat(auto-fit, minmax(230px, 1fr))` — auto-collapses from 4 columns on wide screens to 2 on narrower ones
-- **Footer:** "Showing N of 287 · [filter state] · Explore all 287 failures →" link
+- **Footer:** "Showing N of [total] · [filter state]" — no longer includes an "Explore all" link
+
+**Current headline and subtitle:**
+> "[X] ways the models fall short."
+> "Every entry is a real failure from a frontier video model. Filter by pillar to see where each class of capability breaks."
+
+The "[X]" in the headline is an explicit placeholder — students should replace it with the real failure count once eval results are in. Don't bind it to `FAILURES.length` again; the final headline number should reflect the full eval failure count, not just the curated tiles displayed on the page.
 
 **Each tile shows:**
 - 4:3 aspect schematic thumbnail (court for basketball, pitch for soccer, rink for hockey, agent tree for T9) tinted by pillar color
@@ -252,8 +265,8 @@ Clicking a different clip while one is mid-reveal cancels the current animation 
 
 **Critical TODOs:**
 - **All 19 failure entries are sketches.** Replace each with a real failure pulled from eval logs.
-- **`TOTAL_FAILURES` is set to 287 as a placeholder.** Replace with real count.
-- The "Explore all 287 failures →" link is dead. Wire to a `/failures` sub-page once that exists. The on-page grid is the **preview wall**; the sub-page is the **full searchable archive** with pagination/virtualization, deeper filters (task ID, model, sport, free text search), and deep links per failure.
+- **Replace the "[X]" placeholder in the headline** with the real failure count once eval results are in.
+- The "Explore all →" link has been removed. If a `/failures` sub-page is eventually built (full searchable archive with deeper filters, pagination, deep links), this is where it would be re-introduced.
 - Tile click currently does nothing. Future: modal expansion showing full Q / GT / model output. For tiles that overlap with Ask the play's 7 featured clips, add an "Open in Ask the play →" jump-up link.
 
 ---
@@ -262,16 +275,17 @@ Clicking a different clip while one is mid-reveal cancels the current animation 
 
 **Location:** `#meaning` section.
 
-**Headline:** "The next bottleneck isn't seeing. It's understanding what's been seen." — second sentence italic gray, same pattern as the hero.
+**Headline:** "From seeing to understanding."
 
-**Body:** One paragraph on the **oracle gap** — when the strongest model is given perfect textual descriptions of every frame, T9 accuracy jumps from 6% to 51%. Visual perception is a real limitation, but the 51% ceiling tells us multi-step planning, cross-modal reasoning, and strategic synthesis are equally unsolved.
+**Body:** "Today's video AI can describe what it sees. It can't explain why events unfold, predict what comes next, or decide how to respond. SVI-Bench provides a structured, verifiable testbed for closing that gap."
 
-**Stats row:** 35,000 hours · 15M annotations · 9 tasks · 4 pillars · 3 sports.
+The four verbs in the body map cleanly to the four pillars without naming them: describe → perception, explain why → reasoning, predict what comes next → simulation, decide how to respond → agency.
+
+**Stats row:** 38K hours of broadcast video · 23K scouting reports · 103K stat records · 9 evaluation tasks · 4 cognitive pillars.
 
 **TODOs:**
-- Verify the 6% → 51% oracle gap matches the final paper number
-- Verify "35,000 hours" and "15M annotations" match final dataset statistics
-- The closing line "Sports gives us the structured, verifiable testbed for that work — the way math gives one to formal reasoning" is the framing assertion. Keep this language intact
+- Confirm "scouting reports" and "stat records" are the correct user-facing labels for what's in the data. Adjust if the natural language differs from the engineering terms.
+- Verify final dataset numbers (38K / 23K / 103K) against the latest pipeline run.
 
 ---
 
@@ -279,10 +293,10 @@ Clicking a different clip while one is mid-reveal cancels the current animation 
 
 **Location:** `#about` section of `svi_bench_project_page.html`.
 
-**Current state:** Three-column footer with author list (current names: Gedas, Mohaiminul Islam, Yulu Pan, Seongsu Ha, Benjamin Zhang, Han Yi, Lorenzo Torresani), resources column with four entries (Paper, Code, Dataset, Contact — all tagged `to add`), and a citation block containing a BibTeX template with placeholder fields. A bottom row shows the affiliation and copyright.
+**Current state:** Three-column footer with author list (in submission order: Yulu Pan¹, Han Yi¹, Seongsu Ha¹, Md Mohaiminul Islam¹, Benjamin Zhang¹, Lorenzo Torresani², Gedas Bertasius¹), each linked to their OpenReview profile via a subtle underline; affiliation footnote (¹ UNC Chapel Hill, ² Northeastern University); resources column with four entries (Paper, Code, Dataset, Contact — all tagged `to add`); and a BibTeX template with placeholder fields. A bottom row shows the affiliation and copyright.
 
 **TODOs:**
-- Verify author list and order with co-authors. Add affiliations where they differ from UNC.
+- Confirm author order matches the final paper submission. Add or correct affiliations as needed.
 - Fill the BibTeX with the real citation once venue is settled (currently shows `@inproceedings{svibench2026, title={SVI-Bench: ...}, ...}` as a template)
 - Wire each "to add →" link to its real URL: arXiv, GitHub repo, HuggingFace dataset, contact email
 - Optional: add a copy-to-clipboard button on the BibTeX block
