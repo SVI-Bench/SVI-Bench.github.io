@@ -46,6 +46,7 @@
   </style>
   <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="scripts/panels_block.js"></script>
 </head>
 <body>
   <div id="root"></div>
@@ -115,10 +116,10 @@ const TASKS = [{
   id: 'T3',
   name: 'Compositional Video Retrieval',
   pillar: 'Perception',
-  score: 12,
-  metric: '12.3%',
+  score: 13,
+  metric: '13.3%',
   metricLabel: 'R@10',
-  bestModel: 'best baseline',
+  bestModel: 'InternVideo2 (ft)',
   blurb: 'Find the clip matching a fine-grained query. Models retrieve the right scene but the wrong detail.'
 }, {
   id: 'T4',
@@ -169,11 +170,11 @@ const TASKS = [{
   id: 'T9',
   name: 'Cross-Corpus Agentic Reasoning',
   pillar: 'Agency',
-  score: 6,
-  metric: '5.6%',
+  score: 5,
+  metric: '4.6%',
   metricLabel: 'accuracy',
   bestModel: 'GPT-5.2',
-  blurb: 'Plan, search, and synthesize across video and text. Frontier agents reach 6% — the floor of the cliff.'
+  blurb: 'Plan, search, and synthesize across video and text. Frontier agents reach 4.6% — the floor of the cliff.'
 }];
 
 // ============================================================
@@ -360,7 +361,7 @@ const CLIPS = [{
     text: 'Identified the defensive change correctly but attributed the trigger to player injury rather than the coaching adjustment.'
   }],
   gt: "Yes — Team A switched from drop coverage to aggressive hedging after Game 4, triggered by Team B's pick-and-pop adjustment exploiting drop coverage.",
-  verdictHeadline: '0 of 3 fully correct · 5.6% success at scale'
+  verdictHeadline: '0 of 3 fully correct · 4.6% success at scale'
 }];
 
 // ============================================================
@@ -1610,89 +1611,7 @@ function T2Overlay({
     }, "MODEL"));
   }));
 }
-function T3Overlay({
-  pillar
-}) {
-  const c = PILLARS[pillar];
-  const thumbs = [{
-    match: false
-  }, {
-    match: true,
-    modelPick: false
-  }, {
-    match: false,
-    modelPick: true
-  }, {
-    match: false
-  }];
-  return /*#__PURE__*/React.createElement("div", {
-    style: {
-      position: 'absolute',
-      right: 12,
-      top: 38,
-      bottom: 38,
-      width: 130,
-      display: 'flex',
-      flexDirection: 'column',
-      gap: 8
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: '"IBM Plex Mono", monospace',
-      fontSize: 9,
-      letterSpacing: '0.1em',
-      color: '#a1a1aa',
-      textTransform: 'uppercase',
-      padding: '5px 8px',
-      border: '1px solid #27272a',
-      background: 'rgba(10,10,12,0.7)',
-      borderRadius: 2
-    }
-  }, "\"pick-and-roll \xB7 big finishes at the rim\""), thumbs.map((th, i) => {
-    const isMatch = th.match;
-    const isPicked = th.modelPick;
-    const border = isMatch ? c.base : isPicked ? '#C0392B' : '#27272a';
-    return /*#__PURE__*/React.createElement("div", {
-      key: i,
-      style: {
-        aspectRatio: '4 / 3',
-        borderRadius: 2,
-        background: 'linear-gradient(135deg, #18181b 0%, #0c0d10 100%)',
-        border: `1px solid ${border}`,
-        position: 'relative',
-        animation: 'overlayIn 400ms ease'
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        position: 'absolute',
-        top: 4,
-        left: 6,
-        fontFamily: '"IBM Plex Mono", monospace',
-        fontSize: 8,
-        letterSpacing: '0.1em',
-        color: isMatch ? c.base : isPicked ? '#C0392B' : '#52525b'
-      }
-    }, `#${String(i + 1).padStart(2, '0')}`), isMatch && /*#__PURE__*/React.createElement("div", {
-      style: {
-        position: 'absolute',
-        bottom: 4,
-        right: 6,
-        fontFamily: '"IBM Plex Mono", monospace',
-        fontSize: 9,
-        color: c.base
-      }
-    }, "GT"), isPicked && /*#__PURE__*/React.createElement("div", {
-      style: {
-        position: 'absolute',
-        bottom: 4,
-        right: 6,
-        fontFamily: '"IBM Plex Mono", monospace',
-        fontSize: 9,
-        color: '#C0392B'
-      }
-    }, "MODEL"));
-  }));
-}
+// T3Overlay removed — replaced by T3Panel (in scripts/panels_block.js).
 function T4Overlay({
   pillar
 }) {
@@ -2054,186 +1973,7 @@ function T8Overlay({
     dashed: true
   })));
 }
-function ToolCallTree({
-  pillar
-}) {
-  const c = PILLARS[pillar];
-  const nodes = [{
-    id: 'root',
-    x: 50,
-    y: 240,
-    label: 'query'
-  }, {
-    id: 'vs',
-    x: 130,
-    y: 130,
-    label: 'video_search'
-  }, {
-    id: 'ds',
-    x: 130,
-    y: 240,
-    label: 'doc_search'
-  }, {
-    id: 'vq',
-    x: 130,
-    y: 350,
-    label: 'video_qa'
-  }, {
-    id: 'l1',
-    x: 240,
-    y: 80,
-    label: 'doc_qa'
-  }, {
-    id: 'l2',
-    x: 240,
-    y: 160,
-    label: 'doc_qa'
-  }, {
-    id: 'l3',
-    x: 240,
-    y: 220,
-    label: 'doc_qa'
-  }, {
-    id: 'l4',
-    x: 240,
-    y: 280,
-    label: 'video_qa'
-  }, {
-    id: 'l5',
-    x: 240,
-    y: 360,
-    label: 'doc_qa'
-  }, {
-    id: 'e1',
-    x: 320,
-    y: 60,
-    outcome: 'fail'
-  }, {
-    id: 'e2',
-    x: 320,
-    y: 100,
-    outcome: 'fail'
-  }, {
-    id: 'e3',
-    x: 320,
-    y: 150,
-    outcome: 'success'
-  }, {
-    id: 'e4',
-    x: 320,
-    y: 190,
-    outcome: 'fail'
-  }, {
-    id: 'e5',
-    x: 320,
-    y: 220,
-    outcome: 'fail'
-  }, {
-    id: 'e6',
-    x: 320,
-    y: 250,
-    outcome: 'fail'
-  }, {
-    id: 'e7',
-    x: 320,
-    y: 290,
-    outcome: 'fail'
-  }, {
-    id: 'e8',
-    x: 320,
-    y: 330,
-    outcome: 'fail'
-  }, {
-    id: 'e9',
-    x: 320,
-    y: 390,
-    outcome: 'fail'
-  }];
-  const edges = [['root', 'vs'], ['root', 'ds'], ['root', 'vq'], ['vs', 'l1'], ['vs', 'l2'], ['ds', 'l3'], ['ds', 'l4'], ['vq', 'l5'], ['l1', 'e1'], ['l2', 'e2'], ['l2', 'e3'], ['l3', 'e4'], ['l3', 'e5'], ['l4', 'e6'], ['l4', 'e7'], ['l5', 'e8'], ['l5', 'e9']];
-  const find = id => nodes.find(n => n.id === id);
-  const successPath = new Set(['root', 'vs', 'l2', 'e3']);
-  return /*#__PURE__*/React.createElement("svg", {
-    viewBox: "0 0 360 480",
-    style: {
-      width: '100%',
-      height: '100%',
-      display: 'block'
-    }
-  }, /*#__PURE__*/React.createElement("rect", {
-    x: 0,
-    y: 0,
-    width: 360,
-    height: 480,
-    fill: "#0c0d10"
-  }), edges.map(([a, b], i) => {
-    const na = find(a),
-      nb = find(b);
-    const onSuccessPath = successPath.has(a) && successPath.has(b);
-    return /*#__PURE__*/React.createElement("line", {
-      key: i,
-      x1: na.x,
-      y1: na.y,
-      x2: nb.x,
-      y2: nb.y,
-      stroke: onSuccessPath ? c.base : '#27272a',
-      strokeWidth: onSuccessPath ? 1.5 : 1,
-      opacity: onSuccessPath ? 0.95 : 0.7
-    });
-  }), nodes.map(n => {
-    if (n.outcome) {
-      const ok = n.outcome === 'success';
-      return /*#__PURE__*/React.createElement("g", {
-        key: n.id
-      }, /*#__PURE__*/React.createElement("circle", {
-        cx: n.x,
-        cy: n.y,
-        r: 5,
-        fill: ok ? c.base : 'none',
-        stroke: ok ? c.base : '#52525b',
-        strokeWidth: 1.2
-      }), /*#__PURE__*/React.createElement("text", {
-        x: n.x + 10,
-        y: n.y + 3,
-        fontFamily: "\"IBM Plex Mono\", monospace",
-        fontSize: 9,
-        fill: ok ? c.base : '#52525b'
-      }, ok ? '✓' : '✗'));
-    }
-    const onSuccess = successPath.has(n.id);
-    return /*#__PURE__*/React.createElement("g", {
-      key: n.id
-    }, /*#__PURE__*/React.createElement("circle", {
-      cx: n.x,
-      cy: n.y,
-      r: 4,
-      fill: "#0c0d10",
-      stroke: onSuccess ? c.base : '#71717a',
-      strokeWidth: 1
-    }), /*#__PURE__*/React.createElement("text", {
-      x: n.x,
-      y: n.y - 8,
-      fontFamily: "\"IBM Plex Mono\", monospace",
-      fontSize: 8,
-      fill: onSuccess ? c.base : '#a1a1aa',
-      textAnchor: "middle"
-    }, n.label));
-  }), /*#__PURE__*/React.createElement("text", {
-    x: 20,
-    y: 26,
-    fontFamily: "\"IBM Plex Mono\", monospace",
-    fontSize: 10,
-    fill: "#a1a1aa",
-    letterSpacing: "0.15em"
-  }, "AGENT TRACE"), /*#__PURE__*/React.createElement("text", {
-    x: 340,
-    y: 26,
-    fontFamily: "\"IBM Plex Mono\", monospace",
-    fontSize: 10,
-    fill: c.base,
-    letterSpacing: "0.05em",
-    textAnchor: "end"
-  }, "5.6% success"));
-}
+// ToolCallTree removed — replaced by T9Panel (in scripts/panels_block.js).
 function TaskOverlay({
   taskId,
   pillar
@@ -2247,10 +1987,7 @@ function TaskOverlay({
       return /*#__PURE__*/React.createElement(T2Overlay, {
         pillar: pillar
       });
-    case 'T3':
-      return /*#__PURE__*/React.createElement(T3Overlay, {
-        pillar: pillar
-      });
+    // T3 handled by T3Panel in CliffBroadcastViewport (no overlay needed).
     case 'T4':
       return /*#__PURE__*/React.createElement(T4Overlay, {
         pillar: pillar
@@ -2286,7 +2023,9 @@ function CliffBroadcastViewport({
   const c = PILLARS[task.pillar];
   const totalSeconds = Math.floor(t * 10);
   const tc = `00:${String(totalSeconds).padStart(2, '0')}`;
+  const isT3 = task.id === 'T3';
   const isT9 = task.id === 'T9';
+  const headerLabel = isT9 ? 'AGENT' : isT3 ? 'RETRIEVAL' : 'CAM 1';
   return /*#__PURE__*/React.createElement("div", {
     style: {
       position: 'relative',
@@ -2332,28 +2071,23 @@ function CliffBroadcastViewport({
       background: '#C0392B',
       animation: 'recPulse 1.6s ease-in-out infinite'
     }
-  }), /*#__PURE__*/React.createElement("span", null, isT9 ? 'AGENT' : 'CAM 1', " \xB7 NBA \xB7 Q3 04:13")), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: '"IBM Plex Mono", monospace',
-      fontSize: 10,
-      letterSpacing: '0.15em',
-      color: '#a1a1aa'
-    }
-  }, tc, " / 00:10")), /*#__PURE__*/React.createElement("div", {
-    style: {
-      position: 'absolute',
-      inset: 0
-    }
-  }, isT9 ? /*#__PURE__*/React.createElement(ToolCallTree, {
-    pillar: task.pillar
-  }) : /*#__PURE__*/React.createElement(HalfCourt, null, /*#__PURE__*/React.createElement(PlayLoop, {
-    t: t,
-    pillarColor: c.base,
-    glow: c.glow
-  }))), /*#__PURE__*/React.createElement(TaskOverlay, {
-    taskId: task.id,
-    pillar: task.pillar
-  }), /*#__PURE__*/React.createElement("div", {
+  }), /*#__PURE__*/React.createElement("span", null, headerLabel))),
+  isT3 ? /*#__PURE__*/React.createElement(T3Panel, { pillar: task.pillar, active: true })
+  : isT9 ? /*#__PURE__*/React.createElement(T9Panel, { pillar: task.pillar, active: true })
+  : /*#__PURE__*/React.createElement(React.Fragment, null,
+      /*#__PURE__*/React.createElement("div", {
+        style: { position: 'absolute', inset: 0 }
+      }, /*#__PURE__*/React.createElement(HalfCourt, null, /*#__PURE__*/React.createElement(PlayLoop, {
+        t: t,
+        pillarColor: c.base,
+        glow: c.glow
+      }))),
+      /*#__PURE__*/React.createElement(TaskOverlay, {
+        taskId: task.id,
+        pillar: task.pillar
+      })
+    ),
+  /*#__PURE__*/React.createElement("div", {
     style: {
       position: 'absolute',
       bottom: 0,
@@ -2386,29 +2120,7 @@ function CliffBroadcastViewport({
       fontSize: 11,
       color: '#e4e4e7'
     }
-  }, task.name)), /*#__PURE__*/React.createElement("div", {
-    style: {
-      flex: 1,
-      margin: '0 14px',
-      height: 2,
-      background: '#1c1c1f',
-      borderRadius: 1,
-      overflow: 'hidden'
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      height: '100%',
-      width: `${t * 100}%`,
-      background: c.base
-    }
-  })), /*#__PURE__*/React.createElement("span", {
-    style: {
-      fontFamily: '"IBM Plex Mono", monospace',
-      fontSize: 10,
-      color: '#a1a1aa',
-      letterSpacing: '0.1em'
-    }
-  }, task.metric)));
+  }, task.name))));
 }
 function ScenePanel({
   task,
@@ -3759,16 +3471,43 @@ function CliffSection() {
     t: playT
   }))));
 }
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 function AskThePlaySection() {
-  const [selectedId, setSelectedId] = useState('c3');
-  const [runKey, setRunKey] = useState(0);
-  const playT = usePlayClock(10000);
-  const clip = CLIPS.find(c => c.id === selectedId);
-  const onSelect = id => {
+  var _useState = useState('c3'),
+    _useState2 = _slicedToArray(_useState, 2),
+    selectedId = _useState2[0],
+    setSelectedId = _useState2[1];
+  var _useState3 = useState(0),
+    _useState4 = _slicedToArray(_useState3, 2),
+    runKey = _useState4[0],
+    setRunKey = _useState4[1];
+  var playT = usePlayClock(10000);
+  var clip = CLIPS.find(function (c) {
+    return c.id === selectedId;
+  });
+  var onSelect = function onSelect(id) {
     setSelectedId(id);
-    setRunKey(k => k + 1);
+    setRunKey(function (k) {
+      return k + 1;
+    });
   };
-  const onReplay = () => setRunKey(k => k + 1);
+  var onReplay = function onReplay() {
+    return setRunKey(function (k) {
+      return k + 1;
+    });
+  };
+  var isT9 = clip && clip.taskId === 'T9';
   return /*#__PURE__*/React.createElement("section", {
     id: "ask",
     style: {
@@ -3793,7 +3532,7 @@ function AskThePlaySection() {
       color: '#71717a',
       marginBottom: 16
     }
-  }, "04 \xB7 Ask the play"), /*#__PURE__*/React.createElement("h2", {
+  }, "04 \xB7 Model responses"), /*#__PURE__*/React.createElement("h2", {
     style: {
       fontFamily: '"IBM Plex Serif", serif',
       fontSize: 'clamp(40px, 6vw, 76px)',
@@ -3804,16 +3543,91 @@ function AskThePlaySection() {
       marginBottom: 18,
       maxWidth: 1000
     }
-  }, "Where does the model crack?"), /*#__PURE__*/React.createElement("p", {
+  }, "See how the models answer."), /*#__PURE__*/React.createElement("p", {
     style: {
       fontFamily: '"IBM Plex Sans", sans-serif',
       fontSize: 16,
-      lineHeight: 1.5,
+      lineHeight: 1.55,
       color: '#a1a1aa',
-      maxWidth: 680,
+      maxWidth: 720,
       margin: 0
     }
-  }, "Pick a clip. Watch three frontier video models answer beside the human expert. The judge verdict reveals on a beat.")), /*#__PURE__*/React.createElement("div", {
+  }, "Pick a clip. Watch three frontier video models answer the question beside the human expert \u2014 or, on T9, step through what a single agent did with the same prompt.")), isT9 ? /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'relative',
+      width: '100%',
+      maxWidth: 1180,
+      margin: '0 auto 24px',
+      aspectRatio: '16 / 9',
+      background: '#0c0d10',
+      border: '1px solid #27272a',
+      borderRadius: 4,
+      overflow: 'hidden',
+      boxShadow: '0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(192,57,43,0.12)'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      height: 30,
+      display: 'flex',
+      alignItems: 'center',
+      padding: '0 14px',
+      gap: 12,
+      background: 'linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0) 100%)',
+      zIndex: 5
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      display: 'inline-block',
+      width: 7,
+      height: 7,
+      borderRadius: 4,
+      background: '#C0392B',
+      animation: 'recPulse 1.6s ease-in-out infinite'
+    }
+  }), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: '"IBM Plex Mono", monospace',
+      fontSize: 11,
+      letterSpacing: '0.18em',
+      color: '#a1a1aa',
+      textTransform: 'uppercase'
+    }
+  }, "AGENT TRACE")), /*#__PURE__*/React.createElement(T9Panel, {
+    pillar: "Agency",
+    active: true,
+    data: T9_PANEL_ASK
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      bottom: 0,
+      left: 0,
+      right: 0,
+      height: 32,
+      display: 'flex',
+      alignItems: 'center',
+      padding: '0 14px',
+      gap: 10,
+      background: 'linear-gradient(0deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0) 100%)',
+      zIndex: 5
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: '"IBM Plex Mono", monospace',
+      fontSize: 11,
+      color: '#C0392B',
+      fontWeight: 600
+    }
+  }, "T9"), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: '"IBM Plex Sans", sans-serif',
+      fontSize: 11,
+      color: '#e4e4e7'
+    }
+  }, "Cross-Corpus Agentic Reasoning"))) : /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'grid',
       gridTemplateColumns: '1.35fr 1fr',
@@ -3845,21 +3659,44 @@ function AskThePlaySection() {
     onSelect: onSelect
   }));
 }
+
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+// ── Tape archive section ──────────────────────────────────────────────────
+
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+// ── Tape archive section ──────────────────────────────────────────────────
+
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+// ── Tape archive section ──────────────────────────────────────────────────
+
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+// ── Tape archive section ──────────────────────────────────────────────────
+
 function TapeArchiveSection() {
-  const [pillarFilter, setPillarFilter] = useState('All');
-  const [shuffleSeed, setShuffleSeed] = useState(0);
-  const filtered = useMemo(() => {
-    let list = pillarFilter === 'All' ? FAILURES.slice() : FAILURES.filter(f => f.pillar === pillarFilter);
-    if (shuffleSeed > 0) {
-      list = list.slice();
-      for (let i = list.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [list[i], list[j]] = [list[j], list[i]];
-      }
-    }
-    return list;
-  }, [pillarFilter, shuffleSeed]);
-  const PILLAR_FILTERS = ['All', 'Perception', 'Reasoning', 'Simulation', 'Agency'];
+  var _useState = useState(null),
+    _useState2 = _slicedToArray(_useState, 2),
+    modalTile = _useState2[0],
+    setModalTile = _useState2[1]; // panel object or null
   return /*#__PURE__*/React.createElement("section", {
     id: "archive",
     style: {
@@ -3867,6 +3704,8 @@ function TapeArchiveSection() {
       padding: '110px 48px 80px',
       maxWidth: 1500,
       margin: '0 auto',
+      display: 'flex',
+      flexDirection: 'column',
       borderTop: '1px solid #1c1c1f'
     }
   }, /*#__PURE__*/React.createElement("div", {
@@ -3891,84 +3730,531 @@ function TapeArchiveSection() {
       letterSpacing: '-0.02em',
       margin: 0,
       marginBottom: 18,
-      maxWidth: 1000
+      maxWidth: 1100
     }
-  }, TOTAL_FAILURES, " ways the field falls short."), /*#__PURE__*/React.createElement("p", {
+  }, "Every kind of detail trips it up.", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("span", {
+    style: {
+      color: '#71717a',
+      fontStyle: 'italic'
+    }
+  }, "And every kind of plan, too.")), /*#__PURE__*/React.createElement("p", {
     style: {
       fontFamily: '"IBM Plex Sans", sans-serif',
       fontSize: 16,
-      lineHeight: 1.5,
+      lineHeight: 1.55,
       color: '#a1a1aa',
       maxWidth: 720,
       margin: 0
     }
-  }, "Every entry is a real failure from a frontier video model. Filter by pillar to see where each class of capability breaks. The aggregate is the argument.")), /*#__PURE__*/React.createElement("div", {
+  }, "The model confuses clips that differ on a single attribute axis \u2014 jersey numbers, hands, shot types, the goalie's stance. GPT-5.2 fails the same agentic question in three distinct ways. Click any tile to inspect. The remaining tasks below are sketched placeholders waiting for real failure logs.")), TASKS.map(function (task) {
+    var isT3 = task.id === 'T3';
+    var isT9 = task.id === 'T9';
+    var isOurs = isT3 || isT9;
+    var suffix = isT3 ? ' — four attribute axes' : isT9 ? ' — three failure modes' : ' · placeholder';
+    var taskFailures = !isOurs ? FAILURES.filter(function (f) {
+      return f.taskId === task.id;
+    }) : [];
+    return /*#__PURE__*/React.createElement("div", {
+      key: task.id,
+      style: {
+        marginBottom: 52
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: 'flex',
+        alignItems: 'baseline',
+        gap: 12,
+        marginBottom: 14,
+        fontFamily: '"IBM Plex Mono", monospace',
+        letterSpacing: '0.14em',
+        textTransform: 'uppercase'
+      }
+    }, /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontSize: 13,
+        fontWeight: 600,
+        color: PILLARS[task.pillar].base
+      }
+    }, task.id), /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontSize: 12,
+        color: '#a1a1aa'
+      }
+    }, task.name), /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontSize: 10,
+        color: isOurs ? '#71717a' : '#52525b',
+        letterSpacing: '0.1em'
+      }
+    }, suffix)), /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: 'grid',
+        gridTemplateColumns: 'repeat(4, 1fr)',
+        gap: 14
+      }
+    }, isT3 && T3_ARCHIVE.panels.map(function (p) {
+      return /*#__PURE__*/React.createElement(T3ArchiveTile, {
+        key: p.id,
+        panel: p,
+        onOpen: function onOpen() {
+          return setModalTile(p);
+        }
+      });
+    }), isT9 && T9_ARCHIVE.cards.map(function (c) {
+      return /*#__PURE__*/React.createElement(T9ArchiveCard, {
+        key: c.id,
+        card: c
+      });
+    }), !isOurs && taskFailures.map(function (failure) {
+      return /*#__PURE__*/React.createElement(PlaceholderCard, {
+        key: failure.id,
+        failure: failure
+      });
+    })));
+  }), modalTile && /*#__PURE__*/React.createElement(T3ArchiveModal, {
+    panel: modalTile,
+    onClose: function onClose() {
+      return setModalTile(null);
+    }
+  }));
+}
+function T3ArchiveTile(_ref) {
+  var panel = _ref.panel,
+    onOpen = _ref.onOpen;
+  // Static 2×2 grid of small thumbnails: GT (top-left, green) + 3 HNs.
+  return /*#__PURE__*/React.createElement("div", {
+    onClick: onOpen,
+    style: {
+      cursor: 'pointer',
+      background: '#0c0d10',
+      border: '1px solid #27272a',
+      borderRadius: 4,
+      overflow: 'hidden',
+      transition: 'border-color 150ms, transform 150ms'
+    },
+    onMouseEnter: function onMouseEnter(e) {
+      e.currentTarget.style.borderColor = '#3f3f46';
+      e.currentTarget.style.transform = 'translateY(-2px)';
+    },
+    onMouseLeave: function onMouseLeave(e) {
+      e.currentTarget.style.borderColor = '#27272a';
+      e.currentTarget.style.transform = 'translateY(0)';
+    }
+  }, /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
-      flexWrap: 'wrap',
       alignItems: 'center',
-      gap: 10,
-      marginBottom: 28,
-      paddingBottom: 22,
-      borderBottom: '1px solid #1c1c1f'
+      justifyContent: 'space-between',
+      padding: '8px 12px',
+      borderBottom: '1px solid #1c1c1f',
+      fontFamily: '"IBM Plex Mono", monospace',
+      fontSize: 10.5,
+      letterSpacing: '0.12em',
+      textTransform: 'uppercase',
+      color: '#a1a1aa'
     }
   }, /*#__PURE__*/React.createElement("span", {
     style: {
-      fontFamily: '"IBM Plex Mono", monospace',
-      fontSize: 10,
-      color: '#52525b',
-      letterSpacing: '0.15em',
-      textTransform: 'uppercase',
-      marginRight: 6
+      color: '#4A7FB5'
     }
-  }, "Filter \xB7"), PILLAR_FILTERS.map(p => /*#__PURE__*/React.createElement(FilterChip, {
-    key: p,
-    label: p,
-    active: pillarFilter === p,
-    color: p === 'All' ? '#fafafa' : PILLARS[p]?.base,
-    onClick: () => setPillarFilter(p)
-  })), /*#__PURE__*/React.createElement("div", {
-    style: {
-      flex: 1
-    }
-  }), /*#__PURE__*/React.createElement(SurpriseButton, {
-    onClick: () => setShuffleSeed(s => s + 1)
-  })), /*#__PURE__*/React.createElement("div", {
+  }, "T3"), /*#__PURE__*/React.createElement("span", null, panel.axis_label)), /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'grid',
-      gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))',
-      gap: 16,
-      marginBottom: 40
+      gridTemplateColumns: '1fr 1fr',
+      gap: 1,
+      background: '#1c1c1f'
     }
-  }, filtered.map((failure, i) => /*#__PURE__*/React.createElement("div", {
-    key: failure.id + '_' + shuffleSeed,
+  }, panel.thumbs.map(function (t, i) {
+    return /*#__PURE__*/React.createElement("div", {
+      key: i,
+      style: {
+        position: 'relative',
+        aspectRatio: '16 / 9',
+        background: '#000',
+        overflow: 'hidden'
+      }
+    }, /*#__PURE__*/React.createElement("video", {
+      src: t.video,
+      muted: true,
+      playsInline: true,
+      loop: true,
+      preload: "metadata",
+      style: {
+        width: '100%',
+        height: '100%',
+        objectFit: 'cover',
+        display: 'block'
+      }
+    }), /*#__PURE__*/React.createElement("div", {
+      style: {
+        position: 'absolute',
+        top: 4,
+        left: 4,
+        width: 7,
+        height: 7,
+        borderRadius: 4,
+        background: t.is_gt ? '#2ECC71' : '#E74C3C',
+        boxShadow: '0 0 4px rgba(0,0,0,0.7)'
+      }
+    }));
+  })), /*#__PURE__*/React.createElement("div", {
     style: {
-      animationDelay: `${i * 25}ms`
+      padding: '10px 12px',
+      fontFamily: '"IBM Plex Sans", sans-serif',
+      fontSize: 12.5,
+      lineHeight: 1.4,
+      color: '#e4e4e7'
     }
-  }, /*#__PURE__*/React.createElement(FailureTile, {
-    failure: failure
-  })))), /*#__PURE__*/React.createElement("div", {
+  }, panel.query));
+}
+function T3ArchiveModal(_ref2) {
+  var panel = _ref2.panel,
+    onClose = _ref2.onClose;
+  return /*#__PURE__*/React.createElement("div", {
+    onClick: onClose,
+    style: {
+      position: 'fixed',
+      inset: 0,
+      zIndex: 100,
+      background: 'rgba(0,0,0,0.85)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: 40,
+      cursor: 'pointer',
+      animation: 'overlayIn 200ms ease'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    onClick: function onClick(e) {
+      return e.stopPropagation();
+    },
+    style: {
+      cursor: 'default',
+      background: '#0c0d10',
+      border: '1px solid #27272a',
+      borderRadius: 6,
+      padding: '24px 28px',
+      maxWidth: 1100,
+      width: '100%',
+      maxHeight: '90vh',
+      overflowY: 'auto',
+      boxShadow: '0 24px 80px rgba(0,0,0,0.8)'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'flex-start',
+      justifyContent: 'space-between',
+      gap: 16,
+      marginBottom: 16
+    }
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: '"IBM Plex Mono", monospace',
+      fontSize: 11,
+      letterSpacing: '0.16em',
+      textTransform: 'uppercase',
+      color: '#71717a',
+      marginBottom: 6
+    }
+  }, "T3 \xB7 ", panel.axis_label), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: '"IBM Plex Sans", sans-serif',
+      fontSize: 17,
+      color: '#fafafa',
+      lineHeight: 1.4,
+      maxWidth: 800
+    }
+  }, panel.query)), /*#__PURE__*/React.createElement("button", {
+    onClick: onClose,
+    style: {
+      background: 'transparent',
+      border: '1px solid #3f3f46',
+      color: '#e4e4e7',
+      padding: '5px 14px',
+      borderRadius: 3,
+      fontFamily: '"IBM Plex Mono", monospace',
+      fontSize: 11,
+      letterSpacing: '0.1em',
+      cursor: 'pointer',
+      flex: '0 0 auto'
+    }
+  }, "close \u2715")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'grid',
+      gridTemplateColumns: '1fr 1fr',
+      gap: 12
+    }
+  }, panel.thumbs.map(function (t, i) {
+    var edge = t.is_gt ? '#2ECC71' : '#E74C3C';
+    var glow = t.is_gt ? 'rgba(46,204,113,0.4)' : 'rgba(231,76,60,0.4)';
+    return /*#__PURE__*/React.createElement("div", {
+      key: i,
+      style: {
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 8
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        position: 'relative',
+        aspectRatio: '16 / 9',
+        background: '#000',
+        border: "2px solid ".concat(edge),
+        borderRadius: 3,
+        overflow: 'hidden',
+        boxShadow: "0 0 16px ".concat(glow)
+      }
+    }, /*#__PURE__*/React.createElement("video", {
+      src: t.video,
+      muted: true,
+      playsInline: true,
+      loop: true,
+      autoPlay: true,
+      style: {
+        width: '100%',
+        height: '100%',
+        objectFit: 'cover',
+        display: 'block'
+      }
+    }), /*#__PURE__*/React.createElement("div", {
+      style: {
+        position: 'absolute',
+        top: 8,
+        left: 8,
+        fontFamily: '"IBM Plex Mono", monospace',
+        fontSize: 11,
+        fontWeight: 700,
+        letterSpacing: '0.06em',
+        color: t.is_gt ? '#0a0a0c' : '#fafafa',
+        background: t.is_gt ? edge : 'rgba(10,10,12,0.85)',
+        padding: '3px 8px',
+        borderRadius: 2,
+        lineHeight: 1.15
+      }
+    }, t.is_gt ? 'GT ✓' : 'distractor')), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontFamily: '"IBM Plex Sans", sans-serif',
+        fontSize: 13.5,
+        lineHeight: 1.45,
+        color: t.is_gt ? '#fafafa' : '#d4d4d8'
+      }
+    }, t.diff_substring ? renderCaptionWithDiff(t.caption, t.diff_substring, '#ef6f5e') : t.caption));
+  }))));
+}
+function PlaceholderCard(_ref3) {
+  var failure = _ref3.failure;
+  // Visual sibling of T3ArchiveTile / T9ArchiveCard — same dark card,
+  // mono caps header with a pillar-tinted task ID, a one-line failure
+  // mode, italic excerpt, and the source model attribution at the bottom.
+  // For tasks T1, T2, T4–T8 while their owners produce real eval logs.
+  var c = PILLARS[failure.pillar];
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: '#0c0d10',
+      border: '1px solid #27272a',
+      borderRadius: 4,
+      padding: '14px 16px',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 10,
+      minHeight: 180
+    }
+  }, /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
       justifyContent: 'space-between',
-      alignItems: 'baseline',
-      paddingTop: 24,
-      borderTop: '1px solid #1c1c1f',
+      alignItems: 'center',
       fontFamily: '"IBM Plex Mono", monospace',
-      fontSize: 11,
-      letterSpacing: '0.12em',
+      fontSize: 10.5,
+      letterSpacing: '0.14em',
+      textTransform: 'uppercase'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      color: c.base,
+      fontWeight: 600
+    }
+  }, failure.taskId), /*#__PURE__*/React.createElement("span", {
+    style: {
       color: '#71717a'
     }
-  }, /*#__PURE__*/React.createElement("span", null, "Showing ", filtered.length, " of ", TOTAL_FAILURES, " \xB7 ", pillarFilter !== 'All' ? pillarFilter.toLowerCase() + ' only' : 'all pillars'), /*#__PURE__*/React.createElement("a", {
-    href: "#",
+  }, failure.sport)), /*#__PURE__*/React.createElement("div", {
     style: {
-      color: '#fafafa',
-      textDecoration: 'none',
-      borderBottom: '1px solid #3f3f46',
-      paddingBottom: 2
+      fontFamily: '"IBM Plex Sans", sans-serif',
+      fontSize: 14,
+      fontWeight: 500,
+      lineHeight: 1.35,
+      color: '#fafafa'
     }
-  }, "Explore all ", TOTAL_FAILURES, " failures \u2192")));
+  }, failure.mode), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: '"IBM Plex Sans", sans-serif',
+      fontSize: 12.5,
+      lineHeight: 1.5,
+      color: '#a1a1aa',
+      fontStyle: 'italic'
+    }
+  }, failure.excerpt), /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginTop: 'auto',
+      fontFamily: '"IBM Plex Mono", monospace',
+      fontSize: 10.5,
+      color: '#52525b',
+      letterSpacing: '0.08em',
+      borderTop: '1px solid #1c1c1f',
+      paddingTop: 8
+    }
+  }, failure.model));
 }
+function T9ArchiveCard(_ref4) {
+  var card = _ref4.card;
+  // Compact static card showing the trajectory + failure mode.
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: '#0c0d10',
+      border: '1px solid #27272a',
+      borderRadius: 4,
+      padding: '16px 18px',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 12
+    }
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: '"IBM Plex Mono", monospace',
+      fontSize: 10.5,
+      letterSpacing: '0.16em',
+      textTransform: 'uppercase',
+      color: '#C0392B',
+      marginBottom: 6
+    }
+  }, "T9 \xB7 failure mode"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: '"IBM Plex Sans", sans-serif',
+      fontSize: 16,
+      fontWeight: 600,
+      color: '#fafafa'
+    }
+  }, card.label), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: '"IBM Plex Sans", sans-serif',
+      fontSize: 12.5,
+      color: '#a1a1aa',
+      marginTop: 2,
+      lineHeight: 1.4
+    }
+  }, card.tagline)), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: '"IBM Plex Sans", sans-serif',
+      fontSize: 12.5,
+      lineHeight: 1.45,
+      color: '#d4d4d8',
+      background: 'rgba(20,20,26,0.6)',
+      padding: '8px 10px',
+      borderRadius: 3,
+      border: '1px solid #1c1c1f'
+    }
+  }, card.question_short || card.question), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: '"IBM Plex Mono", monospace',
+      fontSize: 10,
+      letterSpacing: '0.12em',
+      color: '#71717a',
+      textTransform: 'uppercase',
+      marginBottom: 5
+    }
+  }, card.num_turns, " turns"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      gap: 3,
+      alignItems: 'center'
+    }
+  }, card.tool_seq.map(function (t) {
+    return /*#__PURE__*/React.createElement("span", {
+      key: t.turn,
+      style: {
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 22,
+        height: 18,
+        borderRadius: 2,
+        background: T9_TOOL_COLOR[t.tool] || '#71717a',
+        color: '#fafafa',
+        fontFamily: '"IBM Plex Mono", monospace',
+        fontSize: 9.5,
+        fontWeight: 700
+      }
+    }, t.abbrev);
+  }), /*#__PURE__*/React.createElement("span", {
+    style: {
+      display: 'inline-flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: 22,
+      height: 18,
+      borderRadius: 2,
+      background: '#C0392B',
+      color: '#fafafa',
+      fontFamily: '"IBM Plex Mono", monospace',
+      fontSize: 11,
+      fontWeight: 700,
+      marginLeft: 2
+    }
+  }, "\u2717"))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 6,
+      fontFamily: '"IBM Plex Sans", sans-serif',
+      fontSize: 12.5,
+      lineHeight: 1.4
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: '#e4e4e7'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      color: '#C0392B',
+      fontWeight: 600,
+      marginRight: 6
+    }
+  }, "MODEL:"), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: '"IBM Plex Mono", monospace',
+      fontSize: 12
+    }
+  }, card.final_answer)), /*#__PURE__*/React.createElement("div", {
+    style: {
+      color: '#e4e4e7'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      color: '#2ECC71',
+      fontWeight: 600,
+      marginRight: 6
+    }
+  }, "GT:"), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: '"IBM Plex Mono", monospace',
+      fontSize: 12
+    }
+  }, card.gt_answer))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: '"IBM Plex Sans", sans-serif',
+      fontSize: 12,
+      color: '#a1a1aa',
+      lineHeight: 1.5,
+      fontStyle: 'italic',
+      borderTop: '1px solid #1c1c1f',
+      paddingTop: 10
+    }
+  }, card.summary));
+}
+
 function OutroSection() {
   return /*#__PURE__*/React.createElement("section", {
     id: "meaning",
@@ -4012,7 +4298,7 @@ function OutroSection() {
       color: '#a1a1aa',
       maxWidth: 720
     }
-  }, "When we hand the strongest model perfect textual descriptions of every frame, T9 accuracy jumps from 6% to 51%. Visual perception is a major limitation. But the 51% ceiling tells us multi-step planning, cross-modal reasoning, and strategic synthesis are equally unsolved. Sports gives us the structured, verifiable testbed for that work \u2014 the way math gives one to formal reasoning."), /*#__PURE__*/React.createElement("div", {
+  }, "When we hand the strongest model perfect textual descriptions of every frame, T9 accuracy jumps from 4.6% to 54%. Visual perception is a major limitation. But the 54% ceiling tells us multi-step planning, cross-modal reasoning, and strategic synthesis are equally unsolved. Sports gives us the structured, verifiable testbed for that work \u2014 the way math gives one to formal reasoning."), /*#__PURE__*/React.createElement("div", {
     style: {
       marginTop: 96,
       paddingTop: 32,
@@ -4242,7 +4528,7 @@ function Header() {
     label: 'Cliff',
     href: '#cliff'
   }, {
-    label: 'Ask',
+    label: 'Explore',
     href: '#ask'
   }, {
     label: 'Archive',

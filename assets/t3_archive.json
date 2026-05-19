@@ -1,0 +1,128 @@
+{
+  "panels": [
+    {
+      "id": "bb_jersey",
+      "sport": "basketball",
+      "axis_label": "jersey number",
+      "query": "A player makes a free throw \u2014 find the clip of #55.",
+      "thumbs": [
+        {
+          "video": "assets/t3_archive/bb_jersey/gt.mp4",
+          "caption": "Player #55 makes a free throw.",
+          "is_gt": true
+        },
+        {
+          "video": "assets/t3_archive/bb_jersey/hn1.mp4",
+          "caption": "Player #24 makes a free throw.",
+          "diff_substring": "#24",
+          "is_gt": false
+        },
+        {
+          "video": "assets/t3_archive/bb_jersey/hn2.mp4",
+          "caption": "Player #16 makes a free throw.",
+          "diff_substring": "#16",
+          "is_gt": false
+        },
+        {
+          "video": "assets/t3_archive/bb_jersey/hn3.mp4",
+          "caption": "Player #21 makes a free throw.",
+          "diff_substring": "#21",
+          "is_gt": false
+        }
+      ]
+    },
+    {
+      "id": "bb_hand",
+      "sport": "basketball",
+      "axis_label": "shooting hand",
+      "query": "A contested two-point jumper from the top, right-handed.",
+      "thumbs": [
+        {
+          "video": "assets/t3_archive/bb_hand/gt.mp4",
+          "caption": "A right-handed contested jumper from the top.",
+          "is_gt": true
+        },
+        {
+          "video": "assets/t3_archive/bb_hand/hn1.mp4",
+          "caption": "A left-handed contested jumper from the top.",
+          "diff_substring": "left-handed",
+          "is_gt": false
+        },
+        {
+          "video": "assets/t3_archive/bb_hand/hn2.mp4",
+          "caption": "An uncontested right-handed jumper from the top.",
+          "diff_substring": "uncontested",
+          "is_gt": false
+        },
+        {
+          "video": "assets/t3_archive/bb_hand/hn3.mp4",
+          "caption": "A right-handed contested jumper from the restricted area.",
+          "diff_substring": "restricted area",
+          "is_gt": false
+        }
+      ]
+    },
+    {
+      "id": "soc_player",
+      "sport": "soccer",
+      "axis_label": "player name",
+      "query": "K. Stoup wins a duel attacking from the right side.",
+      "thumbs": [
+        {
+          "video": "assets/t3_archive/soc_player/gt.mp4",
+          "caption": "K. Stoup wins a duel attacking from the right side.",
+          "is_gt": true
+        },
+        {
+          "video": "assets/t3_archive/soc_player/hn1.mp4",
+          "caption": "A. Pope wins a duel attacking from the right side.",
+          "diff_substring": "A. Pope",
+          "is_gt": false
+        },
+        {
+          "video": "assets/t3_archive/soc_player/hn2.mp4",
+          "caption": "N\u00e9lson Semedo wins a duel attacking from the right side.",
+          "diff_substring": "N\u00e9lson Semedo",
+          "is_gt": false
+        },
+        {
+          "video": "assets/t3_archive/soc_player/hn3.mp4",
+          "caption": "K. Stoup completes a pass attacking from the right side.",
+          "diff_substring": "completes a pass",
+          "is_gt": false
+        }
+      ]
+    },
+    {
+      "id": "hky_zone",
+      "sport": "hockey",
+      "axis_label": "rink zone",
+      "query": "A wrist shot in the offensive zone, goalie in the butterfly position.",
+      "thumbs": [
+        {
+          "video": "assets/t3_archive/hky_zone/gt.mp4",
+          "caption": "A wrist shot in the offensive zone, goalie in the butterfly.",
+          "is_gt": true
+        },
+        {
+          "video": "assets/t3_archive/hky_zone/hn1.mp4",
+          "caption": "A wrist shot in the neutral zone, goalie in the butterfly.",
+          "diff_substring": "neutral zone",
+          "is_gt": false
+        },
+        {
+          "video": "assets/t3_archive/hky_zone/hn2.mp4",
+          "caption": "A wrist shot in the offensive zone, goalie sitting.",
+          "diff_substring": "sitting",
+          "is_gt": false
+        },
+        {
+          "video": "assets/t3_archive/hky_zone/hn3.mp4",
+          "caption": "A slapshot in the offensive zone, goalie in the butterfly.",
+          "diff_substring": "slapshot",
+          "is_gt": false
+        }
+      ]
+    }
+  ]
+}

@@ -32,32 +32,30 @@
   <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="scripts/panels_block.js"></script>
 </head>
 <body>
   <div id="root"></div>
 
   <script type="text/babel" data-presets="env,react">
-    const { useEffect, useRef, useState } = React;
+    // useEffect, useRef, useState, PILLARS, T3_PANEL, T9_PANEL_CLIFF,
+    // T9_PANEL_ASK, T3Panel, T9Panel come from panels_block.js
+    // (plain JS, loaded above).
 
     // ---------- DATA ----------
     const TASKS = [
       { id: 'T1', name: 'Structured Play Description',    pillar: 'Perception', score: 52, metric: '2.59 / 5', metricLabel: 'judge score',  bestModel: 'LLaVA-Video-7B (ft)',     blurb: 'Describe a 10-second play. Models name actions but mix up jersey numbers and player identities.' },
       { id: 'T2', name: 'Fine-Grained Action QA',         pillar: 'Perception', score: 74, metric: '73.9%',    metricLabel: 'accuracy',     bestModel: 'LLaVA-Video-7B (ft)',     blurb: 'Multiple-choice questions about who did what. Fine-tuned models clear 70% — the field can see.' },
-      { id: 'T3', name: 'Compositional Video Retrieval',  pillar: 'Perception', score: 12, metric: '12.3%',    metricLabel: 'R@10',         bestModel: 'best baseline',           blurb: 'Find the clip matching a fine-grained query. Models retrieve the right scene but the wrong detail.' },
+      { id: 'T3', name: 'Compositional Video Retrieval',  pillar: 'Perception', score: 13, metric: '13.3%',    metricLabel: 'R@10',         bestModel: 'InternVideo2 (ft)',       blurb: 'Find the clip matching a fine-grained query. Models retrieve the right scene but the wrong detail.' },
       { id: 'T4', name: 'Strategic Reasoning QA',         pillar: 'Reasoning',  score: 40, metric: '1.99 / 5', metricLabel: 'judge score',  bestModel: 'GPT-5.2',                 blurb: 'Why did the play work? Models propose plausible tactics that contradict the visual evidence.' },
       { id: 'T5', name: 'Outcome Forecasting',            pillar: 'Reasoning',  score: 45, metric: '44.8%',    metricLabel: 'accuracy',     bestModel: 'Qwen3-VL-8B (ft)',        blurb: 'Predict what happens next. Models are confident and wrong — calibration error of 28 points.' },
       { id: 'T6', name: 'Long-Form Narrative Synthesis',  pillar: 'Reasoning',  score: 7,  metric: '7.3%',     metricLabel: 'saliency',     bestModel: 'best baseline',           blurb: 'Summarize a full game. Facts are mostly right (73%). Almost none of the salient events appear.' },
       { id: 'T7', name: 'Motion-Conditioned Generation',  pillar: 'Simulation', score: 51, metric: '0.513',    metricLabel: 'video mIoU',   bestModel: 'best baseline',           blurb: 'Generate video that follows prescribed trajectories. About half of player positions drift.' },
       { id: 'T8', name: 'Goal-Conditioned Action Gen.',   pillar: 'Simulation', score: 50, metric: '50.2%',    metricLabel: 'goal accuracy',bestModel: 'best baseline',           blurb: 'Generate the action that scores. Goal-conditioned planning sits barely above chance.' },
-      { id: 'T9', name: 'Cross-Corpus Agentic Reasoning', pillar: 'Agency',     score: 6,  metric: '5.6%',     metricLabel: 'accuracy',     bestModel: 'GPT-5.2',                 blurb: 'Plan, search, and synthesize across video and text. Frontier agents reach 6% — the floor of the cliff.' },
+      { id: 'T9', name: 'Cross-Corpus Agentic Reasoning', pillar: 'Agency',     score: 5,  metric: '4.6%',     metricLabel: 'accuracy',     bestModel: 'GPT-5.2',                 blurb: 'Plan, search, and synthesize across video and text. Frontier agents reach 4.6% — the floor of the cliff.' },
     ];
 
-    const PILLARS = {
-      Perception: { base: '#4A7FB5', glow: 'rgba(74,127,181,0.55)', soft: 'rgba(74,127,181,0.12)' },
-      Reasoning:  { base: '#2E9E8F', glow: 'rgba(46,158,143,0.55)', soft: 'rgba(46,158,143,0.12)' },
-      Simulation: { base: '#D4913A', glow: 'rgba(212,145,58,0.55)', soft: 'rgba(212,145,58,0.12)' },
-      Agency:     { base: '#C0392B', glow: 'rgba(192,57,43,0.55)',  soft: 'rgba(192,57,43,0.12)' },
-    };
+    // PILLARS provided by panels_block.js (global).
 
     const PILLAR_ORDER = ['Perception', 'Reasoning', 'Simulation', 'Agency'];
 
@@ -289,56 +287,9 @@
       );
     }
 
-    function T3Overlay({ pillar }) {
-      const c = PILLARS[pillar];
-      const thumbs = [
-        { match: false },
-        { match: true,  modelPick: false },
-        { match: false, modelPick: true },
-        { match: false },
-      ];
-      return (
-        <div style={{ position: 'absolute', right: 12, top: 38, bottom: 38, width: 130, display: 'flex', flexDirection: 'column', gap: 8 }}>
-          <div style={{
-            fontFamily: '"IBM Plex Mono", monospace', fontSize: 9, letterSpacing: '0.1em',
-            color: '#a1a1aa', textTransform: 'uppercase',
-            padding: '5px 8px',
-            border: '1px solid #27272a',
-            background: 'rgba(10,10,12,0.7)',
-            borderRadius: 2,
-          }}>"pick-and-roll · big finishes at the rim"</div>
-          {thumbs.map((th, i) => {
-            const isMatch = th.match;
-            const isPicked = th.modelPick;
-            const border = isMatch ? c.base : isPicked ? '#C0392B' : '#27272a';
-            return (
-              <div key={i} style={{
-                aspectRatio: '4 / 3', borderRadius: 2,
-                background: 'linear-gradient(135deg, #18181b 0%, #0c0d10 100%)',
-                border: `1px solid ${border}`,
-                position: 'relative',
-                animation: 'overlayIn 400ms ease',
-              }}>
-                <div style={{
-                  position: 'absolute', top: 4, left: 6,
-                  fontFamily: '"IBM Plex Mono", monospace', fontSize: 8,
-                  letterSpacing: '0.1em',
-                  color: isMatch ? c.base : isPicked ? '#C0392B' : '#52525b',
-                }}>{`#${String(i+1).padStart(2,'0')}`}</div>
-                {isMatch && <div style={{
-                  position: 'absolute', bottom: 4, right: 6,
-                  fontFamily: '"IBM Plex Mono", monospace', fontSize: 9, color: c.base,
-                }}>GT</div>}
-                {isPicked && <div style={{
-                  position: 'absolute', bottom: 4, right: 6,
-                  fontFamily: '"IBM Plex Mono", monospace', fontSize: 9, color: '#C0392B',
-                }}>MODEL</div>}
-              </div>
-            );
-          })}
-        </div>
-      );
-    }
+    // T3 is now rendered by T3Panel (from panels_block.js), which takes over
+    // the entire broadcast viewport interior instead of being an overlay on
+    // top of the basketball schematic.
 
     function T4Overlay({ pillar }) {
       const c = PILLARS[pillar];
@@ -494,87 +445,15 @@
       );
     }
 
-    function ToolCallTree({ pillar }) {
-      const c = PILLARS[pillar];
-      const nodes = [
-        { id: 'root', x: 50, y: 240, label: 'query' },
-        { id: 'vs',   x: 130, y: 130, label: 'video_search' },
-        { id: 'ds',   x: 130, y: 240, label: 'doc_search' },
-        { id: 'vq',   x: 130, y: 350, label: 'video_qa' },
-        { id: 'l1',   x: 240, y: 80,  label: 'doc_qa' },
-        { id: 'l2',   x: 240, y: 160, label: 'doc_qa' },
-        { id: 'l3',   x: 240, y: 220, label: 'doc_qa' },
-        { id: 'l4',   x: 240, y: 280, label: 'video_qa' },
-        { id: 'l5',   x: 240, y: 360, label: 'doc_qa' },
-        { id: 'e1', x: 320, y: 60,  outcome: 'fail' },
-        { id: 'e2', x: 320, y: 100, outcome: 'fail' },
-        { id: 'e3', x: 320, y: 150, outcome: 'success' },
-        { id: 'e4', x: 320, y: 190, outcome: 'fail' },
-        { id: 'e5', x: 320, y: 220, outcome: 'fail' },
-        { id: 'e6', x: 320, y: 250, outcome: 'fail' },
-        { id: 'e7', x: 320, y: 290, outcome: 'fail' },
-        { id: 'e8', x: 320, y: 330, outcome: 'fail' },
-        { id: 'e9', x: 320, y: 390, outcome: 'fail' },
-      ];
-      const edges = [
-        ['root','vs'], ['root','ds'], ['root','vq'],
-        ['vs','l1'], ['vs','l2'],
-        ['ds','l3'], ['ds','l4'],
-        ['vq','l5'],
-        ['l1','e1'], ['l2','e2'], ['l2','e3'],
-        ['l3','e4'], ['l3','e5'], ['l4','e6'], ['l4','e7'],
-        ['l5','e8'], ['l5','e9'],
-      ];
-      const find = (id) => nodes.find(n => n.id === id);
-      // Path-to-success set
-      const successPath = new Set(['root','vs','l2','e3']);
-
-      return (
-        <svg viewBox="0 0 360 480" style={{ width: '100%', height: '100%', display: 'block' }}>
-          <rect x={0} y={0} width={360} height={480} fill="#0c0d10" />
-          {edges.map(([a, b], i) => {
-            const na = find(a), nb = find(b);
-            const onSuccessPath = successPath.has(a) && successPath.has(b);
-            return (
-              <line key={i} x1={na.x} y1={na.y} x2={nb.x} y2={nb.y}
-                    stroke={onSuccessPath ? c.base : '#27272a'}
-                    strokeWidth={onSuccessPath ? 1.5 : 1}
-                    opacity={onSuccessPath ? 0.95 : 0.7} />
-            );
-          })}
-          {nodes.map((n) => {
-            if (n.outcome) {
-              const ok = n.outcome === 'success';
-              return (
-                <g key={n.id}>
-                  <circle cx={n.x} cy={n.y} r={5} fill={ok ? c.base : 'none'} stroke={ok ? c.base : '#52525b'} strokeWidth={1.2} />
-                  <text x={n.x + 10} y={n.y + 3} fontFamily='"IBM Plex Mono", monospace' fontSize={9}
-                        fill={ok ? c.base : '#52525b'}>{ok ? '✓' : '✗'}</text>
-                </g>
-              );
-            }
-            const onSuccess = successPath.has(n.id);
-            return (
-              <g key={n.id}>
-                <circle cx={n.x} cy={n.y} r={4} fill="#0c0d10" stroke={onSuccess ? c.base : '#71717a'} strokeWidth={1} />
-                <text x={n.x} y={n.y - 8} fontFamily='"IBM Plex Mono", monospace' fontSize={8}
-                      fill={onSuccess ? c.base : '#a1a1aa'} textAnchor="middle">{n.label}</text>
-              </g>
-            );
-          })}
-          <text x={20} y={26} fontFamily='"IBM Plex Mono", monospace' fontSize={10}
-                fill="#a1a1aa" letterSpacing="0.15em">AGENT TRACE</text>
-          <text x={340} y={26} fontFamily='"IBM Plex Mono", monospace' fontSize={10}
-                fill={c.base} letterSpacing="0.05em" textAnchor="end">5.6% success</text>
-        </svg>
-      );
-    }
+    // T9 is now rendered by T9Panel (from panels_block.js), driven by real
+    // GPT-5.2 trajectory data (Q34 — Heat anomaly question).
 
     function TaskOverlay({ taskId, pillar }) {
+      // T3 and T9 are handled directly in BroadcastViewport (they replace the
+      // schematic+overlay combo, not added on top of it).
       switch (taskId) {
         case 'T1': return <T1Overlay pillar={pillar} />;
         case 'T2': return <T2Overlay pillar={pillar} />;
-        case 'T3': return <T3Overlay pillar={pillar} />;
         case 'T4': return <T4Overlay pillar={pillar} />;
         case 'T5': return <T5Overlay pillar={pillar} />;
         case 'T6': return <T6Overlay pillar={pillar} />;
@@ -589,7 +468,10 @@
       const c = PILLARS[task.pillar];
       const totalSeconds = Math.floor(t * 10);
       const tc = `00:${String(totalSeconds).padStart(2, '0')}`;
+      const isT3 = task.id === 'T3';
       const isT9 = task.id === 'T9';
+      const isPanel = isT3 || isT9;
+      const headerLabel = isT9 ? 'AGENT' : isT3 ? 'RETRIEVAL' : 'CAM 1';
 
       return (
         <div style={{
@@ -614,43 +496,37 @@
                 display: 'inline-block', width: 6, height: 6, borderRadius: 3, background: '#C0392B',
                 animation: 'recPulse 1.6s ease-in-out infinite',
               }} />
-              <span>{isT9 ? 'AGENT' : 'CAM 1'} · NBA · Q3 04:13</span>
-            </div>
-            <div style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: 10, letterSpacing: '0.15em', color: '#a1a1aa' }}>
-              {tc} / 00:10
+              <span>{headerLabel}</span>
             </div>
           </div>
 
-          {/* Base schematic or tree */}
-          <div style={{ position: 'absolute', inset: 0 }}>
-            {isT9 ? (
-              <ToolCallTree pillar={task.pillar} />
-            ) : (
-              <HalfCourt>
-                <PlayLoop t={t} pillarColor={c.base} glow={c.glow} />
-              </HalfCourt>
-            )}
-          </div>
+          {/* Real-data panel (T3 / T9) OR schematic + overlay */}
+          {isT3 ? (
+            <T3Panel pillar={task.pillar} active={true} />
+          ) : isT9 ? (
+            <T9Panel pillar={task.pillar} active={true} />
+          ) : (
+            <>
+              <div style={{ position: 'absolute', inset: 0 }}>
+                <HalfCourt>
+                  <PlayLoop t={t} pillarColor={c.base} glow={c.glow} />
+                </HalfCourt>
+              </div>
+              <TaskOverlay taskId={task.id} pillar={task.pillar} />
+            </>
+          )}
 
-          {/* Task-specific overlay on top */}
-          <TaskOverlay taskId={task.id} pillar={task.pillar} />
-
-          {/* Bottom chrome */}
+          {/* Bottom chrome — task ID/name only (metric shown in the big
+              callout below the viewport, no need to duplicate). */}
           <div style={{
             position: 'absolute', bottom: 0, left: 0, right: 0, height: 32,
-            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-            padding: '0 12px',
+            display: 'flex', alignItems: 'center',
+            padding: '0 12px', gap: 8,
             background: 'linear-gradient(0deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0) 100%)',
             zIndex: 5,
           }}>
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
-              <span style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: 11, color: c.base, fontWeight: 600 }}>{task.id}</span>
-              <span style={{ fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 11, color: '#e4e4e7' }}>{task.name}</span>
-            </div>
-            <div style={{ flex: 1, margin: '0 14px', height: 2, background: '#1c1c1f', borderRadius: 1, overflow: 'hidden' }}>
-              <div style={{ height: '100%', width: `${t * 100}%`, background: c.base }} />
-            </div>
-            <span style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: 10, color: '#a1a1aa', letterSpacing: '0.1em' }}>{task.metric}</span>
+            <span style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: 11, color: c.base, fontWeight: 600 }}>{task.id}</span>
+            <span style={{ fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 11, color: '#e4e4e7' }}>{task.name}</span>
           </div>
         </div>
       );

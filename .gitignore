@@ -1,0 +1,11 @@
+# Local backups produced during development
+*.bak
+*.darkbak
+
+# Compiled JSX (regenerated from .jsx via scripts/build_panel_assets.py)
+scripts/panels.compiled.js
+
+# Editor / OS noise
+.DS_Store
+*.swp
+.vscode/

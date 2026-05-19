@@ -1,0 +1,418 @@
+{
+  "question_id": 45,
+  "question": "In the game New Orleans led wire-to-wire and already had 14 made threes by halftime, compare two momentum plays: Russell Westbrook's three-point play in the second quarter and Nicolas Batum's four-point play in the third. How many more points behind were the Clippers immediately after Batum completed his four-point play than they were immediately after Westbrook completed his three-point play?",
+  "category": "Two-Moment Score Math (3-point play vs 4-point play)",
+  "game_id": "1006435",
+  "gt_answer": "5",
+  "verdict": "Wrong",
+  "model": "GPT-5.2",
+  "mode": "oracle",
+  "num_turns": 8,
+  "tool_counts": {
+    "search_documents": 2,
+    "document_qa": 2,
+    "search_videos": 1,
+    "video_qa_oracle": 3
+  },
+  "phases": [
+    {
+      "start_turn": 1,
+      "end_turn": 4,
+      "label": "Find the game"
+    },
+    {
+      "start_turn": 5,
+      "end_turn": 5,
+      "label": "Pivot to video"
+    },
+    {
+      "start_turn": 6,
+      "end_turn": 8,
+      "label": "Probe clips"
+    },
+    {
+      "start_turn": 9,
+      "end_turn": 9,
+      "label": "Give up"
+    }
+  ],
+  "turns": [
+    {
+      "turn": 1,
+      "tool": "search_documents",
+      "abbrev": "SD",
+      "thought": "Find the game \u2014 New Orleans wire-to-wire, 14 threes by halftime.",
+      "arguments": {
+        "query": "New Orleans led wire-to-wire 14 threes by halftime Westbrook three-point play Batum four-point play",
+        "doc_type": "espn_report"
+      },
+      "results": {
+        "kind": "documents",
+        "total": 20,
+        "target_count": 0,
+        "target_ranks": [],
+        "top": [
+          {
+            "rank": 1,
+            "doc_id": "176266_espn_report",
+            "teams": [
+              "Charlotte Hornets",
+              "Brooklyn Nets"
+            ],
+            "highlight": "Allen led the Nets with 11 points in the third.. \nThe Nets took a 56-51 lead into the locker room at the half as Prince andDeAndre Jordanled all score...",
+            "is_target": false
+          },
+          {
+            "rank": 2,
+            "doc_id": "867981_espn_report",
+            "teams": [
+              "Indiana Pacers",
+              "Cleveland Cavaliers"
+            ],
+            "highlight": "\u201cWe can rely on him when it comes down to the wire or on a bucket or an assist.\u201d. \n",
+            "is_target": false
+          },
+          {
+            "rank": 3,
+            "doc_id": "406781_espn_report",
+            "teams": [
+              "Oklahoma City Thunder",
+              "Denver Nuggets"
+            ],
+            "highlight": "Denver led 56-52 at halftime behind 13 points from Murray and 12 points and 12 rebounds by Jokic.. \nOklahoma City'sJerami Granthit a 3-pointer to tie ...",
+            "is_target": false
+          }
+        ]
+      }
+    },
+    {
+      "turn": 2,
+      "tool": "search_documents",
+      "abbrev": "SD",
+      "thought": "First search missed it. Try again with both team names.",
+      "arguments": {
+        "query": "Clippers Pelicans led wire-to-wire 14 threes by halftime Westbrook three-point play Batum four-point play",
+        "doc_type": "espn_report"
+      },
+      "results": {
+        "kind": "documents",
+        "total": 20,
+        "target_count": 1,
+        "target_ranks": [
+          1
+        ],
+        "top": [
+          {
+            "rank": 1,
+            "doc_id": "1006435_espn_report",
+            "teams": [
+              "New Orleans Pelicans",
+              "Los Angeles Clippers"
+            ],
+            "highlight": "Clippers: FNicolas Batumprovided some offensive pop off the bench, finishing with 13 points, including a four-point play in the third quarter. \n... Mc...",
+            "is_target": true
+          },
+          {
+            "rank": 2,
+            "doc_id": "780877_espn_report",
+            "teams": [
+              "New Orleans Pelicans",
+              "Detroit Pistons"
+            ],
+            "highlight": "The Pelicans' lead ballooned to 18 points later in the period when Alexander-Walker made a 3 and layup in succession.. \nTIP-INS. \n",
+            "is_target": false
+          },
+          {
+            "rank": 3,
+            "doc_id": "867981_espn_report",
+            "teams": [
+              "Indiana Pacers",
+              "Cleveland Cavaliers"
+            ],
+            "highlight": "\u201cWe can rely on him when it comes down to the wire or on a bucket or an assist.\u201d. \n",
+            "is_target": false
+          }
+        ]
+      }
+    },
+    {
+      "turn": 3,
+      "tool": "document_qa",
+      "abbrev": "DQ",
+      "thought": "Got the game report. Ask it for both deficits in one go.",
+      "arguments": {
+        "doc_ids": [
+          "1006435_espn_report"
+        ],
+        "query": "In this report, by how many points were the Clippers trailing immediately after Russell Westbrook completed his three-point play in the second quarter, and by how many points were they trailing immediately after Nicolas Batum completed his four-point play in the third quarter? Provide the two deficits."
+      },
+      "results": {
+        "kind": "docqa",
+        "results": [
+          {
+            "doc_id": "1006435_espn_report",
+            "answer": "Let me carefully analyze the document to find information about the Clippers' trailing points after specific plays.\n\nFirst, let's look for the relevant information about Russell Westbrook's three-point play in the sec\u2026",
+            "is_target": true,
+            "contains_answer": true
+          }
+        ]
+      }
+    },
+    {
+      "turn": 4,
+      "tool": "document_qa",
+      "abbrev": "DQ",
+      "thought": "Report doesn't quote the scores. Ask it again, even more directly.",
+      "arguments": {
+        "doc_ids": [
+          "1006435_espn_report"
+        ],
+        "query": "Quote the lines that mention: (1) Russell Westbrook completing a three-point play in the second quarter and state the score or how many points the Clippers trailed immediately after it; (2) Nicolas Batum completing a four-point play in the third quarter and state the score or how many points the Clippers trailed immediately after it. Provide the two deficits as numbers."
+      },
+      "results": {
+        "kind": "docqa",
+        "results": [
+          {
+            "doc_id": "1006435_espn_report",
+            "answer": "Let me carefully read through the document to find the information I need for the two parts of the question.\n\nFirst, I need to find:\n1) Russell Westbrook completing a three-point play in the second quarter and the sco\u2026",
+            "is_target": true,
+            "contains_answer": false
+          }
+        ]
+      }
+    },
+    {
+      "turn": 5,
+      "tool": "search_videos",
+      "abbrev": "SV",
+      "thought": "Reports are a dead end. Search clips around Westbrook and Batum.",
+      "arguments": {
+        "query": "three-point play and-one four-point play",
+        "game_ids": [
+          "1006435"
+        ],
+        "players": [
+          "Russell Westbrook",
+          "Nicolas Batum"
+        ]
+      },
+      "results": {
+        "kind": "videos",
+        "total": 74,
+        "target_count": 4,
+        "target_ranks": [
+          5,
+          39,
+          68,
+          74
+        ],
+        "top": [
+          {
+            "rank": 1,
+            "clip_id": "1006435_60",
+            "quarter": 2,
+            "is_target": false,
+            "frame": "assets/t9_frames/clip_1006435_60.jpg",
+            "clip": "assets/t9_clips/clip_1006435_60.mp4"
+          },
+          {
+            "rank": 2,
+            "clip_id": "1006435_78",
+            "quarter": 2,
+            "is_target": false,
+            "frame": "assets/t9_frames/clip_1006435_78.jpg",
+            "clip": "assets/t9_clips/clip_1006435_78.mp4"
+          },
+          {
+            "rank": 3,
+            "clip_id": "1006435_5",
+            "quarter": 1,
+            "is_target": false,
+            "frame": "assets/t9_frames/clip_1006435_5.jpg",
+            "clip": "assets/t9_clips/clip_1006435_5.mp4"
+          }
+        ]
+      }
+    },
+    {
+      "turn": 6,
+      "tool": "video_qa_oracle",
+      "abbrev": "VQ",
+      "thought": "Ask four clips what happened. Clip 188 (target) shows Batum's 3+1 \u2014 but only the action, not the score.",
+      "arguments": {
+        "video_ids": [
+          "1006435_177",
+          "1006435_178",
+          "1006435_188",
+          "1006435_189"
+        ],
+        "query": "What is the sequence of actions that takes place in this video clip?"
+      },
+      "results": {
+        "kind": "videoqa",
+        "results": [
+          {
+            "clip_id": "1006435_177",
+            "answer": "Josh Richardson misses a 3-point jumper from the corner (catch and shoot, right hand, contested by Nicolas Batum). Larry Nance Jr. secures the rebound. Larry Nance Jr. then misses a 2-point layup in the restricted are\u2026",
+            "is_target": false,
+            "has_answer": true,
+            "clip": "assets/t9_clips/clip_1006435_177.mp4"
+          },
+          {
+            "clip_id": "1006435_178",
+            "answer": "Let me analyze the provided event logs/captions to determine the sequence of actions that takes place in this video clip.\n\nFrom the caption:\n\"Nicolas Batum performed 3 Pt Missed from Corner with a Jumper during a Catc\u2026",
+            "is_target": false,
+            "has_answer": false,
+            "clip": "assets/t9_clips/clip_1006435_178.mp4"
+          },
+          {
+            "clip_id": "1006435_188",
+            "answer": "We are given a clip of events/captions for a video clip and need to answer the question about the sequence of actions.\n\nThe event log/captions provided:\n\"Trey Murphy III performed Error leading to goal. Nicolas Batum\u2026",
+            "is_target": true,
+            "has_answer": true,
+            "frame": "assets/t9_frames/clip_1006435_188.jpg",
+            "clip": "assets/t9_clips/clip_1006435_188.mp4"
+          },
+          {
+            "clip_id": "1006435_189",
+            "answer": "Nicolas Batum made a free throw, resulting in the score update to Los Angeles Clippers 85 - 97 New Orleans Pelicans.",
+            "is_target": true,
+            "has_answer": true,
+            "frame": "assets/t9_frames/clip_1006435_189.jpg"
+          }
+        ]
+      }
+    },
+    {
+      "turn": 7,
+      "tool": "video_qa_oracle",
+      "abbrev": "VQ",
+      "thought": "Probe eleven more clips for Westbrook's play sequence. Still asking 'what happened?', not 'what's the score?'",
+      "arguments": {
+        "video_ids": [
+          "1006435_78",
+          "1006435_87",
+          "1006435_92",
+          "1006435_93",
+          "1006435_98",
+          "1006435_101",
+          "1006435_106",
+          "1006435_110",
+          "1006435_112",
+          "1006435_116",
+          "1006435_118"
+        ],
+        "query": "What is the sequence of actions that takes place in this video clip?"
+      },
+      "results": {
+        "kind": "videoqa",
+        "results": [
+          {
+            "clip_id": "1006435_78",
+            "answer": "Russell Westbrook passes the ball to Eric Gordon. Eric Gordon catches the ball and immediately shoots a three-point jumper with his right hand from the point guard position, while being contested by CJ McCollum; the s\u2026",
+            "is_target": false,
+            "has_answer": true,
+            "frame": "assets/t9_frames/clip_1006435_78.jpg",
+            "clip": "assets/t9_clips/clip_1006435_78.mp4"
+          },
+          {
+            "clip_id": "1006435_87",
+            "answer": "Russell Westbrook attempts a 3-point jumper from the corner during a catch and shoot, shoots with his right hand while uncontested, misses the shot, and Naji Marshall secures the rebound.",
+            "is_target": false,
+            "has_answer": true,
+            "frame": "assets/t9_frames/clip_1006435_87.jpg",
+            "clip": "assets/t9_clips/clip_1006435_87.mp4"
+          },
+          {
+            "clip_id": "1006435_92",
+            "answer": "CJ McCollum attempts a 3-point jump shot using a step-back during a catch and drive with his right hand, contested by Nicolas Batum, resulting in a miss. Russell Westbrook then secures the rebound.",
+            "is_target": false,
+            "has_answer": true,
+            "frame": "assets/t9_frames/clip_1006435_92.jpg",
+            "clip": "assets/t9_clips/clip_1006435_92.mp4"
+          },
+          {
+            "clip_id": "1006435_93",
+            "answer": "Russell Westbrook attempts a 2-point jumper from the restricted area using a spin move during a pick-and-roll play with his right hand, while being contested by CJ McCollum. His shot misses, and CJ McCollum then secur\u2026",
+            "is_target": false,
+            "has_answer": true,
+            "frame": "assets/t9_frames/clip_1006435_93.jpg"
+          },
+          {
+            "clip_id": "1006435_98",
+            "answer": "1. Kawhi Leonard assisted Russell Westbrook. 2. Brandon Ingram made an error leading to a goal. 3. Brandon Ingram committed a foul. 4. Russell Westbrook scored an and-one layup from the restricted area during a pick-a\u2026",
+            "is_target": true,
+            "has_answer": true,
+            "frame": "assets/t9_frames/clip_1006435_98.jpg",
+            "clip": "assets/t9_clips/clip_1006435_98.mp4"
+          },
+          {
+            "clip_id": "1006435_101",
+            "answer": "The sequence of actions in this video clip consists of Russell Westbrook committing a turnover.",
+            "is_target": false,
+            "has_answer": true
+          },
+          {
+            "clip_id": "1006435_106",
+            "answer": "Let me analyze the provided event logs/captions to understand what happened in this video clip.\n\nThe event logs/captions state:\n1. \"Russell Westbrook assisted by Nicolas Batum.\"\n2. \"Naji Marshall performed Error leadi\u2026",
+            "is_target": false,
+            "has_answer": true
+          },
+          {
+            "clip_id": "1006435_110",
+            "answer": "1. Naji Marshall misses a 3-point shot from the corner with a right-handed jumper during an uncontested catch-and-shoot (guarded by Marcus Morris). 2. Russell Westbrook rebounds the ball. 3. Naji Marshall commits a foul.",
+            "is_target": false,
+            "has_answer": true,
+            "frame": "assets/t9_frames/clip_1006435_110.jpg"
+          },
+          {
+            "clip_id": "1006435_112",
+            "answer": "Naji Marshall committed a technical foul first, followed by Russell Westbrook making a free throw for the Los Angeles Clippers. The technical foul resulted in the Clippers gaining possession of the ball and Westbrook\u2026",
+            "is_target": false,
+            "has_answer": true
+          },
+          {
+            "clip_id": "1006435_116",
+            "answer": "The sequence of actions in this video clip begins with Kawhi Leonard executing a catch and shoot 3-point jumper from the wing using his right hand while being contested by Brandon Ingram. The shot is missed, and immed\u2026",
+            "is_target": false,
+            "has_answer": true
+          },
+          {
+            "clip_id": "1006435_118",
+            "answer": "Russell Westbrook attempts a 3-point jumper from the corner during a catch-and-shoot play with his right hand while being contested by CJ McCollum, resulting in a missed shot. Larry Nance Jr. secures the rebound.",
+            "is_target": false,
+            "has_answer": true,
+            "frame": "assets/t9_frames/clip_1006435_118.jpg"
+          }
+        ]
+      }
+    },
+    {
+      "turn": 8,
+      "tool": "video_qa_oracle",
+      "abbrev": "VQ",
+      "thought": "Finally ask one target clip for the score. Get back 'Clippers 48 \u2013 56 Pelicans.'",
+      "arguments": {
+        "video_ids": [
+          "1006435_98"
+        ],
+        "query": "What is the current score of the game?"
+      },
+      "results": {
+        "kind": "videoqa",
+        "results": [
+          {
+            "clip_id": "1006435_98",
+            "answer": "Los Angeles Clippers 48 - 56 New Orleans Pelicans",
+            "is_target": true,
+            "has_answer": true,
+            "frame": "assets/t9_frames/clip_1006435_98.jpg",
+            "clip": "assets/t9_clips/clip_1006435_98.mp4"
+          }
+        ]
+      }
+    }
+  ],
+  "final_answer": "I cannot find the answer in the provided documents or videos.",
+  "final_thought": "Have Westbrook's deficit (Clippers down 8). For Batum's play, only the action description \u2014 no score state. Refuse without both."
+}

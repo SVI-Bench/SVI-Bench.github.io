@@ -1,0 +1,350 @@
+{
+  "cards": [
+    {
+      "id": "doc_only",
+      "label": "Stuck in documents",
+      "sport": "basketball",
+      "tagline": "Never escalates to video \u2014 searches reports, then refuses.",
+      "summary": "Searches game reports 12 times, questions them 4 times. Never invokes a video tool.",
+      "question_short": "What shot type was the first made basket of the Heat player who tripled his usual first-quarter points?",
+      "question_id": 34,
+      "question": "In the matchup where a Heat player scored more than triple his usual first-quarter points for the season, what shot type was his very first made basket of the night?",
+      "gt_answer": "Alley oop",
+      "final_answer": "I cannot find the answer in the provided documents or videos.",
+      "num_turns": 16,
+      "tool_counts": {
+        "search_documents": 12,
+        "document_qa": 4
+      },
+      "tool_seq": [
+        {
+          "turn": 1,
+          "tool": "search_documents",
+          "abbrev": "SD"
+        },
+        {
+          "turn": 2,
+          "tool": "search_documents",
+          "abbrev": "SD"
+        },
+        {
+          "turn": 3,
+          "tool": "search_documents",
+          "abbrev": "SD"
+        },
+        {
+          "turn": 4,
+          "tool": "search_documents",
+          "abbrev": "SD"
+        },
+        {
+          "turn": 5,
+          "tool": "search_documents",
+          "abbrev": "SD"
+        },
+        {
+          "turn": 6,
+          "tool": "search_documents",
+          "abbrev": "SD"
+        },
+        {
+          "turn": 7,
+          "tool": "document_qa",
+          "abbrev": "DQ"
+        },
+        {
+          "turn": 8,
+          "tool": "search_documents",
+          "abbrev": "SD"
+        },
+        {
+          "turn": 9,
+          "tool": "document_qa",
+          "abbrev": "DQ"
+        },
+        {
+          "turn": 10,
+          "tool": "document_qa",
+          "abbrev": "DQ"
+        },
+        {
+          "turn": 11,
+          "tool": "search_documents",
+          "abbrev": "SD"
+        },
+        {
+          "turn": 12,
+          "tool": "search_documents",
+          "abbrev": "SD"
+        },
+        {
+          "turn": 13,
+          "tool": "document_qa",
+          "abbrev": "DQ"
+        },
+        {
+          "turn": 14,
+          "tool": "search_documents",
+          "abbrev": "SD"
+        },
+        {
+          "turn": 15,
+          "tool": "search_documents",
+          "abbrev": "SD"
+        },
+        {
+          "turn": 16,
+          "tool": "search_documents",
+          "abbrev": "SD"
+        }
+      ]
+    },
+    {
+      "id": "perception_bn",
+      "label": "Video perception bottleneck",
+      "sport": "hockey",
+      "tagline": "Asks the clips, can't extract the right detail.",
+      "summary": "Pivots to video early and asks 10 clips for the count. Settles on '8' \u2014 wrong.",
+      "question_short": "From the opening faceoff to the Siegenthaler\u2013Schenn puck battle, how many takeaways happened in New Jersey's back-to-back road win?",
+      "question_id": "perception_bn",
+      "question": "In the game where New Jersey won back-to-back road games for the first time that season and also had an offside call on Yegor Sharangovich near the end of the first period, how many takeaways happened from the opening faceoff up to (and including) the puck battle between Jonas Siegenthaler and Brayden Schenn early in Period 1?",
+      "gt_answer": "2",
+      "final_answer": "8",
+      "num_turns": 18,
+      "tool_counts": {
+        "search_documents": 2,
+        "document_qa": 1,
+        "search_videos": 5,
+        "video_qa": 10
+      },
+      "tool_seq": [
+        {
+          "turn": 1,
+          "tool": "search_documents",
+          "abbrev": "SD"
+        },
+        {
+          "turn": 2,
+          "tool": "document_qa",
+          "abbrev": "DQ"
+        },
+        {
+          "turn": 3,
+          "tool": "search_documents",
+          "abbrev": "SD"
+        },
+        {
+          "turn": 4,
+          "tool": "search_videos",
+          "abbrev": "SV"
+        },
+        {
+          "turn": 5,
+          "tool": "video_qa",
+          "abbrev": "VQ"
+        },
+        {
+          "turn": 6,
+          "tool": "video_qa",
+          "abbrev": "VQ"
+        },
+        {
+          "turn": 7,
+          "tool": "video_qa",
+          "abbrev": "VQ"
+        },
+        {
+          "turn": 8,
+          "tool": "video_qa",
+          "abbrev": "VQ"
+        },
+        {
+          "turn": 9,
+          "tool": "video_qa",
+          "abbrev": "VQ"
+        },
+        {
+          "turn": 10,
+          "tool": "search_videos",
+          "abbrev": "SV"
+        },
+        {
+          "turn": 11,
+          "tool": "video_qa",
+          "abbrev": "VQ"
+        },
+        {
+          "turn": 12,
+          "tool": "video_qa",
+          "abbrev": "VQ"
+        },
+        {
+          "turn": 13,
+          "tool": "search_videos",
+          "abbrev": "SV"
+        },
+        {
+          "turn": 14,
+          "tool": "video_qa",
+          "abbrev": "VQ"
+        },
+        {
+          "turn": 15,
+          "tool": "search_videos",
+          "abbrev": "SV"
+        },
+        {
+          "turn": 16,
+          "tool": "video_qa",
+          "abbrev": "VQ"
+        },
+        {
+          "turn": 17,
+          "tool": "search_videos",
+          "abbrev": "SV"
+        },
+        {
+          "turn": 18,
+          "tool": "video_qa",
+          "abbrev": "VQ"
+        }
+      ]
+    },
+    {
+      "id": "aggregation_fail",
+      "label": "Cross-clip aggregation failure",
+      "sport": "soccer",
+      "tagline": "Inspects each clip on its own, never tallies the pass types across them.",
+      "summary": "23 turns and 21 video calls. The agent looks at one key pass at a time but never counts up the pass types across clips \u2014 returning a player name instead of a pass type.",
+      "question_short": "In the Arsenal\u2013Everton match where Arsenal took over 20 shots and Everton just three, which pass type was most common among Arsenal's key passes?",
+      "question_id": "aggregation_fail",
+      "question": "In the match where Arsenal\u2019s first-half corner count was unusually high compared with Tottenham\u2019s, focus on the first-half moment when Tottenham\u2019s D. Spence committed a foul on R. Sterling after losing a defensive ground duel on the right side; who was the Arsenal player that had just won the interception and immediately passed to Sterling to start that chain?",
+      "gt_answer": "cross",
+      "final_answer": "B. White",
+      "num_turns": 23,
+      "tool_counts": {
+        "search_videos": 7,
+        "search_documents": 1,
+        "document_qa": 1,
+        "video_qa": 14
+      },
+      "tool_seq": [
+        {
+          "turn": 1,
+          "tool": "search_videos",
+          "abbrev": "SV"
+        },
+        {
+          "turn": 2,
+          "tool": "search_videos",
+          "abbrev": "SV"
+        },
+        {
+          "turn": 3,
+          "tool": "search_videos",
+          "abbrev": "SV"
+        },
+        {
+          "turn": 4,
+          "tool": "search_videos",
+          "abbrev": "SV"
+        },
+        {
+          "turn": 5,
+          "tool": "search_videos",
+          "abbrev": "SV"
+        },
+        {
+          "turn": 6,
+          "tool": "search_documents",
+          "abbrev": "SD"
+        },
+        {
+          "turn": 7,
+          "tool": "document_qa",
+          "abbrev": "DQ"
+        },
+        {
+          "turn": 8,
+          "tool": "search_videos",
+          "abbrev": "SV"
+        },
+        {
+          "turn": 9,
+          "tool": "video_qa",
+          "abbrev": "VQ"
+        },
+        {
+          "turn": 10,
+          "tool": "video_qa",
+          "abbrev": "VQ"
+        },
+        {
+          "turn": 11,
+          "tool": "video_qa",
+          "abbrev": "VQ"
+        },
+        {
+          "turn": 12,
+          "tool": "video_qa",
+          "abbrev": "VQ"
+        },
+        {
+          "turn": 13,
+          "tool": "video_qa",
+          "abbrev": "VQ"
+        },
+        {
+          "turn": 14,
+          "tool": "video_qa",
+          "abbrev": "VQ"
+        },
+        {
+          "turn": 15,
+          "tool": "video_qa",
+          "abbrev": "VQ"
+        },
+        {
+          "turn": 16,
+          "tool": "video_qa",
+          "abbrev": "VQ"
+        },
+        {
+          "turn": 17,
+          "tool": "video_qa",
+          "abbrev": "VQ"
+        },
+        {
+          "turn": 18,
+          "tool": "search_videos",
+          "abbrev": "SV"
+        },
+        {
+          "turn": 19,
+          "tool": "video_qa",
+          "abbrev": "VQ"
+        },
+        {
+          "turn": 20,
+          "tool": "video_qa",
+          "abbrev": "VQ"
+        },
+        {
+          "turn": 21,
+          "tool": "video_qa",
+          "abbrev": "VQ"
+        },
+        {
+          "turn": 22,
+          "tool": "video_qa",
+          "abbrev": "VQ"
+        },
+        {
+          "turn": 23,
+          "tool": "video_qa",
+          "abbrev": "VQ"
+        }
+      ]
+    }
+  ]
+}
