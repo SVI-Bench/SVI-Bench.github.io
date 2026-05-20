@@ -178,7 +178,7 @@ const TASKS = [{
 }];
 
 const TASK_MEDIA = {
-  T1: 'assets/videos/cliff_placeholder.mp4',
+  T1: 'assets/T1/t1_clip.mp4',
   T2: 'assets/videos/cliff_placeholder.mp4',
   T3: 'assets/videos/cliff_placeholder.mp4',
   T4: 'assets/videos/cliff_placeholder.mp4',
@@ -193,28 +193,40 @@ const TASK_TEXT = {
   T1: {
     layout: 'caption',
     gt: [
-      { t: 'Jamille Reynolds', ok: true },
-      ', wearing ',
-      { t: '#4', ok: true },
-      ', attempted a ',
-      { t: 'post 2-pt layup', ok: true },
-      ' while contested by ',
-      { t: 'Kalu Ezikpe', ok: true },
-      ' (',
-      { t: '#1', ok: true },
-      '). ',
-      { t: 'Ezikpe', ok: true },
-      ' grabbed the rebound.'
+      { t: 'Duke Brennan', ok: true },
+      ' (#24) executed a ',
+      { t: 'steal', ok: true },
+      ', setting up ',
+      { t: 'Luther Muhammad', ok: true },
+      ' (#1), who attempted a ',
+      { t: 'contested layup', ok: true },
+      ' from the restricted area during a transition, but ',
+      { t: 'missed', ok: true },
+      ', guarded by ',
+      { t: 'Isa Silva', ok: true },
+      ' (#1). ',
+      { t: 'James Keefe', ok: true },
+      ' (#22) secured the rebound. ',
+      { t: 'Arizona State Sun Devils', ok: true },
+      ' vs ',
+      { t: 'Stanford Cardinal', ok: true },
+      ', ',
+      { t: '14 - 9', ok: true },
+      '.'
     ],
     pred: [
-      { t: 'Nick Jourdain', wrong: true },
-      ' attempted a ',
-      { t: 'hook shot', wrong: true },
-      ' while contested by ',
-      { t: 'Mika Adams-Woods', wrong: true },
-      '. ',
-      { t: 'Davenport', wrong: true },
-      ' secured the rebound.'
+      { t: 'Warren Washington', wrong: true },
+      ', wearing ',
+      { t: '#22', wrong: true },
+      ', executed a steal. ',
+      { t: 'Jamiya Neal', wrong: true },
+      ', wearing ',
+      { t: '#5', wrong: true },
+      ', attempted a 2-point layup from the restricted area, but missed while contested by ',
+      { t: 'Harrison Ingram', wrong: true },
+      ', wearing ',
+      { t: '#55', wrong: true },
+      '. Arizona State Sun vs Stanford, 14 - 9.'
     ]
   },
   T2: {
@@ -282,28 +294,59 @@ const CLIPS = [{
   id: 'c1',
   taskId: 'T1',
   pillar: 'Perception',
-  teaser: 'jersey mix',
+  teaser: 'identity swap',
   title: 'Structured Play Description',
-  context: 'NBA · Q3 04:13',
-  question: 'Describe the offensive action in this 10-second clip.',
+  context: 'Soccer · Seattle vs UIW',
+  video: 'assets/T1/t1_ask_clip.mp4',
+  question: 'Describe what happens in this clip.',
   models: [{
     name: 'GPT-5.2',
     score: '2 / 5',
     wrong: true,
-    text: 'Player #4 dribbles up court, sets a pick for #23 who drives baseline and finishes with a layup.'
+    text: 'In the UIW (blue) vs SU (white) match, UIW set up a right-sided corner kick with multiple attackers crowding the six-yard box while SU formed a tight zonal line near the goalmouth. The corner was delivered into the near-post area, where several players jumped and tussled for position as the ball flashed across the face of goal. An SU defender got to it first and cleared the danger away from the goal area, and no shot or goal resulted from the set piece.',
+    displayText: /*#__PURE__*/React.createElement("span", null,
+      "In the UIW ",
+      /*#__PURE__*/React.createElement("s", { style: { textDecorationColor: '#C0392B', color: '#C0392B' } }, "(blue)"),
+      " vs SU (white) match, UIW set up a right-sided corner kick with multiple attackers crowding the six-yard box while SU formed a tight zonal line near the goalmouth. The corner was delivered ",
+      /*#__PURE__*/React.createElement("s", { style: { textDecorationColor: '#C0392B', color: '#C0392B' } }, "into the near-post area"),
+      ", where several players jumped and tussled for position as the ball flashed across the face of goal. ",
+      /*#__PURE__*/React.createElement("s", { style: { textDecorationColor: '#C0392B', color: '#C0392B' } }, "An SU defender got to it first and cleared the danger away"),
+      ", and ",
+      /*#__PURE__*/React.createElement("s", { style: { textDecorationColor: '#C0392B', color: '#C0392B' } }, "no shot or goal resulted"),
+      " from the set piece.")
   }, {
-    name: 'Qwen3-VL',
-    score: '3 / 5',
-    wrong: false,
-    text: 'Point guard runs a ball-screen action, drives middle off the screen, and dishes to the rolling big for a dunk.'
+    name: 'Gemini 3 Flash',
+    score: '1 / 5',
+    wrong: true,
+    text: 'Stanford University (SU) player performed a free kick, delivering the ball into the UIW penalty area. UIW\'s player number 2 then successfully cleared the ball with a header. The match is between Stanford University and the University of the Incarnate Word.',
+    displayText: /*#__PURE__*/React.createElement("span", null,
+      /*#__PURE__*/React.createElement("s", { style: { textDecorationColor: '#C0392B', color: '#C0392B' } }, "Stanford University (SU)"),
+      " player performed a ",
+      /*#__PURE__*/React.createElement("s", { style: { textDecorationColor: '#C0392B', color: '#C0392B' } }, "free kick"),
+      ", delivering the ball into the UIW penalty area. ",
+      /*#__PURE__*/React.createElement("s", { style: { textDecorationColor: '#C0392B', color: '#C0392B' } }, "UIW's player number 2 then successfully cleared the ball with a header"),
+      ". The match is between ",
+      /*#__PURE__*/React.createElement("s", { style: { textDecorationColor: '#C0392B', color: '#C0392B' } }, "Stanford University"),
+      " and the University of the Incarnate Word.")
   }, {
-    name: 'Gemini 2.5',
+    name: 'SVI-100K (ft)',
     score: '2 / 5',
     wrong: true,
-    text: 'Ballhandler uses a high screen, attacks the lane, and kicks out to a teammate in the corner for a three-point attempt.'
+    text: 'L. Thorne-Thomsen, playing as a left attacking midfielder for the Seattle Redhawks, executed a corner kick. C. Miller, positioned as a right center back, engaged in a duel with J. Diaz, who plays as a left defensive midfielder, but lost possession. J. Diaz then attempted a header shot aimed at the outer top right of the goal, but it went off target and out of play. The teams competing are the Seattle Redhawks and the UIW Cardinals.',
+    displayText: /*#__PURE__*/React.createElement("span", null,
+      /*#__PURE__*/React.createElement("s", { style: { textDecorationColor: '#C0392B', color: '#C0392B' } }, "L. Thorne-Thomsen, playing as a left attacking midfielder for the Seattle Redhawks"),
+      ", executed a corner kick. ",
+      /*#__PURE__*/React.createElement("s", { style: { textDecorationColor: '#C0392B', color: '#C0392B' } }, "C. Miller"),
+      ", positioned as a right center back, engaged in a duel with ",
+      /*#__PURE__*/React.createElement("s", { style: { textDecorationColor: '#C0392B', color: '#C0392B' } }, "J. Diaz, who plays as a left defensive midfielder"),
+      ", but lost possession. ",
+      /*#__PURE__*/React.createElement("s", { style: { textDecorationColor: '#C0392B', color: '#C0392B' } }, "J. Diaz"),
+      " then attempted a header shot aimed at the ",
+      /*#__PURE__*/React.createElement("s", { style: { textDecorationColor: '#C0392B', color: '#C0392B' } }, "outer top right"),
+      " of the goal, but it went off target. The teams competing are the Seattle Redhawks and the UIW Cardinals.")
   }],
-  gt: 'Point guard uses high ball-screen, drives middle, passes to the rolling big for a finish at the rim.',
-  verdictHeadline: '2 of 3 misidentified the finishing action'
+  gt: 'V. Velasco of the UIW Cardinals executed a corner while A. Vargas engaged in a duel with A. Acton-Petronotis and lost possession. A. Vargas then attempted a header directed to the outer top left, but it was off target. Seattle Redhawks vs UIW Cardinals.',
+  verdictHeadline: 'All 3 wrong. Gemini calls it Stanford + a free kick. GPT misses the header entirely. SVI-100K gets every player wrong.'
 }, {
   id: 'c2',
   taskId: 'T2',
@@ -469,20 +512,40 @@ const FAILURES = [{
   id: 'f01',
   taskId: 'T1',
   pillar: 'Perception',
-  model: 'GPT-5.2',
-  sport: 'NBA',
-  mode: 'swapped jersey numbers',
-  excerpt: '"Player #4 set the screen for #23" — neither was on the floor.'
+  model: 'Gemini 3 Flash',
+  sport: 'Hockey',
+  video: 'assets/T1/t1_failure_01.mp4',
+  mode: 'jersey numbers swapped',
+  excerpt: 'GT: Justin Robidas #19, Mathieu Roy #15. Model: Robidas #24, Roy #7 — correct names, every number wrong.'
 }, {
   id: 'f02',
   taskId: 'T1',
   pillar: 'Perception',
-  model: 'Gemini 2.5',
-  sport: 'NBA',
-  mode: 'missed the screen entirely',
-  excerpt: '"Player isolated and drove right" — there was a hard double-screen.'
+  model: 'Gemini 3 Flash',
+  sport: 'Basketball',
+  video: 'assets/T1/t1_failure_02.mp4',
+  mode: '3-pointer turned into a layup',
+  excerpt: 'GT: Jackson Fields missed a 3-pt jumper from the wing, App State 54\u201345. Model: CJ Huntley missed a layup — wrong shot type, wrong player, wrong action entirely.'
 }, {
   id: 'f03',
+  taskId: 'T1',
+  pillar: 'Perception',
+  model: 'Gemini 3 Flash',
+  sport: 'Basketball',
+  video: 'assets/T1/t1_failure_03.mp4',
+  mode: 'scoreboard hallucination',
+  excerpt: 'GT: Game tied 33\u201333. Model reads 33\u201310 — invents a 23-point blowout from a tied game. Also calls a 2-pointer a three-pointer.'
+}, {
+  id: 'f04a',
+  taskId: 'T1',
+  pillar: 'Perception',
+  model: 'Gemini 3 Flash',
+  sport: 'Soccer',
+  video: 'assets/T1/t1_failure_04.mp4',
+  mode: 'temporal order reversed',
+  excerpt: 'GT: Saliba \u2192 \u00D8degaard carries forward \u2192 Martinelli. Model: Gabriel \u2192 Martinelli \u2192 Partey \u2192 \u00D8degaard — the sequence runs backwards.'
+}, {
+  id: 'f04',
   taskId: 'T2',
   pillar: 'Perception',
   model: 'GPT-5.2',
@@ -1601,33 +1664,35 @@ function T1Overlay({
   pillar
 }) {
   const c = PILLARS[pillar];
+  const gt = "Duke Brennan (#24) executed a steal, setting the stage for Luther Muhammad (#1), who attempted a contested layup with his right hand from the restricted area during a transition play, but missed, guarded by Isa Silva (#1). James Keefe (#22) secured the rebound. The teams competing are the Arizona State Sun Devils and Stanford Cardinal, with the current score at 14 - 9.";
+  const pred = /*#__PURE__*/React.createElement("span", null,
+    /*#__PURE__*/React.createElement("s", { style: { textDecorationColor: '#C0392B' } }, "Warren Washington"),
+    ", wearing ",
+    /*#__PURE__*/React.createElement("s", { style: { textDecorationColor: '#C0392B' } }, "#22"),
+    ", executed a steal. ",
+    /*#__PURE__*/React.createElement("s", { style: { textDecorationColor: '#C0392B' } }, "Jamiya Neal"),
+    ", wearing ",
+    /*#__PURE__*/React.createElement("s", { style: { textDecorationColor: '#C0392B' } }, "#5"),
+    ", attempted a 2-point layup from the restricted area with his right hand during a transition, but missed while contested by ",
+    /*#__PURE__*/React.createElement("s", { style: { textDecorationColor: '#C0392B' } }, "Harrison Ingram"),
+    ", wearing ",
+    /*#__PURE__*/React.createElement("s", { style: { textDecorationColor: '#C0392B' } }, "#55"),
+    ". The teams competing are Arizona State Sun and Stanford, with the current score at 14 - 9.");
   return /*#__PURE__*/React.createElement("div", {
     style: {
       position: 'absolute',
-      left: 16,
-      right: 16,
-      bottom: 38,
+      left: 0, right: 0, bottom: 32,
+      top: '55%',
+      overflowY: 'auto',
       display: 'flex',
       flexDirection: 'column',
-      gap: 6
+      gap: 6,
+      padding: '0 16px'
     }
   }, /*#__PURE__*/React.createElement(CaptionRow, {
-    label: "GT",
-    color: c.base,
-    text: "Point guard uses high ball-screen, drives middle, kicks to rolling big for a finish at the rim."
+    label: "GT", color: c.base, text: gt
   }), /*#__PURE__*/React.createElement(CaptionRow, {
-    label: "MODEL",
-    color: "#C0392B",
-    dim: true,
-    text: /*#__PURE__*/React.createElement("span", null, "Player #", /*#__PURE__*/React.createElement("s", {
-      style: {
-        textDecorationColor: '#C0392B'
-      }
-    }, "4"), " dribbles, passes to #", /*#__PURE__*/React.createElement("s", {
-      style: {
-        textDecorationColor: '#C0392B'
-      }
-    }, "23"), ", who shoots a layup.")
+    label: "MODEL", color: "#C0392B", dim: true, text: pred
   }));
 }
 function T2Overlay({
@@ -2175,13 +2240,21 @@ function CliffBroadcastViewport({
   isT3 ? /*#__PURE__*/React.createElement(T3Panel, { pillar: task.pillar, active: true })
   : isT9 ? /*#__PURE__*/React.createElement(T9Panel, { pillar: task.pillar, active: true })
   : /*#__PURE__*/React.createElement(React.Fragment, null,
-      /*#__PURE__*/React.createElement("div", {
-        style: { position: 'absolute', inset: 0 }
-      }, /*#__PURE__*/React.createElement(HalfCourt, null, /*#__PURE__*/React.createElement(PlayLoop, {
-        t: t,
-        pillarColor: c.base,
-        glow: c.glow
-      }))),
+      TASK_MEDIA[task.id] && !TASK_MEDIA[task.id].includes('placeholder')
+        ? /*#__PURE__*/React.createElement("div", {
+            style: { position: 'absolute', top: 28, left: 0, right: 0, height: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 20px' }
+          }, /*#__PURE__*/React.createElement("video", {
+            src: TASK_MEDIA[task.id],
+            autoPlay: true, loop: true, muted: true, playsInline: true,
+            style: { maxWidth: '100%', maxHeight: '100%', borderRadius: 4, border: '1px solid #27272a', boxShadow: '0 4px 20px rgba(0,0,0,0.4)' }
+          }))
+        : /*#__PURE__*/React.createElement("div", {
+            style: { position: 'absolute', inset: 0 }
+          }, /*#__PURE__*/React.createElement(HalfCourt, null, /*#__PURE__*/React.createElement(PlayLoop, {
+            t: t,
+            pillarColor: c.base,
+            glow: c.glow
+          }))),
       /*#__PURE__*/React.createElement(TaskOverlay, {
         taskId: task.id,
         pillar: task.pillar
@@ -2654,10 +2727,10 @@ function useRevealEngine(clip, runKey) {
     setStage('question');
     setRevealed([0, 0, 0]);
     const sleep = ms => new Promise(r => setTimeout(r, ms));
-    const SPEED = 22,
-      PAUSE = 500;
+    const SPEED = 4,
+      PAUSE = 150;
     async function run() {
-      await sleep(900);
+      await sleep(300);
       if (ctx.cancelled) return;
       for (let i = 0; i < 3; i++) {
         setStage('m' + (i + 1));
@@ -2675,7 +2748,7 @@ function useRevealEngine(clip, runKey) {
         if (ctx.cancelled) return;
       }
       setStage('gt');
-      await sleep(2400);
+      await sleep(800);
       if (ctx.cancelled) return;
       setStage('verdict');
       await sleep(50);
@@ -2758,16 +2831,21 @@ function AskBroadcastViewport({
       letterSpacing: '0.15em',
       color: '#a1a1aa'
     }
-  }, tc, " / 00:10")), /*#__PURE__*/React.createElement("div", {
-    style: {
-      position: 'absolute',
-      inset: 0
-    }
-  }, /*#__PURE__*/React.createElement(HalfCourt, null, /*#__PURE__*/React.createElement(PlayLoop, {
-    t: playT,
-    pillarColor: c.base,
-    glow: c.glow
-  }))), /*#__PURE__*/React.createElement("div", {
+  }, tc, " / 00:10")),
+  clip.video
+    ? /*#__PURE__*/React.createElement("video", {
+        src: clip.video,
+        autoPlay: true, loop: true, muted: true, playsInline: true,
+        style: { position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'contain', background: '#0c0d10' }
+      })
+    : /*#__PURE__*/React.createElement("div", {
+        style: { position: 'absolute', inset: 0 }
+      }, /*#__PURE__*/React.createElement(HalfCourt, null, /*#__PURE__*/React.createElement(PlayLoop, {
+        t: playT,
+        pillarColor: c.base,
+        glow: c.glow
+      }))),
+  /*#__PURE__*/React.createElement("div", {
     style: {
       position: 'absolute',
       bottom: 0,
@@ -2900,7 +2978,7 @@ function ModelAnswerCard({
       color: '#27272a',
       minHeight: '1.5em'
     }
-  }, visible, showCursor && /*#__PURE__*/React.createElement("span", {
+  }, (isComplete && model.displayText) ? model.displayText : visible, showCursor && /*#__PURE__*/React.createElement("span", {
     style: {
       display: 'inline-block',
       width: 7,
@@ -3624,7 +3702,7 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 function AskThePlaySection() {
-  var _useState = useState('c3'),
+  var _useState = useState('c1'),
     _useState2 = _slicedToArray(_useState, 2),
     selectedId = _useState2[0],
     setSelectedId = _useState2[1];
@@ -4187,10 +4265,6 @@ function T3ArchiveModal(_ref2) {
 }
 function PlaceholderCard(_ref3) {
   var failure = _ref3.failure;
-  // Visual sibling of T3ArchiveTile / T9ArchiveCard — same dark card,
-  // mono caps header with a pillar-tinted task ID, a one-line failure
-  // mode, italic excerpt, and the source model attribution at the bottom.
-  // For tasks T1, T2, T4–T8 while their owners produce real eval logs.
   var c = PILLARS[failure.pillar];
   return /*#__PURE__*/React.createElement("div", {
     style: {
@@ -4198,12 +4272,20 @@ function PlaceholderCard(_ref3) {
       color: '#fafafa',
       border: '1px solid #27272a',
       borderRadius: 4,
-      padding: '14px 16px',
+      overflow: 'hidden',
       display: 'flex',
       flexDirection: 'column',
-      gap: 10,
       minHeight: 180
     }
+  },
+  // Video on top if available
+  failure.video ? /*#__PURE__*/React.createElement("video", {
+    src: failure.video,
+    autoPlay: true, loop: true, muted: true, playsInline: true,
+    style: { width: '100%', aspectRatio: '16 / 9', objectFit: 'cover', borderBottom: '1px solid #1c1c1f' }
+  }) : null,
+  /*#__PURE__*/React.createElement("div", {
+    style: { padding: '14px 16px', display: 'flex', flexDirection: 'column', gap: 10, flex: 1 }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
@@ -4249,7 +4331,7 @@ function PlaceholderCard(_ref3) {
       borderTop: '1px solid #1c1c1f',
       paddingTop: 8
     }
-  }, failure.model));
+  }, failure.model)));
 }
 function T9ArchiveCard(_ref4) {
   var card = _ref4.card;

@@ -1,0 +1,488 @@
+[
+  {
+    "model": "gpt-5.2",
+    "sport": "soccer",
+    "video": "/mnt/sun/shared/datasets/sports_dataset/soccer/talent_scout/non-talents/538223/corner_2307082816.mp4",
+    "ground_truth": "J. Robles of the UTRGV Vaqueros executed a corner kick during the match against the Oral Roberts Golden Eagles.",
+    "prediction": "In the UTRGV Vaqueros vs ORU Golden Eagles match late in the 2nd half (ORU leading 6\u20130), UTRGV set up a corner kick from the left side. The corner taker signals and then swings a right-footed cross into the six-yard box, where multiple attackers and defenders converge and jostle in front of goal. The ball drops into the crowded goalmouth and the play ends with the ball going out of play near the goal line, resulting in a stoppage and players resetting for the next restart, with no goal scored from the corner.",
+    "final_holistic_score": 3,
+    "data_source": "2307082816"
+  },
+  {
+    "model": "sports_100k_f16_full_ft",
+    "sport": "soccer",
+    "video": "/mnt/sun/shared/datasets/sports_dataset/soccer/talent_scout/non-talents/618970/duel_1379977722.mp4",
+    "ground_truth": "J. Lea\u00f1o, playing as a right center-back for the Albany Great Danes, engaged in a duel with J. Finn, a left center midfielder for the Fairfield Stags, but lost possession, causing the ball to go out of play.",
+    "prediction": "J. Lea\u00f1o, playing as the right center back for the Fairfield Stags, executed a clearance that sent the ball out of play during the match against the Albany Great Danes.",
+    "final_holistic_score": 2,
+    "data_source": "1379977722"
+  },
+  {
+    "model": "gpt-5.2",
+    "sport": "soccer",
+    "video": "/mnt/sun/shared/datasets/sports_dataset/soccer/EPL/2021-2022/345621/acceleration_1259512664.mp4",
+    "ground_truth": "Fabinho of Liverpool completed a successful pass to Thiago Alc\u00e2ntara, who then executed a forward pass to Diogo Jota. Jota accelerated with a progressive run and engaged in a duel with V. Lindel\u00f6f, maintaining possession momentarily before losing it after a challenge from H. Maguire. The teams competing are Liverpool and Manchester United.",
+    "prediction": "From a central position just inside the attacking half, a blue midfielder carries the ball forward through the middle as the white-and-orange side drops into shape. He plays into a teammate ahead in the right half-space, who turns and dribbles toward the top of the penalty arc while two defenders converge and another tracks back. As the attacker reaches the edge of the box and tries to push the ball into a shooting lane, a white-shirted defender slides in to challenge, knocking the ball away and halting the move, with no shot or goal resulting from the sequence.",
+    "final_holistic_score": 2,
+    "data_source": "1259512664"
+  },
+  {
+    "model": "sports_100k_f16_full_ft",
+    "sport": "hockey",
+    "video": "/mnt/arc/yulupan/sports_dataset/hockey/hockey_clips/21-22/7/3254/3254_Touch_490268916.mp4",
+    "ground_truth": "Adam Lowry (#17) battled Ryan Strome (#16) for the puck. Andrew Copp (#9) successfully cleared the zone. Lowry then executed a backhand shot on goal in the offensive zone, with a clean view for goalie Igor Shestyorkin (#31), who was in the butterfly position. The matchup features the New York Rangers and Winnipeg Jets.",
+    "prediction": "Mika Zibanejad (#93) faces off against Kyle Connor (#81) in the Offensive Zone. Adam Lowry (#17) battles for the puck in the Defensive Zone against Artemi Panarin (#10). Connor (#81) executes a successful breakout and makes an accurate pass to Lowry (#17) in the Defensive Zone. Lowry (#17) touches the puck in the Neutral Zone, successfully enters the Offensive Zone, and takes a wrist shot on goal. Igor Shestyorkin (#31), in the butterfly position, has a clear view of the shot. The teams are the New York Rangers and Winnipeg Jets.",
+    "final_holistic_score": 2,
+    "data_source": "490268916"
+  },
+  {
+    "model": "gpt-5.2",
+    "sport": "basketball",
+    "video": "/mnt/sun/shared/datasets/aggregated_clips/18-23_clips/20-21/3_NBA/39127/39127_Nicolo Mannion_Rebound_169195564.mp4",
+    "ground_truth": "Deandre Ayton attempted a Right-Handed Jumper from the Low Post but missed while being contested by James Wiseman. Nicolo Mannion secured the rebound. The teams playing are the Phoenix Suns and the Golden State Warriors, with the current score at 0 - 0.",
+    "prediction": "A Phoenix Suns ball-handler in a maroon uniform brought the ball up on the right side and swung it to a teammate posting on the left block, who backed down his defender and turned for a short, contested fadeaway near the lane. The shot missed and the teal-uniformed Golden State Warriors secured the rebound, immediately pushing the ball upcourt in transition. The sequence ends with Golden State advancing into the frontcourt as the score remains 0\u20130 early in the 1st quarter.",
+    "final_holistic_score": 3,
+    "data_source": "169195564"
+  },
+  {
+    "model": "gpt-5.2",
+    "sport": "hockey",
+    "video": "/mnt/sun/shared/datasets/sports_dataset/hockey/hockey_clips/22-23/10/21257/21257_Pass accurate_433625447.mp4",
+    "ground_truth": "With 3:33 left in the 1st period and HC Slavia Praha 1 - SK Horacka Slavia Trebic 1, Jaroslav Broz (#5) performed a Touch in the Defensive Zone, followed by an accurate Pass to Matej Chalupa (#49). Broz executed a successful Breakout before Chalupa made a Touch in the Neutral Zone and then passed back to Broz. Broz performed another Touch and successfully entered the Offensive Zone, but ultimately lost the puck there.",
+    "prediction": "Tre team (blue) works the puck along the right-side end boards behind their net under pressure from Slavia (white), but Slavia forces the puck free and starts a breakout up the right wall. The white puck carrier advances through the neutral zone with support, then drives over the blue line on the right side as two blue defenders collapse toward the slot. Slavia feeds the puck into the middle for a quick chance, but the blue goalie stays square and makes the save, stopping play with the score still 1\u20131.",
+    "final_holistic_score": 1,
+    "data_source": "433625447"
+  },
+  {
+    "model": "gemini-3-flash-preview",
+    "sport": "basketball",
+    "video": "/mnt/sun/shared/datasets/aggregated_clips/18-23_clips/22-23/6_NCAA Division I/589083/589083_Jamille Reynolds_Post_281356274.mp4",
+    "ground_truth": "With 5:02 remaining in the 1st half, Jamille Reynolds, wearing #4, attempted a Post 2 Pt Missed shot from the Restricted Area using a Right-handed Floater and a Spin move while contested by Kalu Ezikpe, wearing #1. Kalu Ezikpe grabbed the rebound. The teams are Cincinnati and Temple, and the current score is 31 - 23.",
+    "prediction": "Ernest Aflakpui (#15) attempted a shot from the post, contested by a double team from Cincinnati. Nysier Brooks (#33) secured the rebound. The game features Temple against Cincinnati, with the current score at 23 - 31.",
+    "final_holistic_score": 2,
+    "data_source": "281356274"
+  },
+  {
+    "model": "gpt-5.2",
+    "sport": "basketball",
+    "video": "/mnt/sun/shared/datasets/aggregated_clips/18-23_clips/18-19/3_NBA/2097/2097_Dwyane Wade_Rebound_135890896.mp4",
+    "ground_truth": "With 2:55 left in the 3rd quarter, In a contested play, Dennis Smith Jr. attempted a 2-point floater from the restricted area during a hand-off while driving right with his right hand, but missed. The shot was defended by Dwyane Wade, who secured the rebound. The New York Knicks are facing the Miami Heat, with the score currently at 74 - 76.",
+    "prediction": "A Miami Heat ball handler on the left wing drove toward the lane, using a screen to turn the corner as New York Knicks defenders collapsed into the paint. He lofted a short runner/layup attempt in traffic that missed, and a Knicks big secured the defensive rebound under the rim to start the transition the other way. The play occurs at Madison Square Garden with the Heat leading 76\u201374 in the 3rd quarter.",
+    "final_holistic_score": 2,
+    "data_source": "135890896"
+  },
+  {
+    "model": "gpt-5.2",
+    "sport": "hockey",
+    "video": "/mnt/arc/yulupan/sports_dataset/hockey/hockey_clips/21-22/337/688917/688917_Puck losses_290542525.mp4",
+    "ground_truth": "With 7:39 left in the 3rd period, Florida Jr. Blades Elite 2 - Tampa Bay Juniors Elite 3. Dawid Wawrzkiewicz (#36) faces off against Alex Broadhead (#58) in the Offensive Zone, resulting in puck losses for Wawrzkiewicz. The teams are the Florida Jr. Blades Elite and Tampa Bay Juniors Elite.",
+    "prediction": "With 7:39 left in the 3rd (score 3\u20132), play shifts into the corner where multiple skaters converge and battle along the boards. The puck is worked up the wall as a black-jersey forward (#12) sets up in the slot with his stick down, while white-jersey defenders hold their positions between the puck and the net. The puck is nudged toward the middle for a potential chance, but the defense collapses and the play stays tied up near the end boards with no clear shot or goal before the clip ends.",
+    "final_holistic_score": 0,
+    "data_source": "290542525"
+  },
+  {
+    "model": "sports_100k_f16_full_ft",
+    "sport": "hockey",
+    "video": "/mnt/sun/shared/datasets/sports_dataset/hockey/hockey_clips/22-23/65/584143/584143_Puck battles_447827862.mp4",
+    "ground_truth": "With 13:24 left in the 1st period and the score tied 0-0, American International College 0 - Bentley Falcons 0. Darwin Lakoduk (#29) faces off against Joe Winkelmann (#24) in the Defensive Zone. Brian Kramer (#7) engages in puck battles with Matthew Thomson (#2), while Luis Lindner (#8) performs a touch in the Defensive Zone. The teams are American International College and Bentley Falcons.",
+    "prediction": "Brett Orr (#26) faces off against Matt Gosiewski (#13) in the Defensive Zone. Orr executes a touch pass to Alex Vlasic (#7), who also performs a touch in the Defensive Zone. The teams are American International College and Bentley Falcons.",
+    "final_holistic_score": 2,
+    "data_source": "447827862"
+  },
+  {
+    "model": "gpt-5.2",
+    "sport": "soccer",
+    "video": "/mnt/sun/shared/datasets/sports_dataset/soccer/talent_scout/talents/668876/pass_1018945581.mp4",
+    "ground_truth": "D. Cyriacks of the Villanova Wildcats executed a successful lateral pass to L. MacKinnon Diouf. L. MacKinnon Diouf then completed a successful short pass to A. Cousins. A. Cousins followed up with a successful short pass to V. Benediktsson. Under pressure, V. Benediktsson made a touch before successfully passing back to A. Cousins. The teams competing are the Villanova Wildcats and Yale Bulldogs.",
+    "prediction": "In the second half of Yale vs. Villanova (score tied 1\u20131), Yale\u2019s #8 collects the ball near the right side of midfield and dribbles forward along the touchline. As a Villanova player steps up to close him down, #8 carries inside and then plays a grounded pass up the right channel to a teammate near the sideline. Villanova immediately applies pressure in a small midfield cluster, and the ball is contested with no clear break created as the sequence ends.",
+    "final_holistic_score": 1,
+    "data_source": "1018945581"
+  },
+  {
+    "model": "gemini-3-flash-preview",
+    "sport": "basketball",
+    "video": "/mnt/sun/shared/datasets/aggregated_clips/18-23_clips/20-21/6_NCAA Division I/561658/561658_Anthony Holland_3+_165720379.mp4",
+    "ground_truth": "With 18:40 left in the 1st half, Leo Colimerio assisted Anthony Holland, who hit a 3-pointer from the corner with a jumper during a catch-and-shoot, using his right hand while contested by Kurt-Curry Wegscheider. The teams are Fresno State and New Mexico, and the current score is 6 - 0 following the shot.",
+    "prediction": "Javont\u00e9 Johnson (#0) successfully attempted a three-pointer from the corner with a right-handed jump shot, which was contested by Deon Stroud (#13). The game features New Mexico against Fresno State, with the current score at 3 - 0.",
+    "final_holistic_score": 2,
+    "data_source": "165720379"
+  },
+  {
+    "model": "gpt-5.2",
+    "sport": "basketball",
+    "video": "/mnt/sun/shared/datasets/aggregated_clips/18-23_clips/22-23/6_NCAA Division I/560810/560810_Da'Shawn Phillip_3-_279785591.mp4",
+    "ground_truth": "With 16:49 left in the 1st half, Da'Shawn Phillip, wearing #5, attempted a missed 3-point jumper from the corner using a right-handed jab step during a transition, contested by Cameron Stitt, who is wearing #20. Ronald Lucas, wearing #10, secured the rebound. The teams are Delaware State and Maryland-Eastern Shore, and the current score is 4 - 8.",
+    "prediction": "A dark-uniformed guard pushes the ball up the right side in transition as the white-uniformed defense sprints back to set up. The offense swings into the half court and the ball is moved toward the right wing/baseline, where a dark-uniformed player drives into the lane for a layup attempt through traffic. Multiple white jerseys contest at the rim and the shot is disrupted, leading to a change of possession as the white team comes away with the ball and starts to run the other way; the scoreboard shows 16:39 remaining with the score 8\u20135.",
+    "final_holistic_score": 1,
+    "data_source": "279785591"
+  },
+  {
+    "model": "gemini-3-flash-preview",
+    "sport": "hockey",
+    "video": "/mnt/arc/yulupan/sports_dataset/hockey/hockey_clips/23-24/73/857275/857275_Icing_570616740.mp4",
+    "ground_truth": "With 14:39 left in the 2nd period and Calgary Hitmen 0 - Red Deer Rebels 1, Samuel Drancak (#14) battled for the puck in the Defensive Zone against Maksim Muranov (#15). He made an accurate pass to Carson Birnie (#15), who then executed a touch play, followed by a second touch. Birnie was later called for icing and incurred puck losses, all within the Defensive Zone. The teams are the Calgary Hitmen and Red Deer Rebels.",
+    "prediction": "Samuel Drancak (#11) executes a touch in the defensive zone before making an accurate pass to Carson Birnie (#10). Birnie performs several touches in the neutral zone and then makes an inaccurate pass towards Talon Brigley (#17) as the puck enters the offensive zone. The teams competing are the Calgary Hitmen and the Red Deer Rebels.",
+    "final_holistic_score": 3,
+    "data_source": "570616740"
+  },
+  {
+    "model": "gemini-3-flash-preview",
+    "sport": "soccer",
+    "video": "/mnt/sun/shared/datasets/sports_dataset/soccer/talent_scout/talents/525347/interception_1113343275.mp4",
+    "ground_truth": "R. Goodhew of the Duquesne Dukes attempted an unsuccessful long forward pass to P. Schulte. P. Schulte, the goalkeeper for the Saint Louis Billikens, executed an interception to recover the ball.",
+    "prediction": "In a match between Duquesne and Saint Louis, Duquesne attempted a long forward pass. Patrick Schulte, the goalkeeper for Saint Louis, anticipated the play and moved off his line to intercept the ball. He successfully secured possession, preventing the Duquesne attacker from making a play on the ball.",
+    "final_holistic_score": 4,
+    "data_source": "1113343275"
+  },
+  {
+    "model": "gemini-3-flash-preview",
+    "sport": "basketball",
+    "video": "/mnt/sun/shared/datasets/aggregated_clips/18-23_clips/21-22/23_Lithuania. LKL/12362/12362_Grantas Vasiliauskas_Foul_218975183.mp4",
+    "ground_truth": "With 7:14 left in the 4th quarter, Grantas Vasiliauskas committed a foul during the matchup between BC Lietkabelis Panevezys and BC Dzukija, with the current score standing at 82 - 55.",
+    "prediction": "Kaspars Berzins, wearing #25, committed a foul during the match between BC Lietkabelis Panevezys and BC Dzukija, with the score currently at 82 - 55.",
+    "final_holistic_score": 3,
+    "data_source": "218975183"
+  },
+  {
+    "model": "sports_100k_f16_full_ft",
+    "sport": "soccer",
+    "video": "/mnt/sun/shared/datasets/sports_dataset/soccer/LaLiga/2023-2024/414193/free_kick_1877355270.mp4",
+    "ground_truth": "N. Molina, playing as a right wing-back for Atl\u00e9tico Madrid, executed a free kick. \u00c1lvaro Morata, the center forward, engaged in a duel with Kike Salas, the left center back, but lost possession. \u00d3liver Torres, the right central midfielder for Sevilla, made a successful forward pass to Suso. The teams competing are Atl\u00e9tico Madrid and Sevilla.",
+    "prediction": "Antoine Griezmann, playing as a second striker for Atl\u00e9tico Madrid, executed a free kick. Koke, positioned as a left central midfielder, engaged in a duel with Mikel Merino but lost possession. Koke then faced off against Ander Guevara and again lost possession. The teams competing are Atl\u00e9tico Madrid and Real Sociedad.",
+    "final_holistic_score": 1,
+    "data_source": "1877355270"
+  },
+  {
+    "model": "sports_100k_f16_full_ft",
+    "sport": "hockey",
+    "video": "/mnt/sun/shared/datasets/sports_dataset/hockey/hockey_clips/22-23/87/866917/866917_Faceoff_357871820.mp4",
+    "ground_truth": "Filip Eriksson (#24) faces off against Alexander Sandberg (#18) in the Defensive Zone. Kevin Israelsson (#57) executes a touch, then makes an accurate pass in the Defensive Zone to Jakub Stancl (#42), who also touches the puck. The teams are HV71 U20 and Vaxjo Lakers HC U20.",
+    "prediction": "Viktor Bernhardtz (#22) faces off against Hugo Pettersson (#29) in the Defensive Zone during the HV71 U20 vs. Vaxjo Lakers HC U20 game.",
+    "final_holistic_score": 3,
+    "data_source": "357871820"
+  },
+  {
+    "model": "gpt-5.2",
+    "sport": "soccer",
+    "video": "/mnt/sun/shared/datasets/sports_dataset/soccer/LaLiga/2023-2024/69513/penalty_1866707273.mp4",
+    "ground_truth": "A. Budimir, the center forward of Osasuna, successfully converted a penalty against C\u00e1diz.",
+    "prediction": "In C\u00e1diz vs Osasuna around 69:30, Osasuna striker Ante Budimir (#17) stood over a penalty with C\u00e1diz goalkeeper set centrally on his line and defenders waiting outside the box. Budimir took a short run-up and struck a low shot toward the goalkeeper\u2019s right; the keeper dived the correct way but could not stop it. The ball went in and Budimir immediately turned away to celebrate, with Osasuna players joining him after the successful penalty.",
+    "final_holistic_score": 4,
+    "data_source": "1866707273"
+  },
+  {
+    "model": "sports_100k_f16_full_ft",
+    "sport": "hockey",
+    "video": "/mnt/arc/yulupan/sports_dataset/hockey/hockey_clips/21-22/73/598346/598346_Breakout successful_243629050.mp4",
+    "ground_truth": "With 4:39 left in the 1st period, Edmonton Oil Kings 1 - Calgary Hitmen 2. Jackson van de Leest (#5) executed a Touch in the Defensive Zone, followed by an accurate Pass to Blake Allan (#25). Allan then completed a successful Breakout, touched the puck again, and passed accurately to David Adaszynski (#17). Adaszynski engaged in puck battles in the Neutral Zone with Logan Dowhaniuk (#24). The teams are the Calgary Hitmen and Edmonton Oil Kings.",
+    "prediction": "Brayden Peters (#35) executed a Touch in the Defensive Zone, followed by an accurate Pass to Blake Allan (#25). Allan then performed a Touch and a successful Breakout in the Defensive Zone, followed by another Touch and an accurate Pass to Oliver Tulk (#12). Tulk executed a Touch in the Neutral Zone but lost the puck in the Offensive Zone.",
+    "final_holistic_score": 2,
+    "data_source": "243629050"
+  },
+  {
+    "model": "gemini-3-flash-preview",
+    "sport": "soccer",
+    "video": "/mnt/sun/shared/datasets/sports_dataset/soccer/talent_scout/talents/539224/interception_2349863782.mp4",
+    "ground_truth": "J. Zulman of the Villanova Wildcats executed a successful lateral pass to B. Johns. B. Johns then attempted an unsuccessful lateral pass to L. Burns. L. Burns of the Providence Friars made an interception, showcasing recovery and a counterpressing carry.",
+    "prediction": "A. Johns, playing as a forward for Providence, executed a successful forward pass after regaining possession from a deflected attempt. M. Zohlman, a center-back for Villanova, was positioned to defend as the ball entered the final third. V. Burnes, a midfielder for Villanova, successfully performed a clearance with a header to neutralize the offensive threat.",
+    "final_holistic_score": 1,
+    "data_source": "2349863782"
+  },
+  {
+    "model": "gemini-3-flash-preview",
+    "sport": "basketball",
+    "video": "/mnt/sun/shared/datasets/aggregated_clips/18-23_clips/22-23/18_Eurocup/106228/106228_Marco Spissu_1+_247839938.mp4",
+    "ground_truth": "With 3:39 left in the 2nd quarter, Marco Spissu (#0) converted a free throw for Reyer Venezia Mestre, extending their lead against KK Cedevita Olimpija with the score now at 35 - 22.",
+    "prediction": "Marco Spissu (#0) successfully made a free throw during the game between Umana Reyer and Cedevita Olimpija, with the current score at 35 - 22.",
+    "final_holistic_score": 4,
+    "data_source": "247839938"
+  },
+  {
+    "model": "sports_100k_f16_full_ft",
+    "sport": "hockey",
+    "video": "/mnt/arc/yulupan/sports_dataset/hockey/hockey_clips/23-24/222/705856/705856_Shot on goal_652577654.mp4",
+    "ground_truth": "Viktor Berg (#53) unleashes a hard slapshot on goal in the Offensive Zone, with William Bjorkman (#50) guarding. The goalie, in a butterfly position, has a clear view of the shot. Teams: Falu IF U18 vs. Grums IK U18.",
+    "prediction": "Viktor Westerlund (#14) took a slapshot on goal in the offensive zone, with William Bjorkman (#50) guarding. The goalie, in the butterfly position, had a clear view of the shot. The teams are Falu IF U18 and Grums IK U18.",
+    "final_holistic_score": 4,
+    "data_source": "652577654"
+  },
+  {
+    "model": "gpt-5.2",
+    "sport": "hockey",
+    "video": "/mnt/arc/yulupan/sports_dataset/hockey/hockey_clips/23-24/40/584833/584833_Touch_643984234.mp4",
+    "ground_truth": "Start of the 3rd period, 20:00 on the clock, Rapid City Rush 3 - Utah Grizzlies 2. Mick Messner (#10) faces off against Maurizio Colella (#10) in the Neutral Zone. Colella executes a Touch, followed by Simon Boyko (#16) with a Touch, and Keoni Texeira (#74) who performs two Touches before an inaccurate Pass, all in the Neutral Zone. Teams: Rapid City Rush vs. Utah Grizzlies.",
+    "prediction": "At the start of the 3rd period (20:00) with a penalty showing on the scoreboard, the teams line up for a center-ice faceoff (UTA down 2\u20133 to RC). The puck is dropped and both centers tie up, with wingers and support skaters collapsing to the dot to battle for possession. RC (in dark) gains control and skates the puck toward the right-side boards through the neutral zone, but UTA (in white) steps up along the boards to challenge. The play becomes a brief scrum near the red line/right boards before UTA pokes the puck free and retreats to reset in the neutral zone as both teams regroup.",
+    "final_holistic_score": 2,
+    "data_source": "643984234"
+  },
+  {
+    "model": "sports_100k_f16_full_ft",
+    "sport": "basketball",
+    "video": "/mnt/sun/shared/datasets/aggregated_clips/18-23_clips/22-23/6_NCAA Division I/639302/639302_Wyatt Fricks_Foul_280225373.mp4",
+    "ground_truth": "With 6:25 left in the 1st half, Wyatt Fricks, wearing #2, committed a foul. The teams competing are Marshall and Texas State, with a current score of 25 - 31.",
+    "prediction": "Andrew Taylor, wearing #0, committed a foul during the matchup between Marshall and Texas State, with the current score standing at 25 - 31.",
+    "final_holistic_score": 3,
+    "data_source": "280225373"
+  },
+  {
+    "model": "gemini-3-flash-preview",
+    "sport": "hockey",
+    "video": "/mnt/arc/yulupan/sports_dataset/hockey/hockey_clips/23-24/27/978279/978279_Puck battles_538328611.mp4",
+    "ground_truth": "With 1:51 left in the 3rd period and the score Caledon Admirals 2 - Collingwood Blues 10, Sam Lockyer (#89) executed a Touch in the Offensive Zone. In the Defensive Zone, Justin Seguin (#5) engaged in Puck battles with Lockyer before executing a Takeaway. Nicholas McCallen (#6) also made a Touch in the Defensive Zone. The teams are the Caledon Admirals and Collingwood Blues.",
+    "prediction": "Ben Brimmer #46 executed a touch and engaged in a puck battle in the offensive zone against Milton Menace players. Brimmer secured a takeaway and completed another touch before scoring a goal. Jack Robertson #7 and Dylan Hudon #8 also performed touches in the offensive zone, contributing to the scoring sequence. The teams competing are the Collingwood Blues and the Milton Menace.",
+    "final_holistic_score": 1,
+    "data_source": "538328611"
+  },
+  {
+    "model": "gpt-5.2",
+    "sport": "hockey",
+    "video": "/mnt/arc/yulupan/sports_dataset/hockey/hockey_clips/23-24/87/659978/659978_Faceoff_552781081.mp4",
+    "ground_truth": "Fabian Hellstrom (#88) faces off against Liam Svensson (#23) in the Offensive Zone during the IK Oskarshamn J20 vs. Vaxjo Lakers HC U20 matchup.",
+    "prediction": "V\u00e4xj\u00f6 (dark) sets up for an offensive-zone faceoff against IK Oskarshamn (white/purple) late in the 3rd period (scoreboard: V\u00c4X 6\u20133 IKO). Off the draw, the puck is tied up and kicked toward the left boards, where multiple players converge and battle along the wall. V\u00e4xj\u00f6 gains control and chips the puck up the boards toward the left point/half-wall area, while IK\u2019s defenders collapse and hold their coverage in front of the net. The sequence ends with the puck still along the left-side boards and no shot generated on goal.",
+    "final_holistic_score": 3,
+    "data_source": "552781081"
+  },
+  {
+    "model": "gpt-5.2",
+    "sport": "hockey",
+    "video": "/mnt/arc/yulupan/sports_dataset/hockey/hockey_clips/23-24/54/657146/657146_Touch_643727861.mp4",
+    "ground_truth": "Early in the 1st period, 3:56 remaining, Djurgarden Hockey 1 - Ostersunds IK 2. Oskar Lundkvist (#88) executed a Touch in the Offensive Zone. Isac Hamberg (#55) also performed a Touch and a Puck loss in the Offensive Zone, followed by an accurate Pass to Casper Andersson (#95). In the Defensive Zone, Ludvig Rensfeldt (#24) engaged in Puck battles against Andersson and made a Takeaway. Daniel Brodin (#34) executed a Touch in the Defensive Zone. The teams are Djurgarden Hockey and Ostersunds IK.",
+    "prediction": "An OIK forward attacks from the right corner and tries a quick jam/centering play at the near post, forcing DIF\u2019s goalie to seal the post and make the initial stop as defenders collapse into the crease. The puck squirts behind/along the end boards where OIK keeps pressure, but DIF wins the board battle and pins the puck momentarily before kicking it free. DIF then controls and rims the puck up the right-side wall, turning it into a breakout as OIK\u2019s point men back off and DIF skates the puck out toward the neutral zone. Outcome: scoring chance denied; DIF clears the zone and relieves pressure.",
+    "final_holistic_score": 1,
+    "data_source": "643727861"
+  },
+  {
+    "model": "gemini-3-flash-preview",
+    "sport": "soccer",
+    "video": "/mnt/sun/shared/datasets/sports_dataset/soccer/talent_scout/non-talents/655193/pass_1842580259.mp4",
+    "ground_truth": "R. Miller, playing left wing-back for the Virginia Cavaliers, executed a throw-in. A. Sohlberg Gashi, positioned as a left center midfielder, made a successful short pass to R. Miller. R. Miller then attempted an unsuccessful long forward pass to K. Skraep, who plays center back for the FIU Panthers. K. Skraep made an unsuccessful attempt at a forward header pass. The teams competing are the FIU Panthers and the Virginia Cavaliers.",
+    "prediction": "M. Thiam, playing as a right central midfielder for Virginia, executed a successful lateral pass to P. Ahlander, who is positioned as a center back. P. Ahlander then completed a successful forward pass to R. Afonso, a left winger. R. Afonso's subsequent long forward pass was intercepted by an FIU player. The teams involved in this match are FIU and Virginia.",
+    "final_holistic_score": 1,
+    "data_source": "1842580259"
+  },
+  {
+    "model": "gpt-5.2",
+    "sport": "soccer",
+    "video": "/mnt/sun/shared/datasets/sports_dataset/soccer/talent_scout/non-talents/449277/throw_in_1842580370.mp4",
+    "ground_truth": "P. Hildebrandt of the FIU Panthers executed a throw-in, while R. Miller of the Virginia Cavaliers intercepted a forward pass with a header, progressing the ball into the final third. M. Thiam of the Virginia Cavaliers lost possession after a touch, but M. Lavenant of the FIU Panthers successfully passed to K. Skraep.",
+    "prediction": "In the NCAA Championship Second Round match between FIU and Virginia, play restarts with a throw-in on the near left touchline in FIU\u2019s half. The ball is thrown up the line toward midfield, where both teams step in to challenge and compress space, leading to a brief contested exchange as the ball pops loose between several players. The sequence ends with Virginia winning the duel and taking control in the central channel near the halfway line, keeping the game scoreless at 0\u20130.",
+    "final_holistic_score": 2,
+    "data_source": "1842580370"
+  },
+  {
+    "model": "sports_100k_f16_full_ft",
+    "sport": "basketball",
+    "video": "/mnt/sun/shared/datasets/aggregated_clips/18-23_clips/18-19/6_NCAA Division I/531466/531466_Connor Harding_Foul_125684090.mp4",
+    "ground_truth": "With 11:06 left in the 2nd half, Connor Harding committed a foul during the game between Utah and BYU, with the current score standing at 35 - 48.",
+    "prediction": "Riley Battin executed a post move, drawing a foul from Alex Barcello. The teams competing are Utah and BYU, with the current score at 35 - 48.",
+    "final_holistic_score": 2,
+    "data_source": "125684090"
+  },
+  {
+    "model": "gpt-5.2",
+    "sport": "hockey",
+    "video": "/mnt/sun/shared/datasets/sports_dataset/hockey/hockey_clips/22-23/16/4764/4764_Goal_342759391.mp4",
+    "ground_truth": "Yevgeni Petrikov (#26) recorded the first assist, followed by Mikhail Varnakov (#81) with the second assist on Nikolai Glukhov's (#5) goal from the offensive zone, scored with a hard slapshot past Lada Togliatti's goalie Ilya Golubev (#91), who is in the butterfly position with a clear view of the shot.",
+    "prediction": "On a BRS power play in the 1st period, the maroon attackers hold the puck at the blue line and work it down the right boards into the offensive zone. A right-side forward controls near the half wall/goal line and threads a pass into the slot through traffic, where a maroon teammate redirects/quickly shoots toward the net as white defenders collapse. The LADA goalie drops into the butterfly and gets a piece, but the puck continues through the crease and is finished at the right post, resulting in a BRS power-play goal to extend the lead (LAD 0\u2013BRS 1 shown before the score update).",
+    "final_holistic_score": 2,
+    "data_source": "342759391"
+  },
+  {
+    "model": "sports_100k_f16_full_ft",
+    "sport": "soccer",
+    "video": "/mnt/sun/shared/datasets/sports_dataset/soccer/LaLiga/2021-2022/25707/pass_1173677500.mp4",
+    "ground_truth": "Late in the 2nd half (91:36 elapsed), Real Madrid 0 - Getafe 1. Isco of Real Madrid executed a successful forward pass to E. Hazard, who then completed a successful long lateral pass to Peter Gonz\u00e1lez. The teams competing are Getafe and Real Madrid.",
+    "prediction": "Lucas V\u00e1zquez, playing as a right back for Real Madrid, executed a successful lateral pass to Rodrygo, who is positioned as a right winger. Rodrygo then made a successful lateral pass to Dani Ceballos, operating as a left central midfielder. The teams competing are Getafe and Real Madrid.",
+    "final_holistic_score": 2,
+    "data_source": "1173677500"
+  },
+  {
+    "model": "gpt-5.2",
+    "sport": "basketball",
+    "video": "/mnt/sun/shared/datasets/aggregated_clips/18-23_clips/22-23/156_NCAA Division I (W)/611621/611621_Rachel Kuhl_Foul_269608437.mp4",
+    "ground_truth": "With 58.9 seconds remaining in the 3rd quarter, Jasmine Lindsay-Huskey, wearing #15 for Saint Peter's, secured a rebound as Rachel Kuhl, wearing #11 for Mt. St. Mary's, committed a foul. The current score stands at 30 - 44.",
+    "prediction": "Players from Mount St. Mary\u2019s and Saint Peter\u2019s gather in a brief stoppage near the bench area as teammates in maroon (including #15, with #25 \u201cDunham\u201d and #13 \u201cLaFlora\u201d nearby) huddle and talk while white-jerseyed Saint Peter\u2019s players look on. Officials stand by as the teams reset after the dead-ball moment, with the scoreboard showing Mount St. Mary\u2019s leading 44\u201330 with 58.9 seconds left in the 3rd quarter.",
+    "final_holistic_score": 2,
+    "data_source": "269608437"
+  },
+  {
+    "model": "gpt-5.2",
+    "sport": "soccer",
+    "video": "/mnt/sun/shared/datasets/sports_dataset/soccer/LaLiga/2022-2023/3534/throw_in_1656660807.mp4",
+    "ground_truth": "In the 2nd half (59:57 elapsed), Valencia 0 - Mallorca 0. Jaume Costa of Mallorca executed a throw-in, successfully passing to Dani Rodr\u00edguez, and then delivered another successful short pass to Jos\u00e9 Copete. The teams playing are Mallorca and Valencia.",
+    "prediction": "Around the 60th minute of Mallorca vs Valencia (0\u20130), Mallorca restart play with a throw-in on the right touchline near halfway. The throw is taken short into a nearby teammate, who receives under pressure from two Valencia players and quickly lays the ball back out toward the touchline. Mallorca then move it forward down the right flank with a short pass into space as Valencia\u2019s midfield line shifts across to press, and the sequence continues with Mallorca advancing along the sideline.",
+    "final_holistic_score": 2,
+    "data_source": "1656660807"
+  },
+  {
+    "model": "gpt-5.2",
+    "sport": "basketball",
+    "video": "/mnt/sun/shared/datasets/aggregated_clips/18-23_clips/22-23/137_United States. NBA G-League/369815/369815_Langston Galloway_2-_255285318.mp4",
+    "ground_truth": "With 6:22 remaining in the 2nd quarter, Langston Galloway, wearing #9, attempted a 2-point shot from the Restricted Area with a Reverse, showcasing a change of direction during a handoff while driving left with his left hand, but was contested by Donovan Williams, who is wearing #19. Donovan Williams secured the rebound. The teams playing are the Long Island Nets and the College Park Skyhawks.",
+    "prediction": "A CPS guard initiates the offense on the right wing and uses a teammate\u2019s screen to dribble toward the right baseline as LIN\u2019s defenders collapse into the paint. The ballhandler turns the corner and attacks the rim, attempting a layup in traffic, but the shot is heavily contested and comes off the basket. LIN secures the defensive rebound under the hoop and immediately starts to push the ball the other way, with the score shown as CPS 46 \u2013 LIN 42 (6:12 left in the 2nd).",
+    "final_holistic_score": 2,
+    "data_source": "255285318"
+  },
+  {
+    "model": "sports_100k_f16_full_ft",
+    "sport": "soccer",
+    "video": "/mnt/sun/shared/datasets/sports_dataset/soccer/EPL/2021-2022/470819/duel_1102203512.mp4",
+    "ground_truth": "Adam Lallana, playing as an attacking midfielder for Brighton, executed a successful lateral pass to Marc Cucurella, the left-back, who then completed a lateral pass back to Lallana. Naby Ke\u00efta, positioned as a central midfielder, engaged in a duel with Leandro Trossard, the center forward, but lost possession. Ibrahima Konat\u00e9, the right center-back for Liverpool, delivered a successful forward pass to Roberto Firmino, the center forward. The teams competing are Brighton and Liverpool.",
+    "prediction": "J. Milner of Liverpool attempted an unsuccessful pass to A. Mac Allister of Brighton, who intercepted the ball. A. Mac Allister then made a successful forward pass to D. Welbeck. D. Welbeck engaged in a duel with J. Matip but lost possession. He subsequently faced off against Fabinho and again lost possession. A. Mac Allister executed a successful forward pass to P. Gro\u00df, who then completed a successful pass to L. Trossard. The teams playing are Brighton and Liverpool.",
+    "final_holistic_score": 1,
+    "data_source": "1102203512"
+  },
+  {
+    "model": "gemini-3-flash-preview",
+    "sport": "basketball",
+    "video": "/mnt/sun/shared/datasets/aggregated_clips/18-23_clips/22-23/156_NCAA Division I (W)/848631/848631_Taleyah Jones_2+_256005855.mp4",
+    "ground_truth": "With 2:55 remaining in the 3rd quarter, Desha Benjamin, wearing #24 for Houston, executed a steal, leading to Taleyah Jones, wearing #15, making a contested right-handed layup for 2 points from the restricted area over defender Laila Blair, who is wearing #14 for Texas-Arlington. The current score is 37 - 49 following the play.",
+    "prediction": "Starr Jacobs (#24) steals the ball and passes it to Shaynee Jones (#15) who finishes the play with a layup. The game features UT Arlington against Houston, with the current score at 49 - 37.",
+    "final_holistic_score": 2,
+    "data_source": "256005855"
+  },
+  {
+    "model": "gemini-3-flash-preview",
+    "sport": "soccer",
+    "video": "/mnt/sun/shared/datasets/sports_dataset/soccer/LaLiga/2021-2022/86212/goal_kick_1129732064.mp4",
+    "ground_truth": "In the 23:40 of the 1st half, Villarreal 0 - Celta de Vigo 0, G. Rulli, the goalkeeper for Villarreal, executed a goal kick as Nolito, playing as a left attacking midfielder for Celta de Vigo, engaged in a duel with J. Foyth, the right back for Villarreal, but lost possession, leading to the ball going out of play.",
+    "prediction": "Juan Foyth, playing as a right back for Villarreal CF, executed a successful lateral pass to Manu Trigueros, positioned as a center midfielder. Manu Trigueros then completed a successful long forward pass to G. Lo Celso, who is playing as a left winger. The teams involved are RC Celta de Vigo and Villarreal CF.",
+    "final_holistic_score": 1,
+    "data_source": "1129732064"
+  },
+  {
+    "model": "gemini-3-flash-preview",
+    "sport": "hockey",
+    "video": "/mnt/sun/shared/datasets/sports_dataset/hockey/hockey_clips/22-23/5014/912005/912005_Dump in unsuccessful_406781498.mp4",
+    "ground_truth": "With 6:01 remaining in the 1st period and the score Yastreby Pinsk 0 - Belarus U17 0. Arseny Marchenko (#54) executed a successful touch and accurate pass in the Defensive Zone to Yan Misyul (#48), then performed a controlled breakout. Yan Misyul (#48) made a touch in the Neutral Zone but his dump attempt was unsuccessful. Ilya Soroko (#72) completed a touch and an accurate pass in the Defensive Zone to Konstantin Perepelitsa (#93). Teams: Belarus U17 vs. Yastreby Pinsk.",
+    "prediction": "Jan Misyul #99 accurately passes the puck in the defensive zone to a teammate (#19). #19 performs a touch and accurately passes to #14. #14 makes a touch in the neutral zone, successfully enters the offensive zone, and delivers an accurate pass back to Misyul #99. Misyul #99 then executes a touch and takes a shot on net. The teams are U17 Belarus and Yastreby.",
+    "final_holistic_score": 1,
+    "data_source": "406781498"
+  },
+  {
+    "model": "gemini-3-flash-preview",
+    "sport": "hockey",
+    "video": "/mnt/arc/yulupan/sports_dataset/hockey/hockey_clips/21-22/65/539370/539370_Breakout successful_275154017.mp4",
+    "ground_truth": "With 7:59 left in the 3rd period and the score Quinnipiac Bobcats 9 - Princeton Tigers 0, Noah de la Durantaye (#22) executed a Touch in the Defensive Zone. Corey Andonovski (#27) followed with a successful Breakout and Controlled breakout in the Defensive Zone, then completed a Touch in the Neutral Zone.",
+    "prediction": "Brendan Less (#3) executed a touch and an accurate pass in the Defensive Zone to Pito Walton (#17). Walton then performed an accurate pass to Liam Gorman (#15). Gorman completed a touch in the Defensive Zone, successfully entered the Offensive Zone, and made an accurate pass to Nicholas Wendt (#28). Wendt followed with an accurate pass to Ian Murphy (#12). Christophe Fillion (#16) engaged in a puck battle against Murphy in the Offensive Zone. Other participants included Michael Lombardi (#22) and Jayden Lee (#6). The teams involved were the Princeton Tigers and the Quinnipiac Bobcats.",
+    "final_holistic_score": 0,
+    "data_source": "275154017"
+  },
+  {
+    "model": "sports_100k_f16_full_ft",
+    "sport": "basketball",
+    "video": "/mnt/sun/shared/datasets/aggregated_clips/18-23_clips/21-22/6_NCAA Division I/531066/531066_Jared Rhoden_Steal_204028300.mp4",
+    "ground_truth": "With 5:33 left in the 1st half, Geo Baker grabbed the rebound, while Jared Rhoden executed a steal. The teams on the court are Seton Hall and the Rutgers Scarlet Knights, and the current score is tied at 19 - 19.",
+    "prediction": "Aundre Hyatt secured a rebound. Clifford Omoruyi attempted a right-handed layup from the restricted area but missed while contested by Kadary Richmond during a transition play. Kadary Richmond then grabbed the rebound. The teams playing are Seton Hall and Rutgers Scarlet, with the current score tied at 19 - 19.",
+    "final_holistic_score": 1,
+    "data_source": "204028300"
+  },
+  {
+    "model": "sports_100k_f16_full_ft",
+    "sport": "soccer",
+    "video": "/mnt/sun/shared/datasets/sports_dataset/soccer/EPL/2022-2023/192792/fairplay_1522144737.mp4",
+    "ground_truth": "In the 37:11 of the 1st half, with Newcastle United and Crystal Palace tied at 0-0, F. Sch\u00e4r, playing as the right center back for Newcastle United, executed a successful lateral pass to D. Burn, the left back, who demonstrated fair play before the ball went out of play. The teams competing are Crystal Palace and Newcastle United.",
+    "prediction": "F. Sch\u00e4r, playing as the right center back for Newcastle United, executed a successful lateral pass to Javi Manquillo, the right back, who demonstrated fair play as the ball went out of play during the match against Crystal Palace.",
+    "final_holistic_score": 4,
+    "data_source": "1522144737"
+  },
+  {
+    "model": "sports_100k_f16_full_ft",
+    "sport": "basketball",
+    "video": "/mnt/sun/shared/datasets/aggregated_clips/18-23_clips/22-23/6_NCAA Division I/532139/532139_Luther Muhammad_2-_257152361.mp4",
+    "ground_truth": "Duke Brennan (#24) executed a steal, setting the stage for Luther Muhammad (#1), who attempted a contested layup with his right hand from the restricted area during a transition play, but missed, guarded by Isa Silva (#1). James Keefe (#22) secured the rebound. The teams competing are the Arizona State Sun Devils and Stanford Cardinal, with the current score at 14 - 9.",
+    "prediction": "Warren Washington, wearing #22, executed a steal. Jamiya Neal, wearing #5, attempted a 2-point layup from the restricted area with his right hand during a transition, but missed while contested by Harrison Ingram, wearing #55. The teams competing are Arizona State Sun and Stanford, with the current score at 14 - 9.",
+    "final_holistic_score": 2,
+    "data_source": "257152361"
+  },
+  {
+    "model": "gemini-3-flash-preview",
+    "sport": "hockey",
+    "video": "/mnt/sun/shared/datasets/sports_dataset/hockey/hockey_clips/22-23/10/21257/21257_Pass accurate_433625447.mp4",
+    "ground_truth": "With 3:33 left in the 1st period and HC Slavia Praha 1 - SK Horacka Slavia Trebic 1, Jaroslav Broz (#5) performed a Touch in the Defensive Zone, followed by an accurate Pass to Matej Chalupa (#49). Broz executed a successful Breakout before Chalupa made a Touch in the Neutral Zone and then passed back to Broz. Broz performed another Touch and successfully entered the Offensive Zone, but ultimately lost the puck there.",
+    "prediction": "Josef Bro\u0161 (#14) executed a touch and an accurate pass in the offensive zone to Petr Kafka (#22). Kafka then performed a touch at the blue line before delivering an accurate pass back to Bro\u0161. Bro\u0161 continued with several touches in the offensive zone as he maneuvered for a scoring opportunity. The teams involved are HC Slavia Praha and SK Hor\u00e1ck\u00e1 Slavia T\u0159eb\u00ed\u010d.",
+    "final_holistic_score": 2,
+    "data_source": "433625447"
+  },
+  {
+    "model": "sports_100k_f16_full_ft",
+    "sport": "soccer",
+    "video": "/mnt/sun/shared/datasets/sports_dataset/soccer/EPL/2022-2023/241564/free_kick_1561739714.mp4",
+    "ground_truth": "In the 1st half at 30:34 elapsed, Arsenal 0 - Leicester City 0, O. Zinchenko, playing as left back for Arsenal, executed a free kick, while his teammate W. Saliba, positioned as right center back, made a touch as the teams competed against Leicester City.",
+    "prediction": "T. Partey of Arsenal executed a free kick, which was followed by Gabriel Magalhaes making a touch as the teams competed against Leicester City.",
+    "final_holistic_score": 3,
+    "data_source": "1561739714"
+  },
+  {
+    "model": "gemini-3-flash-preview",
+    "sport": "soccer",
+    "video": "/mnt/sun/shared/datasets/sports_dataset/soccer/EPL/2022-2023/207143/interception_1626218605.mp4",
+    "ground_truth": "In the 21:30 mark of the 1st half, Nottingham Forest 0 - Liverpool 0, O. Mangala of Nottingham Forest attempted a lateral pass to Fabinho of Liverpool, but Fabinho intercepted it and carried the ball forward. He executed a successful forward pass to Diogo Jota, who then delivered a precise pass to J. Henderson. J. Henderson followed up with another successful forward pass to Mohamed Salah. The teams in action are Liverpool and Nottingham Forest.",
+    "prediction": "Orel Mangala, playing as a central midfielder for Nottingham Forest, led a counter-attack across the halfway line. He was intercepted by Fabinho, a defensive midfielder for Liverpool, who successfully regained possession for his team in the center circle. This recovery ended the Forest counter and allowed Liverpool to reset their offensive movement.",
+    "final_holistic_score": 2,
+    "data_source": "1626218605"
+  },
+  {
+    "model": "gemini-3-flash-preview",
+    "sport": "hockey",
+    "video": "/mnt/sun/shared/datasets/sports_dataset/hockey/hockey_clips/22-23/2826/998387/998387_Chance_439591729.mp4",
+    "ground_truth": "With 10:49 left in the 1st period and Ogden Mustangs Premier 0 - Pueblo Bulls Premier 1, Luke Guarienti (#3) took a wrist shot on goal in the offensive zone, with Owen Yancey (#29) guarding. The goalie, in a butterfly position, had a clean view of the shot. Guarienti also made a takeaway in the offensive zone. Teams: Ogden Mustangs Premier vs. Pueblo Bulls Premier.",
+    "prediction": "Benjamin Slavicek (#17) executes a touch and an accurate pass in the Neutral Zone. Slavicek then successfully enters the zone and performs a shot. He engages in puck battles in the Offensive Zone against Thomas Ames (#26). Ames performs a touch in the Defensive Zone and completes an accurate pass. The teams are the Pueblo Bulls and the Ogden Mustangs.",
+    "final_holistic_score": 1,
+    "data_source": "439591729"
+  },
+  {
+    "model": "sports_100k_f16_full_ft",
+    "sport": "basketball",
+    "video": "/mnt/sun/shared/datasets/aggregated_clips/18-23_clips/20-21/137_United States. NBA G-League/476211/476211_Naji Marshall_Rebound_168256680.mp4",
+    "ground_truth": "With 8:03 remaining in the 4th quarter, Naji Marshall recorded a rebound and then scored a 2-point field goal from the restricted area with a right-hand layup during a putback while being contested by Cassius Stanley. The teams in action are the Fort Wayne Mad Ants and the Birmingham Squadron.",
+    "prediction": "Josh Gray missed a free throw, and Cassius Winston grabbed the rebound. The teams competing are the Fort Wayne Mad Ants and the Birmingham Squadron.",
+    "final_holistic_score": 1,
+    "data_source": "168256680"
+  },
+  {
+    "model": "gemini-3-flash-preview",
+    "sport": "soccer",
+    "video": "/mnt/sun/shared/datasets/sports_dataset/soccer/EPL/2022-2023/21315/penalty_1346068500.mp4",
+    "ground_truth": "Jorginho, playing as a left central midfielder for Chelsea, successfully converted a penalty against Everton.",
+    "prediction": "Jorginho of Chelsea successfully executed a penalty kick against Everton's Jordan Pickford, scoring a goal. The match featured Chelsea and Everton, with the penalty being a pivotal moment in the game.",
+    "final_holistic_score": 3,
+    "data_source": "1346068500"
+  },
+  {
+    "model": "gpt-5.2",
+    "sport": "basketball",
+    "video": "/mnt/sun/shared/datasets/aggregated_clips/18-23_clips/18-19/68_China. CBA/459692/459692_Ge Zhaobao_1+_136101762.mp4",
+    "ground_truth": "With 5:25 left in the 3rd quarter, Ge Zhaobao successfully made a free throw, contributing to the matchup between the Shanxi Loongs and Nanjing Tongxi Monkey King, with the current score at 62-60.",
+    "prediction": "Shanxi\u2019s #21 steps to the free-throw line with players lined up along the lane in the third quarter (5:25 remaining) of their game against Tongxi, with Shanxi leading 61\u201360. He gathers, raises the ball, and calmly converts the free throw as defenders in dark jerseys hold their rebounding positions and the referee watches from the baseline. The made shot pushes Shanxi\u2019s advantage to 62\u201360.",
+    "final_holistic_score": 4,
+    "data_source": "136101762"
+  },
+  {
+    "model": "gemini-3-flash-preview",
+    "sport": "basketball",
+    "video": "/mnt/sun/shared/datasets/aggregated_clips/18-23_clips/21-22/156_NCAA Division I (W)/537243/537243_Destiney Philoxy_2-_217903606.mp4",
+    "ground_truth": "With 2:43 left in the 3rd quarter, Destiney Philoxy missed a 2-point shot from the Restricted Area, while Sam Breen grabbed the rebound. The teams competing are Massachusetts and George Mason, with the current score at 60-33.",
+    "prediction": "Sonia Smith (#1) attempted a layup with a right-handed shot, but missed. The University of Massachusetts (MASS) secured the rebound. The game features George Mason University (GMU) against the University of Massachusetts (MASS), with the current score at 33 - 60.",
+    "final_holistic_score": 2,
+    "data_source": "217903606"
+  },
+  {
+    "model": "sports_100k_f16_full_ft",
+    "sport": "hockey",
+    "video": "/mnt/arc/yulupan/sports_dataset/hockey/hockey_clips/23-24/37/850033/850033_Shot on goal_644798061.mp4",
+    "ground_truth": "Hugo Primeau (#71) faces off against Xavier Sarrasin (#7) in the Offensive Zone. Lewis Gendron (#94) executes a Touch, followed by an accurate Pass to Israel Mianscum (#24), who also performs a Touch. Louis-Alex Tremblay (#77) takes a Slapshot on goal, which Emile Beaunoyer (#37) in the butterfly position has a clean view of. The teams are Sherbrooke Phoenix and Val-d'Or Foreurs.",
+    "prediction": "Justin Gill (#19) faces off against Antoine Lagace (#7) in the Offensive Zone. Charles-Antoine Beauregard (#9) executes a Touch, then makes an accurate Pass to Justin Gill (#19). Gill performs another Touch before passing accurately to William-Charles Bishop (#26). Bishop executes a Touch and then takes a Wrist shot on goal in the Offensive Zone, with a Clean view for goalie Nathan Darveau (#40), who is in the butterfly position. The teams are Sherbrooke Phoenix and Val-d'Or Foreurs.",
+    "final_holistic_score": 2,
+    "data_source": "644798061"
+  },
+  {
+    "model": "sports_100k_f16_full_ft",
+    "sport": "basketball",
+    "video": "/mnt/sun/shared/datasets/aggregated_clips/18-23_clips/22-23/3_NBA/476148/476148_Saben Lee_1+_285343252.mp4",
+    "ground_truth": "With 10:52 left in the 1st quarter, Saben Lee, wearing #38, makes a Free Throw for the Phoenix Suns, bringing the current score to 1 - 2 against the Los Angeles Clippers.",
+    "prediction": "Deandre Ayton, wearing #22, successfully made a free throw for the Phoenix Suns against the Los Angeles Clippers. The current score is 1 - 2.",
+    "final_holistic_score": 4,
+    "data_source": "285343252"
+  }
+]
