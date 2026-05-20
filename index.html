@@ -2266,7 +2266,7 @@ function ScenePanel({
   }, task.bestModel)), /*#__PURE__*/React.createElement(CliffBroadcastViewport, {
     task: task,
     t: t
-  }), TASK_TEXT[task.id] ? /*#__PURE__*/React.createElement("div", {
+  }), (TASK_TEXT[task.id] && task.id !== 'T3') ? /*#__PURE__*/React.createElement("div", {
     style: {
       marginTop: 14,
       display: 'flex',
