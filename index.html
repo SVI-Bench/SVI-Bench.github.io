@@ -2128,7 +2128,7 @@ function CliffBroadcastViewport({
     style: {
       position: 'relative',
       width: '100%',
-      aspectRatio: '16 / 9',
+      aspectRatio: (isT3 || isT9) ? '4 / 3' : '16 / 9',
       background: '#0c0d10',
       border: '1px solid #27272a',
       borderRadius: 4,
