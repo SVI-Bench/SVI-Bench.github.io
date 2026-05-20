@@ -20,6 +20,7 @@ FILES = [
     REPO / "index.html",
     REPO / "svi_bench_cliff.html",
     REPO / "scripts" / "panels.jsx",
+    REPO / "scripts" / "panels_block.js",
 ]
 EXTRA = [
     Path("/tmp/archive_section.jsx"),
@@ -64,13 +65,13 @@ STAGE1 = [
 
 STAGE2 = [
     ("__C_BG__",       "#ffffff"),   # white page bg
-    ("__C_CARD__",     "#fafafa"),   # off-white card surface
-    ("__C_ACTIVE__",   "#f4f4f5"),   # very light grey for active card
-    ("__C_DIV__",      "#ececef"),   # very subtle divider
-    ("__C_BORDER__",   "#e4e4e7"),   # standard light border
-    ("__C_BORDER2__",  "#d4d4d8"),   # hover border
-    ("__C_QUAT__",     "#a1a1aa"),   # quat-text — now light gray
-    ("__C_SECTEXT__",  "#52525b"),   # secondary text — now medium-dark
+    ("__C_CARD__",     "#f4f4f5"),   # light grey card — clearly distinct from white bg
+    ("__C_ACTIVE__",   "#e4e4e7"),   # more elevated active card
+    ("__C_DIV__",      "#d4d4d8"),   # visible divider
+    ("__C_BORDER__",   "#d4d4d8"),   # visible border
+    ("__C_BORDER2__",  "#a1a1aa"),   # hover border — pronounced
+    ("__C_QUAT__",     "#a1a1aa"),   # quat-text — light gray
+    ("__C_SECTEXT__",  "#52525b"),   # secondary text — medium-dark
     ("__C_PRIM2__",    "#3f3f46"),
     ("__C_PRIM3__",    "#27272a"),
     ("__C_PRIM__",     "#18181b"),   # primary text — near black

@@ -9,9 +9,9 @@
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Serif:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; }
-    html, body { margin: 0; padding: 0; background: #0a0a0c; }
+    html, body { margin: 0; padding: 0; background: #ffffff; }
     html { scroll-behavior: smooth; }
-    body { font-family: "IBM Plex Sans", sans-serif; color: #fafafa; }
+    body { font-family: "IBM Plex Sans", sans-serif; color: #18181b; }
     section { scroll-margin-top: 72px; }
     @keyframes fadeSlide {
       from { opacity: 0; transform: translateY(8px); }
@@ -2130,6 +2130,7 @@ function CliffBroadcastViewport({
       width: '100%',
       aspectRatio: isT9 ? '5 / 4' : isT3 ? '4 / 3' : '16 / 9',
       background: '#0c0d10',
+      color: '#fafafa',
       border: '1px solid #27272a',
       borderRadius: 4,
       overflow: 'hidden',
@@ -2286,7 +2287,7 @@ function ScenePanel({
           labelColor: isGt ? c.base : isPred ? '#C0392B' : '#52525b',
           body: opt.text,
           bodyStyle: isGt
-            ? { color: '#e4e4e7', fontWeight: 500 }
+            ? { color: '#18181b', fontWeight: 500 }
             : isPred
               ? { color: '#C0392B', textDecoration: 'line-through' }
               : { color: '#71717a' }
@@ -2319,7 +2320,7 @@ function ScenePanel({
         flexShrink: 0
       }
     }, row.label), /*#__PURE__*/React.createElement("span", {
-      style: Object.assign({ color: '#e4e4e7', flex: 1, minWidth: 0 }, row.bodyStyle || {})
+      style: Object.assign({ color: '#27272a', flex: 1, minWidth: 0 }, row.bodyStyle || {})
     }, (typeof row.body === 'string' ? [row.body] : row.body).map((seg, i) => {
       if (typeof seg === 'string') return seg;
       const segStyle = seg.wrong
@@ -2358,7 +2359,7 @@ function ScenePanel({
       fontFamily: '"IBM Plex Sans", sans-serif',
       fontSize: 13.5,
       lineHeight: 1.5,
-      color: '#a1a1aa',
+      color: '#52525b',
       margin: 0,
       maxWidth: 360
     }
@@ -2371,7 +2372,7 @@ function ScenePanel({
       fontFamily: '"IBM Plex Mono", monospace',
       fontSize: 28,
       fontWeight: 500,
-      color: '#fafafa',
+      color: '#18181b',
       letterSpacing: '-0.02em',
       lineHeight: 1
     }
@@ -2710,6 +2711,7 @@ function AskBroadcastViewport({
       width: '100%',
       aspectRatio: '4 / 3',
       background: '#0c0d10',
+      color: '#fafafa',
       border: '1px solid #27272a',
       borderRadius: 4,
       overflow: 'hidden',
@@ -2833,8 +2835,8 @@ function QuestionCard({
   return /*#__PURE__*/React.createElement("div", {
     style: {
       padding: '12px 14px',
-      background: 'rgba(20,20,24,0.7)',
-      border: '1px solid #27272a',
+      background: '#ffffff',
+      border: '1px solid #d4d4d8',
       borderRadius: 3,
       animation: 'fadeSlide 400ms ease'
     }
@@ -2852,7 +2854,7 @@ function QuestionCard({
       fontFamily: '"IBM Plex Sans", sans-serif',
       fontSize: 14,
       lineHeight: 1.4,
-      color: '#fafafa'
+      color: '#18181b'
     }
   }, question));
 }
@@ -2868,8 +2870,8 @@ function ModelAnswerCard({
   return /*#__PURE__*/React.createElement("div", {
     style: {
       padding: '11px 14px',
-      background: 'rgba(20,20,24,0.55)',
-      border: `1px solid ${isStreaming ? '#3f3f46' : '#27272a'}`,
+      background: '#ffffff',
+      border: `1px solid ${isStreaming ? '#a1a1aa' : '#d4d4d8'}`,
       borderRadius: 3,
       opacity: isUpcoming ? 0.3 : 1,
       transition: 'opacity 400ms ease, border-color 400ms ease',
@@ -2888,14 +2890,14 @@ function ModelAnswerCard({
     }
   }, /*#__PURE__*/React.createElement("span", null, model.name, isStreaming ? ' · streaming' : ''), /*#__PURE__*/React.createElement("span", {
     style: {
-      color: isComplete ? model.wrong ? '#C0392B' : '#a1a1aa' : '#52525b'
+      color: isComplete ? model.wrong ? '#C0392B' : '#52525b' : '#a1a1aa'
     }
   }, isComplete ? model.score : '—')), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: '"IBM Plex Sans", sans-serif',
       fontSize: 13,
       lineHeight: 1.5,
-      color: '#d4d4d8',
+      color: '#27272a',
       minHeight: '1.5em'
     }
   }, visible, showCursor && /*#__PURE__*/React.createElement("span", {
@@ -2903,7 +2905,7 @@ function ModelAnswerCard({
       display: 'inline-block',
       width: 7,
       height: 14,
-      background: '#fafafa',
+      background: '#18181b',
       marginLeft: 2,
       verticalAlign: '-2px',
       animation: 'cursorBlink 0.9s steps(1) infinite'
@@ -2943,7 +2945,7 @@ function GTCard({
       fontFamily: '"IBM Plex Sans", sans-serif',
       fontSize: 13,
       lineHeight: 1.5,
-      color: '#fafafa',
+      color: '#18181b',
       fontWeight: 500
     }
   }, gt));
@@ -2959,11 +2961,11 @@ function VerdictLine({
       justifyContent: 'space-between',
       fontFamily: '"IBM Plex Mono", monospace',
       fontSize: 10,
-      color: '#a1a1aa',
+      color: '#52525b',
       letterSpacing: '0.15em',
       textTransform: 'uppercase',
       paddingTop: 8,
-      borderTop: '1px solid #1c1c1f',
+      borderTop: '1px solid #d4d4d8',
       opacity: visible ? 1 : 0,
       transform: visible ? 'translateY(0)' : 'translateY(6px)',
       transition: 'opacity 500ms ease, transform 500ms ease'
@@ -3036,9 +3038,9 @@ function AnalysisPanel({
     onClick: revealAll,
     style: {
       background: 'transparent',
-      border: '1px solid #27272a',
+      border: '1px solid #d4d4d8',
       borderRadius: 2,
-      color: '#a1a1aa',
+      color: '#52525b',
       padding: '5px 11px',
       fontFamily: '"IBM Plex Mono", monospace',
       fontSize: 10,
@@ -3049,9 +3051,9 @@ function AnalysisPanel({
     onClick: onReplay,
     style: {
       background: 'transparent',
-      border: '1px solid #27272a',
+      border: '1px solid #d4d4d8',
       borderRadius: 2,
-      color: '#a1a1aa',
+      color: '#52525b',
       padding: '5px 11px',
       fontFamily: '"IBM Plex Mono", monospace',
       fontSize: 10,
@@ -3072,24 +3074,26 @@ function ClipCard({
       flex: 1,
       minWidth: 0,
       padding: isActive ? 6 : 7,
-      background: isActive ? '#14141a' : 'rgba(20,20,24,0.4)',
-      border: isActive ? `2px solid ${c.base}` : '1px solid #27272a',
+      background: '#ffffff',
+      border: isActive ? `2px solid ${c.base}` : '1px solid #d4d4d8',
       borderRadius: 4,
       textAlign: 'left',
       display: 'flex',
       flexDirection: 'column',
       gap: 6,
       transition: 'all 200ms ease',
-      color: 'inherit'
+      color: 'inherit',
+      cursor: 'pointer'
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       aspectRatio: '4 / 3',
       background: '#0c0d10',
+      color: '#fafafa',
       border: '1px solid #1c1c1f',
       borderRadius: 2,
       overflow: 'hidden',
-      opacity: isActive ? 1 : 0.65
+      opacity: isActive ? 1 : 0.7
     }
   }, /*#__PURE__*/React.createElement(StaticCourtThumb, {
     pillarColor: c.base
@@ -3110,7 +3114,7 @@ function ClipCard({
     style: {
       fontFamily: '"IBM Plex Sans", sans-serif',
       fontSize: 11,
-      color: isActive ? '#e4e4e7' : '#71717a',
+      color: isActive ? '#18181b' : '#52525b',
       whiteSpace: 'nowrap',
       overflow: 'hidden',
       textOverflow: 'ellipsis'
@@ -3165,6 +3169,7 @@ function FailureTile({
     onMouseLeave: () => setHover(false),
     style: {
       background: '#0c0d10',
+      color: '#fafafa',
       border: hover ? `1px solid ${c.base}` : '1px solid #27272a',
       borderRadius: 4,
       overflow: 'hidden',
@@ -3333,25 +3338,20 @@ function HeroSection() {
       letterSpacing: '-0.03em',
       margin: 0,
       marginBottom: 36,
-      maxWidth: 1100,
+      maxWidth: 1280,
       textWrap: 'balance'
     }
-  }, "Models can see", /*#__PURE__*/React.createElement("br", null), "the play.", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("span", {
-    style: {
-      color: '#71717a',
-      fontStyle: 'italic'
-    }
-  }, "They can't understand it.")), /*#__PURE__*/React.createElement("p", {
+  }, "Models can see the play.", /*#__PURE__*/React.createElement("br", null), "They can't understand it."), /*#__PURE__*/React.createElement("p", {
     style: {
       fontFamily: '"IBM Plex Sans", sans-serif',
       fontSize: 19,
       lineHeight: 1.5,
-      color: '#a1a1aa',
-      maxWidth: 720,
+      color: '#52525b',
+      maxWidth: 1040,
       margin: 0,
       marginBottom: 56
     }
-  }, "SVI-Bench is a unified benchmark for evaluating the full cognitive stack of video intelligence \u2014 perception, reasoning, simulation, and agency. Built on 38,000 hours of broadcast basketball, soccer, and hockey footage. Models handle perception well. Reasoning, simulation, and agency are where current systems break down."), /*#__PURE__*/React.createElement("div", {
+  }, "SVI-Bench is a unified benchmark for evaluating the full cognitive stack of video intelligence \u2014 perception, reasoning, simulation, and agency. Built on 35,000 hours of broadcast basketball, soccer, and hockey footage. Models handle perception well. Reasoning, simulation, and agency are where current systems break down."), /*#__PURE__*/React.createElement(VideoSection, null), /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
       gap: 14,
@@ -3362,10 +3362,10 @@ function HeroSection() {
     key: c,
     style: {
       padding: '8px 14px',
-      border: '1px solid #27272a',
+      border: '1px solid #d4d4d8',
       fontFamily: '"IBM Plex Mono", monospace',
       fontSize: 11,
-      color: '#a1a1aa',
+      color: '#52525b',
       letterSpacing: '0.08em',
       borderRadius: 2
     }
@@ -3381,44 +3381,20 @@ function HeroSection() {
   }, "\u2193  scroll to see the cliff"));
 }
 function VideoSection() {
-  return /*#__PURE__*/React.createElement("section", {
+  return /*#__PURE__*/React.createElement("div", {
     id: "video",
-    style: {
-      minHeight: '100vh',
-      padding: '110px 48px 80px',
-      maxWidth: 1500,
-      margin: '0 auto',
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      borderTop: '1px solid #1c1c1f'
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginBottom: 36,
-      textAlign: 'center'
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: '"IBM Plex Mono", monospace',
-      fontSize: 11,
-      letterSpacing: '0.2em',
-      textTransform: 'uppercase',
-      color: '#71717a',
-      marginBottom: 16
-    }
-  }, "02 \xB7 Overview")), /*#__PURE__*/React.createElement("div", {
     style: {
       width: '100%',
       maxWidth: 960,
-      margin: '0 auto',
+      margin: '32px auto 56px',
       aspectRatio: '16 / 9',
       background: '#0c0d10',
+      color: '#fafafa',
       border: '1px solid #27272a',
       borderRadius: 6,
       overflow: 'hidden',
       position: 'relative',
-      boxShadow: '0 30px 80px rgba(0,0,0,0.6)'
+      boxShadow: '0 18px 50px rgba(0,0,0,0.18)'
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
@@ -3539,19 +3515,7 @@ function VideoSection() {
       width: '0%',
       background: '#fafafa'
     }
-  })))), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: 'flex',
-      justifyContent: 'center',
-      gap: 32,
-      marginTop: 28,
-      fontFamily: '"IBM Plex Mono", monospace',
-      fontSize: 10,
-      color: '#71717a',
-      letterSpacing: '0.15em',
-      textTransform: 'uppercase'
-    }
-  }, /*#__PURE__*/React.createElement("span", null, "01 \xB7 the cliff"), /*#__PURE__*/React.createElement("span", null, "02 \xB7 why sports"), /*#__PURE__*/React.createElement("span", null, "03 \xB7 what's next")));
+  }))));
 }
 function CliffSection() {
   const sectionRef = useRef(null);
@@ -3574,13 +3538,13 @@ function CliffSection() {
       height: '100vh',
       display: 'grid',
       gridTemplateColumns: '1.1fr 1fr',
-      background: '#0a0a0c'
+      background: '#ffffff',
+      color: '#18181b'
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       position: 'relative',
-      padding: '88px 32px 56px 56px',
-      borderRight: '1px solid #1c1c1f'
+      padding: '88px 32px 56px 56px'
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
@@ -3615,11 +3579,16 @@ function CliffSection() {
   }, "Best model per task")), /*#__PURE__*/React.createElement("div", {
     style: {
       position: 'absolute',
-      top: 88,
+      top: 168,
       left: 56,
       right: 32,
       bottom: 56,
-      paddingTop: 60
+      padding: '24px 16px',
+      background: '#0a0a0c',
+      color: '#fafafa',
+      border: '1px solid #1c1c1f',
+      borderRadius: 8,
+      boxShadow: '0 18px 50px rgba(0,0,0,0.18)'
     }
   }, /*#__PURE__*/React.createElement(CliffBars, {
     tasks: TASKS,
@@ -3715,7 +3684,7 @@ function AskThePlaySection() {
       fontFamily: '"IBM Plex Sans", sans-serif',
       fontSize: 16,
       lineHeight: 1.55,
-      color: '#a1a1aa',
+      color: '#52525b',
       maxWidth: 720,
       margin: 0
     }
@@ -3727,6 +3696,7 @@ function AskThePlaySection() {
       margin: '0 auto 24px',
       aspectRatio: '16 / 9',
       background: '#0c0d10',
+      color: '#fafafa',
       border: '1px solid #27272a',
       borderRadius: 4,
       overflow: 'hidden',
@@ -3909,7 +3879,7 @@ function TapeArchiveSection() {
       fontFamily: '"IBM Plex Sans", sans-serif',
       fontSize: 16,
       lineHeight: 1.55,
-      color: '#a1a1aa',
+      color: '#52525b',
       maxWidth: 720,
       margin: 0
     }
@@ -3945,7 +3915,7 @@ function TapeArchiveSection() {
     }, task.id), /*#__PURE__*/React.createElement("span", {
       style: {
         fontSize: 12,
-        color: '#a1a1aa'
+        color: '#52525b'
       }
     }, task.name), /*#__PURE__*/React.createElement("span", {
       style: {
@@ -3994,6 +3964,7 @@ function T3ArchiveTile(_ref) {
     style: {
       cursor: 'pointer',
       background: '#0c0d10',
+      color: '#fafafa',
       border: '1px solid #27272a',
       borderRadius: 4,
       overflow: 'hidden',
@@ -4098,6 +4069,7 @@ function T3ArchiveModal(_ref2) {
     style: {
       cursor: 'default',
       background: '#0c0d10',
+      color: '#fafafa',
       border: '1px solid #27272a',
       borderRadius: 6,
       padding: '24px 28px',
@@ -4219,6 +4191,7 @@ function PlaceholderCard(_ref3) {
   return /*#__PURE__*/React.createElement("div", {
     style: {
       background: '#0c0d10',
+      color: '#fafafa',
       border: '1px solid #27272a',
       borderRadius: 4,
       padding: '14px 16px',
@@ -4280,6 +4253,7 @@ function T9ArchiveCard(_ref4) {
   return /*#__PURE__*/React.createElement("div", {
     style: {
       background: '#0c0d10',
+      color: '#fafafa',
       border: '1px solid #27272a',
       borderRadius: 4,
       padding: '16px 18px',
@@ -4457,7 +4431,7 @@ function OutroSection() {
       fontFamily: '"IBM Plex Sans", sans-serif',
       fontSize: 17,
       lineHeight: 1.6,
-      color: '#a1a1aa',
+      color: '#52525b',
       maxWidth: 720
     }
   }, "When we hand the strongest model perfect textual descriptions of every frame, T9 accuracy jumps from 4.6% to 54%. Visual perception is a major limitation. But the 54% ceiling tells us multi-step planning, cross-modal reasoning, and strategic synthesis are equally unsolved. Sports gives us the structured, verifiable testbed for that work \u2014 the way math gives one to formal reasoning."), /*#__PURE__*/React.createElement("div", {
@@ -4470,7 +4444,7 @@ function OutroSection() {
       gap: 32
     }
   }, [{
-    v: '38K',
+    v: '35K',
     l: 'hours of broadcast video'
   }, {
     v: '23K',
@@ -4491,7 +4465,7 @@ function OutroSection() {
       fontFamily: '"IBM Plex Mono", monospace',
       fontSize: 36,
       fontWeight: 500,
-      color: '#fafafa',
+      color: '#18181b',
       letterSpacing: '-0.02em'
     }
   }, s.v), /*#__PURE__*/React.createElement("div", {
@@ -4542,7 +4516,7 @@ function FooterSection() {
     style: {
       fontFamily: '"IBM Plex Sans", sans-serif',
       fontSize: 14,
-      color: '#e4e4e7',
+      color: '#27272a',
       lineHeight: 1.8
     }
   }, [
@@ -4603,8 +4577,8 @@ function FooterSection() {
       display: 'flex',
       justifyContent: 'space-between',
       textDecoration: 'none',
-      color: '#e4e4e7',
-      borderBottom: '1px solid #1c1c1f',
+      color: '#27272a',
+      borderBottom: '1px solid #d4d4d8',
       paddingBottom: 8
     }
   }, /*#__PURE__*/React.createElement("span", {
@@ -4678,9 +4652,9 @@ function Header() {
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
-      background: 'rgba(10,10,12,0.78)',
+      background: 'rgba(255,255,255,0.92)',
       backdropFilter: 'blur(12px)',
-      borderBottom: '1px solid #1c1c1f'
+      borderBottom: '1px solid #e4e4e7'
     }
   }, /*#__PURE__*/React.createElement("a", {
     href: "#hero",
@@ -4690,7 +4664,7 @@ function Header() {
       letterSpacing: '0.05em',
       fontWeight: 600,
       textDecoration: 'none',
-      color: '#fafafa'
+      color: '#18181b'
     }
   }, "SVI-BENCH"), /*#__PURE__*/React.createElement("nav", {
     style: {
@@ -4719,13 +4693,13 @@ function Header() {
     key: l.label,
     href: l.href,
     style: {
-      color: '#a1a1aa',
+      color: '#52525b',
       textDecoration: 'none',
       textTransform: 'uppercase',
       transition: 'color 150ms'
     },
-    onMouseEnter: e => e.currentTarget.style.color = '#fafafa',
-    onMouseLeave: e => e.currentTarget.style.color = '#a1a1aa'
+    onMouseEnter: e => e.currentTarget.style.color = '#18181b',
+    onMouseLeave: e => e.currentTarget.style.color = '#52525b'
   }, l.label))));
 }
 
@@ -4735,12 +4709,12 @@ function Header() {
 function App() {
   return /*#__PURE__*/React.createElement("div", {
     style: {
-      background: '#0a0a0c',
-      color: '#fafafa',
+      background: '#ffffff',
+      color: '#18181b',
       minHeight: '100vh',
       fontFamily: '"IBM Plex Sans", sans-serif'
     }
-  }, /*#__PURE__*/React.createElement(Header, null), /*#__PURE__*/React.createElement(HeroSection, null), /*#__PURE__*/React.createElement(VideoSection, null), /*#__PURE__*/React.createElement(CliffSection, null), /*#__PURE__*/React.createElement(AskThePlaySection, null), /*#__PURE__*/React.createElement(TapeArchiveSection, null), /*#__PURE__*/React.createElement(OutroSection, null), /*#__PURE__*/React.createElement(FooterSection, null));
+  }, /*#__PURE__*/React.createElement(Header, null), /*#__PURE__*/React.createElement(HeroSection, null), /*#__PURE__*/React.createElement(CliffSection, null), /*#__PURE__*/React.createElement(AskThePlaySection, null), /*#__PURE__*/React.createElement(TapeArchiveSection, null), /*#__PURE__*/React.createElement(OutroSection, null), /*#__PURE__*/React.createElement(FooterSection, null));
 }
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(/*#__PURE__*/React.createElement(App, null));
