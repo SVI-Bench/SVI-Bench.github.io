@@ -3032,7 +3032,8 @@ function AnalysisPanel({
       display: 'flex',
       justifyContent: 'flex-end',
       gap: 10,
-      paddingTop: 4
+      paddingTop: 4,
+      marginTop: 'auto'
     }
   }, stage !== 'done' && stage !== 'verdict' && /*#__PURE__*/React.createElement("button", {
     onClick: revealAll,
@@ -3771,12 +3772,9 @@ function AskThePlaySection() {
     style: {
       display: 'grid',
       gridTemplateColumns: '1.35fr 1fr',
-      gap: 24,
-      width: '100%',
-      maxWidth: 960,
-      marginLeft: 'auto',
-      marginRight: 'auto',
+      gap: 28,
       marginBottom: 24,
+      flex: 1,
       minHeight: 0
     }
   }, /*#__PURE__*/React.createElement("div", {
