@@ -2128,7 +2128,8 @@ function CliffBroadcastViewport({
     style: {
       position: 'relative',
       width: '100%',
-      aspectRatio: isT9 ? '5 / 4' : isT3 ? '4 / 3' : '16 / 9',
+      flex: 1,
+      minHeight: 0,
       background: '#0c0d10',
       color: '#fafafa',
       border: '1px solid #27272a',
@@ -2266,7 +2267,7 @@ function ScenePanel({
   }, task.bestModel)), /*#__PURE__*/React.createElement(CliffBroadcastViewport, {
     task: task,
     t: t
-  }), (TASK_TEXT[task.id] && task.id !== 'T3') ? /*#__PURE__*/React.createElement("div", {
+  }), false ? /*#__PURE__*/React.createElement("div", {
     style: {
       marginTop: 14,
       display: 'flex',
