@@ -3,7 +3,7 @@
     {
       "id": "basketball",
       "sport": "basketball",
-      "query_simple": "Find the clip of a guard taking a contested low-post jumper after a catch-and-drive.",
+      "query_simple": "Find the clip where a guard misses a contested two-point jumper after a catch-and-drive at the low post.",
       "query_full": "The basketball player performs 2 pt missed with a shot from low post with a jumper during catch and drive with a shot using right hand with a shot while contested.",
       "composition": {
         "action_name": "2-",
@@ -19,8 +19,8 @@
           "is_gt": false,
           "sim": 0.84,
           "video": "assets/t3_videos/basketball/neg1.mp4",
-          "caption": "A guard catches the ball at the low post, posts up, and puts up a contested two-point jumper.",
-          "diff_substring": "posts up",
+          "caption": "On a post-up at the low post, a guard misses a contested two-point jumper.",
+          "diff_substring": "post-up",
           "diff_axis": "playtype",
           "diff_values": {
             "positive": "Catch and Drive",
@@ -32,7 +32,7 @@
           "is_gt": false,
           "sim": 0.79,
           "video": "assets/t3_videos/basketball/neg2.mp4",
-          "caption": "A guard catches the ball at the low post, drives, and puts up an uncontested two-point jumper.",
+          "caption": "On a catch and drive from the low post, the guard puts up an uncontested jumper and misses the two point shot.",
           "diff_substring": "uncontested",
           "diff_axis": "contesting",
           "diff_values": {
@@ -45,7 +45,7 @@
           "is_gt": false,
           "sim": 0.74,
           "video": "assets/t3_videos/basketball/neg3.mp4",
-          "caption": "A guard catches the ball at the low post, drives, and makes a contested two-point shot.",
+          "caption": "A guard catches and drives from the low post, then makes a contested two-point jumper.",
           "diff_substring": "makes",
           "diff_axis": "action_name",
           "diff_values": {
@@ -58,7 +58,7 @@
           "is_gt": true,
           "sim": 0.62,
           "video": "assets/t3_videos/basketball/gt.mp4",
-          "caption": "A guard catches the ball at the low post, drives, and puts up a contested two-point jumper.",
+          "caption": "After a catch-and-drive at the low post, a guard misses a contested two-point jumper.",
           "diff_substring": null,
           "diff_axis": null
         }
