@@ -144,7 +144,7 @@
           "is_gt": false,
           "sim": 0.82,
           "video": "assets/t3_videos/hockey/neg1.mp4",
-          "caption": "A defender blocks a slapshot in the offensive zone, goalie set in the butterfly position.",
+          "caption": "In the offensive zone, a defender blocks a slapshot with the goalie in the butterfly position.",
           "diff_substring": "slapshot",
           "diff_axis": "shot_type",
           "diff_values": {
@@ -157,7 +157,7 @@
           "is_gt": false,
           "sim": 0.77,
           "video": "assets/t3_videos/hockey/neg2.mp4",
-          "caption": "A skater scores a goal in the offensive zone on a wrist shot, goalie set in the butterfly position.",
+          "caption": "A skater scores a goal in the offensive zone on a wrist shot while the goalie sits in butterfly.",
           "diff_substring": "scores a goal",
           "diff_axis": "action_name",
           "diff_values": {
@@ -170,7 +170,7 @@
           "is_gt": false,
           "sim": 0.73,
           "video": "assets/t3_videos/hockey/neg3.mp4",
-          "caption": "A defender blocks a wrist shot in the offensive zone, goalie set in the split position.",
+          "caption": "A defender blocks a wrist shot in the offensive zone while the goalie holds a split position.",
           "diff_substring": "split position",
           "diff_axis": "goalie_stance",
           "diff_values": {
@@ -183,7 +183,7 @@
           "is_gt": true,
           "sim": 0.6,
           "video": "assets/t3_videos/hockey/gt.mp4",
-          "caption": "A defender blocks a wrist shot in the offensive zone, goalie set in the butterfly position.",
+          "caption": "A defender blocks a wrist shot in the offensive zone where the goalie is set in the butterfly.",
           "diff_substring": null,
           "diff_axis": null
         }
