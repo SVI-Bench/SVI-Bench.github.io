@@ -753,7 +753,7 @@ function T9LegendAndStats(_ref4) {
   // Narrative summaries: if `data.tool_summaries` exists (cliff), show
   // legend (compact horizontal) + workflow (numbered vertical) separately.
   var summaries = data.tool_summaries;
-  if (summaries && allRevealed) {
+  if (summaries) {
     var legendItems = [
       { abbrev: 'SD', key: 'search_documents', label: 'search documents' },
       { abbrev: 'DQ', key: 'document_qa', label: 'ask questions about a document' },
@@ -788,13 +788,14 @@ function T9LegendAndStats(_ref4) {
         style: { fontFamily: '"IBM Plex Sans", sans-serif' }
       }, item.label));
     })),
-    // "Click any tile" hint
+    // "Overall workflow" subheader
     /*#__PURE__*/React.createElement("div", {
       style: {
-        fontSize: 10, letterSpacing: '0.1em', color: headerCol,
-        textTransform: 'uppercase', fontFamily: '"IBM Plex Mono", monospace'
+        fontSize: 12, letterSpacing: '0.12em', color: headerCol,
+        textTransform: 'uppercase', fontFamily: '"IBM Plex Mono", monospace',
+        fontWeight: 600
       }
-    }, 'Click any tile to inspect'),
+    }, 'Overall workflow'),
     // Workflow numbered list
     /*#__PURE__*/React.createElement("div", {
       style: { display: 'flex', flexDirection: 'column', gap: 4 }
@@ -814,7 +815,15 @@ function T9LegendAndStats(_ref4) {
       }, i + 1 + '.'), /*#__PURE__*/React.createElement("span", {
         style: { color: itemActive }
       }, s.text));
-    })));
+    })),
+    // "Click any tile" hint at the bottom
+    allRevealed && /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 13, color: headerCol,
+        fontFamily: '"IBM Plex Sans", sans-serif',
+        marginTop: 4
+      }
+    }, 'Click any tile to inspect.'));
   }
   return /*#__PURE__*/React.createElement("div", {
     style: {
