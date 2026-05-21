@@ -493,7 +493,8 @@ const CLIPS = [{
   teaser: 'missed shot',
   title: 'Goal-Conditioned Action Generation',
   context: 'NBA · Q4 01:32',
-  question: 'Generate the action sequence that scores from this setup.',
+  question: 'Simulate Player #92 attempting a contested floater off a pick-and-roll set by Player #8, resulting in a miss.',
+  simBaseDir: 'assets/qualitative_vis_basketball_task2/1109_Edgaras_Ulanovas_2-_262040613',
   models: [{
     name: 'GPT-5.2',
     score: 'failed',
@@ -2165,6 +2166,61 @@ function TaskOverlay({
 // ============================================================
 // CLIFF: BROADCAST VIEWPORT (task-aware) + SCENE PANEL
 // ============================================================
+function VideoLightbox({ src, onClose }) {
+  if (!src) return null;
+  return /*#__PURE__*/React.createElement("div", {
+    onClick: onClose,
+    style: {
+      position: 'fixed',
+      inset: 0,
+      zIndex: 200,
+      background: 'rgba(0,0,0,0.88)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: 40,
+      cursor: 'pointer',
+      animation: 'overlayIn 200ms ease'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    onClick: function (e) { e.stopPropagation(); },
+    style: {
+      cursor: 'default',
+      maxWidth: 1200,
+      width: '100%',
+      background: '#0c0d10',
+      borderRadius: 6,
+      border: '1px solid #27272a',
+      overflow: 'hidden',
+      boxShadow: '0 24px 80px rgba(0,0,0,0.8)'
+    }
+  }, /*#__PURE__*/React.createElement("video", {
+    src: src,
+    controls: true,
+    autoPlay: true,
+    muted: true,
+    loop: true,
+    playsInline: true,
+    style: { width: '100%', height: 'auto', display: 'block' }
+  }), /*#__PURE__*/React.createElement("button", {
+    onClick: onClose,
+    style: {
+      position: 'absolute',
+      top: 16,
+      right: 16,
+      background: 'rgba(10,10,12,0.85)',
+      border: '1px solid #3f3f46',
+      color: '#e4e4e7',
+      padding: '6px 16px',
+      borderRadius: 3,
+      fontFamily: '"IBM Plex Mono", monospace',
+      fontSize: 11,
+      letterSpacing: '0.1em',
+      cursor: 'pointer'
+    }
+  }, "close ✕")));
+}
+
 function T7Panel({ pillar }) {
   const c = PILLARS[pillar];
   const baseDir = 'assets/qualitative_vis_soccer_task1/acceleration_2391999457';
@@ -2197,35 +2253,66 @@ function T7Panel({ pillar }) {
     objectFit: 'contain',
     display: 'block'
   };
-  const attachVideo = useCallback((el) => {
-    if (!el) return;
-    if (el.dataset.simAttached) return;
-    el.dataset.simAttached = '1';
-    el.muted = true;
-    el.defaultMuted = true;
+  const [lightboxSrc, setLightboxSrc] = useState(null);
+  const v0Ref = useRef(null);
+  const v1Ref = useRef(null);
+  const v2Ref = useRef(null);
+  useEffect(() => {
+    const videos = [v0Ref.current, v1Ref.current, v2Ref.current].filter(Boolean);
+    if (videos.length === 0) return;
+    videos.forEach(v => { v.muted = true; v.defaultMuted = true; });
     const holdMs = 1500;
     let timer = null;
-    const startWithHold = () => {
+    let stopped = false;
+    const startAll = () => {
+      if (stopped) return;
+      videos.forEach(v => { try { v.pause(); } catch (_) {} v.currentTime = 0; });
       if (timer) clearTimeout(timer);
-      el.currentTime = 0;
       timer = setTimeout(() => {
-        const p = el.play();
-        if (p && p.catch) p.catch(() => {});
+        if (stopped) return;
+        videos.forEach(v => {
+          const p = v.play();
+          if (p && p.catch) p.catch(() => {});
+        });
       }, holdMs);
     };
-    if (el.readyState >= 2) {
-      startWithHold();
-    } else {
-      el.addEventListener('loadeddata', startWithHold, { once: true });
-    }
-    el.addEventListener('ended', startWithHold);
+    const checkAndStart = () => {
+      if (stopped) return;
+      if (videos.every(v => v.readyState >= 2)) startAll();
+    };
+    const readyHandlers = [];
+    videos.forEach(v => {
+      if (v.readyState < 2) {
+        v.addEventListener('loadeddata', checkAndStart, { once: true });
+        readyHandlers.push(v);
+      }
+    });
+    checkAndStart();
+    const endedSet = new Set();
+    const endedHandlers = videos.map(v => {
+      const h = () => {
+        endedSet.add(v);
+        if (endedSet.size === videos.length) {
+          endedSet.clear();
+          startAll();
+        }
+      };
+      v.addEventListener('ended', h);
+      return { v, h };
+    });
+    return () => {
+      stopped = true;
+      if (timer) clearTimeout(timer);
+      readyHandlers.forEach(v => v.removeEventListener('loadeddata', checkAndStart));
+      endedHandlers.forEach(({ v, h }) => v.removeEventListener('ended', h));
+    };
   }, []);
-  const videoProps = (file) => ({
+  const videoProps = (file, ref) => ({
     src: `${baseDir}/${file}`,
     muted: true,
     playsInline: true,
     preload: 'auto',
-    ref: attachVideo,
+    ref: ref,
     style: videoEl
   });
   return /*#__PURE__*/React.createElement("div", {
@@ -2246,11 +2333,11 @@ function T7Panel({ pillar }) {
     style: { flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 6 }
   },
     /*#__PURE__*/React.createElement("div", { style: videoBox },
-      /*#__PURE__*/React.createElement("video", videoProps('original.mp4')),
+      /*#__PURE__*/React.createElement("video", videoProps('original.mp4', v0Ref)),
       /*#__PURE__*/React.createElement("span", { style: labelChip }, "GT")
     ),
     /*#__PURE__*/React.createElement("div", { style: videoBox },
-      /*#__PURE__*/React.createElement("video", videoProps('generated_gt_bbox.mp4')),
+      /*#__PURE__*/React.createElement("video", videoProps('generated_gt_bbox.mp4', v1Ref)),
       /*#__PURE__*/React.createElement("span", { style: { ...labelChip, color: c.base } }, "MODEL")
     )
   ),
@@ -2277,12 +2364,39 @@ function T7Panel({ pillar }) {
       }
     }, "Input"),
     /*#__PURE__*/React.createElement("div", {
-      style: { background: '#000', borderRadius: 2, overflow: 'hidden', aspectRatio: '16 / 9', border: '1px solid #1c1c1f' }
+      onClick: () => setLightboxSrc(`${baseDir}/inpainted_gt_bbox.mp4`),
+      onMouseEnter: (e) => { e.currentTarget.style.borderColor = c.base; e.currentTarget.style.transform = 'translateY(-2px)'; },
+      onMouseLeave: (e) => { e.currentTarget.style.borderColor = '#1c1c1f'; e.currentTarget.style.transform = 'translateY(0)'; },
+      style: {
+        position: 'relative',
+        background: '#000',
+        borderRadius: 2,
+        overflow: 'hidden',
+        aspectRatio: '16 / 9',
+        border: '1px solid #1c1c1f',
+        cursor: 'pointer',
+        transition: 'border-color 150ms, transform 150ms'
+      }
     },
       /*#__PURE__*/React.createElement("video", {
-        ...videoProps('inpainted_gt_bbox.mp4'),
-        style: { ...videoEl, objectFit: 'cover' }
-      })
+        ...videoProps('inpainted_gt_bbox.mp4', v2Ref),
+        style: { ...videoEl, objectFit: 'cover', pointerEvents: 'none' }
+      }),
+      /*#__PURE__*/React.createElement("div", {
+        style: {
+          position: 'absolute',
+          top: 4,
+          right: 4,
+          fontFamily: '"IBM Plex Mono", monospace',
+          fontSize: 9,
+          letterSpacing: '0.1em',
+          color: '#e4e4e7',
+          background: 'rgba(10,10,12,0.7)',
+          padding: '1px 4px',
+          borderRadius: 2,
+          pointerEvents: 'none'
+        }
+      }, "↗")
     ),
     /*#__PURE__*/React.createElement("p", {
       style: {
@@ -2293,7 +2407,10 @@ function T7Panel({ pillar }) {
         margin: 0
       }
     }, "Player-removed background + Per-Player Bounding Box Motion trajectories — the model's input.")
-  ));
+  ), lightboxSrc && /*#__PURE__*/React.createElement(VideoLightbox, {
+    src: lightboxSrc,
+    onClose: () => setLightboxSrc(null)
+  }));
 }
 function T8Panel({ pillar }) {
   const c = PILLARS[pillar];
@@ -2327,35 +2444,66 @@ function T8Panel({ pillar }) {
     objectFit: 'contain',
     display: 'block'
   };
-  const attachVideo = useCallback((el) => {
-    if (!el) return;
-    if (el.dataset.simAttached) return;
-    el.dataset.simAttached = '1';
-    el.muted = true;
-    el.defaultMuted = true;
+  const [lightboxSrc, setLightboxSrc] = useState(null);
+  const v0Ref = useRef(null);
+  const v1Ref = useRef(null);
+  const v2Ref = useRef(null);
+  useEffect(() => {
+    const videos = [v0Ref.current, v1Ref.current, v2Ref.current].filter(Boolean);
+    if (videos.length === 0) return;
+    videos.forEach(v => { v.muted = true; v.defaultMuted = true; });
     const holdMs = 1500;
     let timer = null;
-    const startWithHold = () => {
+    let stopped = false;
+    const startAll = () => {
+      if (stopped) return;
+      videos.forEach(v => { try { v.pause(); } catch (_) {} v.currentTime = 0; });
       if (timer) clearTimeout(timer);
-      el.currentTime = 0;
       timer = setTimeout(() => {
-        const p = el.play();
-        if (p && p.catch) p.catch(() => {});
+        if (stopped) return;
+        videos.forEach(v => {
+          const p = v.play();
+          if (p && p.catch) p.catch(() => {});
+        });
       }, holdMs);
     };
-    if (el.readyState >= 2) {
-      startWithHold();
-    } else {
-      el.addEventListener('loadeddata', startWithHold, { once: true });
-    }
-    el.addEventListener('ended', startWithHold);
+    const checkAndStart = () => {
+      if (stopped) return;
+      if (videos.every(v => v.readyState >= 2)) startAll();
+    };
+    const readyHandlers = [];
+    videos.forEach(v => {
+      if (v.readyState < 2) {
+        v.addEventListener('loadeddata', checkAndStart, { once: true });
+        readyHandlers.push(v);
+      }
+    });
+    checkAndStart();
+    const endedSet = new Set();
+    const endedHandlers = videos.map(v => {
+      const h = () => {
+        endedSet.add(v);
+        if (endedSet.size === videos.length) {
+          endedSet.clear();
+          startAll();
+        }
+      };
+      v.addEventListener('ended', h);
+      return { v, h };
+    });
+    return () => {
+      stopped = true;
+      if (timer) clearTimeout(timer);
+      readyHandlers.forEach(v => v.removeEventListener('loadeddata', checkAndStart));
+      endedHandlers.forEach(({ v, h }) => v.removeEventListener('ended', h));
+    };
   }, []);
-  const videoProps = (file) => ({
+  const videoProps = (file, ref) => ({
     src: `${baseDir}/${file}`,
     muted: true,
     playsInline: true,
     preload: 'auto',
-    ref: attachVideo,
+    ref: ref,
     style: videoEl
   });
   return /*#__PURE__*/React.createElement("div", {
@@ -2376,11 +2524,11 @@ function T8Panel({ pillar }) {
     style: { flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 6 }
   },
     /*#__PURE__*/React.createElement("div", { style: videoBox },
-      /*#__PURE__*/React.createElement("video", videoProps('groundtruth.mp4')),
+      /*#__PURE__*/React.createElement("video", videoProps('groundtruth.mp4', v0Ref)),
       /*#__PURE__*/React.createElement("span", { style: labelChip }, "GT")
     ),
     /*#__PURE__*/React.createElement("div", { style: videoBox },
-      /*#__PURE__*/React.createElement("video", videoProps('generated_gt_bbox.mp4')),
+      /*#__PURE__*/React.createElement("video", videoProps('generated_gt_bbox.mp4', v1Ref)),
       /*#__PURE__*/React.createElement("span", { style: { ...labelChip, color: c.base } }, "MODEL")
     )
   ),
@@ -2407,12 +2555,39 @@ function T8Panel({ pillar }) {
       }
     }, "Input"),
     /*#__PURE__*/React.createElement("div", {
-      style: { background: '#000', borderRadius: 2, overflow: 'hidden', aspectRatio: '16 / 9', border: '1px solid #1c1c1f' }
+      onClick: () => setLightboxSrc(`${baseDir}/background_gt_bbox.mp4`),
+      onMouseEnter: (e) => { e.currentTarget.style.borderColor = c.base; e.currentTarget.style.transform = 'translateY(-2px)'; },
+      onMouseLeave: (e) => { e.currentTarget.style.borderColor = '#1c1c1f'; e.currentTarget.style.transform = 'translateY(0)'; },
+      style: {
+        position: 'relative',
+        background: '#000',
+        borderRadius: 2,
+        overflow: 'hidden',
+        aspectRatio: '16 / 9',
+        border: '1px solid #1c1c1f',
+        cursor: 'pointer',
+        transition: 'border-color 150ms, transform 150ms'
+      }
     },
       /*#__PURE__*/React.createElement("video", {
-        ...videoProps('background_gt_bbox.mp4'),
-        style: { ...videoEl, objectFit: 'cover' }
-      })
+        ...videoProps('background_gt_bbox.mp4', v2Ref),
+        style: { ...videoEl, objectFit: 'cover', pointerEvents: 'none' }
+      }),
+      /*#__PURE__*/React.createElement("div", {
+        style: {
+          position: 'absolute',
+          top: 4,
+          right: 4,
+          fontFamily: '"IBM Plex Mono", monospace',
+          fontSize: 9,
+          letterSpacing: '0.1em',
+          color: '#e4e4e7',
+          background: 'rgba(10,10,12,0.7)',
+          padding: '1px 4px',
+          borderRadius: 2,
+          pointerEvents: 'none'
+        }
+      }, "↗")
     ),
     /*#__PURE__*/React.createElement("p", {
       style: {
@@ -2431,7 +2606,10 @@ function T8Panel({ pillar }) {
          style: { color: '#a1a1aa', fontWeight: 500 }
        }, "Conditioned on: "),
        "initial frame + player-removed background + spatial target + natural-language instruction.")
-  ));
+  ), lightboxSrc && /*#__PURE__*/React.createElement(VideoLightbox, {
+    src: lightboxSrc,
+    onClose: () => setLightboxSrc(null)
+  }));
 }
 function CliffBroadcastViewport({
   task,
@@ -3957,6 +4135,110 @@ function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) 
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+function T8AskPanel({ clip }) {
+  const c = PILLARS[clip.pillar];
+  const baseDir = clip.simBaseDir;
+  const makeTile = (file, label, labelColor) =>
+    /*#__PURE__*/React.createElement("div", {
+      style: {
+        position: 'relative',
+        aspectRatio: '16 / 9',
+        background: '#000',
+        border: '1px solid #27272a',
+        borderRadius: 4,
+        overflow: 'hidden'
+      }
+    },
+      /*#__PURE__*/React.createElement("video", {
+        src: `${baseDir}/${file}`,
+        autoPlay: true,
+        loop: true,
+        muted: true,
+        playsInline: true,
+        preload: 'auto',
+        style: {
+          width: '100%',
+          height: '100%',
+          objectFit: 'contain',
+          background: '#0c0d10',
+          display: 'block'
+        }
+      }),
+      /*#__PURE__*/React.createElement("div", {
+        style: {
+          position: 'absolute',
+          top: 8,
+          left: 8,
+          fontFamily: '"IBM Plex Mono", monospace',
+          fontSize: 10,
+          letterSpacing: '0.15em',
+          color: labelColor,
+          textTransform: 'uppercase',
+          background: 'rgba(10,10,12,0.78)',
+          padding: '2px 7px',
+          borderRadius: 2,
+          fontWeight: 600
+        }
+      }, label)
+    );
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 18,
+      marginBottom: 24
+    }
+  },
+    /*#__PURE__*/React.createElement("div", {
+      style: {
+        padding: '14px 18px',
+        background: '#ffffff',
+        border: '1px solid #d4d4d8',
+        borderRadius: 3
+      }
+    },
+      /*#__PURE__*/React.createElement("div", {
+        style: {
+          fontFamily: '"IBM Plex Mono", monospace',
+          fontSize: 10,
+          color: '#71717a',
+          letterSpacing: '0.18em',
+          textTransform: 'uppercase',
+          marginBottom: 6
+        }
+      }, "Goal"),
+      /*#__PURE__*/React.createElement("div", {
+        style: {
+          fontFamily: '"IBM Plex Sans", sans-serif',
+          fontSize: 14.5,
+          lineHeight: 1.4,
+          color: '#18181b'
+        }
+      }, clip.question)
+    ),
+    /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: 'grid',
+        gridTemplateColumns: '1fr 1fr',
+        gap: 18
+      }
+    },
+      /*#__PURE__*/React.createElement("div", {
+        style: { display: 'flex', flexDirection: 'column', gap: 14 }
+      },
+        makeTile('groundtruth.mp4',         'Ground truth',           '#2ECC71'),
+        makeTile('background_gt_bbox.mp4',  'Input · start/end bbox', '#a1a1aa')
+      ),
+      /*#__PURE__*/React.createElement("div", {
+        style: { display: 'flex', flexDirection: 'column', gap: 10 }
+      },
+        makeTile('generated_gt_bbox.mp4',           'Ours · w/ GT bbox',          c.base),
+        makeTile('generated_ati_gt_bbox.mp4',       'ATI · w/ GT bbox',           '#E74C3C'),
+        makeTile('generated_magicmotion_gt_bbox.mp4', 'MagicMotion · w/ GT bbox', '#E74C3C')
+      )
+    )
+  );
+}
 function AskThePlaySection() {
   var _useState = useState('c1'),
     _useState2 = _slicedToArray(_useState, 2),
@@ -3982,6 +4264,7 @@ function AskThePlaySection() {
     });
   };
   var isT9 = clip && clip.taskId === 'T9';
+  var isT8 = clip && clip.taskId === 'T8';
   return /*#__PURE__*/React.createElement("section", {
     id: "ask",
     style: {
@@ -4101,7 +4384,9 @@ function AskThePlaySection() {
       fontSize: 11,
       color: '#e4e4e7'
     }
-  }, "Cross-Corpus Agentic Reasoning"))) : /*#__PURE__*/React.createElement("div", {
+  }, "Cross-Corpus Agentic Reasoning"))) : isT8 ? /*#__PURE__*/React.createElement(T8AskPanel, {
+    clip: clip
+  }) : /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'grid',
       gridTemplateColumns: '1.35fr 1fr',
@@ -4171,26 +4456,26 @@ const T7_ARCHIVE = {
       id: 'soc_offside',
       sport: 'soccer',
       axis_label: 'soccer · offside acceleration',
-      query: 'A player accelerates to break the offside line. Bbox conditioning kept; identity / fine motion drift.',
+      query: 'Trajectories are mostly followed, but fine identity drifts — jersey colors shift and player bodies blur.',
       base_dir: 'assets/qualitative_vis_soccer_task1/offside_1361922043',
       thumbs: [
-        { kind: 'input',    label: 'Inpainted + bbox',     file: 'inpainted_gt_bbox.mp4' },
-        { kind: 'gt',       label: 'Ground truth',         file: 'original.mp4' },
-        { kind: 'gen',      label: 'Generated',            file: 'generated.mp4' },
-        { kind: 'gen_bbox', label: 'Generated + GT bbox',  file: 'generated_gt_bbox.mp4' }
+        { kind: 'input',    label: 'Per-player bbox trajectories', file: 'inpainted_gt_bbox.mp4' },
+        { kind: 'gt',       label: 'Ground truth',                 file: 'original.mp4' },
+        { kind: 'gen_bbox', label: 'Generated · GT bbox overlay',  file: 'generated_gt_bbox.mp4' },
+        { kind: 'gen',      label: 'Generated',                    file: 'generated.mp4' }
       ]
     },
     {
       id: 'bb_rebound',
       sport: 'basketball',
       axis_label: 'basketball · rebound contest',
-      query: 'A rebound contest — generator follows the bbox path, body and limb dynamics deviate.',
+      query: 'When multiple players overlap during the rebound contest, jersey numbers swap and bodies merge into one another.',
       base_dir: 'assets/qualitative_vis_basketball_task1/328676658_rebound_840.299',
       thumbs: [
-        { kind: 'input',    label: 'Inpainted + bbox',     file: 'inpainted_gt_bbox.mp4' },
-        { kind: 'gt',       label: 'Ground truth',         file: 'original.mp4' },
-        { kind: 'gen',      label: 'Generated',            file: 'generated.mp4' },
-        { kind: 'gen_bbox', label: 'Generated + GT bbox',  file: 'generated_gt_bbox.mp4' }
+        { kind: 'input',    label: 'Per-player bbox trajectories', file: 'inpainted_gt_bbox.mp4' },
+        { kind: 'gt',       label: 'Ground truth',                 file: 'original.mp4' },
+        { kind: 'gen_bbox', label: 'Generated · GT bbox overlay',  file: 'generated_gt_bbox.mp4' },
+        { kind: 'gen',      label: 'Generated',                    file: 'generated.mp4' }
       ]
     }
   ]
@@ -4206,10 +4491,10 @@ const T8_ARCHIVE = {
       query: 'Goal: simulate Player #8 securing a rebound. The generated player can\'t even reach the spatial target — let alone perform the desired action.',
       base_dir: 'assets/qualitative_vis_basketball_task2/1881_Marcus_Morris_Rebound_247840436',
       thumbs: [
-        { kind: 'input',    label: 'Background + bbox',    file: 'background_gt_bbox.mp4' },
-        { kind: 'gt',       label: 'Ground truth',         file: 'groundtruth.mp4' },
-        { kind: 'gen',      label: 'Generated',            file: 'generated.mp4' },
-        { kind: 'gen_bbox', label: 'Generated + GT bbox',  file: 'generated_gt_bbox.mp4' }
+        { kind: 'input',    label: 'Background + start/end bbox',  file: 'background_gt_bbox.mp4' },
+        { kind: 'gt',       label: 'Ground truth',                 file: 'groundtruth.mp4' },
+        { kind: 'gen_bbox', label: 'Generated · target overlay',   file: 'generated_gt_bbox.mp4' },
+        { kind: 'gen',      label: 'Generated',                    file: 'generated.mp4' }
       ]
     },
     {
@@ -4219,10 +4504,10 @@ const T8_ARCHIVE = {
       query: 'Goal: simulate Player #0 missing a contested corner three-pointer off a screen set by Player #6, defended by Player #1. Some players reach their spatial targets, others don\'t — either way, the play never materializes.',
       base_dir: 'assets/qualitative_vis_basketball_task2/8488_Panagiotis_Kalaitzakis_3-_279719388',
       thumbs: [
-        { kind: 'input',    label: 'Background + bbox',    file: 'background_gt_bbox.mp4' },
-        { kind: 'gt',       label: 'Ground truth',         file: 'groundtruth.mp4' },
-        { kind: 'gen',      label: 'Generated',            file: 'generated.mp4' },
-        { kind: 'gen_bbox', label: 'Generated + GT bbox',  file: 'generated_gt_bbox.mp4' }
+        { kind: 'input',    label: 'Background + start/end bbox',  file: 'background_gt_bbox.mp4' },
+        { kind: 'gt',       label: 'Ground truth',                 file: 'groundtruth.mp4' },
+        { kind: 'gen_bbox', label: 'Generated · target overlay',   file: 'generated_gt_bbox.mp4' },
+        { kind: 'gen',      label: 'Generated',                    file: 'generated.mp4' }
       ]
     }
   ]
