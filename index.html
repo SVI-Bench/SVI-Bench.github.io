@@ -138,7 +138,7 @@ const TASKS = [{
   metric: '44.8%',
   metricLabel: 'accuracy',
   bestModel: 'Qwen3-VL-8B (ft)',
-  blurb: 'Predict what happens next. Models are confident and wrong — calibration error of 28 points.'
+  blurb: 'Predict what happens next. The model is 92% confident about a wrong answer.'
 }, {
   id: 'T6',
   name: 'Long-Form Narrative Synthesis',
@@ -181,9 +181,9 @@ const TASK_MEDIA = {
   T1: 'assets/T1/t1_clip.mp4',
   T2: 'assets/T2/t2_clip.mp4',
   T3: 'assets/videos/cliff_placeholder.mp4',
-  T4: 'assets/videos/cliff_placeholder.mp4',
-  T5: 'assets/videos/cliff_placeholder.mp4',
-  T6: 'assets/videos/cliff_placeholder.mp4',
+  T4: 'assets/T4/t4_clip.mp4',
+  T5: 'assets/T5/t5_clip.mp4',
+  T6: 'assets/T6/t6_clip.mp4',
   T7: 'assets/videos/cliff_placeholder.mp4',
   T8: 'assets/videos/cliff_placeholder.mp4',
   T9: 'assets/videos/cliff_placeholder.mp4'
@@ -262,29 +262,25 @@ const TASK_TEXT = {
   },
   T4: {
     layout: 'caption',
-    q: 'In the fourth quarter, what change does Milano make in how they defend White, and how does that change affect White’s options?',
+    q: "In the first half, a Bowling Green player was injured in an unusual sequence. What happened, and what specific injury did he appear to sustain?",
     gt: [
-      'Milano ',
-      { t: 'no longer sends the quick double-team to the post', ok: true },
-      '. White can ',
-      { t: 'hold his position and take a controlled one-on-one shot from the block', ok: true },
-      ' instead of being forced into kick-outs.'
+      "He ",
+      { t: "rolled his right ankle", ok: true },
+      " after accidentally ",
+      { t: "stepping on Ball State's head coach on the sideline", ok: true },
+      " while trying to get back into the play."
     ],
     pred: [
-      'Milano ',
-      { t: 'starts blitzing/trapping White on high ball screens', wrong: true },
-      '. His ',
-      { t: 'driving lane is cut off', wrong: true },
-      ', and his ',
-      { t: 'scoring impact drops', wrong: true },
-      '.'
+      "A Bowling Green player went down in a ",
+      { t: "freak, non-contact moment", wrong: true },
+      ": his ",
+      { t: "foot/leg got tangled as he tried to change direction", wrong: true },
+      ". He appeared to have suffered an ",
+      { t: "ankle injury (appearing like a bad sprain/roll)", wrong: false },
+      "."
     ]
   },
-  T5: {
-    layout: 'caption',
-    kicker: 'predict next outcome',
-    q: 'Analyze the 7-minute segment from the 2nd half. Focus on the player who makes a three-point attempt between 6:15 and 6:25. How many total made three-pointers will this player record from the end of this segment until the end of this half?'
-  }
+  T5: null
 };
 
 // ============================================================
@@ -378,80 +374,118 @@ const CLIPS = [{
   id: 'c3',
   taskId: 'T4',
   pillar: 'Reasoning',
-  teaser: 'defense fail',
+  teaser: 'trick play',
   title: 'Strategic Reasoning QA',
-  context: 'NBA · Q4 02:51',
-  question: 'Why was the defense unable to recover on this pick-and-roll?',
+  context: 'Basketball \xB7 SIU inbounds',
+  video: 'assets/T4/t4_ask_clip.mp4',
+  question: 'With almost no time on the shot clock on an inbounds play, what created the scoring opportunity and why did it work?',
   models: [{
     name: 'GPT-5.2',
-    score: '1 / 5',
+    score: '0 / 5',
     wrong: true,
-    text: 'The defenders failed to switch on the screen, allowing the ball-handler an open three.'
+    text: 'A screen-the-screener action freed a cutter to the rim. The defense top-locked the first option and got caught on the second screen.',
+    displayText: /*#__PURE__*/React.createElement("span", null,
+      "A ", /*#__PURE__*/React.createElement("s", { style: { textDecorationColor: '#C0392B', color: '#C0392B' } }, "screen-the-screener action freed a cutter to the rim"),
+      ". The defense ", /*#__PURE__*/React.createElement("s", { style: { textDecorationColor: '#C0392B', color: '#C0392B' } }, "top-locked the first option and got caught on the second screen"), ".")
+  }, {
+    name: 'Gemini 3 Flash',
+    score: '0 / 5',
+    wrong: true,
+    text: 'A back screen created separation for an undetected cut to the basket, leading to a lob pass for an alley-oop finish.',
+    displayText: /*#__PURE__*/React.createElement("span", null,
+      "A ", /*#__PURE__*/React.createElement("s", { style: { textDecorationColor: '#C0392B', color: '#C0392B' } }, "back screen created separation for an undetected cut"),
+      ", leading to a ", /*#__PURE__*/React.createElement("s", { style: { textDecorationColor: '#C0392B', color: '#C0392B' } }, "lob pass for an alley-oop finish"), ".")
   }, {
     name: 'Qwen3-VL',
-    score: '2 / 5',
+    score: '0 / 5',
     wrong: true,
-    text: 'The screener prevented the help defender from rotating in time, leaving the corner shooter open.'
-  }, {
-    name: 'Gemini 2.5',
-    score: '2 / 5',
-    wrong: true,
-    text: 'Poor communication on the switch led to a mismatch with a slower defender on the perimeter.'
+    text: 'A pick-and-roll created a mismatch. The ball handler drove and drew defenders, leading to a kick-out to an open shooter.',
+    displayText: /*#__PURE__*/React.createElement("span", null,
+      "A ", /*#__PURE__*/React.createElement("s", { style: { textDecorationColor: '#C0392B', color: '#C0392B' } }, "pick-and-roll created a mismatch"),
+      ". The ball handler ", /*#__PURE__*/React.createElement("s", { style: { textDecorationColor: '#C0392B', color: '#C0392B' } }, "drove and drew defenders, leading to a kick-out to an open shooter"), ".")
   }],
-  gt: "Screener's defender hedged hard; the roller had a free lane to the rim with no help defender rotating in time.",
-  verdictHeadline: '3 of 3 wrong · all proposed perimeter outcomes; actual was at the rim'
+  gt: "Jones threw the inbounds pass off the inbounder's back, collected it, and scored. The ball was immediately playable without a normal catch-and-shoot, beating the one-second constraint.",
+  verdictHeadline: 'All 3 score 0. Every model invents a conventional play. None sees the trick: pass off the inbounder\u2019s back.'
 }, {
   id: 'c4',
   taskId: 'T5',
   pillar: 'Reasoning',
-  teaser: 'wrong outcome',
+  teaser: 'wrong forecast',
   title: 'Outcome Forecasting',
-  context: 'NBA · Q3 06:17',
-  question: 'Predict the most likely outcome of the next possession.',
+  context: 'Soccer \xB7 2nd half',
+  video: 'assets/T5/t5_ask_clip.mp4',
+  question: 'Which player will be the first to reach 1 goal by the end of the match?',
   models: [{
     name: 'GPT-5.2',
     score: '0 / 1',
     wrong: true,
-    text: 'Made 2 (62% confidence). The driving lane looks open.'
+    text: 'A \u2014 The player who makes an interception between 1:34 and 1:44.'
+  }, {
+    name: 'Gemini 3 Flash',
+    score: '0 / 1',
+    wrong: true,
+    text: 'D \u2014 The player who recovers the ball between 2:40 and 2:50.'
   }, {
     name: 'Qwen3-VL',
     score: '0 / 1',
     wrong: true,
-    text: 'Missed shot (54% confidence). Help defender is rotating early.'
-  }, {
-    name: 'Gemini 2.5',
-    score: '0 / 1',
-    wrong: true,
-    text: 'Made 2 (47% confidence). Ball-handler has a step on the defender.'
+    text: 'A \u2014 The player who makes an interception between 1:34 and 1:44.'
   }],
-  gt: 'Foul drawn — free throws.',
-  verdictHeadline: '3 of 3 wrong · 28pt calibration error on the top model'
+  gt: 'B \u2014 The player who delivers a cross between 1:58 and 2:08.',
+  verdictHeadline: 'All 3 wrong. GPT and Qwen pick the same wrong player. Gemini picks a different wrong one. None identifies the future goal scorer.'
 }, {
   id: 'c5',
   taskId: 'T6',
   pillar: 'Reasoning',
   teaser: 'missed events',
   title: 'Long-Form Narrative Synthesis',
-  context: 'NBA · Q1 full',
-  question: 'Summarize the key events of this quarter.',
+  context: 'Basketball \xB7 SAC vs IND',
+  video: 'assets/T6/t6_ask_clip.mp4',
+  question: 'Write a comprehensive 500-word game report covering key events, momentum shifts, and tactical patterns.',
   models: [{
-    name: 'GPT-5.2',
-    score: 'saliency 7.3%',
-    wrong: true,
-    text: 'Team A led for most of the quarter behind strong guard shooting. Several defensive stops in the final two minutes preserved a six-point lead.'
-  }, {
     name: 'Qwen3-VL',
-    score: 'saliency 11.2%',
+    score: 'low',
     wrong: true,
-    text: "Steady scoring from both teams. Team A's center had multiple inside finishes. A late-quarter run gave Team A momentum."
+    text: '\u2026Indiana Pacers delivered a commanding performance, securing a decisive 110-109 \u2026 Haliburton orchestrated the offense \u2026 Haliburton\'s clutch free throws and Hield\'s three sealed the win \u2026',
+    displayText: /*#__PURE__*/React.createElement("span", null,
+      "\u2026the Indiana Pacers delivered a commanding performance against the Sacramento Kings, ",
+      /*#__PURE__*/React.createElement("span", { style: { color: '#C0392B' } }, "securing a decisive 110-109"),
+      " \u2026 ",
+      /*#__PURE__*/React.createElement("span", { style: { color: '#D4913A' } }, "Haliburton, the team's maestro, orchestrated the offense with surgical efficiency"),
+      " \u2026 ",
+      /*#__PURE__*/React.createElement("span", { style: { color: '#C0392B' } }, "With the score tied at 109-109, Haliburton's clutch free throws and a timely three-pointer from Hield sealed the win"),
+      " \u2026")
   }, {
-    name: 'Gemini 2.5',
-    score: 'saliency 8.1%',
+    name: 'GPT-5.2',
+    score: 'low',
     wrong: true,
-    text: 'Both teams traded baskets throughout. The pace was controlled, with both coaches making rotations.'
+    text: '\u2026Sacramento edged Indiana 110-109 on a last-second putback \u2026 Metu turned a deficit into a 66-61 halftime lead \u2026 the decisive hustle play on the offensive glass \u2026',
+    displayText: /*#__PURE__*/React.createElement("span", null,
+      "\u2026",
+      /*#__PURE__*/React.createElement("span", { style: { color: '#22c55e' } }, "Sacramento edged Indiana 110-109 on a last-second putback"),
+      " \u2026 Chimezie Metu (career-high scoring night) and steady downhill pressure turned ",
+      /*#__PURE__*/React.createElement("span", { style: { color: '#C0392B' } }, "a five-point deficit into a 66-61 halftime lead"),
+      " \u2026 ",
+      /*#__PURE__*/React.createElement("span", { style: { color: '#D4913A' } }, "Sacramento answered with pressure defense, free throws, and the decisive hustle play on the offensive glass after a broken action"),
+      " \u2026")
+  }, {
+    name: 'Gemini 3 Flash',
+    score: 'low',
+    wrong: true,
+    text: '\u2026Sacramento Kings edged out Indiana 110-109 \u2026 Mitchell tallying 25 points and 7 assists \u2026 Metu erupted for a career-high 22 points \u2026 late-game execution tipped the scales \u2026',
+    displayText: /*#__PURE__*/React.createElement("span", null,
+      "\u2026",
+      /*#__PURE__*/React.createElement("span", { style: { color: '#22c55e' } }, "Sacramento Kings edged out the Indiana Pacers 110-109"),
+      " \u2026 Davion Mitchell, who orchestrated the offense with precision, ",
+      /*#__PURE__*/React.createElement("span", { style: { color: '#C0392B' } }, "tallying 25 points and 7 assists"),
+      " \u2026 Chimezie Metu, who erupted for ",
+      /*#__PURE__*/React.createElement("span", { style: { color: '#C0392B' } }, "a career-high 22 points"),
+      " \u2026 ",
+      /*#__PURE__*/React.createElement("span", { style: { color: '#D4913A' } }, "Sacramento's late-game execution that tipped the scales"),
+      " \u2026")
   }],
-  gt: 'Coach ejection after a contested no-call · technical foul reversed on replay · 8-0 run sparked by transition steals · injury timeout for starting forward · buzzer-beating three.',
-  verdictHeadline: 'Best model covered 1 of 5 salient events'
+  gt: "Jones tip-in with 0.2s left after Lyles' missed corner three. Sacramento 110-109. Mitchell scored 25, owned Q4.",
+  verdictHeadline: "Qwen says Indiana won. GPT gets the winner right but invents halftime stats. Gemini fabricates player stats. None captures the decisive tip-in."
 }, {
   id: 'c6',
   taskId: 'T8',
@@ -602,49 +636,69 @@ const FAILURES = [{
   taskId: 'T4',
   pillar: 'Reasoning',
   model: 'GPT-5.2',
-  sport: 'NBA',
-  mode: 'blamed perimeter, actual at rim',
-  excerpt: '"Open three from the corner." Was a finish at the rim, no rotation.'
+  sport: 'Basketball',
+  video: 'assets/T4/t4_failure_01.mp4',
+  wide: true,
+  mode: 'missed the backboard bounce',
+  excerpt: "Q: What was unusual about Cody Martin's made three? GT: Shot hit the top of the backboard and went in. GPT: \"His first made three of the game.\" All models score 0."
 }, {
   id: 'f08',
   taskId: 'T4',
   pillar: 'Reasoning',
-  model: 'Gemini 2.5',
-  sport: 'NBA',
-  mode: 'invented tactical adjustment',
-  excerpt: '"Coach changed to zone defense." No such change occurred.'
+  model: 'GPT-5.2',
+  sport: 'Basketball',
+  video: 'assets/T4/t4_failure_02.mp4',
+  wide: true,
+  mode: 'plausible but wrong',
+  excerpt: "Q: What drew Utah's defense on the Warriors' transition three? GT: Poole's sprint pulled defenders, leaving Curry open. GPT flips it: says Curry drew attention and \"the opposite-side shooter\" scored. Sounds right \u2014 isn't."
 }, {
   id: 'f09',
   taskId: 'T5',
   pillar: 'Reasoning',
   model: 'GPT-5.2',
-  sport: 'NBA',
-  mode: 'predicted score, was foul',
-  excerpt: '62% "made 2." Actual: shooting foul, two free throws.'
-}, {
-  id: 'f10',
-  taskId: 'T5',
-  pillar: 'Reasoning',
-  model: 'Qwen3-VL',
-  sport: 'NHL',
-  mode: 'wrong outcome with confidence',
-  excerpt: '54% "shot saved." Actual: defender lost the puck for a breakaway.'
+  sport: 'Basketball',
+  wide: true,
+  custom: 'confidence_flip',
+  mode: 'confident until suddenly wrong',
+  excerpt: 'The model predicts Golden State Warriors with >98% confidence across three frames, then abruptly flips to Los Angeles Lakers at 99.96%. The answer is Los Angeles Lakers.',
+  frames: [
+    { img: 'assets/T5/frame_1.png', label: 'Golden State Warriors', confidence: '99.94%', wrong: true },
+    { img: 'assets/T5/frame_2.png', label: 'Golden State Warriors', confidence: '99.53%', wrong: true },
+    { img: 'assets/T5/frame_3.png', label: 'Golden State Warriors', confidence: '98.49%', wrong: true },
+    { img: 'assets/T5/frame_4.png', label: 'Los Angeles Lakers', confidence: '99.96%', wrong: false }
+  ]
 }, {
   id: 'f11',
   taskId: 'T6',
   pillar: 'Reasoning',
   model: 'GPT-5.2',
-  sport: 'NBA',
-  mode: 'covered 1 of 6 salient events',
-  excerpt: 'Mentioned the lead. Missed ejection, technical, run, injury, buzzer-beater.'
-}, {
-  id: 'f12',
-  taskId: 'T6',
-  pillar: 'Reasoning',
-  model: 'Gemini 2.5',
-  sport: 'EPL',
-  mode: 'summarized vibe, missed substance',
-  excerpt: '"Both teams played a possession game." Said nothing about the three red cards.'
+  sport: 'Basketball',
+  wide: true,
+  custom: 'saliency_checklist',
+  mode: 'saliency checklist',
+  excerpt: '',
+  saliency: {
+    covered: [
+      'Indiana defeated Dallas (score mentioned)',
+      'Brogdon scored 22 points'
+    ],
+    missed: [
+      'Indiana made 20 three-pointers',
+      'Turner recorded 7 blocks',
+      'Porzingis: 31 pts, 18 reb',
+      '14-2 run after Dallas cut to 84-80',
+      'McConnell: 8 pts, 3 ast, 2 stl in Q4'
+    ],
+    incorrect: [
+      'Halftime score fabricated (66-61 vs actual 61-48)',
+      'Hield sealed the win with a three (never happened)'
+    ],
+    vague: [
+      '"orchestrated the offense with surgical efficiency"',
+      '"late-game execution tipped the scales"',
+      '"decisive hustle play on the offensive glass"'
+    ]
+  }
 }, {
   id: 'f13',
   taskId: 'T7',
@@ -1808,230 +1862,132 @@ function T2Overlay({
 function T4Overlay({
   pillar
 }) {
-  const c = PILLARS[pillar];
-  return /*#__PURE__*/React.createElement("div", {
-    style: {
-      position: 'absolute',
-      left: 16,
-      right: 16,
-      bottom: 38,
-      display: 'flex',
-      flexDirection: 'column',
-      gap: 6
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: '"IBM Plex Sans", sans-serif',
-      fontSize: 12,
-      color: '#fafafa',
-      fontWeight: 500,
-      padding: '8px 10px',
-      background: 'rgba(10,10,12,0.7)',
-      border: '1px solid #27272a',
-      borderRadius: 2
-    }
-  }, "Q \xB7 Why was the defense unable to recover on this pick-and-roll?"), /*#__PURE__*/React.createElement(CaptionRow, {
-    label: "MODEL",
-    color: "#C0392B",
-    dim: true,
-    text: "The defenders failed to switch on the screen, and the ball-handler got an open three."
-  }), /*#__PURE__*/React.createElement(CaptionRow, {
-    label: "GT",
-    color: c.base,
-    text: "Screener's defender hedged hard; the roller had a free lane with no help defender rotating in time."
-  }));
+  // T4 has a real video — captions shown below the viewport via TASK_TEXT instead
+  return null;
 }
 function T5Overlay({
   pillar
 }) {
   const c = PILLARS[pillar];
-  const outcomes = [{
-    l: 'made 2',
-    model: 0.62,
-    truth: false
-  }, {
-    l: 'foul drawn',
-    model: 0.10,
-    truth: true
-  }, {
-    l: 'missed shot',
-    model: 0.18,
-    truth: false
-  }, {
-    l: 'turnover',
-    model: 0.10,
-    truth: false
-  }];
-  const maxModel = Math.max(...outcomes.map(x => x.model));
+  const options = [
+    { l: 'A', text: '4' },
+    { l: 'B', text: '7' },
+    { l: 'C', text: '1' },
+    { l: 'D', text: '2' },
+    { l: 'E', text: '3', correct: true }
+  ];
+  const modelPick = 'C';
   return /*#__PURE__*/React.createElement("div", {
     style: {
       position: 'absolute',
-      right: 12,
-      top: 38,
-      bottom: 38,
-      width: 190,
+      right: 0, top: 0, bottom: 0,
+      width: 220,
       display: 'flex',
       flexDirection: 'column',
-      gap: 7
+      background: 'rgba(10,10,12,0.85)',
+      backdropFilter: 'blur(8px)',
+      borderLeft: '1px solid #27272a',
+      padding: '38px 14px 38px 14px',
+      gap: 8
     }
-  }, /*#__PURE__*/React.createElement("div", {
+  },
+  /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: '"IBM Plex Mono", monospace',
       fontSize: 9.5,
       letterSpacing: '0.1em',
       color: '#a1a1aa',
-      textTransform: 'uppercase'
+      textTransform: 'uppercase',
+      marginBottom: 4
     }
-  }, "predict next outcome"), outcomes.map(o => {
-    const isTruth = o.truth;
-    const isModelTop = o.model === maxModel;
+  }, "Q \xB7 How many 3-pointers will this player make from end of segment to end of 2nd half?"),
+  /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: '"IBM Plex Sans", sans-serif',
+      fontSize: 10,
+      color: '#71717a',
+      lineHeight: 1.4,
+      marginBottom: 4
+    }
+  }, "GPT-5.2 confidence: 92.3%"),
+  options.map(o => {
+    const isCorrect = o.correct;
+    const isPicked = o.l === modelPick;
+    const border = isCorrect ? c.base : isPicked ? '#C0392B' : '#27272a';
     return /*#__PURE__*/React.createElement("div", {
       key: o.l,
       style: {
-        fontFamily: '"IBM Plex Mono", monospace',
-        fontSize: 10,
-        animation: 'overlayIn 400ms ease'
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
         display: 'flex',
-        justifyContent: 'space-between',
-        marginBottom: 2
+        gap: 8,
+        alignItems: 'center',
+        padding: '6px 8px',
+        background: 'rgba(10,10,12,0.7)',
+        border: '1px solid ' + border,
+        borderRadius: 2,
+        fontFamily: '"IBM Plex Sans", sans-serif',
+        fontSize: 10.5,
+        color: isCorrect ? c.base : isPicked ? '#C0392B' : '#a1a1aa',
+        animation: 'overlayIn 400ms ease'
       }
     }, /*#__PURE__*/React.createElement("span", {
       style: {
-        color: isTruth ? c.base : isModelTop ? '#C0392B' : '#a1a1aa'
+        fontFamily: '"IBM Plex Mono", monospace',
+        fontWeight: 600,
+        minWidth: 12
       }
-    }, o.l, isTruth && ' · GT'), /*#__PURE__*/React.createElement("span", {
+    }, o.l), /*#__PURE__*/React.createElement("span", null, o.text), isCorrect && /*#__PURE__*/React.createElement("span", {
       style: {
-        color: isModelTop ? '#C0392B' : '#52525b'
+        marginLeft: 'auto',
+        fontFamily: '"IBM Plex Mono", monospace',
+        fontSize: 9
       }
-    }, (o.model * 100).toFixed(0), "%")), /*#__PURE__*/React.createElement("div", {
+    }, "GT"), isPicked && !isCorrect && /*#__PURE__*/React.createElement("span", {
       style: {
-        height: 4,
-        background: '#1c1c1f',
-        borderRadius: 1,
-        overflow: 'hidden'
+        marginLeft: 'auto',
+        fontFamily: '"IBM Plex Mono", monospace',
+        fontSize: 9
       }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        height: '100%',
-        width: `${o.model * 100}%`,
-        background: isTruth ? c.base : isModelTop ? '#C0392B' : '#3f3f46'
-      }
-    })));
-  }), /*#__PURE__*/React.createElement("div", {
-    style: {
-      marginTop: 4,
-      fontFamily: '"IBM Plex Mono", monospace',
-      fontSize: 9,
-      color: '#71717a',
-      letterSpacing: '0.1em',
-      textTransform: 'uppercase'
-    }
-  }, "calibration error: 28 pts"));
+    }, "MODEL"));
+  }));
 }
 function T6Overlay({
   pillar
 }) {
   const c = PILLARS[pillar];
-  const events = Array.from({
-    length: 14
-  }, (_, i) => ({
-    salient: [2, 5, 8, 11, 13].includes(i),
-    covered: i === 5
-  }));
+  const s = { textDecorationColor: '#C0392B', color: '#C0392B' };
   return /*#__PURE__*/React.createElement("div", {
     style: {
       position: 'absolute',
-      left: 16,
-      right: 16,
-      bottom: 38,
+      right: 0, top: 0, bottom: 0,
+      width: 280,
       display: 'flex',
       flexDirection: 'column',
-      gap: 8
+      background: 'rgba(10,10,12,0.88)',
+      backdropFilter: 'blur(8px)',
+      borderLeft: '1px solid #27272a',
+      padding: '38px 14px 38px 14px',
+      gap: 10,
+      overflowY: 'auto'
     }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: 'flex',
-      justifyContent: 'space-between',
-      fontFamily: '"IBM Plex Mono", monospace',
-      fontSize: 10,
-      letterSpacing: '0.1em',
-      color: '#a1a1aa',
-      textTransform: 'uppercase'
-    }
-  }, /*#__PURE__*/React.createElement("span", null, "game timeline \xB7 salient events"), /*#__PURE__*/React.createElement("span", {
-    style: {
-      color: c.base
-    }
-  }, "saliency 7.3%")), /*#__PURE__*/React.createElement("div", {
-    style: {
-      position: 'relative',
-      height: 36,
-      background: 'rgba(10,10,12,0.7)',
-      border: '1px solid #27272a',
-      borderRadius: 2
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      position: 'absolute',
-      top: '50%',
-      left: 8,
-      right: 8,
-      height: 1,
-      background: '#27272a'
-    }
-  }), events.map((e, i) => {
-    const left = `${(i + 0.5) / events.length * 100}%`;
-    return /*#__PURE__*/React.createElement("div", {
-      key: i,
-      style: {
-        position: 'absolute',
-        left,
-        top: '50%',
-        transform: 'translate(-50%, -50%)'
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        width: e.salient ? 8 : 4,
-        height: e.salient ? 8 : 4,
-        borderRadius: '50%',
-        background: e.covered ? c.base : e.salient ? '#52525b' : '#3f3f46',
-        boxShadow: e.covered ? `0 0 8px ${c.glow}` : 'none'
-      }
-    }));
-  })), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: 'flex',
-      gap: 14,
-      fontFamily: '"IBM Plex Mono", monospace',
-      fontSize: 9,
-      color: '#71717a',
-      letterSpacing: '0.1em',
-      textTransform: 'uppercase'
-    }
-  }, /*#__PURE__*/React.createElement("span", null, /*#__PURE__*/React.createElement("span", {
-    style: {
-      display: 'inline-block',
-      width: 6,
-      height: 6,
-      borderRadius: 3,
-      background: c.base,
-      marginRight: 6,
-      verticalAlign: 'middle'
-    }
-  }), "covered"), /*#__PURE__*/React.createElement("span", null, /*#__PURE__*/React.createElement("span", {
-    style: {
-      display: 'inline-block',
-      width: 6,
-      height: 6,
-      borderRadius: 3,
-      background: '#52525b',
-      marginRight: 6,
-      verticalAlign: 'middle'
-    }
-  }), "salient \xB7 missed")));
+  },
+  /*#__PURE__*/React.createElement("div", {
+    style: { fontFamily: '"IBM Plex Mono", monospace', fontSize: 9.5, letterSpacing: '0.1em', color: '#a1a1aa', textTransform: 'uppercase', marginBottom: 2 }
+  }, "GPT-5.2 \xB7 Game Summary"),
+  // Paragraph-style report
+  /*#__PURE__*/React.createElement("div", {
+    style: { padding: '10px 12px', background: 'rgba(255,255,255,0.03)', border: '1px solid #27272a', borderRadius: 2, fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 11, lineHeight: 1.65, color: '#d4d4d8' }
+  },
+  "Florida Atlantic throttled crosstown rival FIU 107\u201363 in Boca Raton, turning a tense opening into a runaway clinic built on pace, depth, and relentless rim pressure. ... A 20\u20138 scoreboard at 12:31 of the first half ... ballooned to 31\u201311 by the under-10 as FAU's bench amped the tempo ... The half closed 56\u201323. ... FAU's guards again hunted the elbows in ball screens ... pushing the lead to ",
+  /*#__PURE__*/React.createElement("span", { style: { color: '#C0392B', fontWeight: 500 } }, "66\u201326"),
+  " and later ",
+  /*#__PURE__*/React.createElement("span", { style: { color: '#C0392B', fontWeight: 500 } }, "80\u201342"),
+  " with nine and a half to play. ... ",
+  /*#__PURE__*/React.createElement("span", { style: { color: '#C0392B', fontWeight: 500 } }, "a downhill lead guard repeatedly collapsed the defense; wings ran the lanes and finished; a physical big controlled the glass"),
+  " ... FAU won every phase, and by night's end, the margin told the story."),
+  // Judge score
+  /*#__PURE__*/React.createElement("div", {
+    style: { marginTop: 'auto', padding: '8px 0', borderTop: '1px solid #27272a', display: 'flex', justifyContent: 'space-between', fontFamily: '"IBM Plex Mono", monospace', fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase' }
+  }, /*#__PURE__*/React.createElement("span", { style: { color: '#C0392B' } }, "not accurate \xB7 not salient \xB7 vague with players")));
 }
 function T7Overlay({
   pillar
@@ -2540,7 +2496,7 @@ function CliffBroadcastViewport({
         ? /*#__PURE__*/React.createElement("video", {
             src: TASK_MEDIA[task.id],
             autoPlay: true, loop: true, muted: true, playsInline: true,
-            style: { position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'contain' }
+            style: { position: 'absolute', top: 0, left: 0, width: (task.id === 'T5' || task.id === 'T2') ? 'calc(100% - 220px)' : task.id === 'T6' ? 'calc(100% - 280px)' : '100%', height: '100%', objectFit: 'contain' }
           })
         : /*#__PURE__*/React.createElement("div", {
             style: { position: 'absolute', inset: 0 }
@@ -2634,7 +2590,7 @@ function ScenePanel({
   }, task.bestModel)), /*#__PURE__*/React.createElement(CliffBroadcastViewport, {
     task: task,
     t: t
-  }), false ? /*#__PURE__*/React.createElement("div", {
+  }), (TASK_MEDIA[task.id] && !TASK_MEDIA[task.id].includes('placeholder') && TASK_TEXT[task.id]) ? /*#__PURE__*/React.createElement("div", {
     style: {
       marginTop: 14,
       display: 'flex',
@@ -3242,8 +3198,8 @@ function ModelAnswerCard({
   return /*#__PURE__*/React.createElement("div", {
     style: {
       padding: '11px 14px',
-      background: '#ffffff',
-      border: `1px solid ${isStreaming ? '#a1a1aa' : '#d4d4d8'}`,
+      background: (isComplete && model.wrong) ? '#fef2f2' : '#ffffff',
+      border: `1px solid ${isStreaming ? '#a1a1aa' : (isComplete && model.wrong) ? '#C0392B44' : '#d4d4d8'}`,
       borderRadius: 3,
       opacity: isUpcoming ? 0.3 : 1,
       transition: 'opacity 400ms ease, border-color 400ms ease',
@@ -3293,8 +3249,8 @@ function GTCard({
   return /*#__PURE__*/React.createElement("div", {
     style: {
       padding: '11px 14px',
-      background: soft,
-      border: `1px solid ${pillarColor}`,
+      background: '#f0fdf4',
+      border: '1px solid #22c55e44',
       borderRadius: 3,
       opacity: visible ? 1 : 0,
       transform: visible ? 'translateY(0)' : 'translateY(8px)',
@@ -3306,7 +3262,7 @@ function GTCard({
       justifyContent: 'space-between',
       fontFamily: '"IBM Plex Mono", monospace',
       fontSize: 10,
-      color: pillarColor,
+      color: '#16a34a',
       letterSpacing: '0.15em',
       marginBottom: 5,
       textTransform: 'uppercase',
@@ -4629,6 +4585,7 @@ function TapeArchiveSection() {
     var taskFailures = !isOurs ? FAILURES.filter(function (f) {
       return f.taskId === task.id;
     }) : [];
+    var hasWide = taskFailures.some(function(f) { return f.wide; });
     return /*#__PURE__*/React.createElement("div", {
       key: task.id,
       style: {
@@ -4664,7 +4621,7 @@ function TapeArchiveSection() {
     }, suffix)), /*#__PURE__*/React.createElement("div", {
       style: {
         display: 'grid',
-        gridTemplateColumns: 'repeat(4, 1fr)',
+        gridTemplateColumns: hasWide ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)',
         gap: 14
       }
     }, isT3 && T3_ARCHIVE.panels.map(function (p) {
@@ -4951,6 +4908,115 @@ function T3ArchiveModal(_ref2) {
 function PlaceholderCard(_ref3) {
   var failure = _ref3.failure;
   var c = PILLARS[failure.pillar];
+  // Custom confidence flip card for T5
+  if (failure.custom === 'confidence_flip' && failure.frames) {
+    return /*#__PURE__*/React.createElement("div", {
+      style: {
+        background: '#0c0d10',
+        color: '#fafafa',
+        border: '1px solid #27272a',
+        borderRadius: 4,
+        overflow: 'hidden',
+        gridColumn: '1 / -1'
+      }
+    },
+    // Header
+    /*#__PURE__*/React.createElement("div", {
+      style: { padding: '14px 16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #1c1c1f' }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: { display: 'flex', alignItems: 'center', gap: 10 }
+    }, /*#__PURE__*/React.createElement("span", {
+      style: { fontFamily: '"IBM Plex Mono", monospace', fontSize: 10.5, letterSpacing: '0.14em', textTransform: 'uppercase', color: c.base, fontWeight: 600 }
+    }, failure.taskId), /*#__PURE__*/React.createElement("span", {
+      style: { fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 14, fontWeight: 500, color: '#fafafa' }
+    }, "Same game, same model \u2014 confidence stays high, answer suddenly flips")), /*#__PURE__*/React.createElement("span", {
+      style: { fontFamily: '"IBM Plex Mono", monospace', fontSize: 10.5, letterSpacing: '0.08em', color: '#52525b' }
+    }, failure.model)),
+    // 4 frames
+    /*#__PURE__*/React.createElement("div", {
+      style: { display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 0 }
+    }, failure.frames.map(function(f, i) {
+      var isLast = i === failure.frames.length - 1;
+      return /*#__PURE__*/React.createElement("div", {
+        key: i,
+        style: { position: 'relative', borderRight: isLast ? 'none' : '1px solid #1c1c1f' }
+      },
+      /*#__PURE__*/React.createElement("img", {
+        src: f.img,
+        style: { width: '100%', display: 'block' }
+      }),
+      // Dark overlay for label area
+      /*#__PURE__*/React.createElement("div", {
+        style: {
+          background: f.wrong ? '#C0392B18' : '#22c55e18',
+          borderTop: '2px solid ' + (f.wrong ? '#C0392B' : '#22c55e'),
+          padding: '12px 12px',
+          display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4
+        }
+      },
+      /*#__PURE__*/React.createElement("span", {
+        style: { fontFamily: '"IBM Plex Mono", monospace', fontSize: 9, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#71717a' }
+      }, "Segment " + (i + 1)),
+      /*#__PURE__*/React.createElement("span", {
+        style: { fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 13, fontWeight: 600, color: f.wrong ? '#C0392B' : '#22c55e', textAlign: 'center' }
+      }, f.label),
+      /*#__PURE__*/React.createElement("span", {
+        style: { fontFamily: '"IBM Plex Mono", monospace', fontSize: 22, fontWeight: 700, color: f.wrong ? '#C0392B' : '#22c55e' }
+      }, f.confidence)),
+      // Arrow between frames
+      !isLast && /*#__PURE__*/React.createElement("div", {
+        style: {
+          position: 'absolute', right: -10, top: '40%', transform: 'translateY(-50%)',
+          width: 20, height: 20, borderRadius: 10,
+          background: '#0c0d10', border: '1px solid #3f3f46',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          fontFamily: '"IBM Plex Mono", monospace', fontSize: 12, color: '#71717a',
+          zIndex: 2
+        }
+      }, "\u2192"));
+    })),
+    // Bottom
+    /*#__PURE__*/React.createElement("div", {
+      style: { padding: '12px 16px', borderTop: '1px solid #1c1c1f', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }
+    }, /*#__PURE__*/React.createElement("span", {
+      style: { fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 12.5, color: '#a1a1aa' }
+    }, "Q: Who wins? Model is >98% confident for 3 segments, then flips at 99.96% to the correct answer on the last segment."), /*#__PURE__*/React.createElement("span", {
+      style: { fontFamily: '"IBM Plex Mono", monospace', fontSize: 11, color: '#22c55e', letterSpacing: '0.1em', textTransform: 'uppercase', fontWeight: 600, whiteSpace: 'nowrap', marginLeft: 16 }
+    }, "\u2713 GT: Los Angeles Lakers")));
+  }
+  // Custom saliency checklist card for T6
+  if (failure.custom === 'saliency_checklist' && failure.saliency) {
+    var sal = failure.saliency;
+    function salSection(title, items, color, icon) {
+      return /*#__PURE__*/React.createElement("div", { style: { flex: 1, minWidth: 180 } },
+        /*#__PURE__*/React.createElement("div", {
+          style: { fontFamily: '"IBM Plex Mono", monospace', fontSize: 10, letterSpacing: '0.12em', textTransform: 'uppercase', color: color, fontWeight: 600, marginBottom: 8 }
+        }, title),
+        items.map(function(item, i) {
+          return /*#__PURE__*/React.createElement("div", {
+            key: i,
+            style: { display: 'flex', gap: 6, alignItems: 'flex-start', marginBottom: 5, fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 11.5, lineHeight: 1.4, color: '#d4d4d8' }
+          }, /*#__PURE__*/React.createElement("span", { style: { color: color, flexShrink: 0, fontSize: 12 } }, icon), /*#__PURE__*/React.createElement("span", null, item));
+        }));
+    }
+    return /*#__PURE__*/React.createElement("div", {
+      style: { background: '#0c0d10', color: '#fafafa', border: '1px solid #27272a', borderRadius: 4, overflow: 'hidden', gridColumn: '1 / -1' }
+    },
+    /*#__PURE__*/React.createElement("div", {
+      style: { padding: '14px 16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #1c1c1f' }
+    }, /*#__PURE__*/React.createElement("div", { style: { display: 'flex', alignItems: 'center', gap: 10 } },
+      /*#__PURE__*/React.createElement("span", { style: { fontFamily: '"IBM Plex Mono", monospace', fontSize: 10.5, letterSpacing: '0.14em', textTransform: 'uppercase', color: c.base, fontWeight: 600 } }, failure.taskId),
+      /*#__PURE__*/React.createElement("span", { style: { fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 14, fontWeight: 500, color: '#fafafa' } }, "What the models get right, miss, fabricate, and dodge")),
+    /*#__PURE__*/React.createElement("span", { style: { fontFamily: '"IBM Plex Mono", monospace', fontSize: 10.5, color: '#52525b' } }, "IND vs DAL")),
+    /*#__PURE__*/React.createElement("div", {
+      style: { padding: '16px', display: 'flex', gap: 20, flexWrap: 'wrap' }
+    },
+      salSection("Covered", sal.covered, "#22c55e", "\u2713"),
+      salSection("Missing", sal.missed, "#C0392B", "\u2717"),
+      salSection("Incorrect", sal.incorrect, "#ef4444", "\u26A0"),
+      salSection("Vague", sal.vague, "#D4913A", "\u2026")));
+  }
+  var isWide = failure.wide && failure.video;
   return /*#__PURE__*/React.createElement("div", {
     style: {
       background: '#0c0d10',
@@ -4959,15 +5025,17 @@ function PlaceholderCard(_ref3) {
       borderRadius: 4,
       overflow: 'hidden',
       display: 'flex',
-      flexDirection: 'column',
-      minHeight: 180
+      flexDirection: isWide ? 'row' : 'column',
+      minHeight: isWide ? 200 : 180
     }
   },
-  // Video on top if available
+  // Video: left side for wide, top for normal
   failure.video ? /*#__PURE__*/React.createElement("video", {
     src: failure.video,
     autoPlay: true, loop: true, muted: true, playsInline: true,
-    style: { width: '100%', aspectRatio: '16 / 9', objectFit: 'cover', borderBottom: '1px solid #1c1c1f' }
+    style: isWide
+      ? { width: '50%', objectFit: 'cover', borderRight: '1px solid #1c1c1f' }
+      : { width: '100%', aspectRatio: '16 / 9', objectFit: 'cover', borderBottom: '1px solid #1c1c1f' }
   }) : null,
   /*#__PURE__*/React.createElement("div", {
     style: { padding: '14px 16px', display: 'flex', flexDirection: 'column', gap: 10, flex: 1 }
