@@ -2209,6 +2209,238 @@ function TaskOverlay({
 // ============================================================
 // CLIFF: BROADCAST VIEWPORT (task-aware) + SCENE PANEL
 // ============================================================
+function T7Panel({ pillar }) {
+  const c = PILLARS[pillar];
+  const baseDir = 'assets/qualitative_vis_soccer_task1/acceleration_2391999457';
+  const labelChip = {
+    position: 'absolute',
+    top: 6,
+    left: 8,
+    fontFamily: '"IBM Plex Mono", monospace',
+    fontSize: 9,
+    letterSpacing: '0.15em',
+    color: '#e4e4e7',
+    textTransform: 'uppercase',
+    background: 'rgba(0,0,0,0.65)',
+    padding: '2px 6px',
+    borderRadius: 2,
+    zIndex: 2
+  };
+  const videoBox = {
+    position: 'relative',
+    flex: 1,
+    minHeight: 0,
+    background: '#000',
+    borderRadius: 2,
+    overflow: 'hidden',
+    border: '1px solid #1c1c1f'
+  };
+  const videoEl = {
+    width: '100%',
+    height: '100%',
+    objectFit: 'contain',
+    display: 'block'
+  };
+  const videoProps = (file) => ({
+    src: `${baseDir}/${file}`,
+    autoPlay: true,
+    loop: true,
+    muted: true,
+    playsInline: true,
+    preload: 'auto',
+    ref: el => {
+      if (!el) return;
+      el.muted = true;
+      el.defaultMuted = true;
+      const p = el.play();
+      if (p && p.catch) p.catch(() => {});
+    },
+    style: videoEl
+  });
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      top: 28,
+      bottom: 32,
+      left: 0,
+      right: 0,
+      display: 'flex',
+      gap: 8,
+      padding: '8px 8px',
+      background: '#0c0d10'
+    }
+  },
+  // Left: stacked original (top) + generated (bottom)
+  /*#__PURE__*/React.createElement("div", {
+    style: { flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 6 }
+  },
+    /*#__PURE__*/React.createElement("div", { style: videoBox },
+      /*#__PURE__*/React.createElement("video", videoProps('original.mp4')),
+      /*#__PURE__*/React.createElement("span", { style: labelChip }, "Original")
+    ),
+    /*#__PURE__*/React.createElement("div", { style: videoBox },
+      /*#__PURE__*/React.createElement("video", videoProps('generated_gt_bbox.mp4')),
+      /*#__PURE__*/React.createElement("span", { style: { ...labelChip, color: c.base } }, "Generated \xB7 GT bbox")
+    )
+  ),
+  // Right: side panel with small inpainted preview
+  /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: 160,
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 8,
+      background: 'rgba(10,10,12,0.85)',
+      backdropFilter: 'blur(8px)',
+      borderLeft: '1px solid #27272a',
+      padding: '8px 8px'
+    }
+  },
+    /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontFamily: '"IBM Plex Mono", monospace',
+        fontSize: 9,
+        letterSpacing: '0.12em',
+        color: '#a1a1aa',
+        textTransform: 'uppercase'
+      }
+    }, "Inpainted input"),
+    /*#__PURE__*/React.createElement("div", {
+      style: { background: '#000', borderRadius: 2, overflow: 'hidden', aspectRatio: '16 / 9', border: '1px solid #1c1c1f' }
+    },
+      /*#__PURE__*/React.createElement("video", {
+        ...videoProps('inpainted_gt_bbox.mp4'),
+        style: { ...videoEl, objectFit: 'cover' }
+      })
+    ),
+    /*#__PURE__*/React.createElement("p", {
+      style: {
+        fontFamily: '"IBM Plex Sans", sans-serif',
+        fontSize: 10,
+        lineHeight: 1.45,
+        color: '#71717a',
+        margin: 0
+      }
+    }, "Player-removed background + target bbox trajectories — the model's input.")
+  ));
+}
+function T8Panel({ pillar }) {
+  const c = PILLARS[pillar];
+  const baseDir = 'assets/qualitative_vis_basketball_task2/531247_Keenan_Fitzmorris_2-_264466774';
+  const labelChip = {
+    position: 'absolute',
+    top: 6,
+    left: 8,
+    fontFamily: '"IBM Plex Mono", monospace',
+    fontSize: 9,
+    letterSpacing: '0.15em',
+    color: '#e4e4e7',
+    textTransform: 'uppercase',
+    background: 'rgba(0,0,0,0.65)',
+    padding: '2px 6px',
+    borderRadius: 2,
+    zIndex: 2
+  };
+  const videoBox = {
+    position: 'relative',
+    flex: 1,
+    minHeight: 0,
+    background: '#000',
+    borderRadius: 2,
+    overflow: 'hidden',
+    border: '1px solid #1c1c1f'
+  };
+  const videoEl = {
+    width: '100%',
+    height: '100%',
+    objectFit: 'contain',
+    display: 'block'
+  };
+  const videoProps = (file) => ({
+    src: `${baseDir}/${file}`,
+    autoPlay: true,
+    loop: true,
+    muted: true,
+    playsInline: true,
+    preload: 'auto',
+    ref: el => {
+      if (!el) return;
+      el.muted = true;
+      el.defaultMuted = true;
+      const p = el.play();
+      if (p && p.catch) p.catch(() => {});
+    },
+    style: videoEl
+  });
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      top: 28,
+      bottom: 32,
+      left: 0,
+      right: 0,
+      display: 'flex',
+      gap: 8,
+      padding: '8px 8px',
+      background: '#0c0d10'
+    }
+  },
+  // Left: stacked groundtruth (top) + generated (bottom)
+  /*#__PURE__*/React.createElement("div", {
+    style: { flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 6 }
+  },
+    /*#__PURE__*/React.createElement("div", { style: videoBox },
+      /*#__PURE__*/React.createElement("video", videoProps('groundtruth.mp4')),
+      /*#__PURE__*/React.createElement("span", { style: labelChip }, "Ground truth")
+    ),
+    /*#__PURE__*/React.createElement("div", { style: videoBox },
+      /*#__PURE__*/React.createElement("video", videoProps('generated_gt_bbox.mp4')),
+      /*#__PURE__*/React.createElement("span", { style: { ...labelChip, color: c.base } }, "Generated \xB7 GT bbox")
+    )
+  ),
+  // Right: side panel with goal + small background preview
+  /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: 160,
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 8,
+      background: 'rgba(10,10,12,0.85)',
+      backdropFilter: 'blur(8px)',
+      borderLeft: '1px solid #27272a',
+      padding: '8px 8px'
+    }
+  },
+    /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontFamily: '"IBM Plex Mono", monospace',
+        fontSize: 9,
+        letterSpacing: '0.12em',
+        color: '#a1a1aa',
+        textTransform: 'uppercase'
+      }
+    }, "Background input"),
+    /*#__PURE__*/React.createElement("div", {
+      style: { background: '#000', borderRadius: 2, overflow: 'hidden', aspectRatio: '16 / 9', border: '1px solid #1c1c1f' }
+    },
+      /*#__PURE__*/React.createElement("video", {
+        ...videoProps('background_gt_bbox.mp4'),
+        style: { ...videoEl, objectFit: 'cover' }
+      })
+    ),
+    /*#__PURE__*/React.createElement("p", {
+      style: {
+        fontFamily: '"IBM Plex Sans", sans-serif',
+        fontSize: 10,
+        lineHeight: 1.45,
+        color: '#71717a',
+        margin: 0
+      }
+    }, /*#__PURE__*/React.createElement("span", {
+      style: { color: '#a1a1aa', fontWeight: 500 }
+    }, "Goal: "), "Simulate Player #35 contesting a shot in the restricted area and forcing a miss.")
+  ));
+}
 function CliffBroadcastViewport({
   task,
   t
@@ -2218,7 +2450,9 @@ function CliffBroadcastViewport({
   const tc = `00:${String(totalSeconds).padStart(2, '0')}`;
   const isT3 = task.id === 'T3';
   const isT9 = task.id === 'T9';
-  const headerLabel = isT9 ? 'AGENT' : isT3 ? 'RETRIEVAL' : 'CAM 1';
+  const isT7 = task.id === 'T7';
+  const isT8 = task.id === 'T8';
+  const headerLabel = isT9 ? 'AGENT' : isT3 ? 'RETRIEVAL' : (isT7 || isT8) ? 'GENERATION' : 'CAM 1';
   return /*#__PURE__*/React.createElement("div", {
     style: {
       position: 'relative',
@@ -2269,6 +2503,8 @@ function CliffBroadcastViewport({
   }), /*#__PURE__*/React.createElement("span", null, headerLabel))),
   isT3 ? /*#__PURE__*/React.createElement(T3Panel, { pillar: task.pillar, active: true })
   : isT9 ? /*#__PURE__*/React.createElement(T9Panel, { pillar: task.pillar, active: true })
+  : isT7 ? /*#__PURE__*/React.createElement(T7Panel, { pillar: task.pillar })
+  : isT8 ? /*#__PURE__*/React.createElement(T8Panel, { pillar: task.pillar })
   : /*#__PURE__*/React.createElement(React.Fragment, null,
       TASK_MEDIA[task.id] && !TASK_MEDIA[task.id].includes('placeholder')
         ? /*#__PURE__*/React.createElement("video", {
@@ -3789,7 +4025,7 @@ function AskThePlaySection() {
       marginBottom: 10,
       maxWidth: 1000
     }
-  }, "See how the models answer."), /*#__PURE__*/React.createElement("p", {
+  }, "See how the models fail."), /*#__PURE__*/React.createElement("p", {
     style: {
       fontFamily: '"IBM Plex Sans", sans-serif',
       fontSize: 16,
