@@ -4106,9 +4106,10 @@ function CliffSection() {
   }, "03 \xB7"), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: '"IBM Plex Serif", serif',
-      fontSize: 32,
-      fontWeight: 500,
-      letterSpacing: '-0.01em'
+      fontSize: 'clamp(36px, 5vw, 64px)',
+      fontWeight: 400,
+      lineHeight: 1.05,
+      letterSpacing: '-0.02em'
     }
   }, "The performance cliff"), /*#__PURE__*/React.createElement("div", {
     style: {
@@ -5062,7 +5063,8 @@ function TapeArchiveSection() {
     }), isT9 && T9_ARCHIVE.cards.map(function (c) {
       return /*#__PURE__*/React.createElement(T9ArchiveCard, {
         key: c.id,
-        card: c
+        card: c,
+        onOpen: function() { setModalTile({ kind: 't9', cardId: c.id }); }
       });
     }), !isOurs && taskFailures.map(function (failure) {
       return /*#__PURE__*/React.createElement(PlaceholderCard, {
@@ -5075,6 +5077,13 @@ function TapeArchiveSection() {
         panel: modalTile.panel,
         pillar: modalTile.pillar,
         taskId: modalTile.taskId,
+        onClose: function onClose() {
+          return setModalTile(null);
+        }
+      })
+    : modalTile.kind === 't9'
+    ? /*#__PURE__*/React.createElement(T9ArchiveModal, {
+        cardId: modalTile.cardId,
         onClose: function onClose() {
           return setModalTile(null);
         }
@@ -5509,12 +5518,93 @@ function PlaceholderCard(_ref3) {
     }
   }, failure.model)));
 }
-var T9_ARCHIVE_COLORS = { search_documents: '#06B6D4', document_qa: '#F43F5E', search_videos: '#EAB308', video_qa: '#6366F1', video_qa_oracle: '#6366F1' };
+var T9_ARCHIVE_COLORS = { search_documents: '#22D3EE', document_qa: '#FB7185', search_videos: '#FACC15', video_qa: '#818CF8', video_qa_oracle: '#818CF8' };
+function T9ArchiveModal({ cardId, onClose }) {
+  var panelData = T9_ARC_PANELS[cardId];
+  if (!panelData) return null;
+  return /*#__PURE__*/React.createElement("div", {
+    onClick: onClose,
+    style: {
+      position: 'fixed', inset: 0, zIndex: 100,
+      background: 'rgba(0,0,0,0.85)',
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
+      padding: 40, cursor: 'pointer',
+      animation: 'overlayIn 200ms ease'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    onClick: function(e) { e.stopPropagation(); },
+    style: {
+      cursor: 'default',
+      background: '#0c0d10',
+      color: '#fafafa',
+      border: '1px solid #27272a',
+      borderRadius: 6,
+      maxWidth: 1100, width: '100%',
+      maxHeight: '90vh',
+      overflow: 'hidden',
+      boxShadow: '0 24px 80px rgba(0,0,0,0.8)',
+      position: 'relative',
+      aspectRatio: '16 / 9'
+    }
+  },
+    /*#__PURE__*/React.createElement("div", {
+      style: {
+        position: 'absolute', top: 0, left: 0, right: 0, height: 30,
+        display: 'flex', alignItems: 'center', padding: '0 14px', gap: 12,
+        background: 'linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0) 100%)',
+        zIndex: 5
+      }
+    },
+      /*#__PURE__*/React.createElement("span", {
+        style: { display: 'inline-block', width: 7, height: 7, borderRadius: 4, background: '#C0392B', animation: 'recPulse 1.6s ease-in-out infinite' }
+      }),
+      /*#__PURE__*/React.createElement("span", {
+        style: { fontFamily: '"IBM Plex Mono", monospace', fontSize: 11, letterSpacing: '0.18em', color: '#a1a1aa', textTransform: 'uppercase' }
+      }, "Agent trace"),
+      /*#__PURE__*/React.createElement("button", {
+        onClick: onClose,
+        style: { marginLeft: 'auto', background: 'transparent', border: 'none', color: '#a1a1aa', fontFamily: '"IBM Plex Mono", monospace', fontSize: 14, cursor: 'pointer', padding: 4 }
+      }, "\u00D7")
+    ),
+    /*#__PURE__*/React.createElement(T9Panel, {
+      pillar: 'Agency',
+      active: true,
+      data: panelData,
+      tileColors: { search_documents: '#06B6D4', document_qa: '#F43F5E', search_videos: '#EAB308', video_qa: '#6366F1', video_qa_oracle: '#6366F1' }
+    }),
+    /*#__PURE__*/React.createElement("div", {
+      style: {
+        position: 'absolute', bottom: 0, left: 0, right: 0, height: 32,
+        display: 'flex', alignItems: 'center', padding: '0 14px', gap: 10,
+        background: 'linear-gradient(0deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0) 100%)',
+        zIndex: 5
+      }
+    },
+      /*#__PURE__*/React.createElement("span", {
+        style: { fontFamily: '"IBM Plex Mono", monospace', fontSize: 11, color: '#C0392B', fontWeight: 600 }
+      }, "T9"),
+      /*#__PURE__*/React.createElement("span", {
+        style: { fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 11, color: '#e4e4e7' }
+      }, "Cross-Corpus Agentic Reasoning")
+    )
+  ));
+}
 function T9ArchiveCard(_ref4) {
   var card = _ref4.card;
-  // Compact static card showing the trajectory + failure mode.
+  var onOpen = _ref4.onOpen;
+  // Compact card — click to open full interactive panel.
   return /*#__PURE__*/React.createElement("div", {
+    onClick: onOpen,
+    onMouseEnter: function(e) {
+      e.currentTarget.style.borderColor = '#3f3f46';
+      e.currentTarget.style.transform = 'translateY(-2px)';
+    },
+    onMouseLeave: function(e) {
+      e.currentTarget.style.borderColor = '#27272a';
+      e.currentTarget.style.transform = 'translateY(0)';
+    },
     style: {
+      cursor: 'pointer',
       background: '#0c0d10',
       color: '#fafafa',
       border: '1px solid #27272a',
@@ -5522,7 +5612,8 @@ function T9ArchiveCard(_ref4) {
       padding: '16px 18px',
       display: 'flex',
       flexDirection: 'column',
-      gap: 12
+      gap: 12,
+      transition: 'border-color 150ms, transform 150ms'
     }
   }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     style: {
@@ -5625,14 +5716,6 @@ function T9ArchiveCard(_ref4) {
       }
     }, card.summary)
   ),
-  // Click hint
-  /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: '"IBM Plex Sans", sans-serif',
-      fontSize: 14,
-      color: '#a1a1aa'
-    }
-  }, "Click any tile to inspect."),
   // MODEL / GT answers
   /*#__PURE__*/React.createElement("div", {
     style: {
