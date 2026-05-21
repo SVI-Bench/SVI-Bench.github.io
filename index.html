@@ -3400,8 +3400,8 @@ function GTCard({
   return /*#__PURE__*/React.createElement("div", {
     style: {
       padding: '11px 14px',
-      background: '#f0fdf4',
-      border: '1px solid #22c55e44',
+      background: 'rgba(34,197,94,0.08)',
+      border: '1px solid rgba(34,197,94,0.25)',
       borderRadius: 3,
       opacity: visible ? 1 : 0,
       transform: visible ? 'translateY(0)' : 'translateY(8px)',
@@ -4938,7 +4938,32 @@ function TapeArchiveSection() {
         color: isOurs ? '#71717a' : '#a1a1aa',
         letterSpacing: '0.1em'
       }
-    }, suffix)), /*#__PURE__*/React.createElement("div", {
+    }, suffix)),
+    isT9 && /*#__PURE__*/React.createElement("div", {
+      style: { display: 'flex', flexWrap: 'wrap', gap: '4px 16px', marginBottom: 10, alignItems: 'center' }
+    }, [
+      { abbrev: 'SD', key: 'search_documents', label: 'search documents' },
+      { abbrev: 'DQ', key: 'document_qa', label: 'ask questions about a document' },
+      { abbrev: 'SV', key: 'search_videos', label: 'search video clips' },
+      { abbrev: 'VQ', key: 'video_qa', label: 'ask questions about a video clip' },
+      { abbrev: 'A', key: null, label: 'final answer' }
+    ].map(function (item) {
+      return /*#__PURE__*/React.createElement("div", {
+        key: item.abbrev,
+        style: { display: 'flex', alignItems: 'center', gap: 5, fontSize: 11, color: '#a1a1aa' }
+      }, /*#__PURE__*/React.createElement("span", {
+        style: {
+          display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+          width: 20, height: 15, borderRadius: 2,
+          background: item.key ? (T9_ARCHIVE_COLORS[item.key] || '#71717a') : '#71717a',
+          color: '#fafafa', fontFamily: '"IBM Plex Mono", monospace',
+          fontSize: 8.5, fontWeight: 700
+        }
+      }, item.abbrev), /*#__PURE__*/React.createElement("span", {
+        style: { fontFamily: '"IBM Plex Sans", sans-serif' }
+      }, item.label));
+    })),
+    /*#__PURE__*/React.createElement("div", {
       style: {
         display: 'grid',
         gridTemplateColumns: hasWide ? 'repeat(2, 1fr)' : isT9 ? 'repeat(3, 1fr)' : 'repeat(4, 1fr)',
@@ -5421,6 +5446,7 @@ function PlaceholderCard(_ref3) {
     }
   }, failure.model)));
 }
+var T9_ARCHIVE_COLORS = { search_documents: '#06B6D4', document_qa: '#F43F5E', search_videos: '#EAB308', video_qa: '#6366F1', video_qa_oracle: '#6366F1' };
 function T9ArchiveCard(_ref4) {
   var card = _ref4.card;
   // Compact static card showing the trajectory + failure mode.
@@ -5487,7 +5513,7 @@ function T9ArchiveCard(_ref4) {
         width: 22,
         height: 18,
         borderRadius: 2,
-        background: T9_TOOL_COLOR[t.tool] || '#71717a',
+        background: T9_ARCHIVE_COLORS[t.tool] || '#71717a',
         color: '#fafafa',
         fontFamily: '"IBM Plex Mono", monospace',
         fontSize: 9.5,
@@ -5502,14 +5528,17 @@ function T9ArchiveCard(_ref4) {
       width: 22,
       height: 18,
       borderRadius: 2,
-      background: '#C0392B',
+      background: '#71717a',
       color: '#fafafa',
       fontFamily: '"IBM Plex Mono", monospace',
       fontSize: 11,
       fontWeight: 700,
-      marginLeft: 2
+      marginLeft: 2,
+      outline: '2px solid #C0392B',
+      outlineOffset: 1
     }
-  }, "\u2717"))), /*#__PURE__*/React.createElement("div", {
+  }, "A")),
+), /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
       flexDirection: 'column',
