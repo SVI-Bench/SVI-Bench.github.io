@@ -4239,9 +4239,9 @@ function T8AskPanel({ clip }) {
     );
   return /*#__PURE__*/React.createElement("div", {
     style: {
-      display: 'flex',
-      flexDirection: 'column',
-      gap: 14,
+      display: 'grid',
+      gridTemplateColumns: '1.6fr 1fr',
+      gap: 22,
       marginBottom: 24,
       maxWidth: 1080,
       width: '100%',
@@ -4251,41 +4251,82 @@ function T8AskPanel({ clip }) {
     /*#__PURE__*/React.createElement("div", {
       style: {
         display: 'flex',
-        alignItems: 'baseline',
-        gap: 12,
-        paddingBottom: 4,
-        borderBottom: '1px solid #1c1c1f'
+        flexDirection: 'column',
+        background: '#0c0d10',
+        color: '#fafafa',
+        border: '1px solid #27272a',
+        borderRadius: 4,
+        overflow: 'hidden',
+        boxShadow: `0 20px 60px rgba(0,0,0,0.5), 0 0 40px ${c.soft}`
       }
     },
-      /*#__PURE__*/React.createElement("span", {
+      /*#__PURE__*/React.createElement("div", {
         style: {
+          height: 32,
+          padding: '0 14px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
           fontFamily: '"IBM Plex Mono", monospace',
-          fontSize: 13,
-          color: c.base,
-          fontWeight: 600,
-          letterSpacing: '0.08em'
+          fontSize: 11,
+          letterSpacing: '0.15em',
+          color: '#a1a1aa',
+          textTransform: 'uppercase',
+          borderBottom: '1px solid #1c1c1f',
+          flexShrink: 0
         }
-      }, clip.taskId),
-      /*#__PURE__*/React.createElement("span", {
+      },
+        /*#__PURE__*/React.createElement("div", {
+          style: { display: 'flex', gap: 12, alignItems: 'center' }
+        },
+          /*#__PURE__*/React.createElement("span", {
+            style: { display: 'inline-block', width: 7, height: 7, borderRadius: 4, background: '#C0392B', animation: 'recPulse 1.6s ease-in-out infinite' }
+          }),
+          /*#__PURE__*/React.createElement("span", null, "CAM 1 \xB7 ", clip.context || 'Basketball')
+        ),
+        /*#__PURE__*/React.createElement("span", null, "00:00 / 00:10")
+      ),
+      /*#__PURE__*/React.createElement("div", {
+        style: { display: 'flex', flexDirection: 'column' }
+      },
+        makeTile(r0, 'groundtruth.mp4',        'Ground truth',           '#2ECC71'),
+        makeTile(r1, 'background_gt_bbox.mp4', 'Input · start/end bbox', '#a1a1aa')
+      ),
+      /*#__PURE__*/React.createElement("div", {
         style: {
-          fontFamily: '"IBM Plex Sans", sans-serif',
-          fontSize: 13,
-          color: '#3f3f46'
+          height: 38,
+          padding: '0 14px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          borderTop: '1px solid #1c1c1f',
+          flexShrink: 0
         }
-      }, clip.title)
-    ),
-    /*#__PURE__*/React.createElement("div", {
-      style: {
-        display: 'grid',
-        gridTemplateColumns: '5fr 3fr',
-        gap: 22
-      }
-    },
-    /*#__PURE__*/React.createElement("div", {
-      style: { display: 'flex', flexDirection: 'column', gap: 10, minWidth: 0 }
-    },
-      makeTile(r0, 'groundtruth.mp4',         'Ground truth',           '#2ECC71'),
-      makeTile(r1, 'background_gt_bbox.mp4',  'Input · start/end bbox', '#a1a1aa')
+      },
+        /*#__PURE__*/React.createElement("div", {
+          style: { display: 'flex', alignItems: 'baseline', gap: 10 }
+        },
+          /*#__PURE__*/React.createElement("span", {
+            style: { fontFamily: '"IBM Plex Mono", monospace', fontSize: 13, color: c.base, fontWeight: 600 }
+          }, clip.taskId),
+          /*#__PURE__*/React.createElement("span", {
+            style: { fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 13, color: '#e4e4e7' }
+          }, clip.title)
+        ),
+        /*#__PURE__*/React.createElement("span", {
+          style: {
+            fontFamily: '"IBM Plex Mono", monospace',
+            fontSize: 10,
+            color: '#0a0a0c',
+            letterSpacing: '0.12em',
+            background: c.base,
+            padding: '3px 8px',
+            borderRadius: 2,
+            fontWeight: 600,
+            textTransform: 'uppercase'
+          }
+        }, clip.pillar)
+      )
     ),
     /*#__PURE__*/React.createElement("div", {
       style: { display: 'flex', flexDirection: 'column', gap: 12, minWidth: 0 }
@@ -4320,7 +4361,7 @@ function T8AskPanel({ clip }) {
       makeTile(r2, 'generated_gt_bbox.mp4',           'Ours · w/ GT bbox',          c.base),
       makeTile(r3, 'generated_ati_gt_bbox.mp4',       'ATI · w/ GT bbox',           '#E74C3C'),
       makeTile(r4, 'generated_magicmotion_gt_bbox.mp4', 'MagicMotion · w/ GT bbox', '#E74C3C')
-    ))
+    )
   );
 }
 function AskThePlaySection() {
@@ -4576,9 +4617,9 @@ const T8_ARCHIVE = {
       query: 'Goal: simulate Player #8 securing a rebound. The generated player can\'t even reach the spatial target — let alone perform the desired action.',
       base_dir: 'assets/qualitative_vis_basketball_task2/1881_Marcus_Morris_Rebound_247840436',
       thumbs: [
-        { kind: 'input',    label: 'Background + start/end bbox',  file: 'background_gt_bbox.mp4' },
+        { kind: 'input',    label: 'Input', desc: 'Player-Removed Background Video w/ a Spatial Target',  file: 'background_gt_bbox.mp4' },
         { kind: 'gt',       label: 'Ground truth',                 file: 'groundtruth.mp4' },
-        { kind: 'gen_bbox', label: 'Generated · target overlay',   file: 'generated_gt_bbox.mp4' },
+        { kind: 'gen_bbox', label: 'Generated + start/end bbox',  file: 'generated_gt_bbox.mp4' },
         { kind: 'gen',      label: 'Generated',                    file: 'generated.mp4' }
       ]
     },
@@ -4589,9 +4630,9 @@ const T8_ARCHIVE = {
       query: 'Goal: simulate Player #0 missing a contested corner three-pointer off a screen set by Player #6, defended by Player #1. Some players reach their spatial targets, others don\'t — either way, the play never materializes.',
       base_dir: 'assets/qualitative_vis_basketball_task2/8488_Panagiotis_Kalaitzakis_3-_279719388',
       thumbs: [
-        { kind: 'input',    label: 'Background + start/end bbox',  file: 'background_gt_bbox.mp4' },
+        { kind: 'input',    label: 'Input', desc: 'Player-Removed Background Video w/ a Spatial Target',  file: 'background_gt_bbox.mp4' },
         { kind: 'gt',       label: 'Ground truth',                 file: 'groundtruth.mp4' },
-        { kind: 'gen_bbox', label: 'Generated · target overlay',   file: 'generated_gt_bbox.mp4' },
+        { kind: 'gen_bbox', label: 'Generated + start/end bbox',   file: 'generated_gt_bbox.mp4' },
         { kind: 'gen',      label: 'Generated',                    file: 'generated.mp4' }
       ]
     }
@@ -4888,7 +4929,7 @@ function SimArchiveModal({ panel, pillar, taskId, onClose }) {
         lineHeight: 1.45,
         color: isLight ? '#fafafa' : '#d4d4d8'
       }
-    }, t.label));
+    }, t.desc || t.label));
   }))));
 }
 // ── Tape archive section ──────────────────────────────────────────────────
