@@ -125,7 +125,7 @@ function T3Panel(_ref) {
     style: {
       fontFamily: '"IBM Plex Mono", monospace',
       fontSize: 11,
-      color: '#71717a',
+      color: '#a1a1aa',
       letterSpacing: '0.12em',
       textTransform: 'uppercase',
       marginRight: 10
@@ -215,7 +215,7 @@ function T3Panel(_ref) {
       fontFamily: '"IBM Plex Sans", sans-serif',
       fontSize: 14,
       lineHeight: 1.45,
-      color: selectedThumb.is_gt ? '#fafafa' : '#d4d4d8',
+      color: selectedThumb.is_gt ? '#fafafa' : '#1c1c1f',
       flex: '0 0 auto',
       minHeight: 36
     }
@@ -312,7 +312,7 @@ function T3Panel(_ref) {
         padding: '9px 22px',
         borderRadius: 999,
         background: isActive ? c.base : 'rgba(28,28,31,0.85)',
-        color: isActive ? '#0a0a0c' : '#e4e4e7',
+        color: isActive ? '#0a0a0c' : '#d4d4d8',
         boxShadow: isActive ? "0 0 16px ".concat(c.glow) : 'inset 0 0 0 1px #3f3f46',
         transition: 'background 180ms, color 180ms, box-shadow 180ms',
         textTransform: 'capitalize'
@@ -379,7 +379,7 @@ function T9Panel(_ref2) {
   var headerBg = light ? '#f4f4f5' : 'rgba(20,20,26,0.85)';
   var headerBorder = light ? '#d4d4d8' : '#27272a';
   var textPrimary = light ? '#18181b' : '#fafafa';
-  var textSecondary = light ? '#52525b' : '#a1a1aa';
+  var textSecondary = light ? '#52525b' : '#d4d4d8';
   var stripBg = light ? '#fafafa' : 'rgba(10,10,12,0.6)';
   var stripBorder = light ? '#e4e4e7' : '#1c1c1f';
   var tileBgIdle = light ? '#e4e4e7' : '#1c1c1f';
@@ -494,7 +494,7 @@ function T9Panel(_ref2) {
     style: {
       fontFamily: '"IBM Plex Mono", monospace',
       fontSize: 11,
-      color: '#71717a',
+      color: '#a1a1aa',
       letterSpacing: '0.14em',
       textTransform: 'uppercase',
       marginBottom: 5
@@ -700,14 +700,14 @@ function T9ClipModal(_ref3) {
       alignItems: 'center',
       fontFamily: '"IBM Plex Mono", monospace',
       fontSize: 11,
-      color: '#a1a1aa',
+      color: '#d4d4d8',
       letterSpacing: '0.06em'
     }
   }, /*#__PURE__*/React.createElement("span", null, "clip ", clip.clip_id), /*#__PURE__*/React.createElement("button", {
     onClick: onClose,
     style: {
       background: 'transparent',
-      border: '1px solid #3f3f46',
+      border: '1px solid #27272a',
       color: '#e4e4e7',
       padding: '4px 12px',
       borderRadius: 3,
@@ -726,7 +726,7 @@ function T9LegendAndStats(_ref4) {
   var _tc = toolColor || T9_TOOL_COLOR;
   var headerCol = light ? '#52525b' : '#a1a1aa';
   var itemActive = light ? '#18181b' : '#e4e4e7';
-  var itemDim = light ? '#a1a1aa' : '#52525b';
+  var itemDim = light ? '#a1a1aa' : '#a1a1aa';
   // Plain-English description so the user knows what each abbreviation does
   // without having to infer it from the tool name.
   var items = [{
@@ -856,7 +856,7 @@ function T9LegendAndStats(_ref4) {
       }
     }, it.desc), /*#__PURE__*/React.createElement("span", {
       style: {
-        color: '#71717a',
+        color: '#a1a1aa',
         marginLeft: 'auto'
       }
     }, "\xD7", it.count));
@@ -900,7 +900,7 @@ function T9CloseButton(_ref5) {
       right: 8,
       background: 'transparent',
       border: 'none',
-      color: light ? '#52525b' : '#71717a',
+      color: light ? '#52525b' : '#a1a1aa',
       fontFamily: '"IBM Plex Mono", monospace',
       fontSize: 14,
       lineHeight: 1,
@@ -924,7 +924,7 @@ function T9HoverBubble(_ref6) {
   var bubbleBorder = light ? '#d4d4d8' : '#27272a';
   var finalBg = light ? 'rgba(192,57,43,0.05)' : 'rgba(192,57,43,0.08)';
   var finalBorder = light ? 'rgba(192,57,43,0.45)' : 'rgba(192,57,43,0.5)';
-  var thoughtCol = light ? '#52525b' : '#a1a1aa';
+  var thoughtCol = light ? '#52525b' : '#d4d4d8';
   var answerCol = light ? '#18181b' : '#e4e4e7';
   if (isFinal) {
     return /*#__PURE__*/React.createElement("div", {
@@ -1070,7 +1070,7 @@ function T9KV(_ref7) {
   }, /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: '"IBM Plex Mono", monospace',
-      color: light ? '#52525b' : '#71717a',
+      color: light ? '#52525b' : '#a1a1aa',
       minWidth: 72
     }
   }, k), /*#__PURE__*/React.createElement("span", {
@@ -1308,7 +1308,7 @@ function T9DocQAResults(_ref12) {
     style: {
       fontFamily: '"IBM Plex Mono", monospace',
       fontSize: 9.5,
-      color: '#71717a',
+      color: '#a1a1aa',
       letterSpacing: '0.1em',
       textTransform: 'uppercase'
     }
@@ -1350,7 +1350,7 @@ function T9DocQAResults(_ref12) {
     style: {
       fontFamily: '"IBM Plex Mono", monospace',
       fontSize: 9.5,
-      color: '#52525b',
+      color: '#d4d4d8',
       textAlign: 'right'
     }
   }, "+", results.results.length - 2, " more"));
@@ -1407,7 +1407,7 @@ function T9VideoCards(_ref13) {
       style: {
         flex: 1,
         minWidth: 0,
-        border: "1px solid ".concat(v.is_target ? '#D4913A' : '#27272a'),
+        border: "1px solid ".concat(v.is_target ? '#D4913A' : '#e4e4e7'),
         borderRadius: 3,
         overflow: 'hidden',
         background: '#000',
@@ -1443,7 +1443,7 @@ function T9VideoCards(_ref13) {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        color: '#3f3f46'
+        color: '#d4d4d8'
       }
     }, /*#__PURE__*/React.createElement(T9VideoIcon, null)), /*#__PURE__*/React.createElement("div", {
       style: {
@@ -1569,7 +1569,7 @@ function T9VideoQAResults(_ref14) {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        color: '#3f3f46'
+        color: '#d4d4d8'
       }
     }, /*#__PURE__*/React.createElement(T9VideoIcon, null)), hasClip && /*#__PURE__*/React.createElement("div", {
       style: {
@@ -1624,7 +1624,7 @@ function T9VideoQAResults(_ref14) {
     style: {
       fontFamily: '"IBM Plex Mono", monospace',
       fontSize: 11,
-      color: '#52525b',
+      color: '#d4d4d8',
       textAlign: 'right'
     }
   }, "+", items.length - 3, " more"));
