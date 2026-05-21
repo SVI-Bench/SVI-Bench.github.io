@@ -4195,15 +4195,15 @@ function T8AskPanel({ clip }) {
       endedHandlers.forEach(({ v, h }) => v.removeEventListener('ended', h));
     };
   }, []);
-  const makeTile = (ref, file, label, labelColor) =>
+  const flexTile = (ref, file, label, labelColor, opts) =>
     /*#__PURE__*/React.createElement("div", {
       style: {
         position: 'relative',
-        aspectRatio: '16 / 9',
+        flex: 1,
+        minHeight: 0,
         background: '#000',
-        border: '1px solid #27272a',
-        borderRadius: 4,
-        overflow: 'hidden'
+        overflow: 'hidden',
+        ...(opts && opts.bordered ? { border: '1px solid #27272a', borderRadius: 4 } : {})
       }
     },
       /*#__PURE__*/React.createElement("video", {
@@ -4240,18 +4240,18 @@ function T8AskPanel({ clip }) {
   return /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'grid',
-      gridTemplateColumns: '1.6fr 1fr',
-      gap: 22,
+      gridTemplateColumns: '1.35fr 1fr',
+      gap: 28,
       marginBottom: 24,
-      maxWidth: 1080,
-      width: '100%',
-      margin: '0 auto 24px'
+      height: 500,
+      minHeight: 0
     }
   },
     /*#__PURE__*/React.createElement("div", {
       style: {
         display: 'flex',
         flexDirection: 'column',
+        height: '100%',
         background: '#0c0d10',
         color: '#fafafa',
         border: '1px solid #27272a',
@@ -4261,36 +4261,10 @@ function T8AskPanel({ clip }) {
       }
     },
       /*#__PURE__*/React.createElement("div", {
-        style: {
-          height: 32,
-          padding: '0 14px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          fontFamily: '"IBM Plex Mono", monospace',
-          fontSize: 11,
-          letterSpacing: '0.15em',
-          color: '#a1a1aa',
-          textTransform: 'uppercase',
-          borderBottom: '1px solid #1c1c1f',
-          flexShrink: 0
-        }
+        style: { flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0 }
       },
-        /*#__PURE__*/React.createElement("div", {
-          style: { display: 'flex', gap: 12, alignItems: 'center' }
-        },
-          /*#__PURE__*/React.createElement("span", {
-            style: { display: 'inline-block', width: 7, height: 7, borderRadius: 4, background: '#C0392B', animation: 'recPulse 1.6s ease-in-out infinite' }
-          }),
-          /*#__PURE__*/React.createElement("span", null, "CAM 1 \xB7 ", clip.context || 'Basketball')
-        ),
-        /*#__PURE__*/React.createElement("span", null, "00:00 / 00:10")
-      ),
-      /*#__PURE__*/React.createElement("div", {
-        style: { display: 'flex', flexDirection: 'column' }
-      },
-        makeTile(r0, 'groundtruth.mp4',        'Ground truth',           '#2ECC71'),
-        makeTile(r1, 'background_gt_bbox.mp4', 'Input · start/end bbox', '#a1a1aa')
+        flexTile(r0, 'groundtruth.mp4',        'Ground truth',           '#2ECC71'),
+        flexTile(r1, 'background_gt_bbox.mp4', 'Input',                  '#a1a1aa')
       ),
       /*#__PURE__*/React.createElement("div", {
         style: {
@@ -4329,38 +4303,11 @@ function T8AskPanel({ clip }) {
       )
     ),
     /*#__PURE__*/React.createElement("div", {
-      style: { display: 'flex', flexDirection: 'column', gap: 12, minWidth: 0 }
+      style: { display: 'flex', flexDirection: 'column', gap: 10, height: '100%', minWidth: 0 }
     },
-      /*#__PURE__*/React.createElement("div", {
-        style: {
-          padding: '12px 14px',
-          background: '#ffffff',
-          border: '1px solid #d4d4d8',
-          borderRadius: 3
-        }
-      },
-        /*#__PURE__*/React.createElement("div", {
-          style: {
-            fontFamily: '"IBM Plex Mono", monospace',
-            fontSize: 10,
-            color: '#71717a',
-            letterSpacing: '0.18em',
-            textTransform: 'uppercase',
-            marginBottom: 6
-          }
-        }, "Action"),
-        /*#__PURE__*/React.createElement("div", {
-          style: {
-            fontFamily: '"IBM Plex Sans", sans-serif',
-            fontSize: 13.5,
-            lineHeight: 1.4,
-            color: '#18181b'
-          }
-        }, clip.question)
-      ),
-      makeTile(r2, 'generated_gt_bbox.mp4',           'Ours · w/ GT bbox',          c.base),
-      makeTile(r3, 'generated_ati_gt_bbox.mp4',       'ATI · w/ GT bbox',           '#E74C3C'),
-      makeTile(r4, 'generated_magicmotion_gt_bbox.mp4', 'MagicMotion · w/ GT bbox', '#E74C3C')
+      flexTile(r2, 'generated_gt_bbox.mp4',           'Ours',         c.base,     { bordered: true }),
+      flexTile(r3, 'generated_ati_gt_bbox.mp4',       'ATI',          '#E74C3C',  { bordered: true }),
+      flexTile(r4, 'generated_magicmotion_gt_bbox.mp4', 'MagicMotion', '#E74C3C', { bordered: true })
     )
   );
 }
