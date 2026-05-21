@@ -2879,7 +2879,7 @@ function CliffBars({
     }
   }, /*#__PURE__*/React.createElement("svg", {
     viewBox: "0 0 1000 600",
-    preserveAspectRatio: "none",
+    preserveAspectRatio: "xMinYMin meet",
     style: {
       position: 'absolute',
       inset: 0,
@@ -3035,7 +3035,7 @@ function CliffAnnotation({
   const yT9 = 540 - 6 / 100 * 480;
   return /*#__PURE__*/React.createElement("svg", {
     viewBox: "0 0 1000 600",
-    preserveAspectRatio: "none",
+    preserveAspectRatio: "xMinYMin meet",
     style: {
       position: 'absolute',
       inset: 0,
@@ -3176,8 +3176,23 @@ function AskBroadcastViewport({
   playT
 }) {
   const c = PILLARS[clip.pillar];
-  const totalSeconds = Math.floor(playT * 10);
-  const tc = `00:${String(totalSeconds).padStart(2, '0')}`;
+  const vidRef = useRef(null);
+  const [vidProgress, setVidProgress] = useState(0);
+  const [vidDuration, setVidDuration] = useState(0);
+  const handleTimeUpdate = () => {
+    const v = vidRef.current;
+    if (v && v.duration) {
+      setVidProgress(v.currentTime / v.duration);
+      setVidDuration(v.duration);
+    }
+  };
+  // Use real video progress when video exists, else fall back to playT
+  const progress = clip.video ? vidProgress : playT;
+  const dur = clip.video ? vidDuration : 10;
+  const curSec = Math.floor(progress * dur);
+  const totSec = Math.round(dur);
+  const tc = `00:${String(curSec).padStart(2, '0')}`;
+  const tcTotal = `00:${String(totSec).padStart(2, '0')}`;
   return /*#__PURE__*/React.createElement("div", {
     style: {
       position: 'relative',
@@ -3231,11 +3246,14 @@ function AskBroadcastViewport({
       letterSpacing: '0.15em',
       color: '#d4d4d8'
     }
-  }, tc, " / 00:10")),
+  }, tc, " / ", tcTotal)),
   clip.video
     ? /*#__PURE__*/React.createElement("video", {
+        ref: vidRef,
         src: clip.video,
         autoPlay: true, loop: true, muted: true, playsInline: true,
+        onTimeUpdate: handleTimeUpdate,
+        onLoadedMetadata: handleTimeUpdate,
         style: { position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'contain', background: '#0c0d10' }
       })
     : /*#__PURE__*/React.createElement("div", {
@@ -3290,7 +3308,7 @@ function AskBroadcastViewport({
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       height: '100%',
-      width: `${playT * 100}%`,
+      width: `${progress * 100}%`,
       background: c.base
     }
   })), /*#__PURE__*/React.createElement("span", {
@@ -3778,8 +3796,8 @@ function HeroSection() {
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'center',
-      padding: '120px 48px 80px',
-      maxWidth: 1500,
+      padding: '120px 24px 80px',
+      maxWidth: '100%',
       margin: '0 auto',
       position: 'relative'
     }
@@ -3838,7 +3856,7 @@ function HeroSection() {
       flexWrap: 'wrap',
       marginBottom: 80
     }
-  }, ['ECCV 2026', 'UNC Chapel Hill', 'Northeastern', '9 tasks · 4 pillars · 3 sports'].map(c => /*#__PURE__*/React.createElement("span", {
+  }, ['UNC Chapel Hill', 'Northeastern', '9 tasks · 4 pillars · 3 sports'].map(c => /*#__PURE__*/React.createElement("span", {
     key: c,
     style: {
       padding: '8px 14px',
@@ -4018,7 +4036,7 @@ function CliffSection() {
       height: '100vh',
       display: 'grid',
       gridTemplateColumns: '1.1fr 1fr',
-      maxWidth: 1500,
+      maxWidth: '100%',
       marginLeft: 'auto',
       marginRight: 'auto',
       background: '#0a0a0c',
@@ -4044,7 +4062,7 @@ function CliffSection() {
       textTransform: 'uppercase',
       color: '#a1a1aa'
     }
-  }, "03 \xB7"), /*#__PURE__*/React.createElement("div", {
+  }, "02 \xB7"), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: '"IBM Plex Serif", serif',
       fontSize: 32,
@@ -4065,7 +4083,7 @@ function CliffSection() {
       top: 168,
       left: 56,
       right: 32,
-      bottom: 56,
+      aspectRatio: '5 / 3',
       padding: '24px 16px',
       background: '#0a0a0c',
       color: '#fafafa',
@@ -4302,8 +4320,8 @@ function AskThePlaySection() {
     id: "ask",
     style: {
       minHeight: '100vh',
-      padding: '80px 48px 48px',
-      maxWidth: 1500,
+      padding: '80px 24px 48px',
+      maxWidth: '100%',
       margin: '0 auto',
       display: 'flex',
       flexDirection: 'column',
@@ -4322,7 +4340,7 @@ function AskThePlaySection() {
       color: '#a1a1aa',
       marginBottom: 16
     }
-  }, "04 \xB7 Model responses"), /*#__PURE__*/React.createElement("h2", {
+  }, "03 \xB7 Model responses"), /*#__PURE__*/React.createElement("h2", {
     style: {
       fontFamily: '"IBM Plex Serif", serif',
       fontSize: 'clamp(36px, 4.8vw, 60px)',
@@ -4333,7 +4351,7 @@ function AskThePlaySection() {
       marginBottom: 10,
       maxWidth: 1000
     }
-  }, "See how the models fail."), /*#__PURE__*/React.createElement("p", {
+  }, "Explore model predictions."), /*#__PURE__*/React.createElement("p", {
     style: {
       fontFamily: '"IBM Plex Sans", sans-serif',
       fontSize: 16,
@@ -4342,7 +4360,7 @@ function AskThePlaySection() {
       maxWidth: 720,
       margin: 0
     }
-  }, "Pick a clip. Watch three frontier video models answer the question beside the human expert \u2014 or, on T9, step through what a single agent did with the same prompt.")), isT9 ? /*#__PURE__*/React.createElement("div", {
+  }, "Pick a clip. Watch how frontier video models answer the question.")), isT9 ? /*#__PURE__*/React.createElement("div", {
     style: {
       position: 'relative',
       width: '100%',
@@ -4570,11 +4588,11 @@ function SimArchiveTile({ panel, pillar, taskId, onOpen }) {
       transition: 'border-color 150ms, transform 150ms'
     },
     onMouseEnter: function onMouseEnter(e) {
-      e.currentTarget.style.borderColor = '#d4d4d8';
+      e.currentTarget.style.borderColor = '#3f3f46';
       e.currentTarget.style.transform = 'translateY(-2px)';
     },
     onMouseLeave: function onMouseLeave(e) {
-      e.currentTarget.style.borderColor = '#e4e4e7';
+      e.currentTarget.style.borderColor = '#27272a';
       e.currentTarget.style.transform = 'translateY(0)';
     }
   },
@@ -4851,8 +4869,8 @@ function TapeArchiveSection() {
     id: "archive",
     style: {
       minHeight: '100vh',
-      padding: '110px 48px 80px',
-      maxWidth: 1500,
+      padding: '110px 24px 80px',
+      maxWidth: '100%',
       margin: '0 auto',
       display: 'flex',
       flexDirection: 'column',
@@ -4871,7 +4889,7 @@ function TapeArchiveSection() {
       color: '#a1a1aa',
       marginBottom: 16
     }
-  }, "05 \xB7 Failures"), /*#__PURE__*/React.createElement("h2", {
+  }, "04 \xB7 Failures"), /*#__PURE__*/React.createElement("h2", {
     style: {
       fontFamily: '"IBM Plex Serif", serif',
       fontSize: 'clamp(40px, 6vw, 76px)',
@@ -5040,11 +5058,11 @@ function T3ArchiveTile(_ref) {
       transition: 'border-color 150ms, transform 150ms'
     },
     onMouseEnter: function onMouseEnter(e) {
-      e.currentTarget.style.borderColor = '#d4d4d8';
+      e.currentTarget.style.borderColor = '#3f3f46';
       e.currentTarget.style.transform = 'translateY(-2px)';
     },
     onMouseLeave: function onMouseLeave(e) {
-      e.currentTarget.style.borderColor = '#e4e4e7';
+      e.currentTarget.style.borderColor = '#27272a';
       e.currentTarget.style.transform = 'translateY(0)';
     }
   }, /*#__PURE__*/React.createElement("div", {
@@ -5487,25 +5505,54 @@ function T9ArchiveCard(_ref4) {
       borderRadius: 3,
       border: '1px solid #27272a'
     }
-  }, card.question_short || card.question), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+  }, card.question_short || card.question),
+  // Boxed workflow sub-panel
+  /*#__PURE__*/React.createElement("div", {
     style: {
-      fontFamily: '"IBM Plex Mono", monospace',
-      fontSize: 10,
-      letterSpacing: '0.12em',
-      color: '#a1a1aa',
-      textTransform: 'uppercase',
-      marginBottom: 5
-    }
-  }, card.num_turns, " turns"), /*#__PURE__*/React.createElement("div", {
-    style: {
+      background: 'rgba(30,30,36,0.6)',
+      border: '1px solid #3f3f46',
+      borderRadius: 4,
+      padding: '10px 12px',
       display: 'flex',
-      flexWrap: 'wrap',
-      gap: 3,
-      alignItems: 'center'
+      flexDirection: 'column',
+      gap: 6
     }
-  }, card.tool_seq.map(function (t) {
-    return /*#__PURE__*/React.createElement("span", {
-      key: t.turn,
+  },
+    /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontFamily: '"IBM Plex Mono", monospace',
+        fontSize: 10,
+        letterSpacing: '0.12em',
+        color: '#a1a1aa',
+        textTransform: 'uppercase',
+        fontWeight: 600
+      }
+    }, "Overall workflow \xB7 ", card.num_turns, " turns"),
+    /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        gap: 3,
+        alignItems: 'center'
+      }
+    }, card.tool_seq.map(function (t) {
+      return /*#__PURE__*/React.createElement("span", {
+        key: t.turn,
+        style: {
+          display: 'inline-flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: 22,
+          height: 18,
+          borderRadius: 2,
+          background: T9_ARCHIVE_COLORS[t.tool] || '#71717a',
+          color: '#fafafa',
+          fontFamily: '"IBM Plex Mono", monospace',
+          fontSize: 9.5,
+          fontWeight: 700
+        }
+      }, t.abbrev);
+    }), /*#__PURE__*/React.createElement("span", {
       style: {
         display: 'inline-flex',
         alignItems: 'center',
@@ -5513,32 +5560,36 @@ function T9ArchiveCard(_ref4) {
         width: 22,
         height: 18,
         borderRadius: 2,
-        background: T9_ARCHIVE_COLORS[t.tool] || '#71717a',
+        background: '#71717a',
         color: '#fafafa',
         fontFamily: '"IBM Plex Mono", monospace',
-        fontSize: 9.5,
-        fontWeight: 700
+        fontSize: 11,
+        fontWeight: 700,
+        marginLeft: 2,
+        outline: '2px solid #C0392B',
+        outlineOffset: 1
       }
-    }, t.abbrev);
-  }), /*#__PURE__*/React.createElement("span", {
+    }, "A")),
+    /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontFamily: '"IBM Plex Sans", sans-serif',
+        fontSize: 11.5,
+        color: '#d4d4d8',
+        lineHeight: 1.45,
+        fontStyle: 'italic'
+      }
+    }, card.summary)
+  ),
+  // Click hint
+  /*#__PURE__*/React.createElement("div", {
     style: {
-      display: 'inline-flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      width: 22,
-      height: 18,
-      borderRadius: 2,
-      background: '#71717a',
-      color: '#fafafa',
-      fontFamily: '"IBM Plex Mono", monospace',
-      fontSize: 11,
-      fontWeight: 700,
-      marginLeft: 2,
-      outline: '2px solid #C0392B',
-      outlineOffset: 1
+      fontFamily: '"IBM Plex Sans", sans-serif',
+      fontSize: 14,
+      color: '#a1a1aa'
     }
-  }, "A")),
-), /*#__PURE__*/React.createElement("div", {
+  }, "Click any tile to inspect."),
+  // MODEL / GT answers
+  /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
       flexDirection: 'column',
@@ -5577,17 +5628,7 @@ function T9ArchiveCard(_ref4) {
       fontFamily: '"IBM Plex Mono", monospace',
       fontSize: 12
     }
-  }, card.gt_answer))), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: '"IBM Plex Sans", sans-serif',
-      fontSize: 12,
-      color: '#d4d4d8',
-      lineHeight: 1.5,
-      fontStyle: 'italic',
-      borderTop: '1px solid #1c1c1f',
-      paddingTop: 10
-    }
-  }, card.summary));
+  }, card.gt_answer))));
 }
 
 function OutroSection() {
@@ -5595,8 +5636,8 @@ function OutroSection() {
     id: "meaning",
     style: {
       minHeight: '70vh',
-      padding: '120px 48px',
-      maxWidth: 1500,
+      padding: '120px 24px',
+      maxWidth: '100%',
       margin: '0 auto',
       borderTop: '1px solid #1c1c1f'
     }
@@ -5609,7 +5650,7 @@ function OutroSection() {
       color: '#a1a1aa',
       marginBottom: 32
     }
-  }, "06 \xB7 What this means"), /*#__PURE__*/React.createElement("h2", {
+  }, "05 \xB7 What this means"), /*#__PURE__*/React.createElement("h2", {
     style: {
       fontFamily: '"IBM Plex Serif", serif',
       fontSize: 'clamp(36px, 5vw, 64px)',
@@ -5677,8 +5718,8 @@ function FooterSection() {
   return /*#__PURE__*/React.createElement("section", {
     id: "about",
     style: {
-      padding: '100px 48px 80px',
-      maxWidth: 1500,
+      padding: '100px 24px 80px',
+      maxWidth: '100%',
       margin: '0 auto',
       borderTop: '1px solid #1c1c1f'
     }
@@ -5691,7 +5732,7 @@ function FooterSection() {
       color: '#a1a1aa',
       marginBottom: 24
     }
-  }, "07 \xB7 Authors \xB7 paper \xB7 code \xB7 data"), /*#__PURE__*/React.createElement("div", {
+  }, "06 \xB7 Authors \xB7 paper \xB7 code \xB7 data"), /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'grid',
       gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
@@ -5842,7 +5883,7 @@ function Header() {
       left: 0,
       right: 0,
       zIndex: 50,
-      padding: '18px 48px',
+      padding: '18px 24px',
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',

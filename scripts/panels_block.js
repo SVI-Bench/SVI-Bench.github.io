@@ -847,49 +847,49 @@ function T9LegendAndStats(_ref4) {
       color: headerCol,
       textTransform: 'uppercase'
     }
-  }, data.num_turns, " turns \xB7 ", allRevealed ? 'click any tile to inspect' : 'tracing the agent…'), /*#__PURE__*/React.createElement("div", {
+  }, data.num_turns, " turns \xB7 ", allRevealed ? 'click any tile to inspect' : 'tracing the agent\u2026'), /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'grid',
       gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
       gap: '6px 18px'
     }
   }, items.map(function (it) {
-    return /*#__PURE__*/React.createElement("div", {
-      key: it.key,
-      style: {
-        display: 'flex',
-        alignItems: 'center',
-        gap: 8,
-        fontSize: 12,
-        color: it.count > 0 ? itemActive : itemDim
-      }
-    }, /*#__PURE__*/React.createElement("span", {
-      style: {
-        display: 'inline-flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: 24,
-        height: 18,
-        borderRadius: 3,
-        background: _tc[it.key],
-        color: '#fafafa',
-        fontFamily: '"IBM Plex Mono", monospace',
-        fontSize: 11,
-        fontWeight: 700,
-        letterSpacing: '0.02em',
-        opacity: it.count > 0 ? 1 : 0.3,
-        flex: '0 0 auto'
-      }
-    }, it.abbrev), /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontFamily: '"IBM Plex Sans", sans-serif'
-      }
-    }, it.desc), /*#__PURE__*/React.createElement("span", {
-      style: {
-        color: '#71717a',
-        marginLeft: 'auto'
-      }
-    }, "\xD7", it.count));
+      return /*#__PURE__*/React.createElement("div", {
+        key: it.key,
+        style: {
+          display: 'flex',
+          alignItems: 'center',
+          gap: 8,
+          fontSize: 12,
+          color: it.count > 0 ? itemActive : itemDim
+        }
+      }, /*#__PURE__*/React.createElement("span", {
+        style: {
+          display: 'inline-flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: 24,
+          height: 18,
+          borderRadius: 3,
+          background: _tc[it.key],
+          color: '#fafafa',
+          fontFamily: '"IBM Plex Mono", monospace',
+          fontSize: 11,
+          fontWeight: 700,
+          letterSpacing: '0.02em',
+          opacity: it.count > 0 ? 1 : 0.3,
+          flex: '0 0 auto'
+        }
+      }, it.abbrev), /*#__PURE__*/React.createElement("span", {
+        style: {
+          fontFamily: '"IBM Plex Sans", sans-serif'
+        }
+      }, it.desc), /*#__PURE__*/React.createElement("span", {
+        style: {
+          color: '#71717a',
+          marginLeft: 'auto'
+        }
+      }, "\xD7", it.count));
   }), /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
