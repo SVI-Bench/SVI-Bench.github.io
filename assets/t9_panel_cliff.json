@@ -14,6 +14,13 @@
     "search_videos": 1,
     "video_qa_oracle": 3
   },
+  "tool_summaries": [
+    { "abbrev": "SD", "key": "search_documents", "text": "Searched game reports. Found the Pelicans vs Clippers game on the second try." },
+    { "abbrev": "DQ", "key": "document_qa", "text": "Asked the report for score deficits. The report described the plays but didn't quote exact scores." },
+    { "abbrev": "SV", "key": "search_videos", "text": "Pivoted to video. Found clips of both Westbrook's and Batum's plays." },
+    { "abbrev": "VQ", "key": "video_qa_oracle", "text": "Asked 3 clips for the score. Got Westbrook's deficit (Clippers 48, Pelicans 56) but never asked Batum's clip the same question." },
+    { "abbrev": "✗", "key": null, "text": "Refused to answer. Had one side of the comparison but not the other." }
+  ],
   "phases": [
     {
       "start_turn": 1,

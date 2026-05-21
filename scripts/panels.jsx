@@ -544,18 +544,55 @@ function T9LegendAndStats({ data, allRevealed, light, toolColor }) {
   // without having to infer it from the tool name.
   const items = [
     { key: 'search_documents', abbrev: 'SD',
-      desc: 'searches the game reports',
+      desc: 'searches documents',
       count: tc.search_documents || 0 },
     { key: 'document_qa',      abbrev: 'DQ',
-      desc: 'asks a report a question',
+      desc: 'asks questions about a document',
       count: tc.document_qa || 0 },
     { key: 'search_videos',    abbrev: 'SV',
-      desc: 'searches the video clips',
+      desc: 'searches video clips',
       count: tc.search_videos || 0 },
     { key: 'video_qa',         abbrev: 'VQ',
-      desc: 'asks a clip a question',
+      desc: 'asks questions about a video clip',
       count: (tc.video_qa || 0) + (tc.video_qa_oracle || 0) },
   ];
+  // Narrative summaries: if `data.tool_summaries` exists (cliff), show a
+  // vertical list with per-tool one-liners instead of the grid+counts.
+  const summaries = data.tool_summaries;
+  if (summaries && allRevealed) {
+    return (
+      <div style={{
+        display: 'flex', flexDirection: 'column', gap: 6,
+        fontFamily: '"IBM Plex Sans", sans-serif',
+      }}>
+        <div style={{
+          fontSize: 11, letterSpacing: '0.1em', color: headerCol,
+          textTransform: 'uppercase',
+          fontFamily: '"IBM Plex Mono", monospace',
+          marginBottom: 2,
+        }}>
+          {allRevealed ? 'Click any tile to inspect' : 'Tracing the agent…'}
+        </div>
+        {summaries.map(s => (
+          <div key={s.abbrev} style={{
+            display: 'flex', alignItems: 'flex-start', gap: 10,
+            fontSize: 12.5, lineHeight: 1.45,
+          }}>
+            <span style={{
+              display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+              width: 26, height: 18, borderRadius: 3,
+              background: s.abbrev === '✗' ? (tileColors ? '#71717a' : '#C0392B') : (_tc[s.key] || '#71717a'),
+              color: '#fafafa',
+              fontFamily: '"IBM Plex Mono", monospace',
+              fontSize: 11, fontWeight: 700,
+              flex: '0 0 auto', marginTop: 2,
+            }}>{s.abbrev}</span>
+            <span style={{ color: itemActive }}>{s.text}</span>
+          </div>
+        ))}
+      </div>
+    );
+  }
   return (
     <div style={{
       display: 'flex', flexDirection: 'column', gap: 10,
@@ -600,7 +637,7 @@ function T9LegendAndStats({ data, allRevealed, light, toolColor }) {
           <span style={{
             display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
             width: 24, height: 18, borderRadius: 3,
-            background: '#C0392B', color: '#fafafa',
+            background: tileColors ? '#71717a' : '#C0392B', color: '#fafafa',
             fontFamily: '"IBM Plex Mono", monospace',
             fontSize: 12, fontWeight: 700,
             flex: '0 0 auto',
