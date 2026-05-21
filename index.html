@@ -2197,32 +2197,35 @@ function T7Panel({ pillar }) {
     objectFit: 'contain',
     display: 'block'
   };
+  const attachVideo = useCallback((el) => {
+    if (!el) return;
+    if (el.dataset.simAttached) return;
+    el.dataset.simAttached = '1';
+    el.muted = true;
+    el.defaultMuted = true;
+    const holdMs = 1500;
+    let timer = null;
+    const startWithHold = () => {
+      if (timer) clearTimeout(timer);
+      el.currentTime = 0;
+      timer = setTimeout(() => {
+        const p = el.play();
+        if (p && p.catch) p.catch(() => {});
+      }, holdMs);
+    };
+    if (el.readyState >= 2) {
+      startWithHold();
+    } else {
+      el.addEventListener('loadeddata', startWithHold, { once: true });
+    }
+    el.addEventListener('ended', startWithHold);
+  }, []);
   const videoProps = (file) => ({
     src: `${baseDir}/${file}`,
     muted: true,
     playsInline: true,
     preload: 'auto',
-    ref: el => {
-      if (!el) return;
-      el.muted = true;
-      el.defaultMuted = true;
-      const holdMs = 1500;
-      let timer = null;
-      const startWithHold = () => {
-        if (timer) clearTimeout(timer);
-        el.currentTime = 0;
-        timer = setTimeout(() => {
-          const p = el.play();
-          if (p && p.catch) p.catch(() => {});
-        }, holdMs);
-      };
-      if (el.readyState >= 2) {
-        startWithHold();
-      } else {
-        el.addEventListener('loadeddata', startWithHold, { once: true });
-      }
-      el.addEventListener('ended', startWithHold);
-    },
+    ref: attachVideo,
     style: videoEl
   });
   return /*#__PURE__*/React.createElement("div", {
@@ -2324,32 +2327,35 @@ function T8Panel({ pillar }) {
     objectFit: 'contain',
     display: 'block'
   };
+  const attachVideo = useCallback((el) => {
+    if (!el) return;
+    if (el.dataset.simAttached) return;
+    el.dataset.simAttached = '1';
+    el.muted = true;
+    el.defaultMuted = true;
+    const holdMs = 1500;
+    let timer = null;
+    const startWithHold = () => {
+      if (timer) clearTimeout(timer);
+      el.currentTime = 0;
+      timer = setTimeout(() => {
+        const p = el.play();
+        if (p && p.catch) p.catch(() => {});
+      }, holdMs);
+    };
+    if (el.readyState >= 2) {
+      startWithHold();
+    } else {
+      el.addEventListener('loadeddata', startWithHold, { once: true });
+    }
+    el.addEventListener('ended', startWithHold);
+  }, []);
   const videoProps = (file) => ({
     src: `${baseDir}/${file}`,
     muted: true,
     playsInline: true,
     preload: 'auto',
-    ref: el => {
-      if (!el) return;
-      el.muted = true;
-      el.defaultMuted = true;
-      const holdMs = 1500;
-      let timer = null;
-      const startWithHold = () => {
-        if (timer) clearTimeout(timer);
-        el.currentTime = 0;
-        timer = setTimeout(() => {
-          const p = el.play();
-          if (p && p.catch) p.catch(() => {});
-        }, holdMs);
-      };
-      if (el.readyState >= 2) {
-        startWithHold();
-      } else {
-        el.addEventListener('loadeddata', startWithHold, { once: true });
-      }
-      el.addEventListener('ended', startWithHold);
-    },
+    ref: attachVideo,
     style: videoEl
   });
   return /*#__PURE__*/React.createElement("div", {
