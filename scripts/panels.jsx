@@ -266,11 +266,13 @@ const TOOL_ABBREV_SHORT = {
   video_qa_oracle:  'VQ',
 };
 
-function T9Panel({ pillar, active, data, light }) {
+function T9Panel({ pillar, active, data, light, tileColors, noClick }) {
   const c = PILLARS[pillar];
   // `data` defaults to the cliff trajectory (Q45). Pass `T9_PANEL_ASK` for
   // the Ask-the-play trajectory (Q42).
   if (!data) data = T9_PANEL_CLIFF;
+  // Optional per-panel color override for tiles. Falls back to T9_TOOL_COLOR.
+  const toolColor = tileColors || T9_TOOL_COLOR;
   const turns = data.turns;
   const totalTiles = turns.length + 1;   // + final ✗
 
@@ -328,7 +330,7 @@ function T9Panel({ pillar, active, data, light }) {
   const stripWidth = STRIP_PAD_LEFT * 2 + NUM_TILES * TILE_W + (NUM_TILES - 1) * TILE_GAP;
 
   const toggle = (i) => {
-    if (!allRevealed) return;
+    if (!allRevealed || noClick) return;
     setSelectedIdx(prev => prev === i ? null : i);
   };
 
@@ -367,20 +369,20 @@ function T9Panel({ pillar, active, data, light }) {
         borderRadius: 3,
         overflow: 'hidden',
       }}>
-        {/* Tile row */}
+        {/* Tile row — tiles fill container width via flex */}
         <div style={{
           display: 'flex', gap: TILE_GAP, alignItems: 'center',
-          width: stripWidth, maxWidth: '100%',
+          width: '100%',
         }}>
           {turns.map((t, i) => {
             const revealed = i < revealedCount;
             const isSelected = selectedIdx === i;
-            const color = T9_TOOL_COLOR[t.tool] || '#71717a';
+            const color = toolColor[t.tool] || '#71717a';
             return (
               <div key={t.turn}
                 onClick={() => toggle(i)}
                 style={{
-                  width: TILE_W, height: TILE_H,
+                  flex: 1, minWidth: 0, height: TILE_H,
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   borderRadius: 5,
                   background: revealed ? color : tileBgIdle,
@@ -389,9 +391,8 @@ function T9Panel({ pillar, active, data, light }) {
                   fontSize: 14, fontWeight: 700, letterSpacing: '0.02em',
                   outline: isSelected ? '2px solid ' + selectedOutline : '2px solid transparent',
                   outlineOffset: isSelected ? 1 : 0,
-                  cursor: allRevealed ? 'pointer' : 'default',
+                  cursor: (allRevealed && !noClick) ? 'pointer' : 'default',
                   transition: 'background 180ms, color 180ms, outline-color 120ms',
-                  flex: '0 0 auto',
                   userSelect: 'none',
                 }}>
                 {revealed ? t.abbrev : ''}
@@ -402,7 +403,7 @@ function T9Panel({ pillar, active, data, light }) {
           <div
             onClick={() => toggle(turns.length)}
             style={{
-              width: TILE_W, height: TILE_H,
+              flex: 1, minWidth: 0, height: TILE_H,
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               borderRadius: 5, marginLeft: 4,
               background: revealedCount > turns.length ? '#C0392B' : tileBgIdle,
@@ -412,9 +413,8 @@ function T9Panel({ pillar, active, data, light }) {
               outline: selectedIdx === turns.length
                 ? '2px solid ' + selectedOutline : '2px solid transparent',
               outlineOffset: selectedIdx === turns.length ? 1 : 0,
-              cursor: allRevealed ? 'pointer' : 'default',
+              cursor: (allRevealed && !noClick) ? 'pointer' : 'default',
               transition: 'background 180ms, outline-color 120ms',
-              flex: '0 0 auto',
               userSelect: 'none',
             }}>✗</div>
         </div>
@@ -424,21 +424,21 @@ function T9Panel({ pillar, active, data, light }) {
             centered below it. (Replaces the old colored-chip strip.) */}
         <div style={{
           position: 'relative', height: 32, marginTop: 6,
-          width: stripWidth, maxWidth: '100%',
+          width: '100%',
         }}>
           {data.phases.map((p, pi) => {
             if (revealedCount < p.start_turn) return null;
-            const midTurn = (p.start_turn + p.end_turn) / 2;
             const isLast = pi === data.phases.length - 1;
-            // Bracket spans from the left edge of the first tile to the
-            // right edge of the last tile in the phase.
-            const leftX = tileCenterX(p.start_turn) - TILE_W / 2;
-            const rightX = tileCenterX(p.end_turn) + TILE_W / 2;
+            // Percentage-based positioning (tiles are flex:1 so uniform width).
+            const startIdx = p.start_turn - 1; // 0-based
+            const endIdx = Math.min(p.end_turn, NUM_TILES); // inclusive, 0-based
+            const leftPct = (startIdx / NUM_TILES * 100) + '%';
+            const widthPct = ((endIdx - startIdx) / NUM_TILES * 100) + '%';
             return (
               <React.Fragment key={p.label}>
                 <div style={{
                   position: 'absolute', top: 0,
-                  left: leftX, width: rightX - leftX,
+                  left: leftPct, width: widthPct,
                   height: 2,
                   background: c.base,
                   opacity: 0.55,
@@ -448,8 +448,7 @@ function T9Panel({ pillar, active, data, light }) {
                 <div style={{
                   position: 'absolute',
                   top: 8,
-                  left: leftX,
-                  width: rightX - leftX,
+                  left: leftPct, width: widthPct,
                   textAlign: 'center',
                   fontFamily: '"IBM Plex Mono", monospace',
                   fontSize: 11.5,
@@ -458,11 +457,7 @@ function T9Panel({ pillar, active, data, light }) {
                   lineHeight: 1.3,
                   whiteSpace: 'nowrap',
                   animation: 'overlayIn 240ms ease',
-                  // For the rightmost (final ✗) phase, the bracket is only
-                  // one-tile wide; let the label hang flush-right so it
-                  // doesn't get cut off.
-                  ...(isLast ? { right: STRIP_PAD_LEFT, left: 'auto',
-                                 width: 'auto', textAlign: 'right' } : {}),
+                  ...(isLast ? { textAlign: 'right' } : {}),
                 }}>
                   {p.label}
                 </div>
@@ -482,7 +477,7 @@ function T9Panel({ pillar, active, data, light }) {
                         onClose={() => setSelectedIdx(null)}
                         onClipClick={(clip_id, url) => setModalClip({ clip_id, url })} />
         ) : (
-          <T9LegendAndStats data={data} allRevealed={allRevealed} light={light} />
+          <T9LegendAndStats data={data} allRevealed={allRevealed} light={light} toolColor={toolColor} />
         )}
         {modalClip && (
           <T9ClipModal clip={modalClip} onClose={() => setModalClip(null)} />
@@ -528,8 +523,9 @@ function T9ClipModal({ clip, onClose }) {
   );
 }
 
-function T9LegendAndStats({ data, allRevealed, light }) {
+function T9LegendAndStats({ data, allRevealed, light, toolColor }) {
   const tc = data.tool_counts;
+  const _tc = toolColor || T9_TOOL_COLOR;
   const headerCol = light ? '#52525b' : '#a1a1aa';
   const itemActive = light ? '#18181b' : '#e4e4e7';
   const itemDim = light ? '#a1a1aa' : '#52525b';
@@ -573,7 +569,7 @@ function T9LegendAndStats({ data, allRevealed, light }) {
             <span style={{
               display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
               width: 24, height: 18, borderRadius: 3,
-              background: T9_TOOL_COLOR[it.key],
+              background: _tc[it.key],
               color: '#fafafa',
               fontFamily: '"IBM Plex Mono", monospace',
               fontSize: 11, fontWeight: 700, letterSpacing: '0.02em',
