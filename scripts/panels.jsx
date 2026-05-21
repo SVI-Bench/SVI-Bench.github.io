@@ -341,7 +341,7 @@ function T9Panel({ pillar, active, data, light, tileColors, noClick }) {
       padding: '12px 14px', gap: 10,
       background: bg,
     }}>
-      {/* Query header */}
+      {/* Merged environment + query box (cliff) or plain query (§4) */}
       <div style={{
         fontFamily: '"IBM Plex Sans", sans-serif',
         fontSize: 14, lineHeight: 1.45, color: textPrimary,
@@ -350,6 +350,24 @@ function T9Panel({ pillar, active, data, light, tileColors, noClick }) {
         border: '1px solid ' + headerBorder,
         borderRadius: 3,
       }}>
+        {!light && (
+          <>
+            <div style={{
+              fontFamily: '"IBM Plex Sans", sans-serif',
+              fontSize: 13, color: textSecondary, lineHeight: 1.5,
+              marginBottom: 6,
+            }}>
+              Search through 33K game reports and 1.76M video clips across 7,430 games to answer:
+            </div>
+            <div style={{
+              fontFamily: '"IBM Plex Mono", monospace', fontSize: 10,
+              color: '#71717a', letterSpacing: '0.08em',
+              marginBottom: 8,
+            }}>
+              Tools: document search · document QA · video search · video QA
+            </div>
+          </>
+        )}
         <div style={{
           fontFamily: '"IBM Plex Mono", monospace', fontSize: 11,
           color: '#71717a', letterSpacing: '0.14em',
@@ -406,7 +424,7 @@ function T9Panel({ pillar, active, data, light, tileColors, noClick }) {
               flex: 1, minWidth: 0, height: TILE_H,
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               borderRadius: 5, marginLeft: 4,
-              background: revealedCount > turns.length ? '#C0392B' : tileBgIdle,
+              background: revealedCount > turns.length ? (tileColors ? '#71717a' : '#C0392B') : tileBgIdle,
               color: revealedCount > turns.length ? '#fafafa' : tileTextIdle,
               fontFamily: '"IBM Plex Mono", monospace',
               fontSize: 18, fontWeight: 700,
@@ -432,8 +450,8 @@ function T9Panel({ pillar, active, data, light, tileColors, noClick }) {
             // Percentage-based positioning (tiles are flex:1 so uniform width).
             const startIdx = p.start_turn - 1; // 0-based
             const endIdx = Math.min(p.end_turn, NUM_TILES); // inclusive, 0-based
-            const leftPct = (startIdx / NUM_TILES * 100) + '%';
-            const widthPct = ((endIdx - startIdx) / NUM_TILES * 100) + '%';
+            const leftPct = (startIdx / NUM_TILES * 100 + 0.4) + '%';
+            const widthPct = ((endIdx - startIdx) / NUM_TILES * 100 - 0.8) + '%';
             return (
               <React.Fragment key={p.label}>
                 <div style={{

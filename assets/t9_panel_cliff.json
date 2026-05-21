@@ -1,6 +1,6 @@
 {
   "question_id": 45,
-  "question": "In the game where New Orleans led wire-to-wire with 14 threes by halftime, how much further behind were the Clippers after Batum's four-point play in Q3 than after Westbrook's three-point play in Q2?",
+  "question": "In New Orleans' wire-to-wire win with 14 first-half threes, how many more points were the Clippers down after Batum's Q3 four-point play than after Westbrook's Q2 three-point play?",
   "category": "Two-Moment Score Math (3-point play vs 4-point play)",
   "game_id": "1006435",
   "gt_answer": "5",
