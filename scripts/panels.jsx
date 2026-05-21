@@ -274,7 +274,7 @@ function T9Panel({ pillar, active, data, light, tileColors, noClick }) {
   // Optional per-panel color override for tiles. Falls back to T9_TOOL_COLOR.
   const toolColor = tileColors || T9_TOOL_COLOR;
   const turns = data.turns;
-  const totalTiles = turns.length + 1;   // + final ✗
+  const totalTiles = turns.length + 1;   // + final A
 
   // Light-mode color tokens. When `light` is true (§4 "See how the models
   // answer"), the panel renders on a white card; otherwise it stays as the
@@ -410,7 +410,7 @@ function T9Panel({ pillar, active, data, light, tileColors, noClick }) {
               </div>
             );
           })}
-          {/* Final ✗ */}
+          {/* Final A */}
           <div
             onClick={() => toggle(turns.length)}
             style={{
@@ -427,7 +427,7 @@ function T9Panel({ pillar, active, data, light, tileColors, noClick }) {
               cursor: (allRevealed && !noClick) ? 'pointer' : 'default',
               transition: 'background 180ms, outline-color 120ms',
               userSelect: 'none',
-            }}>✗</div>
+            }}>A</div>
         </div>
 
         {/* Phase annotations — a thin pillar-tinted underline bracket
@@ -581,7 +581,7 @@ function T9LegendAndStats({ data, allRevealed, light, toolColor }) {
             <span style={{
               display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
               width: 26, height: 18, borderRadius: 3,
-              background: s.abbrev === '✗' ? (toolColor ? '#71717a' : '#C0392B') : (_tc[s.key] || '#71717a'),
+              background: s.abbrev === 'A' ? (toolColor ? '#71717a' : '#C0392B') : (_tc[s.key] || '#71717a'),
               color: '#fafafa',
               fontFamily: '"IBM Plex Mono", monospace',
               fontSize: 11, fontWeight: 700,
@@ -641,9 +641,9 @@ function T9LegendAndStats({ data, allRevealed, light, toolColor }) {
             fontFamily: '"IBM Plex Mono", monospace',
             fontSize: 12, fontWeight: 700,
             flex: '0 0 auto',
-          }}>✗</span>
+          }}>A</span>
           <span style={{ fontFamily: '"IBM Plex Sans", sans-serif' }}>
-            agent gave up
+            final answer
           </span>
         </div>
       </div>

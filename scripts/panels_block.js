@@ -563,13 +563,13 @@ function T9Panel(_ref2) {
       fontFamily: '"IBM Plex Mono", monospace',
       fontSize: 18,
       fontWeight: 700,
-      outline: selectedIdx === turns.length ? '2px solid ' + selectedOutline : '2px solid transparent',
-      outlineOffset: selectedIdx === turns.length ? 1 : 0,
+      outline: selectedIdx === turns.length ? '2px solid ' + selectedOutline : revealedCount > turns.length ? '2px solid #C0392B' : '2px solid transparent',
+      outlineOffset: 1,
       cursor: allRevealed && !noClick ? 'pointer' : 'default',
       transition: 'background 180ms, outline-color 120ms',
       userSelect: 'none'
     }
-  }, "\u2717")), /*#__PURE__*/React.createElement("div", {
+  }, "A")), /*#__PURE__*/React.createElement("div", {
     style: {
       position: 'relative',
       height: 32,
@@ -913,11 +913,11 @@ function T9LegendAndStats(_ref4) {
       fontWeight: 700,
       flex: '0 0 auto'
     }
-  }, "\u2717"), /*#__PURE__*/React.createElement("span", {
+  }, "A"), /*#__PURE__*/React.createElement("span", {
     style: {
       fontFamily: '"IBM Plex Sans", sans-serif'
     }
-  }, "agent gave up"))));
+  }, "final answer"))));
 }
 function T9CloseButton(_ref5) {
   var onClose = _ref5.onClose,
