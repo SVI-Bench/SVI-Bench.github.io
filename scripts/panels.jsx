@@ -581,7 +581,7 @@ function T9LegendAndStats({ data, allRevealed, light, toolColor }) {
             <span style={{
               display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
               width: 26, height: 18, borderRadius: 3,
-              background: s.abbrev === '✗' ? (tileColors ? '#71717a' : '#C0392B') : (_tc[s.key] || '#71717a'),
+              background: s.abbrev === '✗' ? (toolColor ? '#71717a' : '#C0392B') : (_tc[s.key] || '#71717a'),
               color: '#fafafa',
               fontFamily: '"IBM Plex Mono", monospace',
               fontSize: 11, fontWeight: 700,
@@ -637,7 +637,7 @@ function T9LegendAndStats({ data, allRevealed, light, toolColor }) {
           <span style={{
             display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
             width: 24, height: 18, borderRadius: 3,
-            background: tileColors ? '#71717a' : '#C0392B', color: '#fafafa',
+            background: toolColor ? '#71717a' : '#C0392B', color: '#fafafa',
             fontFamily: '"IBM Plex Mono", monospace',
             fontSize: 12, fontWeight: 700,
             flex: '0 0 auto',
