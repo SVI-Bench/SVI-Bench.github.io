@@ -561,8 +561,8 @@ function T9Panel(_ref2) {
   }, "\u2717")), /*#__PURE__*/React.createElement("div", {
     style: {
       position: 'relative',
-      height: 36,
-      marginTop: 8,
+      height: 32,
+      marginTop: 6,
       width: stripWidth,
       maxWidth: '100%'
     }
@@ -570,80 +570,45 @@ function T9Panel(_ref2) {
     if (revealedCount < p.start_turn) return null;
     var midTurn = (p.start_turn + p.end_turn) / 2;
     var isLast = pi === data.phases.length - 1;
-    // Every tool type that appears within this phase — deduped,
-    // preserved in encounter order. Used to render a small chip
-    // strip so the user sees that e.g. "Find the game" includes
-    // BOTH search_documents (SD) and document_qa (DQ).
-    var phaseToolSeq = [];
-    var _loop = function _loop(tnum) {
-      var t = turns.find(function (x) {
-        return x.turn === tnum;
-      });
-      if (t && !phaseToolSeq.includes(t.tool)) phaseToolSeq.push(t.tool);
-    };
-    for (var tnum = p.start_turn; tnum <= p.end_turn; tnum++) {
-      _loop(tnum);
-    }
-    var positionStyle = isLast ? {
-      right: STRIP_PAD_LEFT,
-      textAlign: 'right'
-    } : {
-      left: tileCenterX(midTurn),
-      transform: 'translateX(-50%)',
-      textAlign: 'center'
-    };
-    var chips = isLast ? null : /*#__PURE__*/React.createElement("span", {
+    // Bracket spans from the left edge of the first tile to the
+    // right edge of the last tile in the phase.
+    var leftX = tileCenterX(p.start_turn) - TILE_W / 2;
+    var rightX = tileCenterX(p.end_turn) + TILE_W / 2;
+    return /*#__PURE__*/React.createElement(React.Fragment, {
+      key: p.label
+    }, /*#__PURE__*/React.createElement("div", {
       style: {
-        display: 'inline-flex',
-        gap: 2,
-        marginRight: 6,
-        verticalAlign: 'middle'
-      }
-    }, phaseToolSeq.map(function (tool) {
-      return /*#__PURE__*/React.createElement("span", {
-        key: tool,
-        style: {
-          display: 'inline-block',
-          width: 14,
-          height: 10,
-          borderRadius: 2,
-          background: T9_TOOL_COLOR[tool] || '#71717a',
-          fontSize: 7,
-          fontWeight: 700,
-          color: '#fafafa',
-          fontFamily: '"IBM Plex Mono", monospace',
-          textAlign: 'center',
-          lineHeight: '10px',
-          letterSpacing: '0.02em'
-        }
-      }, TOOL_ABBREV_SHORT[tool] || '');
-    }));
-    var dot = isLast ? /*#__PURE__*/React.createElement("span", {
-      style: {
-        display: 'inline-block',
-        width: 6,
-        height: 6,
-        borderRadius: 2,
-        background: '#C0392B',
-        verticalAlign: 'middle',
-        marginRight: 6
-      }
-    }) : null;
-    return /*#__PURE__*/React.createElement("div", {
-      key: p.label,
-      style: _objectSpread({
         position: 'absolute',
         top: 0,
+        left: leftX,
+        width: rightX - leftX,
+        height: 2,
+        background: c.base,
+        opacity: 0.55,
+        borderRadius: 1,
+        animation: 'overlayIn 240ms ease'
+      }
+    }), /*#__PURE__*/React.createElement("div", {
+      style: _objectSpread({
+        position: 'absolute',
+        top: 8,
+        left: leftX,
+        width: rightX - leftX,
+        textAlign: 'center',
         fontFamily: '"IBM Plex Mono", monospace',
         fontSize: 11.5,
         color: textSecondary,
         letterSpacing: '0.04em',
         lineHeight: 1.3,
-        width: isLast ? 60 : 116,
         whiteSpace: 'nowrap',
         animation: 'overlayIn 240ms ease'
-      }, positionStyle)
-    }, chips, dot, p.label);
+      }, isLast ? {
+        right: STRIP_PAD_LEFT,
+        left: 'auto',
+        width: 'auto',
+        textAlign: 'right'
+      } : {})
+    }, p.label));
   }))), /*#__PURE__*/React.createElement("div", {
     style: {
       flex: 1,

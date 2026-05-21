@@ -419,68 +419,54 @@ function T9Panel({ pillar, active, data, light }) {
             }}>✗</div>
         </div>
 
-        {/* Phase annotations — centered under each phase midpoint with
-            max-width clamp + word-wrap so they never collide. The last
-            phase is anchored on its right edge so it never extends past
-            the strip. */}
+        {/* Phase annotations — a thin pillar-tinted underline bracket
+            spanning each phase's tile range, with the phase label
+            centered below it. (Replaces the old colored-chip strip.) */}
         <div style={{
-          position: 'relative', height: 36, marginTop: 8,
+          position: 'relative', height: 32, marginTop: 6,
           width: stripWidth, maxWidth: '100%',
         }}>
           {data.phases.map((p, pi) => {
             if (revealedCount < p.start_turn) return null;
             const midTurn = (p.start_turn + p.end_turn) / 2;
             const isLast = pi === data.phases.length - 1;
-            // Every tool type that appears within this phase — deduped,
-            // preserved in encounter order. Used to render a small chip
-            // strip so the user sees that e.g. "Find the game" includes
-            // BOTH search_documents (SD) and document_qa (DQ).
-            const phaseToolSeq = [];
-            for (let tnum = p.start_turn; tnum <= p.end_turn; tnum++) {
-              const t = turns.find(x => x.turn === tnum);
-              if (t && !phaseToolSeq.includes(t.tool)) phaseToolSeq.push(t.tool);
-            }
-            const positionStyle = isLast
-              ? { right: STRIP_PAD_LEFT, textAlign: 'right' }
-              : { left: tileCenterX(midTurn), transform: 'translateX(-50%)',
-                  textAlign: 'center' };
-            const chips = isLast ? null : (
-              <span style={{
-                display: 'inline-flex', gap: 2, marginRight: 6,
-                verticalAlign: 'middle',
-              }}>
-                {phaseToolSeq.map(tool => (
-                  <span key={tool} style={{
-                    display: 'inline-block', width: 14, height: 10,
-                    borderRadius: 2,
-                    background: T9_TOOL_COLOR[tool] || '#71717a',
-                    fontSize: 7, fontWeight: 700, color: '#fafafa',
-                    fontFamily: '"IBM Plex Mono", monospace',
-                    textAlign: 'center', lineHeight: '10px',
-                    letterSpacing: '0.02em',
-                  }}>{TOOL_ABBREV_SHORT[tool] || ''}</span>
-                ))}
-              </span>
-            );
-            const dot = isLast ? (
-              <span style={{
-                display: 'inline-block', width: 6, height: 6, borderRadius: 2,
-                background: '#C0392B',
-                verticalAlign: 'middle', marginRight: 6,
-              }} />
-            ) : null;
+            // Bracket spans from the left edge of the first tile to the
+            // right edge of the last tile in the phase.
+            const leftX = tileCenterX(p.start_turn) - TILE_W / 2;
+            const rightX = tileCenterX(p.end_turn) + TILE_W / 2;
             return (
-              <div key={p.label} style={{
-                position: 'absolute', top: 0,
-                fontFamily: '"IBM Plex Mono", monospace', fontSize: 11.5,
-                color: textSecondary, letterSpacing: '0.04em',
-                lineHeight: 1.3,
-                width: isLast ? 60 : 116, whiteSpace: 'nowrap',
-                animation: 'overlayIn 240ms ease',
-                ...positionStyle,
-              }}>
-                {chips}{dot}{p.label}
-              </div>
+              <React.Fragment key={p.label}>
+                <div style={{
+                  position: 'absolute', top: 0,
+                  left: leftX, width: rightX - leftX,
+                  height: 2,
+                  background: c.base,
+                  opacity: 0.55,
+                  borderRadius: 1,
+                  animation: 'overlayIn 240ms ease',
+                }} />
+                <div style={{
+                  position: 'absolute',
+                  top: 8,
+                  left: leftX,
+                  width: rightX - leftX,
+                  textAlign: 'center',
+                  fontFamily: '"IBM Plex Mono", monospace',
+                  fontSize: 11.5,
+                  color: textSecondary,
+                  letterSpacing: '0.04em',
+                  lineHeight: 1.3,
+                  whiteSpace: 'nowrap',
+                  animation: 'overlayIn 240ms ease',
+                  // For the rightmost (final ✗) phase, the bracket is only
+                  // one-tile wide; let the label hang flush-right so it
+                  // doesn't get cut off.
+                  ...(isLast ? { right: STRIP_PAD_LEFT, left: 'auto',
+                                 width: 'auto', textAlign: 'right' } : {}),
+                }}>
+                  {p.label}
+                </div>
+              </React.Fragment>
             );
           })}
         </div>
