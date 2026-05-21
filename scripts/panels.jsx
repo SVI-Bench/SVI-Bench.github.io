@@ -492,6 +492,7 @@ function T9Panel({ pillar, active, data, light }) {
           <T9HoverBubble turn={selectedIdx < turns.length ? turns[selectedIdx] : null}
                         isFinal={selectedIdx === turns.length}
                         data={data} pillarColor={c.base}
+                        light={light}
                         onClose={() => setSelectedIdx(null)}
                         onClipClick={(clip_id, url) => setModalClip({ clip_id, url })} />
         ) : (
@@ -620,31 +621,41 @@ function T9LegendAndStats({ data, allRevealed, light }) {
   );
 }
 
-function T9CloseButton({ onClose }) {
+function T9CloseButton({ onClose, light }) {
   return (
     <button onClick={onClose} style={{
       position: 'absolute', top: 6, right: 8,
       background: 'transparent', border: 'none',
-      color: '#71717a', fontFamily: '"IBM Plex Mono", monospace',
+      color: light ? '#52525b' : '#71717a',
+      fontFamily: '"IBM Plex Mono", monospace',
       fontSize: 14, lineHeight: 1, cursor: 'pointer', padding: 4,
     }}>×</button>
   );
 }
 
-function T9HoverBubble({ turn, isFinal, data, pillarColor, onClose, onClipClick }) {
+function T9HoverBubble({ turn, isFinal, data, pillarColor, onClose, onClipClick, light }) {
+  // Light-mode color tokens. Only the OUTER bubble + its immediate text
+  // flip; nested result cards (T9DocCards / T9VideoCards / etc.) keep their
+  // dark "instrument readout" styling on top of the light bubble.
+  const bubbleBg     = light ? '#ffffff' : 'rgba(20,20,26,0.85)';
+  const bubbleBorder = light ? '#d4d4d8' : '#27272a';
+  const finalBg      = light ? 'rgba(192,57,43,0.05)' : 'rgba(192,57,43,0.08)';
+  const finalBorder  = light ? 'rgba(192,57,43,0.45)' : 'rgba(192,57,43,0.5)';
+  const thoughtCol   = light ? '#52525b' : '#a1a1aa';
+  const answerCol    = light ? '#18181b' : '#e4e4e7';
   if (isFinal) {
     return (
       <div style={{
         position: 'relative',
         padding: '12px 14px',
-        background: 'rgba(192,57,43,0.08)',
-        border: '1px solid rgba(192,57,43,0.5)',
+        background: finalBg,
+        border: '1px solid ' + finalBorder,
         borderRadius: 3,
         fontFamily: '"IBM Plex Sans", sans-serif',
         fontSize: 13.5, lineHeight: 1.45,
         animation: 'overlayIn 200ms ease',
       }}>
-        <T9CloseButton onClose={onClose} />
+        <T9CloseButton onClose={onClose} light={light} />
         <div style={{
           fontFamily: '"IBM Plex Mono", monospace', fontSize: 11,
           color: '#C0392B', letterSpacing: '0.14em',
@@ -652,15 +663,15 @@ function T9HoverBubble({ turn, isFinal, data, pillarColor, onClose, onClipClick 
         }}>Final answer · {data.verdict}</div>
         {data.final_thought && (
           <div style={{
-            color: '#a1a1aa', fontStyle: 'italic',
+            color: thoughtCol, fontStyle: 'italic',
             marginBottom: 10, fontSize: 12.5, lineHeight: 1.4,
           }}>“{data.final_thought}”</div>
         )}
-        <div style={{ color: '#e4e4e7', marginBottom: 8 }}>
+        <div style={{ color: answerCol, marginBottom: 8 }}>
           <span style={{ color: '#C0392B', marginRight: 8, fontWeight: 600 }}>MODEL:</span>
           {data.final_answer}
         </div>
-        <div style={{ color: '#e4e4e7' }}>
+        <div style={{ color: answerCol }}>
           <span style={{
             color: pillarColor, marginRight: 8, fontWeight: 600,
           }}>GT:</span>
@@ -675,15 +686,15 @@ function T9HoverBubble({ turn, isFinal, data, pillarColor, onClose, onClipClick 
     <div style={{
       position: 'relative',
       padding: '12px 14px',
-      background: 'rgba(20,20,26,0.85)',
-      border: '1px solid #27272a',
+      background: bubbleBg,
+      border: '1px solid ' + bubbleBorder,
       borderRadius: 3,
       fontFamily: '"IBM Plex Sans", sans-serif',
       fontSize: 13, lineHeight: 1.45,
       animation: 'overlayIn 200ms ease',
       maxHeight: '100%', overflowY: 'auto',
     }}>
-      <T9CloseButton onClose={onClose} />
+      <T9CloseButton onClose={onClose} light={light} />
       <div style={{
         fontFamily: '"IBM Plex Mono", monospace', fontSize: 11,
         color: T9_TOOL_COLOR[turn.tool], letterSpacing: '0.14em',
@@ -693,7 +704,7 @@ function T9HoverBubble({ turn, isFinal, data, pillarColor, onClose, onClipClick 
       </div>
       {turn.thought && (
         <div style={{
-          color: '#a1a1aa', fontStyle: 'italic',
+          color: thoughtCol, fontStyle: 'italic',
           marginBottom: 10, fontSize: 12.5, lineHeight: 1.4,
           borderLeft: `2px solid ${T9_TOOL_COLOR[turn.tool]}66`,
           paddingLeft: 8,
@@ -702,31 +713,31 @@ function T9HoverBubble({ turn, isFinal, data, pillarColor, onClose, onClipClick 
 
       {/* Tool call args */}
       {turn.tool === 'search_documents' && (
-        <T9SearchDocsArgs args={args} />
+        <T9SearchDocsArgs args={args} light={light} />
       )}
       {turn.tool === 'document_qa' && (
-        <T9DocQAArgs args={args} />
+        <T9DocQAArgs args={args} light={light} />
       )}
       {turn.tool === 'search_videos' && (
-        <T9SearchVideosArgs args={args} />
+        <T9SearchVideosArgs args={args} light={light} />
       )}
       {(turn.tool === 'video_qa' || turn.tool === 'video_qa_oracle') && (
-        <T9VideoQAArgs args={args} />
+        <T9VideoQAArgs args={args} light={light} />
       )}
 
       {/* Tool results */}
       <div style={{ marginTop: 8 }}>
         {turn.results.kind === 'documents' && (
-          <T9DocCards results={turn.results} />
+          <T9DocCards results={turn.results} light={light} />
         )}
         {turn.results.kind === 'docqa' && (
-          <T9DocQAResults results={turn.results} />
+          <T9DocQAResults results={turn.results} light={light} />
         )}
         {turn.results.kind === 'videos' && (
-          <T9VideoCards results={turn.results} onClipClick={onClipClick} />
+          <T9VideoCards results={turn.results} onClipClick={onClipClick} light={light} />
         )}
         {turn.results.kind === 'videoqa' && (
-          <T9VideoQAResults results={turn.results} onClipClick={onClipClick} />
+          <T9VideoQAResults results={turn.results} onClipClick={onClipClick} light={light} />
         )}
       </div>
     </div>
@@ -735,15 +746,15 @@ function T9HoverBubble({ turn, isFinal, data, pillarColor, onClose, onClipClick 
 
 // ---- T9 hover sub-renderers ----
 
-function T9KV({ k, v, mono }) {
+function T9KV({ k, v, mono, light }) {
   return (
     <div style={{ display: 'flex', gap: 10, marginBottom: 4, fontSize: 12.5, lineHeight: 1.4 }}>
       <span style={{
         fontFamily: '"IBM Plex Mono", monospace',
-        color: '#71717a', minWidth: 72,
+        color: light ? '#52525b' : '#71717a', minWidth: 72,
       }}>{k}</span>
       <span style={{
-        color: '#e4e4e7',
+        color: light ? '#18181b' : '#e4e4e7',
         fontFamily: mono ? '"IBM Plex Mono", monospace' : 'inherit',
         wordBreak: 'break-word',
       }}>{v}</span>
@@ -751,42 +762,42 @@ function T9KV({ k, v, mono }) {
   );
 }
 
-function T9SearchDocsArgs({ args }) {
+function T9SearchDocsArgs({ args, light }) {
   return (
     <>
-      <T9KV k="query" v={`"${args.query || ''}"`} />
-      {args.doc_type && <T9KV k="doc_type" v={args.doc_type} mono />}
-      {args.teams && <T9KV k="teams" v={args.teams.join(', ')} mono />}
+      <T9KV k="query" v={`"${args.query || ''}"`} light={light} />
+      {args.doc_type && <T9KV k="doc_type" v={args.doc_type} mono light={light} />}
+      {args.teams && <T9KV k="teams" v={args.teams.join(', ')} mono light={light} />}
     </>
   );
 }
 
-function T9DocQAArgs({ args }) {
+function T9DocQAArgs({ args, light }) {
   const ids = args.doc_ids || [];
   return (
     <>
-      <T9KV k="doc_ids" v={`[${ids.length}] ${ids.slice(0,2).join(', ')}${ids.length > 2 ? '…' : ''}`} mono />
-      <T9KV k="query" v={`"${args.query || ''}"`} />
+      <T9KV k="doc_ids" v={`[${ids.length}] ${ids.slice(0,2).join(', ')}${ids.length > 2 ? '…' : ''}`} mono light={light} />
+      <T9KV k="query" v={`"${args.query || ''}"`} light={light} />
     </>
   );
 }
 
-function T9SearchVideosArgs({ args }) {
+function T9SearchVideosArgs({ args, light }) {
   return (
     <>
-      <T9KV k="query" v={`"${args.query || ''}"`} />
-      {args.period && <T9KV k="period" v={args.period} mono />}
-      {args.players && <T9KV k="players" v={args.players.join(', ')} mono />}
+      <T9KV k="query" v={`"${args.query || ''}"`} light={light} />
+      {args.period && <T9KV k="period" v={args.period} mono light={light} />}
+      {args.players && <T9KV k="players" v={args.players.join(', ')} mono light={light} />}
     </>
   );
 }
 
-function T9VideoQAArgs({ args }) {
+function T9VideoQAArgs({ args, light }) {
   const ids = args.video_ids || [];
   return (
     <>
-      <T9KV k="video_ids" v={`[${ids.length}]`} mono />
-      <T9KV k="query" v={`"${args.query || ''}"`} />
+      <T9KV k="video_ids" v={`[${ids.length}]`} mono light={light} />
+      <T9KV k="query" v={`"${args.query || ''}"`} light={light} />
     </>
   );
 }
@@ -832,15 +843,20 @@ function T9TargetSummary({ results, displayedN, kind }) {
   );
 }
 
-function T9DocCards({ results }) {
+function T9DocCards({ results, light }) {
+  const cardBg = light ? '#f4f4f5' : 'rgba(28,28,31,0.6)';
+  const cardBorder = light ? '#d4d4d8' : '#27272a';
+  const idCol = light ? '#18181b' : '#e4e4e7';
+  const teamsCol = light ? '#52525b' : '#a1a1aa';
+  const highlightCol = light ? '#3f3f46' : '#d4d4d8';
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
       <T9TargetSummary results={results} displayedN={results.top.length} kind="docs" />
       {results.top.map(d => (
         <div key={d.rank} style={{
           display: 'flex', gap: 8, padding: '7px 9px',
-          background: 'rgba(28,28,31,0.6)',
-          border: `1px solid ${d.is_target ? '#2E9E8F' : '#27272a'}`,
+          background: cardBg,
+          border: `1px solid ${d.is_target ? '#2E9E8F' : cardBorder}`,
           borderRadius: 2,
         }}>
           <T9DocIcon />
@@ -848,18 +864,18 @@ function T9DocCards({ results }) {
             <div style={{
               display: 'flex', justifyContent: 'space-between', gap: 8,
               fontFamily: '"IBM Plex Mono", monospace', fontSize: 11.5,
-              color: d.is_target ? '#2E9E8F' : '#e4e4e7',
+              color: d.is_target ? '#2E9E8F' : idCol,
             }}>
               <span>#{d.rank}{d.is_target ? ' · target ✓' : ''}  ·  {d.doc_id}</span>
             </div>
             {d.teams && d.teams.length > 0 && (
               <div style={{
                 fontFamily: '"IBM Plex Mono", monospace', fontSize: 11,
-                color: '#a1a1aa', marginTop: 2,
+                color: teamsCol, marginTop: 2,
               }}>{d.teams.join(' · ')}</div>
             )}
             <div style={{
-              fontSize: 12, color: '#d4d4d8', marginTop: 4,
+              fontSize: 12, color: highlightCol, marginTop: 4,
               lineHeight: 1.4,
               fontStyle: 'italic',
               overflow: 'hidden', textOverflow: 'ellipsis',
@@ -872,7 +888,11 @@ function T9DocCards({ results }) {
   );
 }
 
-function T9DocQAResults({ results }) {
+function T9DocQAResults({ results, light }) {
+  const cardBg = light ? '#f4f4f5' : 'rgba(28,28,31,0.6)';
+  const cardBorder = light ? '#d4d4d8' : '#27272a';
+  const idDimCol = light ? '#52525b' : '#a1a1aa';
+  const answerCol = light ? '#18181b' : '#e4e4e7';
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
       <div style={{
@@ -885,19 +905,19 @@ function T9DocQAResults({ results }) {
       {results.results.slice(0, 2).map((r, i) => (
         <div key={i} style={{
           display: 'flex', gap: 8, padding: '6px 8px',
-          background: 'rgba(28,28,31,0.6)',
-          border: `1px solid ${r.contains_answer ? '#2E9E8F' : '#27272a'}`,
+          background: cardBg,
+          border: `1px solid ${r.contains_answer ? '#2E9E8F' : cardBorder}`,
           borderRadius: 2,
         }}>
           <T9DocIcon />
           <div style={{ flex: 1, minWidth: 0 }}>
             <div style={{
               fontFamily: '"IBM Plex Mono", monospace', fontSize: 10,
-              color: r.contains_answer ? '#2E9E8F' : '#a1a1aa',
+              color: r.contains_answer ? '#2E9E8F' : idDimCol,
               marginBottom: 3,
             }}>{r.doc_id} {r.contains_answer ? '· ✓ contains answer' : '· no evidence'}</div>
             <div style={{
-              fontSize: 11, color: '#e4e4e7', lineHeight: 1.35,
+              fontSize: 11, color: answerCol, lineHeight: 1.35,
               display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical',
               overflow: 'hidden',
             }}>{r.answer}</div>
@@ -923,7 +943,8 @@ function T9VideoIcon() {
   );
 }
 
-function T9VideoCards({ results, onClipClick }) {
+function T9VideoCards({ results, onClipClick, light }) {
+  const labelDim = light ? '#52525b' : '#a1a1aa';
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
       <T9TargetSummary results={results} displayedN={results.top.length} kind="clips" />
@@ -989,7 +1010,7 @@ function T9VideoCards({ results, onClipClick }) {
               <div style={{
                 padding: '5px 7px',
                 fontFamily: '"IBM Plex Mono", monospace', fontSize: 11,
-                color: v.is_target ? '#D4913A' : '#a1a1aa',
+                color: v.is_target ? '#D4913A' : labelDim,
                 whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
               }}>{v.clip_id}</div>
             </div>
@@ -1000,9 +1021,14 @@ function T9VideoCards({ results, onClipClick }) {
   );
 }
 
-function T9VideoQAResults({ results, onClipClick }) {
+function T9VideoQAResults({ results, onClipClick, light }) {
   const items = results.results;
   const targetCount = items.filter(r => r.is_target).length;
+  const cardBg = light ? '#f4f4f5' : 'rgba(28,28,31,0.6)';
+  const cardBorder = light ? '#d4d4d8' : '#27272a';
+  const cardBorderDim = light ? '#e4e4e7' : '#1c1c1f';
+  const idDimCol = light ? '#52525b' : '#a1a1aa';
+  const answerCol = light ? '#18181b' : '#e4e4e7';
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
       <div style={{
@@ -1018,8 +1044,8 @@ function T9VideoQAResults({ results, onClipClick }) {
         return (
           <div key={i} style={{
             display: 'flex', gap: 10, padding: '8px 10px',
-            background: 'rgba(28,28,31,0.6)',
-            border: `1px solid ${r.is_target ? '#D4913A' : (r.has_answer ? '#27272a' : '#1c1c1f')}`,
+            background: cardBg,
+            border: `1px solid ${r.is_target ? '#D4913A' : (r.has_answer ? cardBorder : cardBorderDim)}`,
             borderRadius: 3,
           }}>
             <div onClick={() => hasClip && onClipClick && onClipClick(r.clip_id, r.clip)}
@@ -1062,13 +1088,13 @@ function T9VideoQAResults({ results, onClipClick }) {
             <div style={{ flex: 1, minWidth: 0 }}>
               <div style={{
                 fontFamily: '"IBM Plex Mono", monospace', fontSize: 11,
-                color: r.is_target ? '#D4913A' : '#a1a1aa',
+                color: r.is_target ? '#D4913A' : idDimCol,
                 marginBottom: 3,
               }}>
                 {r.clip_id}{r.is_target ? ' · target ✓' : ''}{r.has_answer ? '' : ' · no evidence'}
               </div>
               <div style={{
-                fontSize: 12, color: '#e4e4e7', lineHeight: 1.4,
+                fontSize: 12, color: answerCol, lineHeight: 1.4,
                 display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical',
                 overflow: 'hidden',
               }}>{r.answer}</div>

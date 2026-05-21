@@ -4,29 +4,33 @@
       "id": "bb_jersey",
       "sport": "basketball",
       "axis_label": "jersey number",
-      "query": "A player makes a free throw \u2014 find the clip of #55.",
+      "query": "Find the clip where #55 makes a free throw.",
       "thumbs": [
         {
           "video": "assets/t3_archive/bb_jersey/gt.mp4",
           "caption": "Player #55 makes a free throw.",
+          "sim": 0.62,
           "is_gt": true
         },
         {
           "video": "assets/t3_archive/bb_jersey/hn1.mp4",
           "caption": "Player #24 makes a free throw.",
+          "sim": 0.84,
           "diff_substring": "#24",
           "is_gt": false
         },
         {
           "video": "assets/t3_archive/bb_jersey/hn2.mp4",
-          "caption": "Player #16 makes a free throw.",
-          "diff_substring": "#16",
+          "caption": "Player #11 makes a free throw.",
+          "sim": 0.79,
+          "diff_substring": "#11",
           "is_gt": false
         },
         {
           "video": "assets/t3_archive/bb_jersey/hn3.mp4",
-          "caption": "Player #21 makes a free throw.",
-          "diff_substring": "#21",
+          "caption": "Player #35 makes a free throw.",
+          "sim": 0.74,
+          "diff_substring": "#35",
           "is_gt": false
         }
       ]
@@ -35,29 +39,33 @@
       "id": "bb_hand",
       "sport": "basketball",
       "axis_label": "shooting hand",
-      "query": "A contested two-point jumper from the top, right-handed.",
+      "query": "Find the clip of a right-handed contested two-point jumper from the top.",
       "thumbs": [
         {
           "video": "assets/t3_archive/bb_hand/gt.mp4",
           "caption": "A right-handed contested jumper from the top.",
+          "sim": 0.61,
           "is_gt": true
         },
         {
           "video": "assets/t3_archive/bb_hand/hn1.mp4",
           "caption": "A left-handed contested jumper from the top.",
+          "sim": 0.83,
           "diff_substring": "left-handed",
           "is_gt": false
         },
         {
           "video": "assets/t3_archive/bb_hand/hn2.mp4",
-          "caption": "An uncontested right-handed jumper from the top.",
-          "diff_substring": "uncontested",
+          "caption": "A left-handed jumper from the top off a pick-and-roll.",
+          "sim": 0.78,
+          "diff_substring": "left-handed",
           "is_gt": false
         },
         {
           "video": "assets/t3_archive/bb_hand/hn3.mp4",
-          "caption": "A right-handed contested jumper from the restricted area.",
-          "diff_substring": "restricted area",
+          "caption": "A left-handed contested catch-and-shoot jumper.",
+          "sim": 0.73,
+          "diff_substring": "left-handed",
           "is_gt": false
         }
       ]
@@ -71,24 +79,28 @@
         {
           "video": "assets/t3_archive/soc_player/gt.mp4",
           "caption": "K. Stoup wins a duel attacking from the right side.",
+          "sim": 0.63,
           "is_gt": true
         },
         {
           "video": "assets/t3_archive/soc_player/hn1.mp4",
           "caption": "A. Pope wins a duel attacking from the right side.",
+          "sim": 0.82,
           "diff_substring": "A. Pope",
           "is_gt": false
         },
         {
           "video": "assets/t3_archive/soc_player/hn2.mp4",
-          "caption": "N\u00e9lson Semedo wins a duel attacking from the right side.",
-          "diff_substring": "N\u00e9lson Semedo",
+          "caption": "Nélson Semedo wins a duel attacking from the right side.",
+          "sim": 0.77,
+          "diff_substring": "Nélson Semedo",
           "is_gt": false
         },
         {
           "video": "assets/t3_archive/soc_player/hn3.mp4",
-          "caption": "K. Stoup completes a pass attacking from the right side.",
-          "diff_substring": "completes a pass",
+          "caption": "Martín Zubimendi wins a duel attacking from the right side.",
+          "sim": 0.72,
+          "diff_substring": "Martín Zubimendi",
           "is_gt": false
         }
       ]
@@ -96,29 +108,33 @@
     {
       "id": "hky_zone",
       "sport": "hockey",
-      "axis_label": "rink zone",
-      "query": "A wrist shot in the offensive zone, goalie in the butterfly position.",
+      "axis_label": "shot type",
+      "query": "A wrist shot in the offensive zone, with the goalie in the butterfly position.",
       "thumbs": [
         {
           "video": "assets/t3_archive/hky_zone/gt.mp4",
-          "caption": "A wrist shot in the offensive zone, goalie in the butterfly.",
+          "caption": "A wrist shot in the offensive zone, with the goalie in the butterfly position.",
+          "sim": 0.60,
           "is_gt": true
         },
         {
           "video": "assets/t3_archive/hky_zone/hn1.mp4",
-          "caption": "A wrist shot in the neutral zone, goalie in the butterfly.",
-          "diff_substring": "neutral zone",
+          "caption": "A backhand shot in the offensive zone, with the goalie in the butterfly position.",
+          "sim": 0.83,
+          "diff_substring": "backhand",
           "is_gt": false
         },
         {
           "video": "assets/t3_archive/hky_zone/hn2.mp4",
-          "caption": "A wrist shot in the offensive zone, goalie sitting.",
-          "diff_substring": "sitting",
+          "caption": "A deflection shot in the offensive zone, with the goalie in the butterfly position.",
+          "sim": 0.78,
+          "diff_substring": "deflection",
           "is_gt": false
         },
         {
           "video": "assets/t3_archive/hky_zone/hn3.mp4",
-          "caption": "A slapshot in the offensive zone, goalie in the butterfly.",
+          "caption": "A slapshot in the offensive zone, with the goalie in the butterfly position.",
+          "sim": 0.73,
           "diff_substring": "slapshot",
           "is_gt": false
         }
