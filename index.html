@@ -4172,6 +4172,166 @@ function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) 
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+// ── T7 archive (Pillar 3 simulation examples) ────────────────────────────
+const T7_ARCHIVE = {
+  panels: [
+    {
+      id: 'soc_offside',
+      sport: 'soccer',
+      axis_label: 'soccer · offside acceleration',
+      query: 'A player accelerates to break the offside line. Bbox conditioning kept; identity / fine motion drift.',
+      base_dir: 'assets/qualitative_vis_soccer_task1/offside_1361922043',
+      thumbs: [
+        { kind: 'input',    label: 'Inpainted + bbox',     file: 'inpainted_gt_bbox.mp4' },
+        { kind: 'gt',       label: 'Ground truth',         file: 'original.mp4' },
+        { kind: 'gen',      label: 'Generated',            file: 'generated.mp4' },
+        { kind: 'gen_bbox', label: 'Generated + GT bbox',  file: 'generated_gt_bbox.mp4' }
+      ]
+    },
+    {
+      id: 'bb_rebound',
+      sport: 'basketball',
+      axis_label: 'basketball · rebound contest',
+      query: 'A rebound contest — generator follows the bbox path, body and limb dynamics deviate.',
+      base_dir: 'assets/qualitative_vis_basketball_task1/328676658_rebound_840.299',
+      thumbs: [
+        { kind: 'input',    label: 'Inpainted + bbox',     file: 'inpainted_gt_bbox.mp4' },
+        { kind: 'gt',       label: 'Ground truth',         file: 'original.mp4' },
+        { kind: 'gen',      label: 'Generated',            file: 'generated.mp4' },
+        { kind: 'gen_bbox', label: 'Generated + GT bbox',  file: 'generated_gt_bbox.mp4' }
+      ]
+    }
+  ]
+};
+
+// ── T8 archive (Pillar 3 goal-conditioned action generation) ──────────────
+const T8_ARCHIVE = {
+  panels: [
+    {
+      id: 'bb_morris_rebound',
+      sport: 'basketball',
+      axis_label: 'goal: secure a rebound',
+      query: 'Goal: Player #8 secures a rebound. Bbox trajectory respected; the act of grabbing the ball fails to materialize.',
+      base_dir: 'assets/qualitative_vis_basketball_task2/1881_Marcus_Morris_Rebound_247840436',
+      thumbs: [
+        { kind: 'input',    label: 'Background + bbox',    file: 'background_gt_bbox.mp4' },
+        { kind: 'gt',       label: 'Ground truth',         file: 'groundtruth.mp4' },
+        { kind: 'gen',      label: 'Generated',            file: 'generated.mp4' },
+        { kind: 'gen_bbox', label: 'Generated + GT bbox',  file: 'generated_gt_bbox.mp4' }
+      ]
+    },
+    {
+      id: 'bb_kalaitzakis_3pt',
+      sport: 'basketball',
+      axis_label: 'goal: missed contested 3-pt off a screen',
+      query: 'Goal: Player #0 missing a contested 3-pt jumper from the corner off a screen by #6 vs defender #1. Players move, the shot mechanic dissolves.',
+      base_dir: 'assets/qualitative_vis_basketball_task2/8488_Panagiotis_Kalaitzakis_3-_279719388',
+      thumbs: [
+        { kind: 'input',    label: 'Background + bbox',    file: 'background_gt_bbox.mp4' },
+        { kind: 'gt',       label: 'Ground truth',         file: 'groundtruth.mp4' },
+        { kind: 'gen',      label: 'Generated',            file: 'generated.mp4' },
+        { kind: 'gen_bbox', label: 'Generated + GT bbox',  file: 'generated_gt_bbox.mp4' }
+      ]
+    }
+  ]
+};
+
+function SimArchiveTile({ panel, pillar, taskId }) {
+  var c = PILLARS[pillar];
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      gridColumn: 'span 2',
+      background: '#0c0d10',
+      color: '#fafafa',
+      border: '1px solid #27272a',
+      borderRadius: 4,
+      overflow: 'hidden'
+    }
+  },
+  // Header
+  /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      padding: '8px 12px',
+      borderBottom: '1px solid #1c1c1f',
+      fontFamily: '"IBM Plex Mono", monospace',
+      fontSize: 10.5,
+      letterSpacing: '0.12em',
+      textTransform: 'uppercase',
+      color: '#a1a1aa'
+    }
+  }, /*#__PURE__*/React.createElement("span", { style: { color: c.base } }, taskId || 'T7'),
+     /*#__PURE__*/React.createElement("span", null, panel.axis_label)),
+  // 2x2 grid of thumbs
+  /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'grid',
+      gridTemplateColumns: '1fr 1fr',
+      gap: 1,
+      background: '#1c1c1f'
+    }
+  }, panel.thumbs.map(function (t, i) {
+    var chipColor = t.kind === 'gt' ? '#2ECC71'
+                  : t.kind === 'gen_bbox' ? c.base
+                  : t.kind === 'gen' ? '#E74C3C'
+                  : '#a1a1aa';
+    return /*#__PURE__*/React.createElement("div", {
+      key: i,
+      style: {
+        position: 'relative',
+        aspectRatio: '16 / 9',
+        background: '#000',
+        overflow: 'hidden'
+      }
+    }, /*#__PURE__*/React.createElement("video", {
+      src: panel.base_dir + '/' + t.file,
+      autoPlay: true,
+      muted: true,
+      loop: true,
+      playsInline: true,
+      preload: 'metadata',
+      ref: function ref(el) {
+        if (!el) return;
+        el.muted = true;
+        el.defaultMuted = true;
+        var p = el.play();
+        if (p && p.catch) p.catch(function () {});
+      },
+      style: {
+        width: '100%',
+        height: '100%',
+        objectFit: 'cover',
+        display: 'block'
+      }
+    }), /*#__PURE__*/React.createElement("div", {
+      style: {
+        position: 'absolute',
+        top: 6,
+        left: 6,
+        fontFamily: '"IBM Plex Mono", monospace',
+        fontSize: 9,
+        letterSpacing: '0.12em',
+        textTransform: 'uppercase',
+        color: chipColor,
+        background: 'rgba(0,0,0,0.65)',
+        padding: '2px 6px',
+        borderRadius: 2
+      }
+    }, t.label));
+  })),
+  // Caption
+  /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '10px 12px',
+      fontFamily: '"IBM Plex Sans", sans-serif',
+      fontSize: 12.5,
+      lineHeight: 1.4,
+      color: '#e4e4e7'
+    }
+  }, panel.query));
+}
 // ── Tape archive section ──────────────────────────────────────────────────
 
 function TapeArchiveSection() {
@@ -4231,8 +4391,14 @@ function TapeArchiveSection() {
   }, "The model confuses clips that differ on a single attribute axis \u2014 jersey numbers, hands, shot types, the goalie's stance. GPT-5.2 fails the same agentic question in three distinct ways. Click any tile to inspect. The remaining tasks below are sketched placeholders waiting for real failure logs.")), TASKS.map(function (task) {
     var isT3 = task.id === 'T3';
     var isT9 = task.id === 'T9';
-    var isOurs = isT3 || isT9;
-    var suffix = isT3 ? ' — four attribute axes' : isT9 ? ' — three failure modes' : ' · placeholder';
+    var isT7 = task.id === 'T7';
+    var isT8 = task.id === 'T8';
+    var isOurs = isT3 || isT9 || isT7 || isT8;
+    var suffix = isT3 ? ' — four attribute axes'
+               : isT9 ? ' — three failure modes'
+               : isT7 ? ' — two motion-conditioned examples'
+               : isT8 ? ' — two goal-conditioned examples'
+               : ' · placeholder';
     var taskFailures = !isOurs ? FAILURES.filter(function (f) {
       return f.taskId === task.id;
     }) : [];
@@ -4281,6 +4447,20 @@ function TapeArchiveSection() {
         onOpen: function onOpen() {
           return setModalTile(p);
         }
+      });
+    }), isT7 && T7_ARCHIVE.panels.map(function (p) {
+      return /*#__PURE__*/React.createElement(SimArchiveTile, {
+        key: p.id,
+        panel: p,
+        pillar: task.pillar,
+        taskId: 'T7'
+      });
+    }), isT8 && T8_ARCHIVE.panels.map(function (p) {
+      return /*#__PURE__*/React.createElement(SimArchiveTile, {
+        key: p.id,
+        panel: p,
+        pillar: task.pillar,
+        taskId: 'T8'
       });
     }), isT9 && T9_ARCHIVE.cards.map(function (c) {
       return /*#__PURE__*/React.createElement(T9ArchiveCard, {
