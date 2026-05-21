@@ -15,11 +15,31 @@
     "video_qa_oracle": 3
   },
   "tool_summaries": [
-    { "abbrev": "SD", "key": "search_documents", "text": "Searched game reports. Found the Pelicans vs Clippers game on the second try." },
-    { "abbrev": "DQ", "key": "document_qa", "text": "Asked the report for score deficits. The report described the plays but didn't quote exact scores." },
-    { "abbrev": "SV", "key": "search_videos", "text": "Pivoted to video. Found clips of both Westbrook's and Batum's plays." },
-    { "abbrev": "VQ", "key": "video_qa_oracle", "text": "Asked 3 clips for the score. Got Westbrook's deficit (Clippers 48, Pelicans 56) but never asked Batum's clip the same question." },
-    { "abbrev": "✗", "key": null, "text": "Refused to answer. Had one side of the comparison but not the other." }
+    {
+      "abbrev": "SD",
+      "key": "search_documents",
+      "text": "Searched game reports. Found the Pelicans vs Clippers game on the second try."
+    },
+    {
+      "abbrev": "DQ",
+      "key": "document_qa",
+      "text": "Asked the report for score deficits. The report described the plays but didn't quote exact scores."
+    },
+    {
+      "abbrev": "SV",
+      "key": "search_videos",
+      "text": "Pivoted to video. Found clips of both Westbrook's and Batum's plays."
+    },
+    {
+      "abbrev": "VQ",
+      "key": "video_qa_oracle",
+      "text": "Asked 3 clips for the score. Got Westbrook's deficit (Clippers 48, Pelicans 56) but never asked Batum's clip the same question."
+    },
+    {
+      "abbrev": "A",
+      "key": null,
+      "text": "Refused to answer. Had one side of the comparison but not the other."
+    }
   ],
   "phases": [
     {
@@ -263,14 +283,16 @@
             "answer": "Josh Richardson misses a 3-point jumper from the corner (catch and shoot, right hand, contested by Nicolas Batum). Larry Nance Jr. secures the rebound. Larry Nance Jr. then misses a 2-point layup in the restricted are\u2026",
             "is_target": false,
             "has_answer": true,
-            "clip": "assets/t9_clips/clip_1006435_177.mp4"
+            "clip": "assets/t9_clips/clip_1006435_177.mp4",
+            "frame": "assets/t9_frames/clip_1006435_177.jpg"
           },
           {
             "clip_id": "1006435_178",
             "answer": "Let me analyze the provided event logs/captions to determine the sequence of actions that takes place in this video clip.\n\nFrom the caption:\n\"Nicolas Batum performed 3 Pt Missed from Corner with a Jumper during a Catc\u2026",
             "is_target": false,
             "has_answer": false,
-            "clip": "assets/t9_clips/clip_1006435_178.mp4"
+            "clip": "assets/t9_clips/clip_1006435_178.mp4",
+            "frame": "assets/t9_frames/clip_1006435_178.jpg"
           },
           {
             "clip_id": "1006435_188",
