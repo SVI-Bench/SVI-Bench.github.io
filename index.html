@@ -2250,7 +2250,7 @@ function T7Panel({ pillar }) {
   const videoEl = {
     width: '100%',
     height: '100%',
-    objectFit: 'contain',
+    objectFit: 'cover',
     display: 'block'
   };
   const [lightboxSrc, setLightboxSrc] = useState(null);
@@ -2441,7 +2441,7 @@ function T8Panel({ pillar }) {
   const videoEl = {
     width: '100%',
     height: '100%',
-    objectFit: 'contain',
+    objectFit: 'cover',
     display: 'block'
   };
   const [lightboxSrc, setLightboxSrc] = useState(null);
@@ -4159,7 +4159,7 @@ function T8AskPanel({ clip }) {
         style: {
           width: '100%',
           height: '100%',
-          objectFit: 'contain',
+          objectFit: 'cover',
           background: '#0c0d10',
           display: 'block'
         }
@@ -4194,7 +4194,10 @@ function T8AskPanel({ clip }) {
         padding: '14px 18px',
         background: '#ffffff',
         border: '1px solid #d4d4d8',
-        borderRadius: 3
+        borderRadius: 3,
+        maxWidth: 980,
+        width: '100%',
+        margin: '0 auto'
       }
     },
       /*#__PURE__*/React.createElement("div", {
@@ -4219,18 +4222,22 @@ function T8AskPanel({ clip }) {
     /*#__PURE__*/React.createElement("div", {
       style: {
         display: 'grid',
-        gridTemplateColumns: '1fr 1fr',
-        gap: 18
+        gridTemplateColumns: '3fr 2fr',
+        gap: 12,
+        maxWidth: 980,
+        width: '100%',
+        margin: '0 auto',
+        alignItems: 'stretch'
       }
     },
       /*#__PURE__*/React.createElement("div", {
-        style: { display: 'flex', flexDirection: 'column', gap: 14 }
+        style: { display: 'flex', flexDirection: 'column', gap: 12, minWidth: 0 }
       },
         makeTile('groundtruth.mp4',         'Ground truth',           '#2ECC71'),
         makeTile('background_gt_bbox.mp4',  'Input · start/end bbox', '#a1a1aa')
       ),
       /*#__PURE__*/React.createElement("div", {
-        style: { display: 'flex', flexDirection: 'column', gap: 10 }
+        style: { display: 'flex', flexDirection: 'column', gap: 8, minWidth: 0 }
       },
         makeTile('generated_gt_bbox.mp4',           'Ours · w/ GT bbox',          c.base),
         makeTile('generated_ati_gt_bbox.mp4',       'ATI · w/ GT bbox',           '#E74C3C'),
