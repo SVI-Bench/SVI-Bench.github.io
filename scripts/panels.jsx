@@ -351,30 +351,23 @@ function T9Panel({ pillar, active, data, light, tileColors, noClick }) {
         borderRadius: 3,
       }}>
         {!light && (
-          <>
-            <div style={{
-              fontFamily: '"IBM Plex Sans", sans-serif',
-              fontSize: 13, color: textSecondary, lineHeight: 1.5,
-              marginBottom: 6,
-            }}>
-              Search through 33K game reports and 1.76M video clips across 7,430 games to answer:
-            </div>
-            <div style={{
-              fontFamily: '"IBM Plex Mono", monospace', fontSize: 10,
-              color: '#71717a', letterSpacing: '0.08em',
-              marginBottom: 8,
-            }}>
-              Tools: document search · document QA · video search · video QA
-            </div>
-          </>
+          <div style={{
+            fontFamily: '"IBM Plex Sans", sans-serif',
+            fontSize: 13, color: textSecondary, lineHeight: 1.5,
+            marginBottom: 8,
+          }}>
+            Using tools for searching through documents, asking questions about them, browsing video clips, and querying what happens in each clip, search through 33K game reports and 1.76M video clips across 7,430 games to answer:
+          </div>
         )}
-        <div style={{
-          fontFamily: '"IBM Plex Mono", monospace', fontSize: 11,
-          color: '#71717a', letterSpacing: '0.14em',
-          textTransform: 'uppercase', marginBottom: 5,
-        }}>
-          {data.model} · {data.num_turns} turns
-        </div>
+        {light && (
+          <div style={{
+            fontFamily: '"IBM Plex Mono", monospace', fontSize: 11,
+            color: '#71717a', letterSpacing: '0.14em',
+            textTransform: 'uppercase', marginBottom: 5,
+          }}>
+            {data.model} · {data.num_turns} turns
+          </div>
+        )}
         {data.question}
       </div>
 

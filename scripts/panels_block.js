@@ -482,23 +482,15 @@ function T9Panel(_ref2) {
       border: '1px solid ' + headerBorder,
       borderRadius: 3
     }
-  }, !light && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+  }, !light && /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: '"IBM Plex Sans", sans-serif',
       fontSize: 13,
       color: textSecondary,
       lineHeight: 1.5,
-      marginBottom: 6
-    }
-  }, "Search through 33K game reports and 1.76M video clips across 7,430 games to answer:"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: '"IBM Plex Mono", monospace',
-      fontSize: 10,
-      color: '#71717a',
-      letterSpacing: '0.08em',
       marginBottom: 8
     }
-  }, "Tools: document search \xB7 document QA \xB7 video search \xB7 video QA")), /*#__PURE__*/React.createElement("div", {
+  }, "Using tools for searching through documents, asking questions about them, browsing video clips, and querying what happens in each clip, search through 33K game reports and 1.76M video clips across 7,430 games to answer:"), light && /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: '"IBM Plex Mono", monospace',
       fontSize: 11,
