@@ -266,13 +266,28 @@ const TOOL_ABBREV_SHORT = {
   video_qa_oracle:  'VQ',
 };
 
-function T9Panel({ pillar, active, data }) {
+function T9Panel({ pillar, active, data, light }) {
   const c = PILLARS[pillar];
   // `data` defaults to the cliff trajectory (Q45). Pass `T9_PANEL_ASK` for
   // the Ask-the-play trajectory (Q42).
   if (!data) data = T9_PANEL_CLIFF;
   const turns = data.turns;
   const totalTiles = turns.length + 1;   // + final ✗
+
+  // Light-mode color tokens. When `light` is true (§4 "See how the models
+  // answer"), the panel renders on a white card; otherwise it stays as the
+  // dark broadcast monitor (cliff section).
+  const bg            = light ? '#ffffff'              : '#0c0d10';
+  const headerBg      = light ? '#f4f4f5'              : 'rgba(20,20,26,0.85)';
+  const headerBorder  = light ? '#d4d4d8'              : '#27272a';
+  const textPrimary   = light ? '#18181b'              : '#fafafa';
+  const textSecondary = light ? '#52525b'              : '#a1a1aa';
+  const stripBg       = light ? '#fafafa'              : 'rgba(10,10,12,0.6)';
+  const stripBorder   = light ? '#e4e4e7'              : '#1c1c1f';
+  const tileBgIdle    = light ? '#e4e4e7'              : '#1c1c1f';
+  const tileTextIdle  = light ? '#a1a1aa'              : '#3f3f46';
+  const tileRevealedText = light ? '#ffffff'           : '#fafafa';
+  const selectedOutline  = light ? '#18181b'           : '#fafafa';
 
   const [revealedCount, setRevealedCount] = useState(0);
   const [selectedIdx, setSelectedIdx] = useState(null);
@@ -304,8 +319,8 @@ function T9Panel({ pillar, active, data }) {
   let TILE_W, TILE_H, TILE_GAP;
   if (NUM_TILES_RAW <= 12)      { TILE_W = 50; TILE_H = 36; TILE_GAP = 9; }
   else if (NUM_TILES_RAW <= 16) { TILE_W = 44; TILE_H = 34; TILE_GAP = 7; }
-  else if (NUM_TILES_RAW <= 20) { TILE_W = 38; TILE_H = 32; TILE_GAP = 6; }
-  else                          { TILE_W = 32; TILE_H = 28; TILE_GAP = 5; }
+  else if (NUM_TILES_RAW <= 20) { TILE_W = 42; TILE_H = 32; TILE_GAP = 8; }
+  else                          { TILE_W = 48; TILE_H = 34; TILE_GAP = 8; }
   const TILE_STRIDE = TILE_W + TILE_GAP;
   const STRIP_PAD_LEFT = 8;
   const NUM_TILES = totalTiles;
@@ -322,15 +337,15 @@ function T9Panel({ pillar, active, data }) {
       position: 'absolute', top: 28, bottom: 32, left: 0, right: 0,
       display: 'flex', flexDirection: 'column',
       padding: '12px 14px', gap: 10,
-      background: '#0c0d10',
+      background: bg,
     }}>
       {/* Query header */}
       <div style={{
         fontFamily: '"IBM Plex Sans", sans-serif',
-        fontSize: 14, lineHeight: 1.45, color: '#fafafa',
+        fontSize: 14, lineHeight: 1.45, color: textPrimary,
         padding: '10px 14px',
-        background: 'rgba(20,20,26,0.85)',
-        border: '1px solid #27272a',
+        background: headerBg,
+        border: '1px solid ' + headerBorder,
         borderRadius: 3,
       }}>
         <div style={{
@@ -347,8 +362,8 @@ function T9Panel({ pillar, active, data }) {
       <div style={{
         position: 'relative',
         padding: '14px 6px 10px',
-        background: 'rgba(10,10,12,0.6)',
-        border: '1px solid #1c1c1f',
+        background: stripBg,
+        border: '1px solid ' + stripBorder,
         borderRadius: 3,
         overflow: 'hidden',
       }}>
@@ -368,11 +383,11 @@ function T9Panel({ pillar, active, data }) {
                   width: TILE_W, height: TILE_H,
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   borderRadius: 5,
-                  background: revealed ? color : '#1c1c1f',
-                  color: revealed ? '#fafafa' : '#3f3f46',
+                  background: revealed ? color : tileBgIdle,
+                  color: revealed ? tileRevealedText : tileTextIdle,
                   fontFamily: '"IBM Plex Mono", monospace',
                   fontSize: 14, fontWeight: 700, letterSpacing: '0.02em',
-                  outline: isSelected ? '2px solid #fafafa' : '2px solid transparent',
+                  outline: isSelected ? '2px solid ' + selectedOutline : '2px solid transparent',
                   outlineOffset: isSelected ? 1 : 0,
                   cursor: allRevealed ? 'pointer' : 'default',
                   transition: 'background 180ms, color 180ms, outline-color 120ms',
@@ -390,12 +405,12 @@ function T9Panel({ pillar, active, data }) {
               width: TILE_W, height: TILE_H,
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               borderRadius: 5, marginLeft: 4,
-              background: revealedCount > turns.length ? '#C0392B' : '#1c1c1f',
-              color: revealedCount > turns.length ? '#fafafa' : '#3f3f46',
+              background: revealedCount > turns.length ? '#C0392B' : tileBgIdle,
+              color: revealedCount > turns.length ? '#fafafa' : tileTextIdle,
               fontFamily: '"IBM Plex Mono", monospace',
               fontSize: 18, fontWeight: 700,
               outline: selectedIdx === turns.length
-                ? '2px solid #fafafa' : '2px solid transparent',
+                ? '2px solid ' + selectedOutline : '2px solid transparent',
               outlineOffset: selectedIdx === turns.length ? 1 : 0,
               cursor: allRevealed ? 'pointer' : 'default',
               transition: 'background 180ms, outline-color 120ms',
@@ -458,7 +473,7 @@ function T9Panel({ pillar, active, data }) {
               <div key={p.label} style={{
                 position: 'absolute', top: 0,
                 fontFamily: '"IBM Plex Mono", monospace', fontSize: 11.5,
-                color: '#a1a1aa', letterSpacing: '0.04em',
+                color: textSecondary, letterSpacing: '0.04em',
                 lineHeight: 1.3,
                 width: isLast ? 60 : 116, whiteSpace: 'nowrap',
                 animation: 'overlayIn 240ms ease',
@@ -480,7 +495,7 @@ function T9Panel({ pillar, active, data }) {
                         onClose={() => setSelectedIdx(null)}
                         onClipClick={(clip_id, url) => setModalClip({ clip_id, url })} />
         ) : (
-          <T9LegendAndStats data={data} allRevealed={allRevealed} />
+          <T9LegendAndStats data={data} allRevealed={allRevealed} light={light} />
         )}
         {modalClip && (
           <T9ClipModal clip={modalClip} onClose={() => setModalClip(null)} />
@@ -526,8 +541,11 @@ function T9ClipModal({ clip, onClose }) {
   );
 }
 
-function T9LegendAndStats({ data, allRevealed }) {
+function T9LegendAndStats({ data, allRevealed, light }) {
   const tc = data.tool_counts;
+  const headerCol = light ? '#52525b' : '#a1a1aa';
+  const itemActive = light ? '#18181b' : '#e4e4e7';
+  const itemDim = light ? '#a1a1aa' : '#52525b';
   // Plain-English description so the user knows what each abbreviation does
   // without having to infer it from the tool name.
   const items = [
@@ -550,7 +568,7 @@ function T9LegendAndStats({ data, allRevealed }) {
       fontFamily: '"IBM Plex Mono", monospace',
     }}>
       <div style={{
-        fontSize: 12, letterSpacing: '0.1em', color: '#a1a1aa',
+        fontSize: 12, letterSpacing: '0.1em', color: headerCol,
         textTransform: 'uppercase',
       }}>
         {data.num_turns} turns · {allRevealed ? 'click any tile to inspect' : 'tracing the agent…'}
@@ -563,7 +581,7 @@ function T9LegendAndStats({ data, allRevealed }) {
         {items.map(it => (
           <div key={it.key} style={{
             display: 'flex', alignItems: 'center', gap: 8,
-            fontSize: 12, color: it.count > 0 ? '#e4e4e7' : '#52525b',
+            fontSize: 12, color: it.count > 0 ? itemActive : itemDim,
           }}>
             <span style={{
               display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
@@ -583,7 +601,7 @@ function T9LegendAndStats({ data, allRevealed }) {
         ))}
         <div style={{
           display: 'flex', alignItems: 'center', gap: 8,
-          fontSize: 12, color: '#e4e4e7',
+          fontSize: 12, color: itemActive,
         }}>
           <span style={{
             display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
