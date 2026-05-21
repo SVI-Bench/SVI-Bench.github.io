@@ -4236,16 +4236,35 @@ const T8_ARCHIVE = {
   ]
 };
 
-function SimArchiveTile({ panel, pillar, taskId }) {
+function simDotColor(kind, pillarBase) {
+  return kind === 'input' ? '#71717a'
+       : kind === 'gt' ? '#2ECC71'
+       : kind === 'gen' ? '#E74C3C'
+       : kind === 'gen_bbox' ? pillarBase
+       : '#71717a';
+}
+
+function SimArchiveTile({ panel, pillar, taskId, onOpen }) {
   var c = PILLARS[pillar];
   return /*#__PURE__*/React.createElement("div", {
+    onClick: onOpen,
     style: {
       gridColumn: 'span 2',
+      cursor: 'pointer',
       background: '#0c0d10',
       color: '#fafafa',
       border: '1px solid #27272a',
       borderRadius: 4,
-      overflow: 'hidden'
+      overflow: 'hidden',
+      transition: 'border-color 150ms, transform 150ms'
+    },
+    onMouseEnter: function onMouseEnter(e) {
+      e.currentTarget.style.borderColor = '#3f3f46';
+      e.currentTarget.style.transform = 'translateY(-2px)';
+    },
+    onMouseLeave: function onMouseLeave(e) {
+      e.currentTarget.style.borderColor = '#27272a';
+      e.currentTarget.style.transform = 'translateY(0)';
     }
   },
   // Header
@@ -4264,7 +4283,7 @@ function SimArchiveTile({ panel, pillar, taskId }) {
     }
   }, /*#__PURE__*/React.createElement("span", { style: { color: c.base } }, taskId || 'T7'),
      /*#__PURE__*/React.createElement("span", null, panel.axis_label)),
-  // 2x2 grid of thumbs
+  // 2x2 grid of static thumbs (first-frame only; modal autoplays)
   /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'grid',
@@ -4273,10 +4292,6 @@ function SimArchiveTile({ panel, pillar, taskId }) {
       background: '#1c1c1f'
     }
   }, panel.thumbs.map(function (t, i) {
-    var chipColor = t.kind === 'gt' ? '#2ECC71'
-                  : t.kind === 'gen_bbox' ? c.base
-                  : t.kind === 'gen' ? '#E74C3C'
-                  : '#a1a1aa';
     return /*#__PURE__*/React.createElement("div", {
       key: i,
       style: {
@@ -4287,18 +4302,10 @@ function SimArchiveTile({ panel, pillar, taskId }) {
       }
     }, /*#__PURE__*/React.createElement("video", {
       src: panel.base_dir + '/' + t.file,
-      autoPlay: true,
       muted: true,
-      loop: true,
       playsInline: true,
-      preload: 'metadata',
-      ref: function ref(el) {
-        if (!el) return;
-        el.muted = true;
-        el.defaultMuted = true;
-        var p = el.play();
-        if (p && p.catch) p.catch(function () {});
-      },
+      loop: true,
+      preload: "metadata",
       style: {
         width: '100%',
         height: '100%',
@@ -4308,18 +4315,15 @@ function SimArchiveTile({ panel, pillar, taskId }) {
     }), /*#__PURE__*/React.createElement("div", {
       style: {
         position: 'absolute',
-        top: 6,
-        left: 6,
-        fontFamily: '"IBM Plex Mono", monospace',
-        fontSize: 9,
-        letterSpacing: '0.12em',
-        textTransform: 'uppercase',
-        color: chipColor,
-        background: 'rgba(0,0,0,0.65)',
-        padding: '2px 6px',
-        borderRadius: 2
+        top: 4,
+        left: 4,
+        width: 7,
+        height: 7,
+        borderRadius: 4,
+        background: simDotColor(t.kind, c.base),
+        boxShadow: '0 0 4px rgba(0,0,0,0.7)'
       }
-    }, t.label));
+    }));
   })),
   // Caption
   /*#__PURE__*/React.createElement("div", {
@@ -4331,6 +4335,199 @@ function SimArchiveTile({ panel, pillar, taskId }) {
       color: '#e4e4e7'
     }
   }, panel.query));
+}
+
+function SimArchiveModal({ panel, pillar, taskId, onClose }) {
+  var c = PILLARS[pillar];
+  var gridRef = useRef(null);
+  useEffect(function () {
+    var root = gridRef.current;
+    if (!root) return;
+    var allVideos = Array.prototype.slice.call(root.querySelectorAll('video'));
+    if (allVideos.length === 0) return;
+    var syncing = false;
+    var handlers = [];
+    allVideos.forEach(function (video) {
+      var onPlay = function () {
+        if (syncing) return;
+        syncing = true;
+        allVideos.forEach(function (v) {
+          if (v !== video && v.paused) {
+            if (v.ended) v.currentTime = 0;
+            var p = v.play();
+            if (p && p.catch) p.catch(function () {});
+          }
+        });
+        syncing = false;
+      };
+      var onPause = function () {
+        if (syncing || video.ended) return;
+        syncing = true;
+        allVideos.forEach(function (v) { if (v !== video && !v.paused) v.pause(); });
+        syncing = false;
+      };
+      var onSeeked = function () {
+        if (syncing) return;
+        syncing = true;
+        allVideos.forEach(function (v) {
+          if (v !== video && Math.abs(v.currentTime - video.currentTime) > 0.1) {
+            v.currentTime = video.currentTime;
+          }
+        });
+        syncing = false;
+      };
+      video.addEventListener('play', onPlay);
+      video.addEventListener('pause', onPause);
+      video.addEventListener('seeked', onSeeked);
+      handlers.push({ video: video, onPlay: onPlay, onPause: onPause, onSeeked: onSeeked });
+    });
+    return function () {
+      handlers.forEach(function (h) {
+        h.video.removeEventListener('play', h.onPlay);
+        h.video.removeEventListener('pause', h.onPause);
+        h.video.removeEventListener('seeked', h.onSeeked);
+      });
+    };
+  }, []);
+  return /*#__PURE__*/React.createElement("div", {
+    onClick: onClose,
+    style: {
+      position: 'fixed',
+      inset: 0,
+      zIndex: 100,
+      background: 'rgba(0,0,0,0.85)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: 40,
+      cursor: 'pointer',
+      animation: 'overlayIn 200ms ease'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    onClick: function onClick(e) {
+      return e.stopPropagation();
+    },
+    style: {
+      cursor: 'default',
+      background: '#0c0d10',
+      color: '#fafafa',
+      border: '1px solid #27272a',
+      borderRadius: 6,
+      padding: '24px 28px',
+      maxWidth: 1100,
+      width: '100%',
+      maxHeight: '90vh',
+      overflowY: 'auto',
+      boxShadow: '0 24px 80px rgba(0,0,0,0.8)'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'flex-start',
+      justifyContent: 'space-between',
+      gap: 16,
+      marginBottom: 16
+    }
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: '"IBM Plex Mono", monospace',
+      fontSize: 11,
+      letterSpacing: '0.16em',
+      textTransform: 'uppercase',
+      color: '#71717a',
+      marginBottom: 6
+    }
+  }, taskId, " \xB7 ", panel.axis_label), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontFamily: '"IBM Plex Sans", sans-serif',
+      fontSize: 17,
+      color: '#fafafa',
+      lineHeight: 1.4,
+      maxWidth: 800
+    }
+  }, panel.query)), /*#__PURE__*/React.createElement("button", {
+    onClick: onClose,
+    style: {
+      background: 'transparent',
+      border: '1px solid #3f3f46',
+      color: '#e4e4e7',
+      padding: '5px 14px',
+      borderRadius: 3,
+      fontFamily: '"IBM Plex Mono", monospace',
+      fontSize: 11,
+      letterSpacing: '0.1em',
+      cursor: 'pointer',
+      flex: '0 0 auto'
+    }
+  }, "close ✕")), /*#__PURE__*/React.createElement("div", {
+    ref: gridRef,
+    style: {
+      display: 'grid',
+      gridTemplateColumns: '1fr 1fr',
+      gap: 12
+    }
+  }, panel.thumbs.map(function (t, i) {
+    var edge = simDotColor(t.kind, c.base);
+    var glowAlpha = t.kind === 'gt' ? 'rgba(46,204,113,0.4)'
+                  : t.kind === 'gen' ? 'rgba(231,76,60,0.4)'
+                  : t.kind === 'gen_bbox' ? 'rgba(212,145,58,0.4)'
+                  : 'rgba(113,113,122,0.35)';
+    var isLight = t.kind === 'gt' || t.kind === 'gen_bbox';
+    return /*#__PURE__*/React.createElement("div", {
+      key: i,
+      style: {
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 8
+      }
+    }, /*#__PURE__*/React.createElement("div", {
+      style: {
+        position: 'relative',
+        aspectRatio: '16 / 9',
+        background: '#000',
+        border: "2px solid " + edge,
+        borderRadius: 3,
+        overflow: 'hidden',
+        boxShadow: "0 0 16px " + glowAlpha
+      }
+    }, /*#__PURE__*/React.createElement("video", {
+      controls: true,
+      muted: true,
+      playsInline: true,
+      preload: "metadata",
+      style: {
+        width: '100%',
+        height: '100%',
+        objectFit: 'cover',
+        display: 'block'
+      }
+    }, /*#__PURE__*/React.createElement("source", {
+      src: panel.base_dir + '/' + t.file,
+      type: "video/mp4"
+    })), /*#__PURE__*/React.createElement("div", {
+      style: {
+        position: 'absolute',
+        top: 8,
+        left: 8,
+        fontFamily: '"IBM Plex Mono", monospace',
+        fontSize: 11,
+        fontWeight: 700,
+        letterSpacing: '0.06em',
+        color: isLight ? '#0a0a0c' : '#fafafa',
+        background: isLight ? edge : 'rgba(10,10,12,0.85)',
+        padding: '3px 8px',
+        borderRadius: 2,
+        lineHeight: 1.15
+      }
+    }, t.label)), /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontFamily: '"IBM Plex Sans", sans-serif',
+        fontSize: 13.5,
+        lineHeight: 1.45,
+        color: isLight ? '#fafafa' : '#d4d4d8'
+      }
+    }, t.label));
+  }))));
 }
 // ── Tape archive section ──────────────────────────────────────────────────
 
@@ -4445,7 +4642,7 @@ function TapeArchiveSection() {
         key: p.id,
         panel: p,
         onOpen: function onOpen() {
-          return setModalTile(p);
+          return setModalTile({ kind: 't3', panel: p });
         }
       });
     }), isT7 && T7_ARCHIVE.panels.map(function (p) {
@@ -4453,14 +4650,20 @@ function TapeArchiveSection() {
         key: p.id,
         panel: p,
         pillar: task.pillar,
-        taskId: 'T7'
+        taskId: 'T7',
+        onOpen: function onOpen() {
+          return setModalTile({ kind: 'sim', panel: p, pillar: task.pillar, taskId: 'T7' });
+        }
       });
     }), isT8 && T8_ARCHIVE.panels.map(function (p) {
       return /*#__PURE__*/React.createElement(SimArchiveTile, {
         key: p.id,
         panel: p,
         pillar: task.pillar,
-        taskId: 'T8'
+        taskId: 'T8',
+        onOpen: function onOpen() {
+          return setModalTile({ kind: 'sim', panel: p, pillar: task.pillar, taskId: 'T8' });
+        }
       });
     }), isT9 && T9_ARCHIVE.cards.map(function (c) {
       return /*#__PURE__*/React.createElement(T9ArchiveCard, {
@@ -4473,12 +4676,21 @@ function TapeArchiveSection() {
         failure: failure
       });
     })));
-  }), modalTile && /*#__PURE__*/React.createElement(T3ArchiveModal, {
-    panel: modalTile,
-    onClose: function onClose() {
-      return setModalTile(null);
-    }
-  }));
+  }), modalTile && (modalTile.kind === 'sim'
+    ? /*#__PURE__*/React.createElement(SimArchiveModal, {
+        panel: modalTile.panel,
+        pillar: modalTile.pillar,
+        taskId: modalTile.taskId,
+        onClose: function onClose() {
+          return setModalTile(null);
+        }
+      })
+    : /*#__PURE__*/React.createElement(T3ArchiveModal, {
+        panel: modalTile.panel || modalTile,
+        onClose: function onClose() {
+          return setModalTile(null);
+        }
+      })));
 }
 function T3ArchiveTile(_ref) {
   var panel = _ref.panel,
