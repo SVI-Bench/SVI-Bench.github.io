@@ -159,13 +159,13 @@ const TASKS = [{
   blurb: 'Generate video that follows prescribed trajectories. About half of player positions drift.'
 }, {
   id: 'T8',
-  name: 'Goal-Conditioned Action Gen.',
+  name: 'Goal-Conditioned Action Generation',
   pillar: 'Simulation',
   score: 50,
   metric: '50.2%',
   metricLabel: 'goal accuracy',
   bestModel: 'Wan 2.1 (ft)',
-  blurb: 'Generate the action that scores. Goal-conditioned planning sits barely above chance.'
+  blurb: 'Generate video that follows desired actions. the generated video hardly follow the desired actions.'
 }, {
   id: 'T9',
   name: 'Cross-Corpus Agentic Reasoning',
@@ -2243,8 +2243,6 @@ function T7Panel({ pillar }) {
   };
   const videoProps = (file) => ({
     src: `${baseDir}/${file}`,
-    autoPlay: true,
-    loop: true,
     muted: true,
     playsInline: true,
     preload: 'auto',
@@ -2252,8 +2250,22 @@ function T7Panel({ pillar }) {
       if (!el) return;
       el.muted = true;
       el.defaultMuted = true;
-      const p = el.play();
-      if (p && p.catch) p.catch(() => {});
+      const holdMs = 1500;
+      let timer = null;
+      const startWithHold = () => {
+        if (timer) clearTimeout(timer);
+        el.currentTime = 0;
+        timer = setTimeout(() => {
+          const p = el.play();
+          if (p && p.catch) p.catch(() => {});
+        }, holdMs);
+      };
+      if (el.readyState >= 2) {
+        startWithHold();
+      } else {
+        el.addEventListener('loadeddata', startWithHold, { once: true });
+      }
+      el.addEventListener('ended', startWithHold);
     },
     style: videoEl
   });
@@ -2276,11 +2288,11 @@ function T7Panel({ pillar }) {
   },
     /*#__PURE__*/React.createElement("div", { style: videoBox },
       /*#__PURE__*/React.createElement("video", videoProps('original.mp4')),
-      /*#__PURE__*/React.createElement("span", { style: labelChip }, "Original")
+      /*#__PURE__*/React.createElement("span", { style: labelChip }, "GT")
     ),
     /*#__PURE__*/React.createElement("div", { style: videoBox },
       /*#__PURE__*/React.createElement("video", videoProps('generated_gt_bbox.mp4')),
-      /*#__PURE__*/React.createElement("span", { style: { ...labelChip, color: c.base } }, "Generated \xB7 GT bbox")
+      /*#__PURE__*/React.createElement("span", { style: { ...labelChip, color: c.base } }, "MODEL")
     )
   ),
   // Right: side panel with small inpainted preview
@@ -2304,7 +2316,7 @@ function T7Panel({ pillar }) {
         color: '#a1a1aa',
         textTransform: 'uppercase'
       }
-    }, "Inpainted input"),
+    }, "Input"),
     /*#__PURE__*/React.createElement("div", {
       style: { background: '#000', borderRadius: 2, overflow: 'hidden', aspectRatio: '16 / 9', border: '1px solid #1c1c1f' }
     },
@@ -2321,7 +2333,7 @@ function T7Panel({ pillar }) {
         color: '#71717a',
         margin: 0
       }
-    }, "Player-removed background + target bbox trajectories — the model's input.")
+    }, "Player-removed background + Per-Player Bounding Box Motion trajectories — the model's input.")
   ));
 }
 function T8Panel({ pillar }) {
@@ -2358,8 +2370,6 @@ function T8Panel({ pillar }) {
   };
   const videoProps = (file) => ({
     src: `${baseDir}/${file}`,
-    autoPlay: true,
-    loop: true,
     muted: true,
     playsInline: true,
     preload: 'auto',
@@ -2367,8 +2377,22 @@ function T8Panel({ pillar }) {
       if (!el) return;
       el.muted = true;
       el.defaultMuted = true;
-      const p = el.play();
-      if (p && p.catch) p.catch(() => {});
+      const holdMs = 1500;
+      let timer = null;
+      const startWithHold = () => {
+        if (timer) clearTimeout(timer);
+        el.currentTime = 0;
+        timer = setTimeout(() => {
+          const p = el.play();
+          if (p && p.catch) p.catch(() => {});
+        }, holdMs);
+      };
+      if (el.readyState >= 2) {
+        startWithHold();
+      } else {
+        el.addEventListener('loadeddata', startWithHold, { once: true });
+      }
+      el.addEventListener('ended', startWithHold);
     },
     style: videoEl
   });
@@ -2391,11 +2415,11 @@ function T8Panel({ pillar }) {
   },
     /*#__PURE__*/React.createElement("div", { style: videoBox },
       /*#__PURE__*/React.createElement("video", videoProps('groundtruth.mp4')),
-      /*#__PURE__*/React.createElement("span", { style: labelChip }, "Ground truth")
+      /*#__PURE__*/React.createElement("span", { style: labelChip }, "GT")
     ),
     /*#__PURE__*/React.createElement("div", { style: videoBox },
       /*#__PURE__*/React.createElement("video", videoProps('generated_gt_bbox.mp4')),
-      /*#__PURE__*/React.createElement("span", { style: { ...labelChip, color: c.base } }, "Generated \xB7 GT bbox")
+      /*#__PURE__*/React.createElement("span", { style: { ...labelChip, color: c.base } }, "MODEL")
     )
   ),
   // Right: side panel with goal + small background preview
@@ -2419,7 +2443,7 @@ function T8Panel({ pillar }) {
         color: '#a1a1aa',
         textTransform: 'uppercase'
       }
-    }, "Background input"),
+    }, "Input"),
     /*#__PURE__*/React.createElement("div", {
       style: { background: '#000', borderRadius: 2, overflow: 'hidden', aspectRatio: '16 / 9', border: '1px solid #1c1c1f' }
     },
@@ -2438,7 +2462,13 @@ function T8Panel({ pillar }) {
       }
     }, /*#__PURE__*/React.createElement("span", {
       style: { color: '#a1a1aa', fontWeight: 500 }
-    }, "Goal: "), "Simulate Player #35 contesting a shot in the restricted area and forcing a miss.")
+    }, "Goal: "),
+       "Simulate Player #35 contesting a shot in the restricted area, forcing a miss.",
+       /*#__PURE__*/React.createElement("br", null),
+       /*#__PURE__*/React.createElement("span", {
+         style: { color: '#a1a1aa', fontWeight: 500 }
+       }, "Conditioned on: "),
+       "initial frame + player-removed background + spatial target + natural-language instruction.")
   ));
 }
 function CliffBroadcastViewport({
@@ -4211,7 +4241,7 @@ const T8_ARCHIVE = {
       id: 'bb_morris_rebound',
       sport: 'basketball',
       axis_label: 'goal: secure a rebound',
-      query: 'Goal: Player #8 secures a rebound. Bbox trajectory respected; the act of grabbing the ball fails to materialize.',
+      query: 'Goal: simulate Player #8 securing a rebound. The generated player can\'t even reach the spatial target — let alone perform the desired action.',
       base_dir: 'assets/qualitative_vis_basketball_task2/1881_Marcus_Morris_Rebound_247840436',
       thumbs: [
         { kind: 'input',    label: 'Background + bbox',    file: 'background_gt_bbox.mp4' },
@@ -4224,7 +4254,7 @@ const T8_ARCHIVE = {
       id: 'bb_kalaitzakis_3pt',
       sport: 'basketball',
       axis_label: 'goal: missed contested 3-pt off a screen',
-      query: 'Goal: Player #0 missing a contested 3-pt jumper from the corner off a screen by #6 vs defender #1. Players move, the shot mechanic dissolves.',
+      query: 'Goal: simulate Player #0 missing a contested corner three-pointer off a screen set by Player #6, defended by Player #1. Some players reach their spatial targets, others don\'t — either way, the play never materializes.',
       base_dir: 'assets/qualitative_vis_basketball_task2/8488_Panagiotis_Kalaitzakis_3-_279719388',
       thumbs: [
         { kind: 'input',    label: 'Background + bbox',    file: 'background_gt_bbox.mp4' },
