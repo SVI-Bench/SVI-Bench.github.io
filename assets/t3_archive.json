@@ -21,16 +21,16 @@
         },
         {
           "video": "assets/t3_archive/bb_jersey/hn2.mp4",
-          "caption": "Player #11 makes a free throw.",
+          "caption": "Player #8 makes a free throw.",
           "sim": 0.79,
-          "diff_substring": "#11",
+          "diff_substring": "#8",
           "is_gt": false
         },
         {
           "video": "assets/t3_archive/bb_jersey/hn3.mp4",
-          "caption": "Player #35 makes a free throw.",
+          "caption": "Player #6 makes a free throw.",
           "sim": 0.74,
-          "diff_substring": "#35",
+          "diff_substring": "#6",
           "is_gt": false
         }
       ]

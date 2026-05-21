@@ -3105,7 +3105,7 @@ function CliffAnnotation({
     fill: "#fafafa",
     textAnchor: "middle",
     letterSpacing: "0.05em"
-  }, "\u221268 pts"), /*#__PURE__*/React.createElement("text", {
+  }, "\u221269 pts"), /*#__PURE__*/React.createElement("text", {
     x: (xT2 + xT9) / 2,
     y: (yT2 + yT9) / 2 + 2,
     fontFamily: "\"IBM Plex Sans\", sans-serif",
@@ -4955,7 +4955,7 @@ function TapeArchiveSection() {
     }, suffix)), /*#__PURE__*/React.createElement("div", {
       style: {
         display: 'grid',
-        gridTemplateColumns: hasWide ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)',
+        gridTemplateColumns: hasWide ? 'repeat(2, 1fr)' : isT9 ? 'repeat(3, 1fr)' : 'repeat(4, 1fr)',
         gap: 14
       }
     }, isT3 && T3_ARCHIVE.panels.map(function (p) {
@@ -5450,15 +5450,6 @@ function T9ArchiveCard(_ref4) {
       gap: 12
     }
   }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontFamily: '"IBM Plex Mono", monospace',
-      fontSize: 10.5,
-      letterSpacing: '0.16em',
-      textTransform: 'uppercase',
-      color: '#C0392B',
-      marginBottom: 6
-    }
-  }, "T9 \xB7 failure mode"), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: '"IBM Plex Sans", sans-serif',
       fontSize: 16,
