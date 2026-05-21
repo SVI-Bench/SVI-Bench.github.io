@@ -2905,22 +2905,38 @@ function CliffBars({
     stroke: "#e4e4e7",
     strokeWidth: 1,
     strokeDasharray: y === 0 ? '0' : '2 4'
-  }), /*#__PURE__*/React.createElement("text", {
-    x: 56,
-    y: 540 - y / 100 * 480 + 4,
-    fontFamily: "\"IBM Plex Mono\", monospace",
-    fontSize: 11,
-    fill: "#a1a1aa",
-    textAnchor: "end"
-  }, y))), /*#__PURE__*/React.createElement("text", {
-    x: 56,
-    y: 32,
-    fontFamily: "\"IBM Plex Mono\", monospace",
-    fontSize: 10,
-    fill: "#71717a",
-    textAnchor: "end",
-    letterSpacing: "0.1em"
-  }, "SCORE")), /*#__PURE__*/React.createElement("div", {
+  })))),
+  // Axis labels as HTML (won't stretch with SVG)
+  /*#__PURE__*/React.createElement("div", {
+    style: { position: 'absolute', left: 0, top: '10%', bottom: '10%', width: '7%', pointerEvents: 'none' }
+  },
+    [0, 25, 50, 75, 100].map(y => /*#__PURE__*/React.createElement("div", {
+      key: y,
+      style: {
+        position: 'absolute',
+        right: 8,
+        top: (100 - y) + '%',
+        transform: 'translateY(-50%)',
+        fontFamily: '"IBM Plex Mono", monospace',
+        fontSize: 11,
+        color: '#a1a1aa',
+        textAlign: 'right'
+      }
+    }, y)),
+    /*#__PURE__*/React.createElement("div", {
+      style: {
+        position: 'absolute',
+        right: 8,
+        top: '-8%',
+        fontFamily: '"IBM Plex Mono", monospace',
+        fontSize: 10,
+        color: '#71717a',
+        letterSpacing: '0.1em',
+        textAlign: 'right'
+      }
+    }, "SCORE")
+  ),
+  /*#__PURE__*/React.createElement("div", {
     style: {
       position: 'absolute',
       left: '7%',
@@ -3908,7 +3924,7 @@ function VideoSection() {
   }, "02 \xB7 Overview")), /*#__PURE__*/React.createElement("div", {
     style: {
       width: '100%',
-      maxWidth: 960,
+      maxWidth: 1200,
       margin: '0 auto',
       aspectRatio: '16 / 9',
       background: '#0c0d10',
@@ -3953,7 +3969,7 @@ function VideoSection() {
       background: '#C0392B',
       animation: 'recPulse 1.6s ease-in-out infinite'
     }
-  }), /*#__PURE__*/React.createElement("span", null, "SVI-BENCH \xB7 Explainer")), /*#__PURE__*/React.createElement("div", {
+  })), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: '"IBM Plex Mono", monospace',
       fontSize: 11,
@@ -4369,7 +4385,7 @@ function AskThePlaySection() {
   }, "04 \xB7 Model responses"), /*#__PURE__*/React.createElement("h2", {
     style: {
       fontFamily: '"IBM Plex Serif", serif',
-      fontSize: 'clamp(36px, 4.8vw, 60px)',
+      fontSize: 'clamp(36px, 5vw, 64px)',
       fontWeight: 400,
       lineHeight: 1.05,
       letterSpacing: '-0.02em',
@@ -4847,10 +4863,11 @@ function SimArchiveModal({ panel, pillar, taskId, onClose }) {
         boxShadow: "0 0 16px " + glowAlpha
       }
     }, /*#__PURE__*/React.createElement("video", {
-      controls: true,
+      autoPlay: true,
+      loop: true,
       muted: true,
       playsInline: true,
-      preload: "metadata",
+      preload: "auto",
       style: {
         width: '100%',
         height: '100%',
@@ -4919,9 +4936,9 @@ function TapeArchiveSection() {
   }, "05 \xB7 Failures"), /*#__PURE__*/React.createElement("h2", {
     style: {
       fontFamily: '"IBM Plex Serif", serif',
-      fontSize: 'clamp(40px, 6vw, 76px)',
+      fontSize: 'clamp(36px, 5vw, 64px)',
       fontWeight: 400,
-      lineHeight: 1,
+      lineHeight: 1.05,
       letterSpacing: '-0.02em',
       margin: 0,
       marginBottom: 18,
@@ -5922,14 +5939,15 @@ function Header() {
   }, /*#__PURE__*/React.createElement("a", {
     href: "#hero",
     style: {
-      fontFamily: '"IBM Plex Mono", monospace',
-      fontSize: 13,
-      letterSpacing: '0.05em',
-      fontWeight: 600,
       textDecoration: 'none',
-      color: '#fafafa'
+      display: 'flex',
+      alignItems: 'center'
     }
-  }, "SVI-BENCH"), /*#__PURE__*/React.createElement("nav", {
+  }, /*#__PURE__*/React.createElement("img", {
+    src: 'assets/svi_bench_logo.svg',
+    alt: 'SVI-BENCH',
+    style: { height: 36 }
+  })), /*#__PURE__*/React.createElement("nav", {
     style: {
       display: 'flex',
       gap: 28,
