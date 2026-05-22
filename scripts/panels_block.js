@@ -1330,7 +1330,7 @@ function T9DocQAResults(_ref12) {
     }
   },
   /*#__PURE__*/React.createElement("div", { style: { color: '#a1a1aa' } },
-    "Analyzed ", results.results.length, " doc", results.results.length === 1 ? '' : 's'),
+    results.results.length, " document", results.results.length === 1 ? '' : 's', " analyzed"),
   /*#__PURE__*/React.createElement("div", { style: { color: results.results.some(function(r) { return r.contains_answer; }) ? '#2E9E8F' : '#71717a' } },
     results.results.some(function(r) { return r.contains_answer; }) ? 'Found relevant document' : 'No relevant document found')),
   results.results.slice(0, 2).map(function (r, i) {
@@ -1551,7 +1551,7 @@ function T9VideoQAResults(_ref14) {
     }
   },
   /*#__PURE__*/React.createElement("div", { style: { color: '#a1a1aa' } },
-    "Analyzed ", items.length, " clip", items.length === 1 ? '' : 's'),
+    items.length, " clip", items.length === 1 ? '' : 's', " analyzed"),
   /*#__PURE__*/React.createElement("div", { style: { color: targetCount > 0 ? '#2E9E8F' : '#71717a' } },
     targetCount > 0 ? "Found ".concat(targetCount, " relevant clip").concat(targetCount === 1 ? '' : 's') : 'No relevant clips found')),
   items.slice(0, 3).map(function (r, i) {
