@@ -501,6 +501,16 @@ const CLIPS = [{
   }],
   gt: "Yes — Team A switched from drop coverage to aggressive hedging after Game 4, triggered by Team B's pick-and-pop adjustment exploiting drop coverage.",
   verdictHeadline: '0 of 3 fully correct · 4.6% success at scale'
+}, {
+  id: 'c7',
+  taskId: 'T7',
+  pillar: 'Simulation',
+  teaser: 'free-kick shot',
+  title: 'Motion-Conditioned Action Generation',
+  context: 'Soccer · free-kick',
+  question: 'Reconstruct the play from per-player bounding-box motion trajectories on a player-removed background.',
+  simBaseDir: 'assets/qualitative_vis_soccer_task1/shot_2434650876',
+  models: []
 }];
 
 // ============================================================
@@ -4203,6 +4213,201 @@ function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) 
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+function T7AskPanel({ clip }) {
+  const c = PILLARS[clip.pillar];
+  const baseDir = clip.simBaseDir;
+  const rIn = useRef(null);
+  const r0 = useRef(null);
+  const r1 = useRef(null);
+  const r2 = useRef(null);
+  const r3 = useRef(null);
+  useEffect(() => {
+    const videos = [rIn.current, r0.current, r1.current, r2.current, r3.current].filter(Boolean);
+    if (videos.length === 0) return;
+    videos.forEach(v => { v.muted = true; v.defaultMuted = true; });
+    const holdMs = 2500;
+    let timer = null;
+    let stopped = false;
+    const startAll = () => {
+      if (stopped) return;
+      videos.forEach(v => { try { v.pause(); } catch (_) {} v.currentTime = 0; });
+      if (timer) clearTimeout(timer);
+      timer = setTimeout(() => {
+        if (stopped) return;
+        videos.forEach(v => { const p = v.play(); if (p && p.catch) p.catch(() => {}); });
+      }, holdMs);
+    };
+    const checkAndStart = () => {
+      if (stopped) return;
+      if (videos.every(v => v.readyState >= 2)) startAll();
+    };
+    videos.forEach(v => { if (v.readyState < 2) v.addEventListener('loadeddata', checkAndStart, { once: true }); });
+    checkAndStart();
+    const endedSet = new Set();
+    const endedHandlers = videos.map(v => {
+      const h = () => {
+        endedSet.add(v);
+        if (endedSet.size === videos.length) {
+          endedSet.clear();
+          if (timer) clearTimeout(timer);
+          timer = setTimeout(startAll, holdMs);
+        }
+      };
+      v.addEventListener('ended', h);
+      return { v, h };
+    });
+    return () => {
+      stopped = true;
+      if (timer) clearTimeout(timer);
+      videos.forEach(v => v.removeEventListener('loadeddata', checkAndStart));
+      endedHandlers.forEach(({ v, h }) => v.removeEventListener('ended', h));
+    };
+  }, []);
+  const tile = (ref, file, label, labelColor) =>
+    /*#__PURE__*/React.createElement("div", {
+      style: {
+        position: 'relative',
+        width: '100%',
+        height: '100%',
+        background: '#000',
+        overflow: 'hidden',
+        border: '1px solid #27272a',
+        borderRadius: 3
+      }
+    },
+      /*#__PURE__*/React.createElement("video", {
+        ref: ref,
+        src: `${baseDir}/${file}`,
+        muted: true,
+        playsInline: true,
+        preload: 'auto',
+        style: { width: '100%', height: '100%', objectFit: 'cover', background: '#0c0d10', display: 'block' }
+      }),
+      /*#__PURE__*/React.createElement("div", {
+        style: {
+          position: 'absolute',
+          top: 6,
+          left: 6,
+          fontFamily: '"IBM Plex Mono", monospace',
+          fontSize: 9.5,
+          letterSpacing: '0.14em',
+          color: labelColor,
+          textTransform: 'uppercase',
+          background: 'rgba(10,10,12,0.78)',
+          padding: '2px 6px',
+          borderRadius: 2,
+          fontWeight: 600
+        }
+      }, label)
+    );
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      maxWidth: 1320,
+      margin: '0 auto 24px',
+      display: 'grid',
+      gridTemplateColumns: '1fr 1fr',
+      gap: 18,
+      alignItems: 'stretch'
+    }
+  },
+    // Left: input video (inpainted + bbox trajectories) + strip + conditioned-on chips
+    /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: 'flex',
+        flexDirection: 'column',
+        background: '#0c0d10',
+        color: '#fafafa',
+        border: '1px solid #27272a',
+        borderRadius: 4,
+        overflow: 'hidden',
+        boxShadow: `0 20px 60px rgba(0,0,0,0.5), 0 0 40px ${c.soft}`
+      }
+    },
+      /*#__PURE__*/React.createElement("div", {
+        style: { position: 'relative', width: '100%', aspectRatio: '832 / 480', background: '#000', flexShrink: 0 }
+      },
+        /*#__PURE__*/React.createElement("video", {
+          ref: rIn,
+          src: `${baseDir}/inpainted_gt_bbox.mp4`,
+          muted: true,
+          playsInline: true,
+          preload: 'auto',
+          style: { width: '100%', height: '100%', objectFit: 'cover', display: 'block' }
+        }),
+        /*#__PURE__*/React.createElement("div", {
+          style: {
+            position: 'absolute', top: 8, left: 8,
+            fontFamily: '"IBM Plex Mono", monospace', fontSize: 10, letterSpacing: '0.14em',
+            color: c.base, textTransform: 'uppercase',
+            background: 'rgba(10,10,12,0.78)', padding: '3px 7px', borderRadius: 2, fontWeight: 600
+          }
+        }, "Input · per-player bbox")
+      ),
+      /*#__PURE__*/React.createElement("div", {
+        style: {
+          height: 38, padding: '0 14px', display: 'flex',
+          alignItems: 'center', justifyContent: 'space-between',
+          borderTop: '1px solid #1c1c1f', flexShrink: 0
+        }
+      },
+        /*#__PURE__*/React.createElement("div", { style: { display: 'flex', alignItems: 'baseline', gap: 10 } },
+          /*#__PURE__*/React.createElement("span", { style: { fontFamily: '"IBM Plex Mono", monospace', fontSize: 13, color: c.base, fontWeight: 600 } }, clip.taskId),
+          /*#__PURE__*/React.createElement("span", { style: { fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 13, color: '#e4e4e7' } }, clip.title)
+        ),
+        /*#__PURE__*/React.createElement("span", {
+          style: {
+            fontFamily: '"IBM Plex Mono", monospace', fontSize: 10, color: '#0a0a0c',
+            letterSpacing: '0.12em', background: c.base, padding: '3px 8px', borderRadius: 2,
+            fontWeight: 600, textTransform: 'uppercase'
+          }
+        }, clip.pillar)
+      ),
+      /*#__PURE__*/React.createElement("div", {
+        style: {
+          flex: 1, padding: '14px 16px', borderTop: '1px solid #1c1c1f',
+          display: 'flex', flexDirection: 'column', gap: 8
+        }
+      },
+        /*#__PURE__*/React.createElement("div", {
+          style: {
+            fontFamily: '"IBM Plex Mono", monospace', fontSize: 10,
+            letterSpacing: '0.16em', textTransform: 'uppercase', color: '#a1a1aa'
+          }
+        }, "Conditioned on"),
+        /*#__PURE__*/React.createElement("div", { style: { display: 'flex', flexDirection: 'column', gap: 6 } },
+          ["Player-removed background", "Per-player bounding-box motion trajectories"].map(function (label) {
+            return /*#__PURE__*/React.createElement("div", {
+              key: label,
+              style: {
+                fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 12.5, lineHeight: 1.4,
+                color: '#e4e4e7', background: 'rgba(255,255,255,0.04)',
+                border: '1px solid #27272a', borderRadius: 3, padding: '5px 10px'
+              }
+            }, label);
+          })
+        )
+      )
+    ),
+    // Right: 2x2 grid — fills column height
+    /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: 'grid',
+        gridTemplateColumns: 'repeat(2, 1fr)',
+        gridTemplateRows: 'repeat(2, 1fr)',
+        gap: 8,
+        minWidth: 0,
+        width: '100%',
+        height: '100%',
+        minHeight: 0
+      }
+    },
+      tile(r0, 'original_gt_bbox.mp4',      'Ground truth', '#2ECC71'),
+      tile(r1, 'generated_gt_bbox.mp4',     'Ours',         c.base),
+      tile(r2, 'ati_gt_bbox.mp4',           'ATI',          '#E74C3C'),
+      tile(r3, 'magicmotion_gt_bbox.mp4',   'MagicMotion',  '#E74C3C')
+    )
+  );
+}
 function T8AskPanel({ clip }) {
   const c = PILLARS[clip.pillar];
   const baseDir = clip.simBaseDir;
@@ -4464,6 +4669,7 @@ function AskThePlaySection() {
   };
   var isT9 = clip && clip.taskId === 'T9';
   var isT8 = clip && clip.taskId === 'T8';
+  var isT7 = clip && clip.taskId === 'T7';
   return /*#__PURE__*/React.createElement("section", {
     id: "ask",
     style: {
@@ -4585,6 +4791,8 @@ function AskThePlaySection() {
       color: '#e4e4e7'
     }
   }, "Cross-Corpus Agentic Reasoning"))) : isT8 ? /*#__PURE__*/React.createElement(T8AskPanel, {
+    clip: clip
+  }) : isT7 ? /*#__PURE__*/React.createElement(T7AskPanel, {
     clip: clip
   }) : /*#__PURE__*/React.createElement("div", {
     style: {
@@ -4719,7 +4927,50 @@ function simDotColor(kind, pillarBase) {
 
 function SimArchiveTile({ panel, pillar, taskId, onOpen }) {
   var c = PILLARS[pillar];
+  var containerRef = useRef(null);
+  useEffect(function () {
+    var root = containerRef.current;
+    if (!root) return;
+    var videos = Array.prototype.slice.call(root.querySelectorAll('video'));
+    if (!videos.length) return;
+    videos.forEach(function (v) {
+      v.muted = true; v.defaultMuted = true;
+      if (panel.playbackRate) v.playbackRate = panel.playbackRate;
+    });
+    var stopped = false;
+    var startAll = function () {
+      if (stopped) return;
+      videos.forEach(function (v) { try { v.pause(); } catch (_) {} v.currentTime = 0; });
+      videos.forEach(function (v) {
+        var p = v.play();
+        if (p && p.catch) p.catch(function () {});
+      });
+    };
+    var checkAndStart = function () {
+      if (stopped) return;
+      if (videos.every(function (v) { return v.readyState >= 2; })) startAll();
+    };
+    videos.forEach(function (v) {
+      if (v.readyState < 2) v.addEventListener('loadeddata', checkAndStart, { once: true });
+    });
+    checkAndStart();
+    var endedSet = new Set();
+    var endedHandlers = videos.map(function (v) {
+      var h = function () {
+        endedSet.add(v);
+        if (endedSet.size === videos.length) { endedSet.clear(); startAll(); }
+      };
+      v.addEventListener('ended', h);
+      return { v: v, h: h };
+    });
+    return function () {
+      stopped = true;
+      videos.forEach(function (v) { v.removeEventListener('loadeddata', checkAndStart); });
+      endedHandlers.forEach(function (rec) { rec.v.removeEventListener('ended', rec.h); });
+    };
+  }, []);
   return /*#__PURE__*/React.createElement("div", {
+    ref: containerRef,
     style: {
       gridColumn: 'span 2',
       background: '#0c0d10',
@@ -4764,17 +5015,9 @@ function SimArchiveTile({ panel, pillar, taskId, onOpen }) {
       }
     }, /*#__PURE__*/React.createElement("video", {
       src: panel.base_dir + '/' + t.file,
-      autoPlay: true,
       muted: true,
       playsInline: true,
-      loop: true,
       preload: "auto",
-      ref: function (el) {
-        if (!el) return;
-        if (panel.playbackRate) el.playbackRate = panel.playbackRate;
-        var p = el.play();
-        if (p && p.catch) p.catch(function () {});
-      },
       style: {
         width: '100%',
         height: '100%',
