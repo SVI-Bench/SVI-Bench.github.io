@@ -3204,7 +3204,7 @@ function ScenePanel({
   }, task.bestModel)), /*#__PURE__*/React.createElement(CliffBroadcastViewport, {
     task: task,
     t: t
-  }), (TASK_MEDIA[task.id] && !TASK_MEDIA[task.id].includes('placeholder') && TASK_TEXT[task.id]) ? /*#__PURE__*/React.createElement("div", {
+  }), (TASK_MEDIA[task.id] && !TASK_MEDIA[task.id].includes('placeholder') && TASK_TEXT[task.id] && task.id !== 'T2' && task.id !== 'T4' && task.id !== 'T5') ? /*#__PURE__*/React.createElement("div", {
     style: {
       marginTop: 14,
       display: 'flex',
@@ -6193,9 +6193,13 @@ function PlaceholderCard(_ref3) {
       style: { fontFamily: '"IBM Plex Mono", monospace', fontSize: 10.5, letterSpacing: '0.14em', textTransform: 'uppercase', color: c.base, fontWeight: 600 }
     }, failure.taskId), /*#__PURE__*/React.createElement("span", {
       style: { fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 14, fontWeight: 500, color: '#fafafa' }
-    }, "Same game, same model \u2014 confidence stays high, answer suddenly flips")), /*#__PURE__*/React.createElement("span", {
-      style: { fontFamily: '"IBM Plex Mono", monospace', fontSize: 10.5, letterSpacing: '0.08em', color: '#d4d4d8' }
-    }, failure.model)),
+    }, "Same game, same model \u2014 confidence stays high, answer suddenly flips"))),
+    // Question context
+    /*#__PURE__*/React.createElement("div", {
+      style: { padding: '10px 16px', borderBottom: '1px solid #1c1c1f' }
+    }, /*#__PURE__*/React.createElement("span", {
+      style: { fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 12.5, color: '#d4d4d8' }
+    }, "Q: Who wins? Model is >98\u0025 confident for 3 segments, then flips at 99.96\u0025 to the correct answer on the last segment.")),
     // 4 frames
     /*#__PURE__*/React.createElement("div", {
       style: { display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 0 }
@@ -6247,9 +6251,7 @@ function PlaceholderCard(_ref3) {
     /*#__PURE__*/React.createElement("div", {
       style: { padding: '12px 16px', borderTop: '1px solid #1c1c1f', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }
     }, /*#__PURE__*/React.createElement("span", {
-      style: { fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 12.5, color: '#d4d4d8' }
-    }, "Q: Who wins? Model is >98% confident for 3 segments, then flips at 99.96% to the correct answer on the last segment."), /*#__PURE__*/React.createElement("span", {
-      style: { fontFamily: '"IBM Plex Mono", monospace', fontSize: 11, color: '#22c55e', letterSpacing: '0.1em', textTransform: 'uppercase', fontWeight: 600, whiteSpace: 'nowrap', marginLeft: 16 }
+      style: { fontFamily: '"IBM Plex Mono", monospace', fontSize: 11, color: '#22c55e', letterSpacing: '0.1em', textTransform: 'uppercase', fontWeight: 600, whiteSpace: 'nowrap' }
     }, "\u2713 GT: Los Angeles Lakers")));
   }
   // Custom saliency checklist card for T6
@@ -6360,7 +6362,7 @@ function PlaceholderCard(_ref3) {
       borderTop: '1px solid #1c1c1f',
       paddingTop: 8
     }
-  }, failure.model)));
+  }, failure.taskId !== 'T1' && failure.taskId !== 'T2' && failure.taskId !== 'T4' && failure.taskId !== 'T5' ? failure.model : null)));
 }
 var T9_ARCHIVE_COLORS = { search_documents: '#22D3EE', document_qa: '#FB7185', search_videos: '#FACC15', video_qa: '#818CF8', video_qa_oracle: '#818CF8' };
 function T9ArchiveModal({ cardId, onClose }) {
