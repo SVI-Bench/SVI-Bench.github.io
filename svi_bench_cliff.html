@@ -235,10 +235,10 @@
       );
     }
 
-    function T1Captions({ pillar }) {
+    function T1Overlay({ pillar }) {
       const c = PILLARS[pillar];
       return (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 6, padding: '10px 16px 6px' }}>
+        <div style={{ position: 'absolute', left: 16, right: 16, bottom: 38, display: 'flex', flexDirection: 'column', gap: 6 }}>
           <CaptionRow label="GT" color={c.base} text="Point guard uses high ball-screen, drives middle, kicks to rolling big for a finish at the rim." />
           <CaptionRow label="MODEL" color="#C0392B" dim
             text={<span>Player #<s style={{textDecorationColor:'#C0392B'}}>4</s> dribbles, passes to #<s style={{textDecorationColor:'#C0392B'}}>23</s>, who shoots a layup.</span>} />
@@ -449,10 +449,10 @@
     // GPT-5.2 trajectory data (Q34 — Heat anomaly question).
 
     function TaskOverlay({ taskId, pillar }) {
-      // T1, T3 and T9 are handled directly in BroadcastViewport (T1 splits the
-      // viewport into a schematic + captions stack; T3/T9 replace the schematic
-      // entirely with a real-data panel).
+      // T3 and T9 are handled directly in BroadcastViewport (they replace the
+      // schematic+overlay combo, not added on top of it).
       switch (taskId) {
+        case 'T1': return <T1Overlay pillar={pillar} />;
         case 'T2': return <T2Overlay pillar={pillar} />;
         case 'T4': return <T4Overlay pillar={pillar} />;
         case 'T5': return <T5Overlay pillar={pillar} />;
@@ -468,7 +468,6 @@
       const c = PILLARS[task.pillar];
       const totalSeconds = Math.floor(t * 10);
       const tc = `00:${String(totalSeconds).padStart(2, '0')}`;
-      const isT1 = task.id === 'T1';
       const isT3 = task.id === 'T3';
       const isT9 = task.id === 'T9';
       const isPanel = isT3 || isT9;
@@ -501,29 +500,11 @@
             </div>
           </div>
 
-          {/* Real-data panel (T3 / T9), T1 split layout, or schematic + overlay */}
+          {/* Real-data panel (T3 / T9) OR schematic + overlay */}
           {isT3 ? (
             <T3Panel pillar={task.pillar} active={true} />
           ) : isT9 ? (
             <T9Panel pillar={task.pillar} active={true} />
-          ) : isT1 ? (
-            <div style={{
-              position: 'absolute', top: 28, left: 0, right: 0, bottom: 32,
-              display: 'flex', flexDirection: 'column',
-            }}>
-              <div style={{ flex: 1, minHeight: 0, position: 'relative' }}>
-                <HalfCourt>
-                  <PlayLoop t={t} pillarColor={c.base} glow={c.glow} />
-                </HalfCourt>
-              </div>
-              <div style={{
-                flex: 'none',
-                borderTop: '1px solid #1c1c1f',
-                background: 'rgba(10,10,12,0.85)',
-              }}>
-                <T1Captions pillar={task.pillar} />
-              </div>
-            </div>
           ) : (
             <>
               <div style={{ position: 'absolute', inset: 0 }}>
