@@ -256,6 +256,7 @@ const CLIPS = [{
   title: 'Structured Play Description',
   context: 'Soccer · Seattle vs UIW',
   video: 'assets/T1/t1_ask_clip.mp4',
+  thumb: 'assets/T1/t1_ask_thumb.jpg',
   question: 'Describe what happens in this clip.',
   models: [{
     name: 'GPT-5.2',
@@ -313,6 +314,7 @@ const CLIPS = [{
   title: 'Fine-Grained Action QA',
   context: 'Basketball \xB7 FIBA Champions League',
   video: 'assets/T2/t2_ask_clip.mp4',
+  thumb: 'assets/T2/t2_ask_thumb.jpg',
   question: "Outline the order of actions performed in this video clip.\n(A) 2pt Missed, Rebound, Steal\n(B) Rebound, 2pt Made, Assisting\n(C) 3pt Missed, Rebound, Foul\n(D) 3pt Missed, Rebound, Assisting\n(E) Pick'n'Roll, 3pt Made, Assisting",
   models: [{
     name: 'GPT-5.2',
@@ -340,6 +342,7 @@ const CLIPS = [{
   title: 'Strategic Reasoning QA',
   context: 'Basketball \xB7 SIU inbounds',
   video: 'assets/T4/t4_ask_clip.mp4',
+  thumb: 'assets/T4/t4_ask_thumb.jpg',
   question: 'With almost no time on the shot clock on an inbounds play, what created the scoring opportunity and why did it work?',
   models: [{
     name: 'GPT-5.2',
@@ -376,6 +379,7 @@ const CLIPS = [{
   title: 'Outcome Forecasting',
   context: 'Soccer \xB7 2nd half',
   video: 'assets/T5/t5_ask_clip.mp4',
+  thumb: 'assets/T5/t5_ask_thumb.jpg',
   question: 'Which player will be the first to make one goal by the end of the match?',
   models: [{
     name: 'GPT-5.2',
@@ -403,6 +407,7 @@ const CLIPS = [{
   title: 'Long-Form Narrative Synthesis',
   context: 'Basketball \xB7 SAC vs IND',
   video: 'assets/T6/t6_ask_clip.mp4',
+  thumb: 'assets/T6/t6_ask_thumb.jpg',
   question: 'Write a comprehensive 500-word game report covering key events, momentum shifts, and tactical patterns.',
   models: [{
     name: 'Qwen3-VL',
@@ -455,6 +460,7 @@ const CLIPS = [{
   teaser: 'free-kick shot',
   title: 'Motion-Conditioned Action Generation',
   context: 'Soccer · free-kick',
+  thumb: 'assets/T7/t7_ask_thumb.jpg',
   question: 'Reconstruct the play from per-player bounding-box motion trajectories on a player-removed background.',
   simBaseDir: 'assets/qualitative_vis_soccer_task1/shot_2434650876',
   models: []
@@ -465,6 +471,7 @@ const CLIPS = [{
   teaser: 'missed shot',
   title: 'Goal-Conditioned Action Generation',
   context: 'NBA · Q4 01:32',
+  thumb: 'assets/T8/t8_ask_thumb.jpg',
   question: 'Simulate Player #92 attempting a contested floater off a pick-and-roll set by Player #8, resulting in a miss.',
   simBaseDir: 'assets/qualitative_vis_basketball_task2/1109_Edgaras_Ulanovas_2-_262040613',
   models: [{
@@ -492,6 +499,7 @@ const CLIPS = [{
   teaser: 'tool errors',
   title: 'Cross-Corpus Agentic Reasoning',
   context: 'Finals · Games 3-5',
+  thumb: 'assets/T9/t9_ask_thumb.jpg',
   question: "Did Team A's pick-and-roll defense change between games 3 and 5, and what triggered the change?",
   models: [{
     name: 'GPT-5.2',
@@ -3091,17 +3099,25 @@ function CliffAnnotation({
   const xT9 = (left + bandWidth * 8.5) * 10;
   const yT2 = 540 - 74 / 100 * 480;
   const yT9 = 540 - 6 / 100 * 480;
-  return /*#__PURE__*/React.createElement("svg", {
+  const midXPct = (xT2 + xT9) / 2 / 1000 * 100;
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      inset: 0,
+      pointerEvents: 'none',
+      opacity: visible ? 1 : 0,
+      transition: 'opacity 600ms ease'
+    }
+  },
+  // Dashed line + endpoint circles stay in SVG (geometry stretches fine)
+  /*#__PURE__*/React.createElement("svg", {
     viewBox: "0 0 1000 600",
     preserveAspectRatio: "none",
     style: {
       position: 'absolute',
       inset: 0,
       width: '100%',
-      height: '100%',
-      pointerEvents: 'none',
-      opacity: visible ? 1 : 0,
-      transition: 'opacity 600ms ease'
+      height: '100%'
     }
   }, /*#__PURE__*/React.createElement("line", {
     x1: xT2,
@@ -3121,21 +3137,32 @@ function CliffAnnotation({
     cy: yT9 - 8,
     r: 3,
     fill: "#fafafa"
-  }), /*#__PURE__*/React.createElement("text", {
-    x: (xT2 + xT9) / 2,
-    y: 275,
-    fontFamily: "\"IBM Plex Mono\", monospace",
-    fontSize: 14,
-    fill: "#fafafa",
-    textAnchor: "middle",
-    letterSpacing: "0.05em"
-  }, "\u221269 pts"), /*#__PURE__*/React.createElement("text", {
-    x: (xT2 + xT9) / 2,
-    y: 295,
-    fontFamily: "\"IBM Plex Sans\", sans-serif",
-    fontSize: 11,
-    fill: "#3f3f46",
-    textAnchor: "middle"
+  })),
+  // Text labels as HTML (won't stretch with SVG)
+  /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      left: midXPct + '%',
+      top: (275 / 600 * 100) + '%',
+      transform: 'translate(-50%, -100%)',
+      fontFamily: '"IBM Plex Mono", monospace',
+      fontSize: 14,
+      color: '#fafafa',
+      letterSpacing: '0.05em',
+      whiteSpace: 'nowrap'
+    }
+  }, "\u221269 pts"),
+  /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      left: midXPct + '%',
+      top: (295 / 600 * 100) + '%',
+      transform: 'translate(-50%, -100%)',
+      fontFamily: '"IBM Plex Sans", sans-serif',
+      fontSize: 11,
+      color: '#3f3f46',
+      whiteSpace: 'nowrap'
+    }
   }, "same data \xB7 same models"));
 }
 function ProgressDots({
@@ -3651,7 +3678,11 @@ function ClipCard({
       overflow: 'hidden',
       opacity: isActive ? 1 : 0.7
     }
-  }, /*#__PURE__*/React.createElement(StaticCourtThumb, {
+  }, clip.thumb ? /*#__PURE__*/React.createElement("img", {
+    src: clip.thumb,
+    alt: clip.teaser,
+    style: { width: '100%', height: '100%', objectFit: 'cover', display: 'block' }
+  }) : /*#__PURE__*/React.createElement(StaticCourtThumb, {
     pillarColor: c.base
   })), /*#__PURE__*/React.createElement("div", {
     style: {
@@ -5690,7 +5721,7 @@ function T3ArchiveModal(_ref2) {
         fontFamily: '"IBM Plex Sans", sans-serif',
         fontSize: 13.5,
         lineHeight: 1.45,
-        color: t.is_gt ? '#fafafa' : '#1c1c1f'
+        color: t.is_gt ? '#fafafa' : '#e4e4e7'
       }
     }, t.diff_substring ? renderCaptionWithDiff(t.caption, t.diff_substring, '#ef6f5e') : t.caption));
   }))));
