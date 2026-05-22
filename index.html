@@ -4603,8 +4603,8 @@ const T8_ARCHIVE = {
       base_dir: 'assets/qualitative_vis_basketball_task2/1881_Marcus_Morris_Rebound_247840436',
       playbackRate: 0.5,
       thumbs: [
-        { kind: 'gt',       label: 'Ground truth',           file: 'groundtruth_gt_bbox.mp4' },
-        { kind: 'gen_bbox', label: 'Generated',              file: 'generated_gt_bbox.mp4' }
+        { kind: 'gt',  label: 'Ground truth', file: 'groundtruth_gt_bbox.mp4' },
+        { kind: 'gen', label: 'Generated',    file: 'generated_gt_bbox.mp4' }
       ]
     },
     {
@@ -4615,8 +4615,8 @@ const T8_ARCHIVE = {
       base_dir: 'assets/qualitative_vis_basketball_task2/8488_Panagiotis_Kalaitzakis_3-_279719388',
       playbackRate: 0.5,
       thumbs: [
-        { kind: 'gt',       label: 'Ground truth',           file: 'groundtruth_gt_bbox.mp4' },
-        { kind: 'gen_bbox', label: 'Generated',              file: 'generated_gt_bbox.mp4' }
+        { kind: 'gt',  label: 'Ground truth', file: 'groundtruth_gt_bbox.mp4' },
+        { kind: 'gen', label: 'Generated',    file: 'generated_gt_bbox.mp4' }
       ]
     }
   ]
@@ -4633,24 +4633,13 @@ function simDotColor(kind, pillarBase) {
 function SimArchiveTile({ panel, pillar, taskId, onOpen }) {
   var c = PILLARS[pillar];
   return /*#__PURE__*/React.createElement("div", {
-    onClick: onOpen,
     style: {
       gridColumn: 'span 2',
-      cursor: 'pointer',
       background: '#0c0d10',
       color: '#fafafa',
       border: '1px solid #27272a',
       borderRadius: 4,
-      overflow: 'hidden',
-      transition: 'border-color 150ms, transform 150ms'
-    },
-    onMouseEnter: function onMouseEnter(e) {
-      e.currentTarget.style.borderColor = '#3f3f46';
-      e.currentTarget.style.transform = 'translateY(-2px)';
-    },
-    onMouseLeave: function onMouseLeave(e) {
-      e.currentTarget.style.borderColor = '#27272a';
-      e.currentTarget.style.transform = 'translateY(0)';
+      overflow: 'hidden'
     }
   },
   // Header
@@ -4708,15 +4697,30 @@ function SimArchiveTile({ panel, pillar, taskId, onOpen }) {
     }), /*#__PURE__*/React.createElement("div", {
       style: {
         position: 'absolute',
-        top: 4,
-        left: 4,
+        top: 6,
+        left: 6,
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: 6,
+        padding: '3px 8px 3px 6px',
+        borderRadius: 999,
+        background: 'rgba(10,10,12,0.78)',
+        fontFamily: '"IBM Plex Mono", monospace',
+        fontSize: 10,
+        letterSpacing: '0.1em',
+        textTransform: 'uppercase',
+        color: '#fafafa',
+        backdropFilter: 'blur(4px)'
+      }
+    }, /*#__PURE__*/React.createElement("span", {
+      style: {
+        display: 'inline-block',
         width: 7,
         height: 7,
         borderRadius: 4,
-        background: simDotColor(t.kind, c.base),
-        boxShadow: '0 0 4px rgba(0,0,0,0.7)'
+        background: simDotColor(t.kind, c.base)
       }
-    }));
+    }), t.kind === 'gt' ? 'GT' : t.kind === 'gen' ? 'Generated' : t.label));
   })),
   // Caption
   /*#__PURE__*/React.createElement("div", {
