@@ -2207,9 +2207,18 @@ function T7Panel({ pillar }) {
     zIndex: 2
   };
   const videoBox = {
-    position: 'relative',
     flex: 1,
     minHeight: 0,
+    minWidth: 0,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  };
+  const videoFrame = {
+    position: 'relative',
+    height: '100%',
+    aspectRatio: '832 / 480',
+    maxWidth: '100%',
     background: '#000',
     borderRadius: 2,
     overflow: 'hidden',
@@ -2218,7 +2227,7 @@ function T7Panel({ pillar }) {
   const videoEl = {
     width: '100%',
     height: '100%',
-    objectFit: 'contain',
+    objectFit: 'cover',
     display: 'block'
   };
   const [lightboxSrc, setLightboxSrc] = useState(null);
@@ -2311,13 +2320,17 @@ function T7Panel({ pillar }) {
   }, "Player-removed background + Per-Player Bounding Box Motion trajectories"),
   // Top: input (inpainted + GT bbox), chip labeled GT
   /*#__PURE__*/React.createElement("div", { style: videoBox },
-    /*#__PURE__*/React.createElement("video", videoProps('inpainted_gt_bbox.mp4', v0Ref)),
-    /*#__PURE__*/React.createElement("span", { style: { ...labelChip, color: c.base } }, "GT")
+    /*#__PURE__*/React.createElement("div", { style: videoFrame },
+      /*#__PURE__*/React.createElement("video", videoProps('inpainted_gt_bbox.mp4', v0Ref)),
+      /*#__PURE__*/React.createElement("span", { style: { ...labelChip, color: c.base } }, "GT")
+    )
   ),
   // Bottom: generated model output
   /*#__PURE__*/React.createElement("div", { style: videoBox },
-    /*#__PURE__*/React.createElement("video", videoProps('generated_gt_bbox.mp4', v1Ref)),
-    /*#__PURE__*/React.createElement("span", { style: { ...labelChip, color: c.base } }, "MODEL")
+    /*#__PURE__*/React.createElement("div", { style: videoFrame },
+      /*#__PURE__*/React.createElement("video", videoProps('generated_gt_bbox.mp4', v1Ref)),
+      /*#__PURE__*/React.createElement("span", { style: { ...labelChip, color: c.base } }, "MODEL")
+    )
   ), lightboxSrc && /*#__PURE__*/React.createElement(VideoLightbox, {
     src: lightboxSrc,
     onClose: () => setLightboxSrc(null)
@@ -2341,9 +2354,18 @@ function T8Panel({ pillar }) {
     zIndex: 2
   };
   const videoBox = {
-    position: 'relative',
     flex: 1,
     minHeight: 0,
+    minWidth: 0,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  };
+  const videoFrame = {
+    position: 'relative',
+    height: '100%',
+    aspectRatio: '832 / 480',
+    maxWidth: '100%',
     background: '#000',
     borderRadius: 2,
     overflow: 'hidden',
@@ -2352,7 +2374,7 @@ function T8Panel({ pillar }) {
   const videoEl = {
     width: '100%',
     height: '100%',
-    objectFit: 'contain',
+    objectFit: 'cover',
     display: 'block'
   };
   const [lightboxSrc, setLightboxSrc] = useState(null);
@@ -2437,12 +2459,16 @@ function T8Panel({ pillar }) {
     style: { flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 6 }
   },
     /*#__PURE__*/React.createElement("div", { style: videoBox },
-      /*#__PURE__*/React.createElement("video", videoProps('groundtruth.mp4', v0Ref)),
-      /*#__PURE__*/React.createElement("span", { style: labelChip }, "GT")
+      /*#__PURE__*/React.createElement("div", { style: videoFrame },
+        /*#__PURE__*/React.createElement("video", videoProps('groundtruth.mp4', v0Ref)),
+        /*#__PURE__*/React.createElement("span", { style: labelChip }, "GT")
+      )
     ),
     /*#__PURE__*/React.createElement("div", { style: videoBox },
-      /*#__PURE__*/React.createElement("video", videoProps('generated_gt_bbox.mp4', v1Ref)),
-      /*#__PURE__*/React.createElement("span", { style: { ...labelChip, color: c.base } }, "MODEL")
+      /*#__PURE__*/React.createElement("div", { style: videoFrame },
+        /*#__PURE__*/React.createElement("video", videoProps('generated_gt_bbox.mp4', v1Ref)),
+        /*#__PURE__*/React.createElement("span", { style: { ...labelChip, color: c.base } }, "MODEL")
+      )
     )
   ),
   // Right: side panel with goal + small background preview
