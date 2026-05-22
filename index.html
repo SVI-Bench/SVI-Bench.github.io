@@ -3855,17 +3855,27 @@ function HeroSection() {
       maxWidth: 1400,
       whiteSpace: 'nowrap'
     }
-  }, "Models can see the play.", /*#__PURE__*/React.createElement("br", null), "They can't understand it."), /*#__PURE__*/React.createElement("p", {
+  }, "Models can see the play.", /*#__PURE__*/React.createElement("br", null), "They can't understand it."), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: 24,
+      maxWidth: 1040,
+      marginBottom: 16
+    }
+  }, /*#__PURE__*/React.createElement("img", {
+    src: 'assets/svi_bench_logo.svg',
+    alt: 'SVI-BENCH',
+    style: { height: 90, flexShrink: 0 }
+  }), /*#__PURE__*/React.createElement("p", {
     style: {
       fontFamily: '"IBM Plex Sans", sans-serif',
       fontSize: 19,
       lineHeight: 1.5,
       color: '#d4d4d8',
-      maxWidth: 1040,
-      margin: 0,
-      marginBottom: 16
+      margin: 0
     }
-  }, "SVI-Bench is a unified benchmark for evaluating the full cognitive stack of video intelligence \u2014 perception, reasoning, simulation, and agency. Built on 35,000 hours of broadcast basketball, soccer, and hockey footage. Models handle perception well. Reasoning, simulation, and agency are where current systems break down."), /*#__PURE__*/React.createElement("div", {
+  }, "SVI-Bench is a unified benchmark for evaluating the full cognitive stack of video intelligence \u2014 perception, reasoning, simulation, and agency. Built on 35,000 hours of broadcast basketball, soccer, and hockey footage. Models handle perception well. Reasoning, simulation, and agency are where current systems break down.")), /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
       gap: 14,
@@ -6021,15 +6031,14 @@ function Header() {
   }, /*#__PURE__*/React.createElement("a", {
     href: "#hero",
     style: {
+      fontFamily: '"IBM Plex Mono", monospace',
+      fontSize: 13,
+      letterSpacing: '0.05em',
+      fontWeight: 600,
       textDecoration: 'none',
-      display: 'flex',
-      alignItems: 'center'
+      color: '#fafafa'
     }
-  }, /*#__PURE__*/React.createElement("img", {
-    src: 'assets/svi_bench_logo.svg',
-    alt: 'SVI-BENCH',
-    style: { height: 36 }
-  })), /*#__PURE__*/React.createElement("nav", {
+  }, "SVI-BENCH"), /*#__PURE__*/React.createElement("nav", {
     style: {
       display: 'flex',
       gap: 28,
