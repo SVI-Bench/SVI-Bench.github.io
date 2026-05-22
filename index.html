@@ -4571,11 +4571,10 @@ const T7_ARCHIVE = {
       axis_label: 'soccer · free kick',
       query: 'Trajectories are mostly followed, but fine identity drifts — jersey colors shift and player bodies blur.',
       base_dir: 'assets/qualitative_vis_soccer_task1/offside_1361922043',
+      playbackRate: 0.5,
       thumbs: [
-        { kind: 'input',    label: 'Per-player bbox trajectories', file: 'inpainted_gt_bbox.mp4' },
-        { kind: 'gt',       label: 'Ground truth',                 file: 'original.mp4' },
-        { kind: 'gen_bbox', label: 'Generated · GT bbox overlay',  file: 'generated_gt_bbox.mp4' },
-        { kind: 'gen',      label: 'Generated',                    file: 'generated.mp4' }
+        { kind: 'gt',  label: 'Ground truth', file: 'original.mp4'  },
+        { kind: 'gen', label: 'Generated',    file: 'generated.mp4' }
       ]
     },
     {
@@ -4584,11 +4583,10 @@ const T7_ARCHIVE = {
       axis_label: 'basketball · rebound contest',
       query: 'When multiple players overlap during the rebound contest, jersey numbers swap and bodies merge into one another.',
       base_dir: 'assets/qualitative_vis_basketball_task1/328676658_rebound_840.299',
+      playbackRate: 0.5,
       thumbs: [
-        { kind: 'input',    label: 'Per-player bbox trajectories', file: 'inpainted_gt_bbox.mp4' },
-        { kind: 'gt',       label: 'Ground truth',                 file: 'original.mp4' },
-        { kind: 'gen_bbox', label: 'Generated · GT bbox overlay',  file: 'generated_gt_bbox.mp4' },
-        { kind: 'gen',      label: 'Generated',                    file: 'generated.mp4' }
+        { kind: 'gt',  label: 'Ground truth', file: 'original.mp4'  },
+        { kind: 'gen', label: 'Generated',    file: 'generated.mp4' }
       ]
     }
   ]
@@ -4603,11 +4601,10 @@ const T8_ARCHIVE = {
       axis_label: 'goal: secure a rebound',
       query: 'Goal: simulate Player #8 securing a rebound. The generated player can\'t even reach the spatial target — let alone perform the desired action.',
       base_dir: 'assets/qualitative_vis_basketball_task2/1881_Marcus_Morris_Rebound_247840436',
+      playbackRate: 0.5,
       thumbs: [
-        { kind: 'input',    label: 'Input', desc: 'Player-Removed Background Video w/ a Spatial Target',  file: 'background_gt_bbox.mp4' },
-        { kind: 'gt',       label: 'Ground truth',                 file: 'groundtruth.mp4' },
-        { kind: 'gen_bbox', label: 'Generated + start/end bbox',  file: 'generated_gt_bbox.mp4' },
-        { kind: 'gen',      label: 'Generated',                    file: 'generated.mp4' }
+        { kind: 'gt',       label: 'Ground truth',           file: 'groundtruth_gt_bbox.mp4' },
+        { kind: 'gen_bbox', label: 'Generated',              file: 'generated_gt_bbox.mp4' }
       ]
     },
     {
@@ -4616,11 +4613,10 @@ const T8_ARCHIVE = {
       axis_label: 'goal: missed contested 3-pt off a screen',
       query: 'Goal: simulate Player #0 missing a contested corner three-pointer off a screen set by Player #6, defended by Player #1. Some players reach their spatial targets, others don\'t — either way, the play never materializes.',
       base_dir: 'assets/qualitative_vis_basketball_task2/8488_Panagiotis_Kalaitzakis_3-_279719388',
+      playbackRate: 0.5,
       thumbs: [
-        { kind: 'input',    label: 'Input', desc: 'Player-Removed Background Video w/ a Spatial Target',  file: 'background_gt_bbox.mp4' },
-        { kind: 'gt',       label: 'Ground truth',                 file: 'groundtruth.mp4' },
-        { kind: 'gen_bbox', label: 'Generated + start/end bbox',   file: 'generated_gt_bbox.mp4' },
-        { kind: 'gen',      label: 'Generated',                    file: 'generated.mp4' }
+        { kind: 'gt',       label: 'Ground truth',           file: 'groundtruth_gt_bbox.mp4' },
+        { kind: 'gen_bbox', label: 'Generated',              file: 'generated_gt_bbox.mp4' }
       ]
     }
   ]
@@ -4697,6 +4693,12 @@ function SimArchiveTile({ panel, pillar, taskId, onOpen }) {
       playsInline: true,
       loop: true,
       preload: "auto",
+      ref: function (el) {
+        if (!el) return;
+        if (panel.playbackRate) el.playbackRate = panel.playbackRate;
+        var p = el.play();
+        if (p && p.catch) p.catch(function () {});
+      },
       style: {
         width: '100%',
         height: '100%',
@@ -4882,21 +4884,25 @@ function SimArchiveModal({ panel, pillar, taskId, onClose }) {
         boxShadow: "0 0 16px " + glowAlpha
       }
     }, /*#__PURE__*/React.createElement("video", {
+      src: panel.base_dir + '/' + t.file,
       autoPlay: true,
       loop: true,
       muted: true,
       playsInline: true,
       preload: "auto",
+      ref: function (el) {
+        if (!el) return;
+        if (panel.playbackRate) el.playbackRate = panel.playbackRate;
+        var p = el.play();
+        if (p && p.catch) p.catch(function () {});
+      },
       style: {
         width: '100%',
         height: '100%',
         objectFit: 'cover',
         display: 'block'
       }
-    }, /*#__PURE__*/React.createElement("source", {
-      src: panel.base_dir + '/' + t.file,
-      type: "video/mp4"
-    })), /*#__PURE__*/React.createElement("div", {
+    }), /*#__PURE__*/React.createElement("div", {
       style: {
         position: 'absolute',
         top: 8,
