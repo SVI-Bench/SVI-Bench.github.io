@@ -147,7 +147,7 @@ const TASKS = [{
   metric: '7.3%',
   metricLabel: 'saliency coverage',
   bestModel: 'GPT-5.2',
-  blurb: 'Write a narrative report on a full game. Facts are mostly right (73%). Almost none of the salient events appear.'
+  blurb: 'Write a narrative report on a full game. Facts are mostly right, but almost none of the salient events appear in the report.'
 }, {
   id: 'T7',
   name: 'Motion-Conditioned Generation',
@@ -310,7 +310,7 @@ const CLIPS = [{
   id: 'c2',
   taskId: 'T2',
   pillar: 'Perception',
-  teaser: 'made \u2192 missed',
+  teaser: 'action misidentification',
   title: 'Fine-Grained Action QA',
   context: 'Basketball \xB7 FIBA Champions League',
   video: 'assets/T2/t2_ask_clip.mp4',
@@ -338,7 +338,7 @@ const CLIPS = [{
   id: 'c3',
   taskId: 'T4',
   pillar: 'Reasoning',
-  teaser: 'trick play',
+  teaser: 'fabricated answer',
   title: 'Strategic Reasoning QA',
   context: 'Basketball \xB7 SIU inbounds',
   video: 'assets/T4/t4_ask_clip.mp4',
@@ -403,7 +403,7 @@ const CLIPS = [{
   id: 'c5',
   taskId: 'T6',
   pillar: 'Reasoning',
-  teaser: 'missed events',
+  teaser: 'missed salient events',
   title: 'Long-Form Narrative Synthesis',
   context: 'Basketball \xB7 SAC vs IND',
   video: 'assets/T6/t6_ask_clip.mp4',
@@ -559,7 +559,7 @@ const FAILURES = [{
   sport: 'Soccer',
   video: 'assets/T1/t1_failure_04.mp4',
   mode: 'temporal order reversed',
-  excerpt: 'GT: Saliba \u2192 \u00D8degaard carries forward \u2192 Martinelli. Model: Gabriel \u2192 Martinelli \u2192 Partey \u2192 \u00D8degaard — the player sequence is incorrect.'
+  excerpt: 'GT: Saliba \u2192 \u00D8degaard carries forward \u2192 Martinelli. Model: Gabriel \u2192 Martinelli \u2192 Partey \u2192 \u00D8degaard. The model identifies most of the player, but the sequence is incorrect.'
 }, {
   id: 'f04',
   taskId: 'T2',
@@ -568,7 +568,7 @@ const FAILURES = [{
   sport: 'Basketball',
   video: 'assets/T2/t2_failure_01.mp4',
   mode: 'Made Shot identified as Missed',
-  excerpt: 'GT: 3 PT Made. Model: 3 PT Missed. The shot goes in, but the model says it missed \u2014 can see the shot, can\'t see the outcome.'
+  excerpt: 'GT: 3 PT Made. Model: 3 PT Missed. The shot goes in, but the model says it missed. The model identifies the shot, but fails to see the outcome.'
 }, {
   id: 'f04b',
   taskId: 'T2',
@@ -595,7 +595,7 @@ const FAILURES = [{
   sport: 'Hockey',
   video: 'assets/T2/t2_failure_04.mp4',
   mode: 'charging called moving the goal',
-  excerpt: 'Q: What violation is committed? GT: Charging (skating into opponent). Model: Moving the goal \u2014 confuses a body-contact penalty with an equipment violation.'
+  excerpt: 'Q: What violation is committed? GT: Charging (skating into opponent). Model: Moving the goal. The model confuses a body-contact penalty with an equipment violation.'
 }, {
   id: 'f05',
   taskId: 'T3',
@@ -620,8 +620,8 @@ const FAILURES = [{
   sport: 'Basketball',
   video: 'assets/T4/t4_failure_01.mp4',
   wide: true,
-  mode: 'missed the backboard bounce',
-  excerpt: "Q: What was unusual about Cody Martin's made three? GT: Shot hit the top of the backboard and went in. GPT: \"His first made three of the game.\" All models score 0."
+  mode: 'visual details were missed',
+  excerpt: "Q: What was unusual about Cody Martin's made three? GT: Shot hit the top of the backboard and went in. GPT: \"His first made three of the game.\" The model fails to identify the unusual visual feature of the shot."
 }, {
   id: 'f08',
   taskId: 'T4',
@@ -631,7 +631,7 @@ const FAILURES = [{
   video: 'assets/T4/t4_failure_02.mp4',
   wide: true,
   mode: 'plausible but wrong',
-  excerpt: "Q: What drew Utah's defense on the Warriors' transition three? GT: Poole's sprint pulled defenders, leaving Curry open. GPT flips it: says Curry drew attention and \"the opposite-side shooter\" scored. Sounds right \u2014 isn't."
+  excerpt: "Q: What drew Utah's defense on the Warriors' transition three? GT: Poole's sprint pulled defenders, leaving Curry open. GPT says Curry drew attention that created the opening for his teammate's three. The response sounds plausible, but is incorrect."
 }, {
   id: 'f09',
   taskId: 'T5',
@@ -3577,7 +3577,7 @@ function CliffAnnotation({
       color: '#3f3f46',
       whiteSpace: 'nowrap'
     }
-  }, "same data \xB7 same models"));
+  }, ""));
 }
 function ProgressDots({
   tasks,
@@ -3884,7 +3884,7 @@ function ModelAnswerCard({
       marginBottom: 5,
       textTransform: 'uppercase'
     }
-  }, /*#__PURE__*/React.createElement("span", null, model.name, isStreaming ? ' · streaming' : ''), /*#__PURE__*/React.createElement("span", {
+  }, /*#__PURE__*/React.createElement("span", null, model.name, isStreaming ? ' · ' : ''), /*#__PURE__*/React.createElement("span", {
     style: {
       color: isComplete ? model.wrong ? '#C0392B' : '#a1a1aa' : '#3f3f46'
     }
@@ -6193,13 +6193,13 @@ function PlaceholderCard(_ref3) {
       style: { fontFamily: '"IBM Plex Mono", monospace', fontSize: 10.5, letterSpacing: '0.14em', textTransform: 'uppercase', color: c.base, fontWeight: 600 }
     }, failure.taskId), /*#__PURE__*/React.createElement("span", {
       style: { fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 14, fontWeight: 500, color: '#fafafa' }
-    }, "Same game, same model \u2014 confidence stays high, answer suddenly flips"))),
+    }, "Predicting the same game at different timestamps"))),
     // Question context
     /*#__PURE__*/React.createElement("div", {
       style: { padding: '10px 16px', borderBottom: '1px solid #1c1c1f' }
     }, /*#__PURE__*/React.createElement("span", {
       style: { fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 12.5, color: '#d4d4d8' }
-    }, "Q: Who wins? Model is >98\u0025 confident for 3 segments, then flips at 99.96\u0025 to the correct answer on the last segment.")),
+    }, "Q: Who wins? Model is >98\u0025 confident for 3 segments, then flips at 99.96\u0025 confidence to another answer on the last segment.")),
     // 4 frames
     /*#__PURE__*/React.createElement("div", {
       style: { display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 0 }
