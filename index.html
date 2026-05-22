@@ -288,7 +288,7 @@ const CLIPS = [{
       /*#__PURE__*/React.createElement("s", { style: { textDecorationColor: '#C0392B', color: '#C0392B' } }, "Stanford University"),
       " and the University of the Incarnate Word.")
   }, {
-    name: 'SVI-100K (ft)',
+    name: 'LLaVA-Video-7B (ft)',
     score: '2 / 5',
     wrong: true,
     text: 'L. Thorne-Thomsen, playing as a left attacking midfielder for the Seattle Redhawks, executed a corner kick. C. Miller, positioned as a right center back, engaged in a duel with J. Diaz, who plays as a left defensive midfielder, but lost possession. J. Diaz then attempted a header shot aimed at the outer top right of the goal, but it went off target and out of play. The teams competing are the Seattle Redhawks and the UIW Cardinals.',
@@ -305,7 +305,7 @@ const CLIPS = [{
       " of the goal, but it went off target. The teams competing are the Seattle Redhawks and the UIW Cardinals.")
   }],
   gt: 'V. Velasco of the UIW Cardinals executed a corner while A. Vargas engaged in a duel with A. Acton-Petronotis and lost possession. A. Vargas then attempted a header directed to the outer top left, but it was off target. Seattle Redhawks vs UIW Cardinals.',
-  verdictHeadline: 'All 3 wrong. Gemini calls it Stanford + a free kick. GPT misses the header entirely. SVI-100K gets every player wrong.'
+  verdictHeadline: 'All 3 wrong. Gemini calls it Stanford + a free kick. GPT misses the header entirely. LLaVA-Video-7B (ft) gets every player wrong.'
 }, {
   id: 'c2',
   taskId: 'T2',
@@ -327,13 +327,13 @@ const CLIPS = [{
     wrong: true,
     text: 'D \u2014 3 Pt Missed, Rebound, Assisting. The shooter misses from beyond the arc, the big collects the board, and the outlet pass sets up the next basket.'
   }, {
-    name: 'SVI-100K (ft)',
+    name: 'LLaVA-Video-7B (ft)',
     score: '0 / 1',
     wrong: true,
     text: 'B \u2014 Rebound, 2 Pt Made, Assisting. After grabbing the rebound, the player scores a 2-pointer off the put-back with an assist.'
   }],
   gt: "E \u2014 Pick'n'Roll, 3 Pt Made, Assisting. The pick-and-roll creates an open 3-pointer that goes in, credited as an assist.",
-  verdictHeadline: "All 3 wrong. GPT-5.2 and Gemini say the 3-pointer missed \u2014 it went in. LLaVA-Video misses the pick'n'roll entirely."
+  verdictHeadline: "All 3 wrong. GPT-5.2 and Gemini say the 3-pointer missed but the shot went in. LLaVA-Video misidentifies many actions and puts them in the wrong order."
 }, {
   id: 'c3',
   taskId: 'T4',
@@ -370,7 +370,7 @@ const CLIPS = [{
       ". The ball handler ", /*#__PURE__*/React.createElement("s", { style: { textDecorationColor: '#C0392B', color: '#C0392B' } }, "drove and drew defenders, leading to a kick-out to an open shooter"), ".")
   }],
   gt: "Jones threw the inbounds pass off the inbounder's back, collected it, and scored. The ball was immediately playable without a normal catch-and-shoot, beating the one-second constraint.",
-  verdictHeadline: 'All 3 score 0. Every model invents a conventional play. None sees the trick: pass off the inbounder\u2019s back.'
+  verdictHeadline: 'Every model invents an answer that sounds plausible. None sees the correct action: pass off the inbounder\u2019s back.'
 }, {
   id: 'c4',
   taskId: 'T5',
@@ -398,7 +398,7 @@ const CLIPS = [{
     text: 'A \u2014 The player who makes an interception between 1:34 and 1:44.'
   }],
   gt: 'B \u2014 The player who delivers a cross between 1:58 and 2:08.',
-  verdictHeadline: 'All 3 wrong. GPT and Qwen pick the same wrong player. Gemini picks a different wrong one. None identifies the future goal scorer.'
+  verdictHeadline: 'All 3 models make a wrong guess. None identifies the future goal scorer.'
 }, {
   id: 'c5',
   taskId: 'T6',
@@ -452,7 +452,7 @@ const CLIPS = [{
       " \u2026")
   }],
   gt: "Damian Jones supplied the final word. With 0.2 seconds left, he slipped inside for a decisive tip-in after Trey Lyles\u2019 missed corner three, lifting Sacramento past Indiana 110\u2013109 \u2026 Mitchell scored 25 and owned the fourth quarter \u2026 a 15-footer with 18.7 seconds remaining that set up the final possession \u2026 Sacramento shot 61.5% before halftime \u2026 proved costly against a Kings group that made the final plays.",
-  verdictHeadline: "Qwen says Indiana won. GPT gets the winner right but invents halftime stats. Gemini fabricates player stats. None captures the decisive tip-in."
+  verdictHeadline: "Models produce some factually correct statements. GPT gets the winner right but invents halftime stats. Gemini fabricates player stats. None of the model captures the decisive tip-in that sealed the game."
 }, {
   id: 'c6',
   taskId: 'T7',
@@ -4391,7 +4391,7 @@ function HeroSection() {
       color: '#d4d4d8',
       animation: 'subtlePulse 2.5s ease-in-out infinite'
     }
-  }, "\u2193  scroll to see the cliff"));
+  }, "\u2193  find out more about the dataset"));
 }
 function VideoSection() {
   return /*#__PURE__*/React.createElement("section", {
