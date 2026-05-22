@@ -450,6 +450,16 @@ const CLIPS = [{
   verdictHeadline: "Qwen says Indiana won. GPT gets the winner right but invents halftime stats. Gemini fabricates player stats. None captures the decisive tip-in."
 }, {
   id: 'c6',
+  taskId: 'T7',
+  pillar: 'Simulation',
+  teaser: 'free-kick shot',
+  title: 'Motion-Conditioned Action Generation',
+  context: 'Soccer · free-kick',
+  question: 'Reconstruct the play from per-player bounding-box motion trajectories on a player-removed background.',
+  simBaseDir: 'assets/qualitative_vis_soccer_task1/shot_2434650876',
+  models: []
+}, {
+  id: 'c7',
   taskId: 'T8',
   pillar: 'Simulation',
   teaser: 'missed shot',
@@ -476,7 +486,7 @@ const CLIPS = [{
   gt: 'Inverted ball-screen with shooter; PG rejects screen, draws help, kicks to corner for an open three.',
   verdictHeadline: '1 of 3 reached the goal · all chose the wrong action type'
 }, {
-  id: 'c7',
+  id: 'c8',
   taskId: 'T9',
   pillar: 'Agency',
   teaser: 'tool errors',
@@ -501,16 +511,6 @@ const CLIPS = [{
   }],
   gt: "Yes — Team A switched from drop coverage to aggressive hedging after Game 4, triggered by Team B's pick-and-pop adjustment exploiting drop coverage.",
   verdictHeadline: '0 of 3 fully correct · 4.6% success at scale'
-}, {
-  id: 'c7',
-  taskId: 'T7',
-  pillar: 'Simulation',
-  teaser: 'free-kick shot',
-  title: 'Motion-Conditioned Action Generation',
-  context: 'Soccer · free-kick',
-  question: 'Reconstruct the play from per-player bounding-box motion trajectories on a player-removed background.',
-  simBaseDir: 'assets/qualitative_vis_soccer_task1/shot_2434650876',
-  models: []
 }];
 
 // ============================================================
