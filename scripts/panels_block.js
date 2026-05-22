@@ -755,58 +755,88 @@ function T9LegendAndStats(_ref4) {
     desc: 'asks questions about a video clip',
     count: (tc.video_qa || 0) + (tc.video_qa_oracle || 0)
   }];
-  // Narrative summaries: if `data.tool_summaries` exists (cliff), show a
-  // vertical list with per-tool one-liners instead of the grid+counts.
+  // Narrative summaries: if `data.tool_summaries` exists (cliff), show
+  // legend (compact horizontal) + workflow (numbered vertical) separately.
   var summaries = data.tool_summaries;
-  if (summaries && allRevealed) {
+  if (summaries) {
+    var legendItems = [
+      { abbrev: 'SD', key: 'search_documents', label: 'search documents' },
+      { abbrev: 'DQ', key: 'document_qa', label: 'ask questions about a document' },
+      { abbrev: 'SV', key: 'search_videos', label: 'search video clips' },
+      { abbrev: 'VQ', key: 'video_qa', label: 'ask questions about a video clip' },
+      { abbrev: 'A', key: null, label: 'final answer' }
+    ];
     return /*#__PURE__*/React.createElement("div", {
       style: {
         display: 'flex',
         flexDirection: 'column',
-        gap: 6,
+        gap: 14,
         fontFamily: '"IBM Plex Sans", sans-serif'
       }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: 11,
-        letterSpacing: '0.1em',
-        color: headerCol,
-        textTransform: 'uppercase',
-        fontFamily: '"IBM Plex Mono", monospace',
-        marginBottom: 2
-      }
-    }, allRevealed ? 'Click any tile to inspect' : 'Tracing the agent…'), summaries.map(function (s) {
+    },
+    // Legend row
+    /*#__PURE__*/React.createElement("div", {
+      style: { display: 'flex', flexWrap: 'wrap', gap: '4px 14px', alignItems: 'center' }
+    }, legendItems.map(function (item) {
       return /*#__PURE__*/React.createElement("div", {
-        key: s.abbrev,
-        style: {
-          display: 'flex',
-          alignItems: 'flex-start',
-          gap: 10,
-          fontSize: 12.5,
-          lineHeight: 1.45
-        }
+        key: item.abbrev,
+        style: { display: 'flex', alignItems: 'center', gap: 5, fontSize: 10.5, color: headerCol }
       }, /*#__PURE__*/React.createElement("span", {
         style: {
-          display: 'inline-flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          width: 26,
-          height: 18,
-          borderRadius: 3,
-          background: s.abbrev === '✗' ? toolColor ? '#71717a' : '#C0392B' : _tc[s.key] || '#71717a',
-          color: '#fafafa',
-          fontFamily: '"IBM Plex Mono", monospace',
-          fontSize: 11,
-          fontWeight: 700,
-          flex: '0 0 auto',
-          marginTop: 2
+          display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+          width: 20, height: 15, borderRadius: 2,
+          background: item.key ? (_tc[item.key] || '#71717a') : '#71717a',
+          color: '#fafafa', fontFamily: '"IBM Plex Mono", monospace',
+          fontSize: 8.5, fontWeight: 700
         }
-      }, s.abbrev), /*#__PURE__*/React.createElement("span", {
+      }, item.abbrev), /*#__PURE__*/React.createElement("span", {
+        style: { fontFamily: '"IBM Plex Sans", sans-serif' }
+      }, item.label));
+    })),
+    // Workflow sub-panel (boxed)
+    /*#__PURE__*/React.createElement("div", {
+      style: {
+        background: 'rgba(20,20,26,0.5)',
+        border: '1px solid #27272a',
+        borderRadius: 4,
+        padding: '10px 14px',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 6
+      }
+    },
+      /*#__PURE__*/React.createElement("div", {
         style: {
-          color: itemActive
+          fontSize: 11, letterSpacing: '0.12em', color: headerCol,
+          textTransform: 'uppercase', fontFamily: '"IBM Plex Mono", monospace',
+          fontWeight: 600, marginBottom: 2
         }
-      }, s.text));
-    }));
+      }, 'Overall workflow'),
+      summaries.map(function (s, i) {
+        return /*#__PURE__*/React.createElement("div", {
+          key: i,
+          style: {
+            display: 'flex', alignItems: 'flex-start', gap: 8,
+            fontSize: 12, lineHeight: 1.45
+          }
+        }, /*#__PURE__*/React.createElement("span", {
+          style: {
+            fontFamily: '"IBM Plex Mono", monospace',
+            fontSize: 12, fontWeight: 600, color: headerCol,
+            width: 16, flexShrink: 0, textAlign: 'right'
+          }
+        }, i + 1 + '.'), /*#__PURE__*/React.createElement("span", {
+          style: { color: itemActive }
+        }, s.text));
+      })
+    ),
+    // "Click any tile" hint at the bottom
+    allRevealed && /*#__PURE__*/React.createElement("div", {
+      style: {
+        fontSize: 15, color: headerCol,
+        fontFamily: '"IBM Plex Sans", sans-serif'
+      }
+    }, 'Click any tile to inspect.'));
   }
   return /*#__PURE__*/React.createElement("div", {
     style: {
