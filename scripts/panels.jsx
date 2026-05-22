@@ -356,7 +356,7 @@ function T9Panel({ pillar, active, data, light, tileColors, noClick }) {
             fontSize: 13, color: textSecondary, lineHeight: 1.5,
             marginBottom: 8,
           }}>
-            Using tools for searching through documents, asking questions about them, browsing video clips, and querying what happens in each clip, search through 33K game reports and 1.76M video clips across 7,430 games to answer:
+            Using tools for searching through documents, asking questions about them, browsing video clips, and querying what happens in each clip, search through 33K documents and 1.76M video clips across 7,430 games to answer:
           </div>
         )}
         {light && (

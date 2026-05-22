@@ -52,7 +52,7 @@
       "thought": "Find the Suns\u2013Bulls game where Booker had six threes and Phoenix made twenty.",
       "arguments": {
         "query": "Devin Booker six threes Phoenix 20 made threes Chicago early third quarter trimmed lead from four to one",
-        "doc_type": "espn_report"
+        "doc_type": "report"
       },
       "results": {
         "kind": "documents",
@@ -62,7 +62,7 @@
         "top": [
           {
             "rank": null,
-            "doc_id": "732051_espn_report",
+            "doc_id": "732051_report",
             "teams": [
               "Phoenix Suns",
               "Cleveland Cavaliers"
@@ -72,7 +72,7 @@
           },
           {
             "rank": null,
-            "doc_id": "1003418_espn_report",
+            "doc_id": "1003418_report",
             "teams": [
               "Phoenix Suns",
               "Chicago Bulls"
@@ -82,7 +82,7 @@
           },
           {
             "rank": null,
-            "doc_id": "791802_espn_report",
+            "doc_id": "791802_report",
             "teams": [
               "Phoenix Suns",
               "Los Angeles Clippers"
@@ -100,7 +100,7 @@
       "thought": "Ask the matched reports to confirm both stats.",
       "arguments": {
         "doc_ids": [
-          "1003418_espn_report"
+          "1003418_report"
         ],
         "query": "In this game report, what early third-quarter shot trimmed Chicago's lead from four points down to one, and who made the shot?"
       },
@@ -108,7 +108,7 @@
         "kind": "docqa",
         "results": [
           {
-            "doc_id": "1003418_espn_report",
+            "doc_id": "1003418_report",
             "answer": "Kevin Durant scored seven straight points early in the third quarter to trim Chicago's lead from four points down to one, putting the Suns back on top 70-67.",
             "is_target": false,
             "contains_answer": false

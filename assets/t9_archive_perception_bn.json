@@ -42,7 +42,7 @@
       "thought": "",
       "arguments": {
         "query": "back-to-back road games for the first time this season offside call on Yegor Sharangovich near the end of the first period",
-        "doc_type": "espn_report"
+        "doc_type": "report"
       },
       "results": {
         "kind": "documents",
@@ -52,7 +52,7 @@
         "top": [
           {
             "rank": null,
-            "doc_id": "682226_espn_report",
+            "doc_id": "682226_report",
             "teams": [
               "Calgary Flames",
               "Minnesota Wild"
@@ -62,7 +62,7 @@
           },
           {
             "rank": null,
-            "doc_id": "229098_espn_report",
+            "doc_id": "229098_report",
             "teams": [
               "Tampa Bay Lightning",
               "Chicago Blackhawks"
@@ -72,7 +72,7 @@
           },
           {
             "rank": null,
-            "doc_id": "437522_espn_report",
+            "doc_id": "437522_report",
             "teams": [
               "New York Rangers",
               "New Jersey Devils"
@@ -90,7 +90,7 @@
       "thought": "",
       "arguments": {
         "doc_ids": [
-          "437393_espn_report"
+          "437393_report"
         ],
         "query": "Does this game report mention an offside call on Yegor Sharangovich near the end of the first period? If so, what exactly does it say?"
       },
@@ -98,7 +98,7 @@
         "kind": "docqa",
         "results": [
           {
-            "doc_id": "437393_espn_report",
+            "doc_id": "437393_report",
             "answer": "No, the game report does not mention an offside call on Yegor Sharangovich near the end of the first period. The document only mentions that Sharangovich scored during the third period, specifically: 'Sharangovich tied\u2026",
             "is_target": false,
             "contains_answer": false
@@ -113,7 +113,7 @@
       "thought": "",
       "arguments": {
         "query": "New Jersey won back-to-back road games for the first time this season offside Sharangovich end of the first period",
-        "doc_type": "espn_report",
+        "doc_type": "report",
         "teams": [
           "New Jersey Devils"
         ]
@@ -126,7 +126,7 @@
         "top": [
           {
             "rank": null,
-            "doc_id": "437424_espn_report",
+            "doc_id": "437424_report",
             "teams": [
               "New York Rangers",
               "New Jersey Devils"
@@ -136,7 +136,7 @@
           },
           {
             "rank": null,
-            "doc_id": "576290_espn_report",
+            "doc_id": "576290_report",
             "teams": [
               "New Jersey Devils",
               "Toronto Maple Leafs"
@@ -146,7 +146,7 @@
           },
           {
             "rank": null,
-            "doc_id": "437393_espn_report",
+            "doc_id": "437393_report",
             "teams": [
               "New Jersey Devils",
               "St. Louis Blues"

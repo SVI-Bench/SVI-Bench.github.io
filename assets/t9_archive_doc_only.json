@@ -40,7 +40,7 @@
       "thought": "Turn 1: search_documents",
       "arguments": {
         "query": "Heat more than triple his usual first-quarter points season first quarter",
-        "doc_type": "espn_report"
+        "doc_type": "report"
       },
       "results": {
         "kind": "documents",
@@ -50,7 +50,7 @@
         "top": [
           {
             "rank": 1,
-            "doc_id": "405021_espn_report",
+            "doc_id": "405021_report",
             "teams": [
               "Miami Heat"
             ],
@@ -59,7 +59,7 @@
           },
           {
             "rank": 2,
-            "doc_id": "359740_espn_report",
+            "doc_id": "359740_report",
             "teams": [
               "Los Angeles Lakers",
               "Miami Heat"
@@ -69,7 +69,7 @@
           },
           {
             "rank": 3,
-            "doc_id": "204676_espn_report",
+            "doc_id": "204676_report",
             "teams": [
               "Houston Rockets",
               "Miami Heat"
@@ -84,10 +84,10 @@
       "turn": 2,
       "tool": "search_documents",
       "abbrev": "SD",
-      "thought": "Global Plan:\n- Decompose the task:\n  1) Identify the specific ESPN report that mentions a Miami Heat player who scored m",
+      "thought": "Global Plan:\n- Decompose the task:\n  1) Identify the specific game report that mentions a Miami Heat player who scored m",
       "arguments": {
         "query": "\"more than triple his usual first-quarter points\" Heat",
-        "doc_type": "espn_report"
+        "doc_type": "report"
       },
       "results": {
         "kind": "documents",
@@ -97,7 +97,7 @@
         "top": [
           {
             "rank": 1,
-            "doc_id": "176398_espn_report",
+            "doc_id": "176398_report",
             "teams": [
               "Miami Heat",
               "Chicago Bulls"
@@ -107,7 +107,7 @@
           },
           {
             "rank": 2,
-            "doc_id": "867851_espn_report",
+            "doc_id": "867851_report",
             "teams": [
               "Milwaukee Bucks",
               "Cleveland Cavaliers"
@@ -117,7 +117,7 @@
           },
           {
             "rank": 3,
-            "doc_id": "401111_espn_report",
+            "doc_id": "401111_report",
             "teams": [
               "Miami Heat",
               "Brooklyn Nets"
@@ -132,10 +132,10 @@
       "turn": 3,
       "tool": "search_documents",
       "abbrev": "SD",
-      "thought": "Plan Refinement:\n- What I know: I need the specific ESPN report mentioning a Heat player scoring more than triple his us",
+      "thought": "Plan Refinement:\n- What I know: I need the specific game report mentioning a Heat player scoring more than triple his us",
       "arguments": {
         "query": "Heat more than triple his usual first-quarter points for the season usual first-quarter points season",
-        "doc_type": "espn_report"
+        "doc_type": "report"
       },
       "results": {
         "kind": "documents",
@@ -145,7 +145,7 @@
         "top": [
           {
             "rank": 1,
-            "doc_id": "405021_espn_report",
+            "doc_id": "405021_report",
             "teams": [
               "Miami Heat"
             ],
@@ -154,7 +154,7 @@
           },
           {
             "rank": 2,
-            "doc_id": "359740_espn_report",
+            "doc_id": "359740_report",
             "teams": [
               "Los Angeles Lakers",
               "Miami Heat"
@@ -164,7 +164,7 @@
           },
           {
             "rank": 3,
-            "doc_id": "985017_espn_report",
+            "doc_id": "985017_report",
             "teams": [
               "Charlotte Hornets",
               "Miami Heat"
@@ -179,10 +179,10 @@
       "turn": 4,
       "tool": "search_documents",
       "abbrev": "SD",
-      "thought": "Global Plan:\n- Goal: Identify the ESPN report mentioning a Miami Heat player who scored more than triple his usual first",
+      "thought": "Global Plan:\n- Goal: Identify the game report mentioning a Miami Heat player who scored more than triple his usual first",
       "arguments": {
         "query": "\"usual first-quarter points\" Heat season",
-        "doc_type": "espn_report"
+        "doc_type": "report"
       },
       "results": {
         "kind": "documents",
@@ -192,7 +192,7 @@
         "top": [
           {
             "rank": 1,
-            "doc_id": "405021_espn_report",
+            "doc_id": "405021_report",
             "teams": [
               "Miami Heat"
             ],
@@ -201,7 +201,7 @@
           },
           {
             "rank": 2,
-            "doc_id": "359740_espn_report",
+            "doc_id": "359740_report",
             "teams": [
               "Los Angeles Lakers",
               "Miami Heat"
@@ -211,7 +211,7 @@
           },
           {
             "rank": 3,
-            "doc_id": "204676_espn_report",
+            "doc_id": "204676_report",
             "teams": [
               "Houston Rockets",
               "Miami Heat"
@@ -226,10 +226,10 @@
       "turn": 5,
       "tool": "search_documents",
       "abbrev": "SD",
-      "thought": "Plan Refinement:\n- What I know: I still need to locate the specific ESPN report that mentions \u201cmore than triple his usua",
+      "thought": "Plan Refinement:\n- What I know: I still need to locate the specific game report that mentions \u201cmore than triple his usua",
       "arguments": {
         "query": "more than triple his usual first-quarter points for the season Heat",
-        "doc_type": "espn_report"
+        "doc_type": "report"
       },
       "results": {
         "kind": "documents",
@@ -239,7 +239,7 @@
         "top": [
           {
             "rank": 1,
-            "doc_id": "1006446_espn_report",
+            "doc_id": "1006446_report",
             "teams": [
               "Memphis Grizzlies",
               "Miami Heat"
@@ -249,7 +249,7 @@
           },
           {
             "rank": 2,
-            "doc_id": "985017_espn_report",
+            "doc_id": "985017_report",
             "teams": [
               "Charlotte Hornets",
               "Miami Heat"
@@ -259,7 +259,7 @@
           },
           {
             "rank": 3,
-            "doc_id": "176398_espn_report",
+            "doc_id": "176398_report",
             "teams": [
               "Miami Heat",
               "Chicago Bulls"
@@ -286,7 +286,7 @@
         "top": [
           {
             "rank": 1,
-            "doc_id": "1003554_espn_report",
+            "doc_id": "1003554_report",
             "teams": [
               "Phoenix Suns",
               "Cleveland Cavaliers"
@@ -296,7 +296,7 @@
           },
           {
             "rank": 2,
-            "doc_id": "1003459_espn_report",
+            "doc_id": "1003459_report",
             "teams": [
               "Houston Rockets",
               "Portland Trail Blazers"
@@ -306,7 +306,7 @@
           },
           {
             "rank": 3,
-            "doc_id": "176367_espn_report",
+            "doc_id": "176367_report",
             "teams": [
               "Golden State Warriors",
               "Charlotte Hornets"
@@ -324,12 +324,12 @@
       "thought": "Turn 7: document_qa",
       "arguments": {
         "doc_ids": [
-          "1006446_espn_report",
-          "985017_espn_report",
-          "618058_espn_report",
-          "204676_espn_report",
-          "1003662_espn_report",
-          "400288_espn_report"
+          "1006446_report",
+          "985017_report",
+          "618058_report",
+          "204676_report",
+          "1003662_report",
+          "400288_report"
         ],
         "query": "Does this report mention a Miami Heat player who scored more than triple his usual first-quarter points for the season? If yes, name the player and specify the shot type of his very first made basket of the night."
       },
@@ -341,19 +341,19 @@
         "top": [],
         "results": [
           {
-            "doc_id": "1006446_espn_report",
+            "doc_id": "1006446_report",
             "answer": "There is no evidence in the document that mentions any Miami Heat player who scored more than triple his usual first-quarter points for the season. The document provides overall scoring totals for Hea...",
             "is_target": false,
             "contains_answer": false
           },
           {
-            "doc_id": "985017_espn_report",
+            "doc_id": "985017_report",
             "answer": "There is no evidence that any Miami Heat player scored more than triple his usual first-quarter points for the season. The document reports overall scoring stats for the game but does not provide spec...",
             "is_target": false,
             "contains_answer": false
           },
           {
-            "doc_id": "618058_espn_report",
+            "doc_id": "618058_report",
             "answer": "Let me carefully analyze the document to find information about Miami Heat players scoring more than triple their usual first-quarter points for the season, and the shot type of their first made baske...",
             "is_target": false,
             "contains_answer": false
@@ -377,7 +377,7 @@
         "top": [
           {
             "rank": 1,
-            "doc_id": "985017_espn_report",
+            "doc_id": "985017_report",
             "teams": [
               "Charlotte Hornets",
               "Miami Heat"
@@ -387,7 +387,7 @@
           },
           {
             "rank": 2,
-            "doc_id": "176398_espn_report",
+            "doc_id": "176398_report",
             "teams": [
               "Miami Heat",
               "Chicago Bulls"
@@ -397,7 +397,7 @@
           },
           {
             "rank": 3,
-            "doc_id": "405021_espn_report",
+            "doc_id": "405021_report",
             "teams": [
               "Miami Heat"
             ],
@@ -411,10 +411,10 @@
       "turn": 9,
       "tool": "document_qa",
       "abbrev": "DQ",
-      "thought": "Global Plan:\n- Identify the exact ESPN report that mentions a Heat player scoring more than triple his usual first-quart",
+      "thought": "Global Plan:\n- Identify the exact game report that mentions a Heat player scoring more than triple his usual first-quart",
       "arguments": {
         "doc_ids": [
-          "985017_espn_report"
+          "985017_report"
         ],
         "query": "Which Miami Heat player is said to have scored more than triple his usual first-quarter points for the season in this game, and what was the shot type of his very first made basket of the night?"
       },
@@ -426,7 +426,7 @@
         "top": [],
         "results": [
           {
-            "doc_id": "985017_espn_report",
+            "doc_id": "985017_report",
             "answer": "There is no evidence in the document that specifies which Miami Heat player scored more than triple his usual first-quarter points for the season in this game, nor does it mention the shot type of his...",
             "is_target": false,
             "contains_answer": false
@@ -441,7 +441,7 @@
       "thought": "Turn 10: document_qa",
       "arguments": {
         "doc_ids": [
-          "618468_espn_report"
+          "618468_report"
         ],
         "query": "Does this report say a Miami Heat player scored more than triple his usual first-quarter points for the season? If yes, who is the player and what was the shot type of his very first made basket of the night?"
       },
@@ -453,7 +453,7 @@
         "top": [],
         "results": [
           {
-            "doc_id": "618468_espn_report",
+            "doc_id": "618468_report",
             "answer": "There is no evidence in the document that any Miami Heat player scored more than triple his usual first-quarter points for the season. The document mentions Herro had 14 points in the first quarter af...",
             "is_target": false,
             "contains_answer": false
@@ -468,7 +468,7 @@
       "thought": "Turn 11: search_documents",
       "arguments": {
         "query": "Miami Heat more than triple his usual first quarter points for the season first made basket shot type",
-        "doc_type": "espn_report"
+        "doc_type": "report"
       },
       "results": {
         "kind": "documents",
@@ -478,7 +478,7 @@
         "top": [
           {
             "rank": 1,
-            "doc_id": "204676_espn_report",
+            "doc_id": "204676_report",
             "teams": [
               "Houston Rockets",
               "Miami Heat"
@@ -488,7 +488,7 @@
           },
           {
             "rank": 2,
-            "doc_id": "985017_espn_report",
+            "doc_id": "985017_report",
             "teams": [
               "Charlotte Hornets",
               "Miami Heat"
@@ -498,7 +498,7 @@
           },
           {
             "rank": 3,
-            "doc_id": "405021_espn_report",
+            "doc_id": "405021_report",
             "teams": [
               "Miami Heat"
             ],
@@ -527,7 +527,7 @@
         "top": [
           {
             "rank": 1,
-            "doc_id": "204548_espn_report",
+            "doc_id": "204548_report",
             "teams": [
               "Atlanta Hawks",
               "Miami Heat"
@@ -537,7 +537,7 @@
           },
           {
             "rank": 2,
-            "doc_id": "867791_espn_report",
+            "doc_id": "867791_report",
             "teams": [
               "Golden State Warriors",
               "Miami Heat"
@@ -547,7 +547,7 @@
           },
           {
             "rank": 3,
-            "doc_id": "1030480_espn_report",
+            "doc_id": "1030480_report",
             "teams": [
               "Milwaukee Bucks",
               "Miami Heat"
@@ -562,10 +562,10 @@
       "turn": 13,
       "tool": "document_qa",
       "abbrev": "DQ",
-      "thought": "Plan Refinement:\n- What I know: We need the ESPN report that explicitly says a Miami Heat player scored \u201cmore than tripl",
+      "thought": "Plan Refinement:\n- What I know: We need the game report that explicitly says a Miami Heat player scored \u201cmore than tripl",
       "arguments": {
         "doc_ids": [
-          "204548_espn_report"
+          "204548_report"
         ],
         "query": "Does this report state that a Miami Heat player scored more than triple his usual first-quarter points for the season? If yes, who is the player and what was the shot type of his very first made basket of the night?"
       },
@@ -577,7 +577,7 @@
         "top": [],
         "results": [
           {
-            "doc_id": "204548_espn_report",
+            "doc_id": "204548_report",
             "answer": "There is no evidence in the document that any Miami Heat player scored more than triple their usual first-quarter points for the season. The document does mention that Jimmy Butler made his first four...",
             "is_target": false,
             "contains_answer": false
@@ -592,7 +592,7 @@
       "thought": "Turn 14: search_documents",
       "arguments": {
         "query": "Heat \"first made basket of the night\"",
-        "doc_type": "espn_report"
+        "doc_type": "report"
       },
       "results": {
         "kind": "documents",
@@ -602,7 +602,7 @@
         "top": [
           {
             "rank": 1,
-            "doc_id": "351674_espn_report",
+            "doc_id": "351674_report",
             "teams": [
               "Boston Celtics",
               "Miami Heat"
@@ -612,7 +612,7 @@
           },
           {
             "rank": 2,
-            "doc_id": "343587_espn_report",
+            "doc_id": "343587_report",
             "teams": [
               "Milwaukee Bucks",
               "Miami Heat"
@@ -622,7 +622,7 @@
           },
           {
             "rank": 3,
-            "doc_id": "732367_espn_report",
+            "doc_id": "732367_report",
             "teams": [
               "Charlotte Hornets",
               "Miami Heat"
@@ -637,10 +637,10 @@
       "turn": 15,
       "tool": "search_documents",
       "abbrev": "SD",
-      "thought": "Plan Refinement:\n- What I know: I must identify the ESPN report that explicitly says a Miami Heat player \u201cscored more th",
+      "thought": "Plan Refinement:\n- What I know: I must identify the game report that explicitly says a Miami Heat player \u201cscored more th",
       "arguments": {
         "query": "Miami Heat more than triple his usual first quarter points this season",
-        "doc_type": "espn_report"
+        "doc_type": "report"
       },
       "results": {
         "kind": "documents",
@@ -650,7 +650,7 @@
         "top": [
           {
             "rank": 1,
-            "doc_id": "405021_espn_report",
+            "doc_id": "405021_report",
             "teams": [
               "Miami Heat"
             ],
@@ -659,7 +659,7 @@
           },
           {
             "rank": 2,
-            "doc_id": "985017_espn_report",
+            "doc_id": "985017_report",
             "teams": [
               "Charlotte Hornets",
               "Miami Heat"
@@ -669,7 +669,7 @@
           },
           {
             "rank": 3,
-            "doc_id": "176398_espn_report",
+            "doc_id": "176398_report",
             "teams": [
               "Miami Heat",
               "Chicago Bulls"
@@ -696,7 +696,7 @@
         "top": [
           {
             "rank": 1,
-            "doc_id": "1003554_espn_report",
+            "doc_id": "1003554_report",
             "teams": [
               "Phoenix Suns",
               "Cleveland Cavaliers"
@@ -706,7 +706,7 @@
           },
           {
             "rank": 2,
-            "doc_id": "402255_espn_report",
+            "doc_id": "402255_report",
             "teams": [
               "Detroit Pistons"
             ],
@@ -715,7 +715,7 @@
           },
           {
             "rank": 3,
-            "doc_id": "1033404_espn_report",
+            "doc_id": "1033404_report",
             "teams": [
               "Phoenix Suns",
               "Denver Nuggets"
