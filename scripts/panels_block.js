@@ -1221,7 +1221,7 @@ function T9TargetSummary(_ref10) {
     relevantLine = "No relevant ".concat(kind === 'docs' ? 'document' : 'clip', " found");
   } else {
     var first = tr[0];
-    relevantLine = "Relevant ".concat(kind === 'docs' ? 'document' : 'clip', " at rank ", first);
+    relevantLine = "Found relevant ".concat(kind === 'docs' ? 'document' : 'clip', " at rank ", first);
   }
   return /*#__PURE__*/React.createElement("div", {
     style: {
@@ -1322,13 +1322,18 @@ function T9DocQAResults(_ref12) {
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
+      display: 'flex', flexDirection: 'column', gap: 2,
       fontFamily: '"IBM Plex Mono", monospace',
       fontSize: 9.5,
-      color: '#71717a',
       letterSpacing: '0.1em',
       textTransform: 'uppercase'
     }
-  }, results.results.length, " doc", results.results.length === 1 ? '' : 's', " answered"), results.results.slice(0, 2).map(function (r, i) {
+  },
+  /*#__PURE__*/React.createElement("div", { style: { color: '#a1a1aa' } },
+    "Analyzed ", results.results.length, " doc", results.results.length === 1 ? '' : 's'),
+  /*#__PURE__*/React.createElement("div", { style: { color: results.results.some(function(r) { return r.contains_answer; }) ? '#2E9E8F' : '#71717a' } },
+    results.results.some(function(r) { return r.contains_answer; }) ? 'Found relevant document' : 'No relevant document found')),
+  results.results.slice(0, 2).map(function (r, i) {
     return /*#__PURE__*/React.createElement("div", {
       key: i,
       style: {
@@ -1365,11 +1370,11 @@ function T9DocQAResults(_ref12) {
   }), results.results.length > 2 && /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: '"IBM Plex Mono", monospace',
-      fontSize: 9.5,
+      fontSize: 10,
       color: '#52525b',
       textAlign: 'right'
     }
-  }, "+", results.results.length - 2, " more"));
+  }, "Top 2 results shown"));
 }
 function T9VideoIcon() {
   return /*#__PURE__*/React.createElement("svg", {
@@ -1513,9 +1518,9 @@ function T9VideoCards(_ref13) {
         textOverflow: 'ellipsis'
       }
     }, v.clip_id));
-  }), results.total > items.length && /*#__PURE__*/React.createElement("div", {
+  }), results.total > results.top.length && /*#__PURE__*/React.createElement("div", {
     style: { fontFamily: '"IBM Plex Mono", monospace', fontSize: 10, color: '#52525b', textAlign: 'right' }
-  }, "Top ", items.length, " results shown")));
+  }, "Top ", results.top.length, " results shown")));
 }
 function T9VideoQAResults(_ref14) {
   var results = _ref14.results,
@@ -1538,13 +1543,18 @@ function T9VideoQAResults(_ref14) {
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
+      display: 'flex', flexDirection: 'column', gap: 2,
       fontFamily: '"IBM Plex Mono", monospace',
       fontSize: 11,
-      color: targetCount > 0 ? '#2E9E8F' : '#71717a',
       letterSpacing: '0.08em',
       textTransform: 'uppercase'
     }
-  }, "Analyzed ", items.length, " clip", items.length === 1 ? '' : 's', targetCount > 0 ? ", ".concat(targetCount, " relevant") : ''), items.slice(0, 3).map(function (r, i) {
+  },
+  /*#__PURE__*/React.createElement("div", { style: { color: '#a1a1aa' } },
+    "Analyzed ", items.length, " clip", items.length === 1 ? '' : 's'),
+  /*#__PURE__*/React.createElement("div", { style: { color: targetCount > 0 ? '#2E9E8F' : '#71717a' } },
+    targetCount > 0 ? "Found ".concat(targetCount, " relevant clip").concat(targetCount === 1 ? '' : 's') : 'No relevant clips found')),
+  items.slice(0, 3).map(function (r, i) {
     var hasClip = !!r.clip;
     return /*#__PURE__*/React.createElement("div", {
       key: i,
@@ -1641,9 +1651,9 @@ function T9VideoQAResults(_ref14) {
   }), items.length > 3 && /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: '"IBM Plex Mono", monospace',
-      fontSize: 11,
+      fontSize: 10,
       color: '#52525b',
       textAlign: 'right'
     }
-  }, "+", items.length - 3, " more"));
+  }, "Top 3 results shown"));
 }
