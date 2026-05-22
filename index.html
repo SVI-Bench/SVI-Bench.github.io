@@ -457,9 +457,9 @@ const CLIPS = [{
   id: 'c6',
   taskId: 'T7',
   pillar: 'Simulation',
-  teaser: 'free-kick shot',
+  teaser: 'identity drift',
   title: 'Motion-Conditioned Action Generation',
-  context: 'Soccer · free-kick',
+  context: 'Soccer',
   thumb: 'assets/T7/t7_ask_thumb.jpg',
   question: 'Reconstruct the play from per-player bounding-box motion trajectories on a player-removed background.',
   simBaseDir: 'assets/qualitative_vis_soccer_task1/shot_2434650876',
@@ -468,9 +468,9 @@ const CLIPS = [{
   id: 'c7',
   taskId: 'T8',
   pillar: 'Simulation',
-  teaser: 'missed shot',
+  teaser: 'goal failure',
   title: 'Goal-Conditioned Action Generation',
-  context: 'NBA · Q4 01:32',
+  context: 'Basketball',
   thumb: 'assets/T8/t8_ask_thumb.jpg',
   question: 'Simulate Player #92 attempting a contested floater off a pick-and-roll set by Player #8, resulting in a miss.',
   simBaseDir: 'assets/qualitative_vis_basketball_task2/1109_Edgaras_Ulanovas_2-_262040613',
@@ -4753,8 +4753,9 @@ function T7AskPanel({ clip }) {
       marginBottom: 24,
       display: 'grid',
       gridTemplateColumns: '1fr 1fr',
-      gap: 18,
-      alignItems: 'stretch'
+      gap: 28,
+      height: 620,
+      minHeight: 0
     }
   },
     // Left: input video (inpainted + bbox trajectories) + strip + conditioned-on chips
@@ -4767,11 +4768,36 @@ function T7AskPanel({ clip }) {
         border: '1px solid #27272a',
         borderRadius: 4,
         overflow: 'hidden',
+        minHeight: 0,
         boxShadow: `0 20px 60px rgba(0,0,0,0.5), 0 0 40px ${c.soft}`
       }
     },
       /*#__PURE__*/React.createElement("div", {
-        style: { position: 'relative', width: '100%', aspectRatio: '832 / 480', background: '#000', flexShrink: 0 }
+        style: {
+          height: 32, padding: '0 14px', display: 'flex',
+          alignItems: 'center', justifyContent: 'space-between',
+          background: 'linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0) 100%)',
+          borderBottom: '1px solid #1c1c1f', flexShrink: 0
+        }
+      },
+        /*#__PURE__*/React.createElement("div", {
+          style: {
+            display: 'flex', gap: 10, alignItems: 'center',
+            fontFamily: '"IBM Plex Mono", monospace', fontSize: 11,
+            letterSpacing: '0.15em', color: '#d4d4d8', textTransform: 'uppercase'
+          }
+        },
+          /*#__PURE__*/React.createElement("span", {
+            style: {
+              display: 'inline-block', width: 7, height: 7, borderRadius: 4,
+              background: '#C0392B', animation: 'recPulse 1.6s ease-in-out infinite'
+            }
+          }),
+          /*#__PURE__*/React.createElement("span", null, clip.context)
+        )
+      ),
+      /*#__PURE__*/React.createElement("div", {
+        style: { position: 'relative', flex: 1, minHeight: 0, background: '#000', overflow: 'hidden' }
       },
         /*#__PURE__*/React.createElement("video", {
           ref: rIn,
@@ -4780,15 +4806,7 @@ function T7AskPanel({ clip }) {
           playsInline: true,
           preload: 'auto',
           style: { width: '100%', height: '100%', objectFit: 'cover', display: 'block' }
-        }),
-        /*#__PURE__*/React.createElement("div", {
-          style: {
-            position: 'absolute', top: 8, left: 8,
-            fontFamily: '"IBM Plex Mono", monospace', fontSize: 10, letterSpacing: '0.14em',
-            color: c.base, textTransform: 'uppercase',
-            background: 'rgba(10,10,12,0.78)', padding: '3px 7px', borderRadius: 2, fontWeight: 600
-          }
-        }, "Input · per-player bbox")
+        })
       ),
       /*#__PURE__*/React.createElement("div", {
         style: {
@@ -4811,8 +4829,8 @@ function T7AskPanel({ clip }) {
       ),
       /*#__PURE__*/React.createElement("div", {
         style: {
-          flex: 1, padding: '14px 16px', borderTop: '1px solid #1c1c1f',
-          display: 'flex', flexDirection: 'column', gap: 8
+          padding: '12px 16px', borderTop: '1px solid #1c1c1f',
+          display: 'flex', flexDirection: 'column', gap: 6, flexShrink: 0
         }
       },
         /*#__PURE__*/React.createElement("div", {
@@ -4821,14 +4839,14 @@ function T7AskPanel({ clip }) {
             letterSpacing: '0.16em', textTransform: 'uppercase', color: '#a1a1aa'
           }
         }, "Conditioned on"),
-        /*#__PURE__*/React.createElement("div", { style: { display: 'flex', flexDirection: 'column', gap: 6 } },
+        /*#__PURE__*/React.createElement("div", { style: { display: 'flex', flexDirection: 'column', gap: 5 } },
           ["Player-removed background", "Per-player bounding-box motion trajectories"].map(function (label) {
             return /*#__PURE__*/React.createElement("div", {
               key: label,
               style: {
-                fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 12.5, lineHeight: 1.4,
+                fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 12, lineHeight: 1.35,
                 color: '#e4e4e7', background: 'rgba(255,255,255,0.04)',
-                border: '1px solid #27272a', borderRadius: 3, padding: '5px 10px'
+                border: '1px solid #27272a', borderRadius: 3, padding: '4px 9px'
               }
             }, label);
           })
@@ -4959,11 +4977,12 @@ function T8AskPanel({ clip }) {
       marginBottom: 24,
       display: 'grid',
       gridTemplateColumns: '1fr 1fr',
-      gap: 18,
-      alignItems: 'stretch'
+      gap: 28,
+      height: 620,
+      minHeight: 0
     }
   },
-    // Left: image (start/end bbox) + strip + goal block
+    // Left: header + image + strip + goal block
     /*#__PURE__*/React.createElement("div", {
       style: {
         display: 'flex',
@@ -4973,39 +4992,42 @@ function T8AskPanel({ clip }) {
         border: '1px solid #27272a',
         borderRadius: 4,
         overflow: 'hidden',
+        minHeight: 0,
         boxShadow: `0 20px 60px rgba(0,0,0,0.5), 0 0 40px ${c.soft}`
       }
     },
       /*#__PURE__*/React.createElement("div", {
         style: {
-          position: 'relative',
-          width: '100%',
-          aspectRatio: '832 / 480',
-          background: '#000',
-          flexShrink: 0
+          height: 32, padding: '0 14px', display: 'flex',
+          alignItems: 'center', justifyContent: 'space-between',
+          background: 'linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0) 100%)',
+          borderBottom: '1px solid #1c1c1f', flexShrink: 0
         }
+      },
+        /*#__PURE__*/React.createElement("div", {
+          style: {
+            display: 'flex', gap: 10, alignItems: 'center',
+            fontFamily: '"IBM Plex Mono", monospace', fontSize: 11,
+            letterSpacing: '0.15em', color: '#d4d4d8', textTransform: 'uppercase'
+          }
+        },
+          /*#__PURE__*/React.createElement("span", {
+            style: {
+              display: 'inline-block', width: 7, height: 7, borderRadius: 4,
+              background: '#C0392B', animation: 'recPulse 1.6s ease-in-out infinite'
+            }
+          }),
+          /*#__PURE__*/React.createElement("span", null, clip.context)
+        )
+      ),
+      /*#__PURE__*/React.createElement("div", {
+        style: { position: 'relative', flex: 1, minHeight: 0, background: '#000', overflow: 'hidden' }
       },
         /*#__PURE__*/React.createElement("img", {
           src: `${baseDir}/first_frame_player_goal_bbox.png`,
           alt: "Player-removed background with start (solid) and end (dashed) bbox",
           style: { width: '100%', height: '100%', objectFit: 'cover', display: 'block' }
-        }),
-        /*#__PURE__*/React.createElement("div", {
-          style: {
-            position: 'absolute',
-            top: 8,
-            left: 8,
-            fontFamily: '"IBM Plex Mono", monospace',
-            fontSize: 10,
-            letterSpacing: '0.14em',
-            color: c.base,
-            textTransform: 'uppercase',
-            background: 'rgba(10,10,12,0.78)',
-            padding: '3px 7px',
-            borderRadius: 2,
-            fontWeight: 600
-          }
-        }, "Input · start/end bbox")
+        })
       ),
       /*#__PURE__*/React.createElement("div", {
         style: {
@@ -5044,16 +5066,16 @@ function T8AskPanel({ clip }) {
       ),
       /*#__PURE__*/React.createElement("div", {
         style: {
-          flex: 1,
-          padding: '14px 16px',
+          padding: '12px 16px',
           borderTop: '1px solid #1c1c1f',
           fontFamily: '"IBM Plex Sans", sans-serif',
-          fontSize: 13.5,
-          lineHeight: 1.5,
+          fontSize: 13,
+          lineHeight: 1.45,
           color: '#e4e4e7',
           display: 'flex',
           flexDirection: 'column',
-          gap: 6
+          gap: 5,
+          flexShrink: 0
         }
       },
         /*#__PURE__*/React.createElement("div", {
