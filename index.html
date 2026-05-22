@@ -110,8 +110,8 @@ const TASKS = [{
   score: 74,
   metric: '73.9%',
   metricLabel: 'accuracy',
-  bestModel: 'LLaVA-Video-7B (ft)',
-  blurb: 'Multiple-choice questions about who did what. Fine-tuned models clear 74% — the field can see, but still confuses 2-pt with 3-pt and similar fine-grained details.'
+  bestModel: 'Gemini 3 Flash',
+  blurb: 'Multiple-choice questions about video clip details. Models recognize most actions, but fail on subtle distinctions.'
 }, {
   id: 'T3',
   name: 'Compositional Video Retrieval',
@@ -129,7 +129,7 @@ const TASKS = [{
   metric: '1.99 / 5',
   metricLabel: 'judge score',
   bestModel: 'GPT-5.2',
-  blurb: 'Why did the play work? Models propose plausible tactics that contradict the visual evidence.'
+  blurb: 'Why did the play succeed or fail? Models propose plausible tactics that contradict the visual evidence.'
 }, {
   id: 'T5',
   name: 'Outcome Forecasting',
@@ -137,7 +137,7 @@ const TASKS = [{
   score: 45,
   metric: '44.8%',
   metricLabel: 'accuracy',
-  bestModel: 'Qwen3-VL-8B (ft)',
+  bestModel: 'GPT-5.2',
   blurb: 'Predict what happens next. The model is 92% confident about a wrong answer.'
 }, {
   id: 'T6',
@@ -146,8 +146,8 @@ const TASKS = [{
   score: 7,
   metric: '7.3%',
   metricLabel: 'saliency coverage',
-  bestModel: 'Gemini 3.1 Pro',
-  blurb: 'Summarize a full game. Facts are mostly right (73%). Almost none of the salient events appear.'
+  bestModel: 'GPT-5.2',
+  blurb: 'Write a narrative report on a full game. Facts are mostly right (73%). Almost none of the salient events appear.'
 }, {
   id: 'T7',
   name: 'Motion-Conditioned Generation',
@@ -333,7 +333,7 @@ const CLIPS = [{
     text: 'B \u2014 Rebound, 2 Pt Made, Assisting. After grabbing the rebound, the player scores a 2-pointer off the put-back with an assist.'
   }],
   gt: "E \u2014 Pick'n'Roll, 3 Pt Made, Assisting. The pick-and-roll creates an open 3-pointer that goes in, credited as an assist.",
-  verdictHeadline: "All 3 wrong. GPT-5.2 and Gemini say the 3-pointer missed \u2014 it went in. SVI-100K misses the pick'n'roll entirely."
+  verdictHeadline: "All 3 wrong. GPT-5.2 and Gemini say the 3-pointer missed \u2014 it went in. LLaVA-Video misses the pick'n'roll entirely."
 }, {
   id: 'c3',
   taskId: 'T4',
@@ -380,7 +380,7 @@ const CLIPS = [{
   context: 'Soccer \xB7 2nd half',
   video: 'assets/T5/t5_ask_clip.mp4',
   thumb: 'assets/T5/t5_ask_thumb.jpg',
-  question: 'Which player will be the first to make one goal by the end of the match?',
+  question: 'Which player will be the first to score a goal by the end of the match?\n(A) The player who makes an interception between time 1:34 and 1:44\n(B) The player who delivers a cross between time 1:58 and 2:08\n(C) The player who makes an interception between time 1:59 and 2:09\n(D) The player who recovers the ball between time 2:40 and 2:50\n(E) The player who recovers the ball between time 2:29 and 2:39',
   models: [{
     name: 'GPT-5.2',
     score: '0 / 1',
@@ -408,7 +408,7 @@ const CLIPS = [{
   context: 'Basketball \xB7 SAC vs IND',
   video: 'assets/T6/t6_ask_clip.mp4',
   thumb: 'assets/T6/t6_ask_thumb.jpg',
-  question: 'Write a comprehensive 500-word game report covering key events, momentum shifts, and tactical patterns.',
+  question: 'Write a comprehensive journalist-style game report covering key events, momentum shifts, and tactical patterns.',
   models: [{
     name: 'Qwen3-VL',
     score: 'low',
@@ -451,7 +451,7 @@ const CLIPS = [{
       /*#__PURE__*/React.createElement("span", { style: { color: '#D4913A' } }, "Sacramento's late-game execution that tipped the scales"),
       " \u2026")
   }],
-  gt: "Jones tip-in with 0.2s left after Lyles' missed corner three. Sacramento 110-109. Mitchell scored 25, owned Q4.",
+  gt: "Damian Jones supplied the final word. With 0.2 seconds left, he slipped inside for a decisive tip-in after Trey Lyles\u2019 missed corner three, lifting Sacramento past Indiana 110\u2013109 \u2026 Mitchell scored 25 and owned the fourth quarter \u2026 a 15-footer with 18.7 seconds remaining that set up the final possession \u2026 Sacramento shot 61.5% before halftime \u2026 proved costly against a Kings group that made the final plays.",
   verdictHeadline: "Qwen says Indiana won. GPT gets the winner right but invents halftime stats. Gemini fabricates player stats. None captures the decisive tip-in."
 }, {
   id: 'c6',
@@ -532,7 +532,7 @@ const FAILURES = [{
   sport: 'Hockey',
   video: 'assets/T1/t1_failure_01.mp4',
   mode: 'jersey numbers swapped',
-  excerpt: 'GT: Justin Robidas #19, Mathieu Roy #15. Model: Robidas #24, Roy #7 — correct names, every number wrong.'
+  excerpt: 'GT: Justin Robidas #19, Mathieu Roy #15. Model: Robidas #24, Roy #7 — correct names, every jersey number identification wrong.'
 }, {
   id: 'f02',
   taskId: 'T1',
@@ -541,7 +541,7 @@ const FAILURES = [{
   sport: 'Basketball',
   video: 'assets/T1/t1_failure_02.mp4',
   mode: '3-pointer turned into a layup',
-  excerpt: 'GT: Jackson Fields missed a 3-pt jumper from the wing, App State 54\u201345. Model: CJ Huntley missed a layup — wrong shot type, wrong player, wrong action entirely.'
+  excerpt: 'GT: Jackson Fields missed a 3-pt jumper from the wing, App State 54\u201345. Model: CJ Huntley missed a layup — wrong shot type, wrong player, and wrong action.'
 }, {
   id: 'f03',
   taskId: 'T1',
@@ -550,7 +550,7 @@ const FAILURES = [{
   sport: 'Basketball',
   video: 'assets/T1/t1_failure_03.mp4',
   mode: 'scoreboard hallucination',
-  excerpt: 'GT: Game tied 33\u201333. Model reads 33\u201310 — invents a 23-point blowout from a tied game. Also calls a 2-pointer a three-pointer.'
+  excerpt: 'GT: Game tied 33\u201333. Model reads 33\u201310 — a 23-point misidentification of the score.'
 }, {
   id: 'f04a',
   taskId: 'T1',
@@ -559,7 +559,7 @@ const FAILURES = [{
   sport: 'Soccer',
   video: 'assets/T1/t1_failure_04.mp4',
   mode: 'temporal order reversed',
-  excerpt: 'GT: Saliba \u2192 \u00D8degaard carries forward \u2192 Martinelli. Model: Gabriel \u2192 Martinelli \u2192 Partey \u2192 \u00D8degaard — the sequence runs backwards.'
+  excerpt: 'GT: Saliba \u2192 \u00D8degaard carries forward \u2192 Martinelli. Model: Gabriel \u2192 Martinelli \u2192 Partey \u2192 \u00D8degaard — the player sequence is incorrect.'
 }, {
   id: 'f04',
   taskId: 'T2',
@@ -567,8 +567,8 @@ const FAILURES = [{
   model: 'Gemini 3 Flash',
   sport: 'Basketball',
   video: 'assets/T2/t2_failure_01.mp4',
-  mode: '3 PT Made called 3 PT Missed',
-  excerpt: 'GT: D (3 PT Made). Model: B (3 PT Missed). The shot goes in, but the model says it missed \u2014 can see the shot, can\'t see the outcome.'
+  mode: 'Made Shot identified as Missed',
+  excerpt: 'GT: 3 PT Made. Model: 3 PT Missed. The shot goes in, but the model says it missed \u2014 can see the shot, can\'t see the outcome.'
 }, {
   id: 'f04b',
   taskId: 'T2',
@@ -585,8 +585,8 @@ const FAILURES = [{
   model: 'Gemini 3 Flash',
   sport: 'Basketball',
   video: 'assets/T2/t2_failure_03.mp4',
-  mode: 'corner \u2192 restricted area',
-  excerpt: 'Q: Where is the player when the shot is missed? GT: Corner (behind 3pt line). Model: Restricted Area (under the basket) \u2014 maximum possible spatial error.'
+  mode: 'confused shot location',
+  excerpt: 'Q: Where is the player when the shot is missed? GT: Corner (behind 3pt line). Model: Restricted Area (under the basket) \u2014 completely different areas of the court.'
 }, {
   id: 'f04d',
   taskId: 'T2',
@@ -643,10 +643,10 @@ const FAILURES = [{
   mode: 'confident until suddenly wrong',
   excerpt: 'The model predicts Golden State Warriors with >98% confidence across three frames, then abruptly flips to Los Angeles Lakers at 99.96%. The answer is Los Angeles Lakers.',
   frames: [
-    { img: 'assets/T5/frame_1.png', label: 'Golden State Warriors', confidence: '99.94%', wrong: true },
-    { img: 'assets/T5/frame_2.png', label: 'Golden State Warriors', confidence: '99.53%', wrong: true },
-    { img: 'assets/T5/frame_3.png', label: 'Golden State Warriors', confidence: '98.49%', wrong: true },
-    { img: 'assets/T5/frame_4.png', label: 'Los Angeles Lakers', confidence: '99.96%', wrong: false }
+    { video: 'assets/T5/segment_1.mp4', label: 'Golden State Warriors', confidence: '99.94%', wrong: true },
+    { video: 'assets/T5/segment_2.mp4', label: 'Golden State Warriors', confidence: '99.53%', wrong: true },
+    { video: 'assets/T5/segment_3.mp4', label: 'Golden State Warriors', confidence: '98.49%', wrong: true },
+    { video: 'assets/T5/segment_4.mp4', label: 'Los Angeles Lakers', confidence: '99.96%', wrong: false }
   ]
 }, {
   id: 'f11',
@@ -656,23 +656,26 @@ const FAILURES = [{
   sport: 'Basketball',
   wide: true,
   custom: 'saliency_checklist',
+  video: 'assets/T6/t6_game_clip.mp4',
   mode: 'saliency checklist',
   excerpt: '',
   saliency: {
     covered: [
-      'Indiana defeated Dallas (score mentioned)',
-      'Brogdon scored 22 points'
+      'Sacramento defeated Indiana 110-109',
+      'Chimezie Metu scored 22 points',
+      'Davion Mitchell scored 25 points',
+      'Sacramento shot 61.5% in the first half'
     ],
     missed: [
-      'Indiana made 20 three-pointers',
-      'Turner recorded 7 blocks',
-      'Porzingis: 31 pts, 18 reb',
-      '14-2 run after Dallas cut to 84-80',
-      'McConnell: 8 pts, 3 ast, 2 stl in Q4'
+      'Damian Jones tip-in with 0.2s left decided the game',
+      'Buddy Hield turnover with 14 seconds remaining',
+      'Tyrese Haliburton: 13 pts, 15 assists',
+      'Indiana led 89-85 after the third quarter',
+      'Goga Bitadze scored 20 points'
     ],
     incorrect: [
-      'Halftime score fabricated (66-61 vs actual 61-48)',
-      'Hield sealed the win with a three (never happened)'
+      'Qwen: Indiana won 110-109 (Sacramento won)',
+      '"Haliburton\'s free throws and Hield\'s three sealed the win" (fabricated)'
     ],
     vague: [
       '"orchestrated the offense with surgical efficiency"',
@@ -1646,6 +1649,72 @@ function StaticTreeThumb({
 }
 
 // ============================================================
+// CLIFF: SHARED PANEL UTILITIES (for T5/T6 panels)
+// ============================================================
+function VideoFrame({ src }) {
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'relative', flex: 1, minWidth: 0, minHeight: 0,
+      background: '#000', border: '1px solid #27272a',
+      borderRadius: 3, overflow: 'hidden'
+    }
+  },
+    /*#__PURE__*/React.createElement("video", {
+    src: src,
+    autoPlay: true, loop: true, muted: true, playsInline: true,
+    style: {
+      position: 'absolute', inset: 0,
+      width: '100%', height: '100%',
+      objectFit: 'contain', background: '#000', display: 'block'
+    }
+  })
+  );
+}
+function PanelShell({ children }) {
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      top: 28, bottom: 32, left: 0, right: 0,
+      display: 'flex', flexDirection: 'column',
+      padding: '11px 14px', gap: 10,
+      background: '#0c0d10'
+    }
+  }, children);
+}
+
+function renderSegments(segments, c) {
+  const arr = typeof segments === 'string' ? [segments] : segments;
+  return arr.map((seg, i) => {
+    if (typeof seg === 'string') return seg;
+    const segStyle = seg.wrong
+      ? { color: '#C0392B', textDecoration: 'line-through' }
+      : seg.ok ? { color: c.base, fontWeight: 500 } : null;
+    return /*#__PURE__*/React.createElement('span', { key: 'seg' + i, style: segStyle }, seg.t);
+  });
+}
+function PanelCaptionRow({ label, labelColor, children }) {
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex', gap: 10, alignItems: 'baseline',
+      fontFamily: '"IBM Plex Sans", sans-serif',
+      fontSize: 12.5, lineHeight: 1.5
+    }
+  },
+    /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: '"IBM Plex Mono", monospace',
+      fontSize: 10, letterSpacing: '0.15em',
+      color: labelColor, textTransform: 'uppercase',
+      minWidth: 40, flexShrink: 0
+    }
+  }, label),
+    /*#__PURE__*/React.createElement("span", {
+    style: { color: '#e4e4e7', flex: 1, minWidth: 0 }
+  }, children)
+  );
+}
+
+// ============================================================
 // CLIFF: PER-TASK OVERLAYS
 // ============================================================
 function CaptionRow({
@@ -1970,6 +2039,340 @@ function T6Overlay({
     style: { marginTop: 'auto', padding: '8px 0', borderTop: '1px solid #e4e4e7', display: 'flex', justifyContent: 'space-between', fontFamily: '"IBM Plex Mono", monospace', fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase' }
   }, /*#__PURE__*/React.createElement("span", { style: { color: '#C0392B' } }, "not accurate \xB7 not salient \xB7 vague with players")));
 }
+
+// ============================================================
+// CLIFF: NEW PANEL COMPONENTS (T1, T2, T4, T5, T6)
+// ============================================================
+function T1Panel({ pillar }) {
+  const c = PILLARS[pillar];
+  const gt = 'Duke Brennan (#24) executed a steal, setting the stage for Luther Muhammad (#1), who attempted a contested layup with his right hand from the restricted area during a transition play, but missed, guarded by Isa Silva (#1). James Keefe (#22) secured the rebound. The teams competing are the Arizona State Sun Devils and Stanford Cardinal, with the current score at 14 - 9.';
+  const pred = [
+    { t: 'Warren Washington', wrong: true },
+    ', wearing ',
+    { t: '#22', wrong: true },
+    ', executed a steal. ',
+    { t: 'Jamiya Neal', wrong: true },
+    ', wearing ',
+    { t: '#5', wrong: true },
+    ', attempted a 2-point layup from the restricted area with his right hand during a transition, but missed while contested by ',
+    { t: 'Harrison Ingram', wrong: true },
+    ', wearing ',
+    { t: '#55', wrong: true },
+    '. The teams competing are Arizona State Sun and Stanford, with the current score at 14 - 9.'
+  ];
+  return /*#__PURE__*/React.createElement(PanelShell, null,
+    /*#__PURE__*/React.createElement(VideoFrame, { src: TASK_MEDIA.T1 }),
+    /*#__PURE__*/React.createElement("div", {
+    style: { flex: '0 0 auto', display: 'flex', flexDirection: 'column', gap: 6 }
+  },
+      /*#__PURE__*/React.createElement(PanelCaptionRow, { label: 'GT', labelColor: c.base }, gt),
+      /*#__PURE__*/React.createElement(PanelCaptionRow, { label: 'PRED', labelColor: '#71717a' }, renderSegments(pred, c))
+  )
+  );
+}
+function T2Panel({ pillar }) {
+  const c = PILLARS[pillar];
+  const question = 'What action is displayed in this video?';
+  const options = [
+    { l: 'A', text: 'goalkeeper exit' },
+    { l: 'B', text: 'acceleration' },
+    { l: 'C', text: 'throw in' },
+    { l: 'D', text: 'touch' },
+    { l: 'E', text: 'infraction', correct: true }
+  ];
+  const modelPick = 'C';
+  const renderOption = o => {
+    const isCorrect = o.correct;
+    const isPicked = o.l === modelPick;
+    const border = isCorrect ? '#22c55e' : isPicked ? '#C0392B' : '#3f3f46';
+    return /*#__PURE__*/React.createElement("div", {
+      key: o.l,
+      style: {
+        flex: 1, display: 'flex', gap: 8, alignItems: 'center',
+        padding: '8px 10px',
+        background: 'rgba(20,20,26,0.7)',
+        border: '1px solid ' + border,
+        borderRadius: 3,
+        fontFamily: '"IBM Plex Sans", sans-serif',
+        fontSize: 12,
+        color: isCorrect ? '#22c55e' : isPicked ? '#C0392B' : '#e4e4e7',
+        fontWeight: (isCorrect || isPicked) ? 500 : 400
+      }
+    },
+      /*#__PURE__*/React.createElement("span", {
+        style: { fontFamily: '"IBM Plex Mono", monospace', fontWeight: 600, minWidth: 14, color: isCorrect ? '#22c55e' : isPicked ? '#C0392B' : '#a1a1aa' }
+      }, o.l),
+      /*#__PURE__*/React.createElement("span", { style: { flex: 1 } }, o.text),
+      isCorrect && /*#__PURE__*/React.createElement("span", {
+        style: { marginLeft: 'auto', fontFamily: '"IBM Plex Mono", monospace', fontSize: 10, letterSpacing: '0.15em', color: '#22c55e' }
+      }, "GT"),
+      isPicked && !isCorrect && /*#__PURE__*/React.createElement("span", {
+        style: { marginLeft: 'auto', fontFamily: '"IBM Plex Mono", monospace', fontSize: 10, letterSpacing: '0.15em', color: '#C0392B' }
+      }, "MODEL")
+    );
+  };
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      position: 'absolute',
+      top: 28, bottom: 32, left: 0, right: 0,
+      display: 'flex', flexDirection: 'column',
+      padding: '11px 14px', gap: 10,
+      background: '#0c0d10'
+    }
+  },
+    /*#__PURE__*/React.createElement("div", {
+      style: {
+        flex: '0 0 auto', padding: '10px 14px',
+        background: 'rgba(20,20,26,0.85)', border: '1px solid #27272a', borderRadius: 3,
+        fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 15, lineHeight: 1.4, color: '#fafafa'
+      }
+    },
+      /*#__PURE__*/React.createElement("span", {
+        style: { fontFamily: '"IBM Plex Mono", monospace', fontSize: 11, color: '#71717a', letterSpacing: '0.12em', textTransform: 'uppercase', marginRight: 10 }
+      }, "Question"),
+      question
+    ),
+    /*#__PURE__*/React.createElement("div", {
+      style: { flex: 1, minHeight: 0, position: 'relative', background: '#000', border: '1px solid #27272a', borderRadius: 3, overflow: 'hidden' }
+    },
+      /*#__PURE__*/React.createElement("video", {
+        src: TASK_MEDIA.T2, autoPlay: true, loop: true, muted: true, playsInline: true,
+        style: { position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'contain', background: '#000', display: 'block' }
+      })
+    ),
+    /*#__PURE__*/React.createElement("div", { style: { flex: '0 0 auto', display: 'flex', gap: 8 } },
+      options.map(renderOption)
+    )
+  );
+}
+function T4Panel({ pillar }) {
+  const c = PILLARS[pillar];
+  const q = 'In the first half, a Bowling Green player was injured in an unusual sequence. What happened in that moment, and what specific injury did he appear to sustain?';
+  const gt = [
+    'He ',
+    { t: 'rolled his right ankle', ok: true },
+    ' after accidentally ',
+    { t: "stepping on Ball State's head coach on the sideline", ok: true },
+    ' while trying to get back into the play.'
+  ];
+  const pred = [
+    'A Bowling Green player went down in a ',
+    { t: 'freak, non-contact moment', wrong: true },
+    ': his ',
+    { t: 'foot/leg got tangled as he tried to change direction', wrong: true },
+    '. He appeared to have suffered an ',
+    { t: 'ankle injury (appearing like a bad sprain/roll)', ok: false },
+    '.'
+  ];
+  return /*#__PURE__*/React.createElement(PanelShell, null,
+    /*#__PURE__*/React.createElement("div", {
+    style: {
+      flex: '0 0 auto',
+      padding: '10px 14px',
+      background: 'rgba(20,20,26,0.85)',
+      border: '1px solid #27272a',
+      borderRadius: 3,
+      fontFamily: '"IBM Plex Sans", sans-serif',
+      fontSize: 14, lineHeight: 1.4, color: '#fafafa'
+    }
+  },
+      /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontFamily: '"IBM Plex Mono", monospace',
+      fontSize: 11, color: '#71717a',
+      letterSpacing: '0.12em', textTransform: 'uppercase',
+      marginRight: 10
+    }
+  }, "Question"),
+    q
+  ),
+    /*#__PURE__*/React.createElement(VideoFrame, { src: TASK_MEDIA.T4 }),
+    /*#__PURE__*/React.createElement("div", {
+    style: { flex: '0 0 auto', display: 'flex', flexDirection: 'column', gap: 6 }
+  },
+      /*#__PURE__*/React.createElement(PanelCaptionRow, { label: 'GT', labelColor: c.base }, renderSegments(gt, c)),
+      /*#__PURE__*/React.createElement(PanelCaptionRow, { label: 'PRED', labelColor: '#71717a' }, renderSegments(pred, c))
+  )
+  );
+}
+function T5Panel({ pillar }) {
+  const c = PILLARS[pillar];
+  const question = 'How many 3-pointers will player wearing #4 make from end of segment to end of 2nd half?';
+  const options = [
+    { l: 'A', text: '4' },
+    { l: 'B', text: '7' },
+    { l: 'C', text: '1' },
+    { l: 'D', text: '2' },
+    { l: 'E', text: '3', correct: true }
+  ];
+  const modelPick = 'C';
+  const renderOption = o => {
+    const isCorrect = o.correct;
+    const isPicked = o.l === modelPick;
+    const border = isCorrect ? '#22c55e' : isPicked ? '#C0392B' : '#3f3f46';
+    return /*#__PURE__*/React.createElement("div", {
+      key: o.l,
+      style: {
+        flex: 1, display: 'flex', gap: 8, alignItems: 'center',
+        padding: '8px 10px',
+        background: 'rgba(20,20,26,0.7)',
+        border: '1px solid ' + border,
+        borderRadius: 3,
+        fontFamily: '"IBM Plex Sans", sans-serif',
+        fontSize: 12,
+        color: isCorrect ? '#22c55e' : isPicked ? '#C0392B' : '#e4e4e7',
+        fontWeight: (isCorrect || isPicked) ? 500 : 400
+      }
+    },
+      /*#__PURE__*/React.createElement("span", {
+        style: { fontFamily: '"IBM Plex Mono", monospace', fontWeight: 600, minWidth: 14, color: isCorrect ? '#22c55e' : isPicked ? '#C0392B' : '#a1a1aa' }
+      }, o.l),
+      /*#__PURE__*/React.createElement("span", { style: { flex: 1 } }, o.text),
+      isCorrect && /*#__PURE__*/React.createElement("span", {
+        style: { marginLeft: 'auto', fontFamily: '"IBM Plex Mono", monospace', fontSize: 10, letterSpacing: '0.15em', color: '#22c55e' }
+      }, "GT"),
+      isPicked && !isCorrect && /*#__PURE__*/React.createElement("span", {
+        style: { marginLeft: 'auto', fontFamily: '"IBM Plex Mono", monospace', fontSize: 10, letterSpacing: '0.15em', color: '#C0392B' }
+      }, "MODEL")
+    );
+  };
+  return /*#__PURE__*/React.createElement(PanelShell, null,
+    /*#__PURE__*/React.createElement("div", {
+      style: {
+        flex: '0 0 auto', padding: '10px 14px',
+        background: 'rgba(20,20,26,0.85)', border: '1px solid #27272a', borderRadius: 3,
+        fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 15, lineHeight: 1.4, color: '#fafafa'
+      }
+    },
+      /*#__PURE__*/React.createElement("span", {
+        style: { fontFamily: '"IBM Plex Mono", monospace', fontSize: 11, color: '#71717a', letterSpacing: '0.12em', textTransform: 'uppercase', marginRight: 10 }
+      }, "Question"),
+      question
+    ),
+    /*#__PURE__*/React.createElement(VideoFrame, { src: TASK_MEDIA.T5 }),
+    /*#__PURE__*/React.createElement("div", { style: { flex: '0 0 auto', display: 'flex', flexDirection: 'column', gap: 6 } },
+      /*#__PURE__*/React.createElement("div", {
+        style: { fontFamily: '"IBM Plex Mono", monospace', fontSize: 10, color: '#a1a1aa', letterSpacing: '0.1em', textTransform: 'uppercase' }
+      }, "Model confidence: 92.3%"),
+      /*#__PURE__*/React.createElement("div", { style: { display: 'flex', gap: 8 } },
+        options.map(renderOption)
+      )
+    )
+  );
+}
+function T6Panel({ pillar }) {
+  const c = PILLARS[pillar];
+  const redSpan = txt => /*#__PURE__*/React.createElement("span",
+    { style: { color: '#C0392B', fontWeight: 500 } }, txt);
+  const greenSpan = txt => /*#__PURE__*/React.createElement("span",
+    { style: { color: '#22c55e', fontWeight: 500 } }, txt);
+  const salient = [
+    { text: 'Murray State defeated Indiana State 82-73.', covered: true },
+    { text: 'The game was tied 36-36 at halftime.', covered: false },
+    { text: "Rob Perry's free throw at 11:31 of the second half produced the final lead change of the game.", covered: false },
+    { text: 'Rob Perry shot 0-for-9 from three-point range.', covered: false },
+    { text: 'Rob Perry made all five of his two-point field goal attempts in the second half.', covered: false },
+    { text: 'Cameron Henry recorded 10 assists.', covered: false },
+    { text: '\u2026', covered: false, dim: true }
+  ];
+  return /*#__PURE__*/React.createElement(PanelShell, null,
+    /*#__PURE__*/React.createElement("div", {
+      style: { display: 'flex', flexDirection: 'column', gap: 10, flex: 1, minHeight: 0 }
+    },
+      /*#__PURE__*/React.createElement("div", { style: { flex: 2, minHeight: 0, display: 'flex', flexDirection: 'column' } },
+        /*#__PURE__*/React.createElement(VideoFrame, { src: TASK_MEDIA.T6 })
+      ),
+      /*#__PURE__*/React.createElement("div", {
+        style: {
+          flex: '0 0 auto',
+          display: 'flex', gap: 12,
+          background: 'rgba(20,20,26,0.7)',
+          border: '1px solid #27272a', borderRadius: 3,
+          padding: '10px 12px'
+        }
+      },
+        /*#__PURE__*/React.createElement("div", {
+          style: { flex: 3, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 5 }
+        },
+          /*#__PURE__*/React.createElement("div", {
+            style: {
+              fontFamily: '"IBM Plex Mono", monospace',
+              fontSize: 10, color: '#a1a1aa',
+              letterSpacing: '0.12em', textTransform: 'uppercase'
+            }
+          }, "GPT-5.2 \xB7 Game Report"),
+          /*#__PURE__*/React.createElement("div", {
+            style: {
+              fontFamily: '"IBM Plex Sans", sans-serif',
+              fontSize: 11, lineHeight: 1.5, color: '#e4e4e7'
+            }
+          },
+            "Murray State absorbed Indiana State\u2019s early punches, then methodically flipped the game with defense, paint touches and free throws, closing on a ",
+            greenSpan("46"),
+            redSpan("\u201331"),
+            greenSpan(" second-half surge to win 82\u201373."),
+            " Indiana State\u2019s precision start set the tone: crisp spacing, early post seals ",
+            greenSpan("and pick-and-roll pocket feeds produced a 16\u20136 lead"),
+            " and ",
+            redSpan("a 42\u201336 edge out of halftime"),
+            ". The Sycamores\u2019 frontcourt execution was clean\u2014high-low entries and short-roll decisions repeatedly created point-blank looks\u2014and their wings punished late closeouts. \u2026 Burns anchored the swing\u2014owning the glass, sealing deep, and finishing through contact\u2014to pace Murray\u2019s interior dominance. Rob Perry\u2019s late-clock shot-making and composure at the line closed the door. \u2026"
+          )
+        ),
+        /*#__PURE__*/React.createElement("div", {
+          style: {
+            width: 1, background: '#27272a', flexShrink: 0,
+            alignSelf: 'stretch'
+          }
+        }),
+        /*#__PURE__*/React.createElement("div", {
+          style: { flex: 2, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 5 }
+        },
+          /*#__PURE__*/React.createElement("div", {
+            style: {
+              fontFamily: '"IBM Plex Mono", monospace',
+              fontSize: 10, color: '#a1a1aa',
+              letterSpacing: '0.12em', textTransform: 'uppercase'
+            }
+          }, "Salient Events Coverage"),
+          /*#__PURE__*/React.createElement("div", {
+            style: { display: 'flex', flexDirection: 'column', gap: 3 }
+          },
+            salient.map((s, i) => s.dim
+              ? /*#__PURE__*/React.createElement("div", {
+                  key: i,
+                  style: {
+                    fontFamily: '"IBM Plex Mono", monospace',
+                    fontSize: 10, color: '#52525b',
+                    letterSpacing: '0.05em', marginTop: 2
+                  }
+                }, s.text)
+              : /*#__PURE__*/React.createElement("div", {
+              key: i,
+              style: {
+                display: 'flex', gap: 8, alignItems: 'baseline',
+                fontFamily: '"IBM Plex Sans", sans-serif',
+                fontSize: 10.5, lineHeight: 1.3
+              }
+            },
+              /*#__PURE__*/React.createElement("span", {
+                style: {
+                  fontFamily: '"IBM Plex Mono", monospace',
+                  fontSize: 10.5, fontWeight: 700,
+                  color: s.covered ? c.base : '#C0392B',
+                  minWidth: 12, flexShrink: 0
+                }
+              }, s.covered ? "\u2713" : "\u2715"),
+              /*#__PURE__*/React.createElement("span", {
+                style: { flex: 1, color: s.covered ? '#e4e4e7' : '#a1a1aa' }
+              }, s.text)
+            ))
+          )
+        )
+      )
+    )
+  );
+}
+
 function T7Overlay({
   pillar
 }) {
@@ -2634,11 +3037,17 @@ function CliffBroadcastViewport({
   const c = PILLARS[task.pillar];
   const totalSeconds = Math.floor(t * 10);
   const tc = `00:${String(totalSeconds).padStart(2, '0')}`;
+  const isT1 = task.id === 'T1';
+  const isT2 = task.id === 'T2';
   const isT3 = task.id === 'T3';
-  const isT9 = task.id === 'T9';
+  const isT4 = task.id === 'T4';
+  const isT5 = task.id === 'T5';
+  const isT6 = task.id === 'T6';
   const isT7 = task.id === 'T7';
   const isT8 = task.id === 'T8';
-  const headerLabel = isT9 ? 'AGENT' : isT3 ? 'RETRIEVAL' : (isT7 || isT8) ? 'GENERATION' : 'CAM 1';
+  const isT9 = task.id === 'T9';
+  const TASK_HEADERS = { T1: 'Play Description', T2: 'Action QA', T4: 'Strategic Reasoning', T5: 'Outcome Forecasting', T6: 'Narrative Synthesis' };
+  const headerLabel = isT9 ? 'AGENT' : isT3 ? 'RETRIEVAL' : (isT7 || isT8) ? 'GENERATION' : (TASK_HEADERS[task.id] || 'CAM 1');
   return /*#__PURE__*/React.createElement("div", {
     style: {
       position: 'relative',
@@ -2691,6 +3100,11 @@ function CliffBroadcastViewport({
   : isT9 ? /*#__PURE__*/React.createElement(T9Panel, { pillar: task.pillar, active: true, tileColors: { search_documents: '#06B6D4', document_qa: '#F43F5E', search_videos: '#EAB308', video_qa: '#6366F1', video_qa_oracle: '#6366F1' } })
   : isT7 ? /*#__PURE__*/React.createElement(T7Panel, { pillar: task.pillar })
   : isT8 ? /*#__PURE__*/React.createElement(T8Panel, { pillar: task.pillar })
+  : isT1 ? /*#__PURE__*/React.createElement(T1Panel, { pillar: task.pillar })
+  : isT2 ? /*#__PURE__*/React.createElement(T2Panel, { pillar: task.pillar })
+  : isT4 ? /*#__PURE__*/React.createElement(T4Panel, { pillar: task.pillar })
+  : isT5 ? /*#__PURE__*/React.createElement(T5Panel, { pillar: task.pillar })
+  : isT6 ? /*#__PURE__*/React.createElement(T6Panel, { pillar: task.pillar })
   : /*#__PURE__*/React.createElement(React.Fragment, null,
       TASK_MEDIA[task.id] && !TASK_MEDIA[task.id].includes('placeholder')
         ? /*#__PURE__*/React.createElement("video", {
@@ -3324,7 +3738,7 @@ function AskBroadcastViewport({
       background: '#C0392B',
       animation: 'recPulse 1.6s ease-in-out infinite'
     }
-  }), /*#__PURE__*/React.createElement("span", null, "CAM 1 \xB7 ", clip.context)), /*#__PURE__*/React.createElement("div", {
+  }), /*#__PURE__*/React.createElement("span", null, clip.context)), /*#__PURE__*/React.createElement("div", {
     style: {
       fontFamily: '"IBM Plex Mono", monospace',
       fontSize: 11,
@@ -5355,6 +5769,11 @@ function TapeArchiveSection() {
                : isT9 ? ' — three failure modes'
                : isT7 ? ' — two motion-conditioned examples'
                : isT8 ? ' — two goal-conditioned examples'
+               : task.id === 'T1' ? ' — four types of misidentifications'
+               : task.id === 'T2' ? ' — different types of recognition errors'
+               : task.id === 'T4' ? ' — missed visual evidence, invented narratives'
+               : task.id === 'T5' ? ' — poor calibration and accuracy'
+               : task.id === 'T6' ? ' — facts mostly right, missing almost all key events'
                : ' · placeholder';
     var taskFailures = !isOurs ? FAILURES.filter(function (f) {
       return f.taskId === task.id;
@@ -5764,8 +6183,12 @@ function PlaceholderCard(_ref3) {
         key: i,
         style: { position: 'relative', borderRight: isLast ? 'none' : '1px solid #1c1c1f' }
       },
-      /*#__PURE__*/React.createElement("img", {
-        src: f.img,
+      /*#__PURE__*/React.createElement("video", {
+        src: f.video,
+        autoPlay: true,
+        loop: true,
+        muted: true,
+        playsInline: true,
         style: { width: '100%', display: 'block' }
       }),
       // Dark overlay for label area
@@ -5830,14 +6253,22 @@ function PlaceholderCard(_ref3) {
     }, /*#__PURE__*/React.createElement("div", { style: { display: 'flex', alignItems: 'center', gap: 10 } },
       /*#__PURE__*/React.createElement("span", { style: { fontFamily: '"IBM Plex Mono", monospace', fontSize: 10.5, letterSpacing: '0.14em', textTransform: 'uppercase', color: c.base, fontWeight: 600 } }, failure.taskId),
       /*#__PURE__*/React.createElement("span", { style: { fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 14, fontWeight: 500, color: '#fafafa' } }, "What the models get right, miss, fabricate, and dodge")),
-    /*#__PURE__*/React.createElement("span", { style: { fontFamily: '"IBM Plex Mono", monospace', fontSize: 10.5, color: '#d4d4d8' } }, "IND vs DAL")),
+),
     /*#__PURE__*/React.createElement("div", {
-      style: { padding: '16px', display: 'flex', gap: 20, flexWrap: 'wrap' }
+      style: { display: 'flex', minHeight: 0 }
     },
-      salSection("Covered", sal.covered, "#22c55e", "\u2713"),
-      salSection("Missing", sal.missed, "#C0392B", "\u2717"),
-      salSection("Incorrect", sal.incorrect, "#ef4444", "\u26A0"),
-      salSection("Vague", sal.vague, "#D4913A", "\u2026")));
+      failure.video ? /*#__PURE__*/React.createElement("video", {
+        src: failure.video,
+        autoPlay: true, loop: true, muted: true, playsInline: true,
+        style: { width: '25%', objectFit: 'cover', borderRight: '1px solid #1c1c1f', flexShrink: 0 }
+      }) : null,
+      /*#__PURE__*/React.createElement("div", {
+        style: { padding: '16px', display: 'flex', gap: 20, flexWrap: 'wrap', flex: 1 }
+      },
+        salSection("Covered", sal.covered, "#22c55e", "\u2713"),
+        salSection("Missing Salient Events", sal.missed, "#C0392B", "\u2717"),
+        salSection("Incorrect", sal.incorrect, "#ef4444", "\u26A0"),
+        salSection("Vague", sal.vague, "#D4913A", "\u2026"))));
   }
   var isWide = failure.wide && failure.video;
   return /*#__PURE__*/React.createElement("div", {
