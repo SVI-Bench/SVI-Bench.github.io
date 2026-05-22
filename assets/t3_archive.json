@@ -14,21 +14,21 @@
         },
         {
           "video": "assets/t3_archive/bb_jersey/hn1.mp4",
-          "caption": "Player #24 makes a free throw.",
+          "caption": "Player #24 makes a successful free throw.",
           "sim": 0.84,
           "diff_substring": "#24",
           "is_gt": false
         },
         {
           "video": "assets/t3_archive/bb_jersey/hn2.mp4",
-          "caption": "Player #8 makes a free throw.",
+          "caption": "#8 makes a free throw.",
           "sim": 0.79,
           "diff_substring": "#8",
           "is_gt": false
         },
         {
           "video": "assets/t3_archive/bb_jersey/hn3.mp4",
-          "caption": "Player #6 makes a free throw.",
+          "caption": "Player #6 tries a free throw, and makes it.",
           "sim": 0.74,
           "diff_substring": "#6",
           "is_gt": false
@@ -49,9 +49,9 @@
         },
         {
           "video": "assets/t3_archive/bb_hand/hn1.mp4",
-          "caption": "A left-handed contested jumper from the top.",
+          "caption": "A contested jumper from the top with the left hand.",
           "sim": 0.83,
-          "diff_substring": "left-handed",
+          "diff_substring": "left hand",
           "is_gt": false
         },
         {
@@ -63,7 +63,7 @@
         },
         {
           "video": "assets/t3_archive/bb_hand/hn3.mp4",
-          "caption": "A left-handed contested catch-and-shoot jumper.",
+          "caption": "A left-handed catch-and-shoot jumper while contested.",
           "sim": 0.73,
           "diff_substring": "left-handed",
           "is_gt": false
@@ -78,27 +78,27 @@
       "thumbs": [
         {
           "video": "assets/t3_archive/soc_player/gt.mp4",
-          "caption": "K. Stoup wins a duel attacking from the right side.",
+          "caption": "K. Stoup attacks from the right side and wins a duel.",
           "sim": 0.63,
           "is_gt": true
         },
         {
           "video": "assets/t3_archive/soc_player/hn1.mp4",
-          "caption": "A. Pope wins a duel attacking from the right side.",
+          "caption": "A. Pope wins a duel on the right side.",
           "sim": 0.82,
           "diff_substring": "A. Pope",
           "is_gt": false
         },
         {
           "video": "assets/t3_archive/soc_player/hn2.mp4",
-          "caption": "Nélson Semedo wins a duel attacking from the right side.",
+          "caption": "Nélson Semedo attacks from the right and wins the duel.",
           "sim": 0.77,
           "diff_substring": "Nélson Semedo",
           "is_gt": false
         },
         {
           "video": "assets/t3_archive/soc_player/hn3.mp4",
-          "caption": "Martín Zubimendi wins a duel attacking from the right side.",
+          "caption": "Martín Zubimendi wins a duel, attacking from the right side.",
           "sim": 0.72,
           "diff_substring": "Martín Zubimendi",
           "is_gt": false
@@ -113,27 +113,27 @@
       "thumbs": [
         {
           "video": "assets/t3_archive/hky_zone/gt.mp4",
-          "caption": "A wrist shot in the offensive zone, with the goalie in the butterfly position.",
+          "caption": "The player takes a wrist shot in the offensive zone with the goalie in the butterfly position.",
           "sim": 0.60,
           "is_gt": true
         },
         {
           "video": "assets/t3_archive/hky_zone/hn1.mp4",
-          "caption": "A backhand shot in the offensive zone, with the goalie in the butterfly position.",
+          "caption": "A backhand shot in the offensive zone, as the goalie is in the butterfly position.",
           "sim": 0.83,
           "diff_substring": "backhand",
           "is_gt": false
         },
         {
           "video": "assets/t3_archive/hky_zone/hn2.mp4",
-          "caption": "A deflection shot in the offensive zone, with the goalie in the butterfly position.",
+          "caption": "A deflection in the offensive zone with the goalie in the butterfly position.",
           "sim": 0.78,
           "diff_substring": "deflection",
           "is_gt": false
         },
         {
           "video": "assets/t3_archive/hky_zone/hn3.mp4",
-          "caption": "A slapshot in the offensive zone, with the goalie in the butterfly position.",
+          "caption": "While the goalie is in the butterfly position, the player takes a slapshot from the offensive zone.",
           "sim": 0.73,
           "diff_substring": "slapshot",
           "is_gt": false

@@ -71,7 +71,7 @@
       "thought": "Find the game \u2014 New Orleans wire-to-wire, 14 threes by halftime.",
       "arguments": {
         "query": "New Orleans led wire-to-wire 14 threes by halftime Westbrook three-point play Batum four-point play",
-        "doc_type": "espn_report"
+        "doc_type": "report"
       },
       "results": {
         "kind": "documents",
@@ -81,7 +81,7 @@
         "top": [
           {
             "rank": 1,
-            "doc_id": "176266_espn_report",
+            "doc_id": "176266_report",
             "teams": [
               "Charlotte Hornets",
               "Brooklyn Nets"
@@ -91,7 +91,7 @@
           },
           {
             "rank": 2,
-            "doc_id": "867981_espn_report",
+            "doc_id": "867981_report",
             "teams": [
               "Indiana Pacers",
               "Cleveland Cavaliers"
@@ -101,7 +101,7 @@
           },
           {
             "rank": 3,
-            "doc_id": "406781_espn_report",
+            "doc_id": "406781_report",
             "teams": [
               "Oklahoma City Thunder",
               "Denver Nuggets"
@@ -119,7 +119,7 @@
       "thought": "First search missed it. Try again with both team names.",
       "arguments": {
         "query": "Clippers Pelicans led wire-to-wire 14 threes by halftime Westbrook three-point play Batum four-point play",
-        "doc_type": "espn_report"
+        "doc_type": "report"
       },
       "results": {
         "kind": "documents",
@@ -131,7 +131,7 @@
         "top": [
           {
             "rank": 1,
-            "doc_id": "1006435_espn_report",
+            "doc_id": "1006435_report",
             "teams": [
               "New Orleans Pelicans",
               "Los Angeles Clippers"
@@ -141,7 +141,7 @@
           },
           {
             "rank": 2,
-            "doc_id": "780877_espn_report",
+            "doc_id": "780877_report",
             "teams": [
               "New Orleans Pelicans",
               "Detroit Pistons"
@@ -151,7 +151,7 @@
           },
           {
             "rank": 3,
-            "doc_id": "867981_espn_report",
+            "doc_id": "867981_report",
             "teams": [
               "Indiana Pacers",
               "Cleveland Cavaliers"
@@ -169,7 +169,7 @@
       "thought": "Got the game report. Ask it for both deficits in one go.",
       "arguments": {
         "doc_ids": [
-          "1006435_espn_report"
+          "1006435_report"
         ],
         "query": "In this report, by how many points were the Clippers trailing immediately after Russell Westbrook completed his three-point play in the second quarter, and by how many points were they trailing immediately after Nicolas Batum completed his four-point play in the third quarter? Provide the two deficits."
       },
@@ -177,7 +177,7 @@
         "kind": "docqa",
         "results": [
           {
-            "doc_id": "1006435_espn_report",
+            "doc_id": "1006435_report",
             "answer": "Let me carefully analyze the document to find information about the Clippers' trailing points after specific plays.\n\nFirst, let's look for the relevant information about Russell Westbrook's three-point play in the sec\u2026",
             "is_target": true,
             "contains_answer": true
@@ -192,7 +192,7 @@
       "thought": "Report doesn't quote the scores. Ask it again, even more directly.",
       "arguments": {
         "doc_ids": [
-          "1006435_espn_report"
+          "1006435_report"
         ],
         "query": "Quote the lines that mention: (1) Russell Westbrook completing a three-point play in the second quarter and state the score or how many points the Clippers trailed immediately after it; (2) Nicolas Batum completing a four-point play in the third quarter and state the score or how many points the Clippers trailed immediately after it. Provide the two deficits as numbers."
       },
@@ -200,7 +200,7 @@
         "kind": "docqa",
         "results": [
           {
-            "doc_id": "1006435_espn_report",
+            "doc_id": "1006435_report",
             "answer": "Let me carefully read through the document to find the information I need for the two parts of the question.\n\nFirst, I need to find:\n1) Russell Westbrook completing a three-point play in the second quarter and the sco\u2026",
             "is_target": true,
             "contains_answer": false
@@ -288,7 +288,7 @@
           },
           {
             "clip_id": "1006435_178",
-            "answer": "Let me analyze the provided event logs/captions to determine the sequence of actions that takes place in this video clip.\n\nFrom the caption:\n\"Nicolas Batum performed 3 Pt Missed from Corner with a Jumper during a Catc\u2026",
+            "answer": "In the clip, \"Nicolas Batum performed 3 Pt Missed from Corner with a Jumper during a Catc\u2026",
             "is_target": false,
             "has_answer": false,
             "clip": "assets/t9_clips/clip_1006435_178.mp4",
@@ -296,7 +296,7 @@
           },
           {
             "clip_id": "1006435_188",
-            "answer": "We are given a clip of events/captions for a video clip and need to answer the question about the sequence of actions.\n\nThe event log/captions provided:\n\"Trey Murphy III performed Error leading to goal. Nicolas Batum\u2026",
+            "answer": "The clip shows: \"Trey Murphy III performed Error leading to goal. Nicolas Batum\u2026",
             "is_target": true,
             "has_answer": true,
             "frame": "assets/t9_frames/clip_1006435_188.jpg",
@@ -383,7 +383,7 @@
           },
           {
             "clip_id": "1006435_106",
-            "answer": "Let me analyze the provided event logs/captions to understand what happened in this video clip.\n\nThe event logs/captions state:\n1. \"Russell Westbrook assisted by Nicolas Batum.\"\n2. \"Naji Marshall performed Error leadi\u2026",
+            "answer": "The clip shows: 1. \"Russell Westbrook assisted by Nicolas Batum.\"\n2. \"Naji Marshall performed Error leadi\u2026",
             "is_target": false,
             "has_answer": true
           },
@@ -420,7 +420,7 @@
       "turn": 8,
       "tool": "video_qa_oracle",
       "abbrev": "VQ",
-      "thought": "Finally ask one target clip for the score. Get back 'Clippers 48 \u2013 56 Pelicans.'",
+      "thought": "Finally ask one target clip for the score after Westbrook's play. Get back 'Clippers 48 \u2013 56 Pelicans.'",
       "arguments": {
         "video_ids": [
           "1006435_98"
