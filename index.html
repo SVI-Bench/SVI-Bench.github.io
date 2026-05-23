@@ -4680,13 +4680,12 @@
       function T7AskPanel({ clip }) {
         const c = PILLARS[clip.pillar];
         const baseDir = clip.simBaseDir;
-        const rIn = useRef(null);
         const r0 = useRef(null);
         const r1 = useRef(null);
         const r2 = useRef(null);
         const r3 = useRef(null);
         useEffect(() => {
-          const videos = [rIn.current, r0.current, r1.current, r2.current, r3.current].filter(Boolean);
+          const videos = [r0.current, r1.current, r2.current, r3.current].filter(Boolean);
           if (videos.length === 0) return;
           videos.forEach(v => { v.muted = true; v.defaultMuted = true; });
           const holdMs = 2500;
@@ -4813,17 +4812,65 @@
           /*#__PURE__*/React.createElement("span", null, clip.context)
         )
         ),
+      // Middle: filmstrip — sampled input frames (initial + inpainted+bbox samples) with ellipsis
       /*#__PURE__*/React.createElement("div", {
-          style: { position: 'relative', flex: 1, minHeight: 0, background: '#000', overflow: 'hidden' }
+          style: {
+            position: 'relative', flex: 1, minHeight: 0, padding: '14px 14px',
+            background: '#0c0d10', display: 'flex', flexDirection: 'column',
+            justifyContent: 'center', gap: 10
+          }
         },
-        /*#__PURE__*/React.createElement("video", {
-          ref: rIn,
-          src: `${baseDir}/inpainted_gt_bbox.mp4`,
-          muted: true,
-          playsInline: true,
-          preload: 'auto',
-          style: { width: '100%', height: '100%', objectFit: 'cover', display: 'block' }
-        })
+        /*#__PURE__*/React.createElement("div", {
+          style: {
+            fontFamily: '"IBM Plex Mono", monospace', fontSize: 10,
+            letterSpacing: '0.2em', textTransform: 'uppercase', color: c.base,
+            fontWeight: 700, paddingLeft: 2
+          }
+        }, "Input"),
+        /*#__PURE__*/React.createElement("div", {
+          style: { display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 0 }
+        },
+          [
+            { file: 'seq_0_original.png', t: 0 },
+            { file: 'seq_2_inp50.png',    t: 3 },
+            { file: 'seq_3_inp80.png',    t: 5 }
+          ].flatMap(function (s, i, arr) {
+            var t = /*#__PURE__*/React.createElement("div", {
+              key: s.file,
+              style: {
+                flex: '0 1 220px', minWidth: 0, maxWidth: 220,
+                position: 'relative', aspectRatio: '16 / 9',
+                background: '#000', borderRadius: 3, overflow: 'hidden',
+                border: '1px solid #27272a'
+              }
+            },
+              /*#__PURE__*/React.createElement("img", {
+                src: `${baseDir}/${s.file}`,
+                alt: `t = ${s.t}s`,
+                style: { width: '100%', height: '100%', objectFit: 'cover', display: 'block' }
+              }),
+              /*#__PURE__*/React.createElement("span", {
+                style: {
+                  position: 'absolute', top: 6, right: 6,
+                  fontFamily: '"IBM Plex Mono", monospace', fontSize: 10,
+                  letterSpacing: '0.04em',
+                  background: 'rgba(10,10,12,0.78)', color: '#e4e4e7',
+                  padding: '2px 6px', borderRadius: 2, fontWeight: 600
+                }
+              }, `t = ${s.t}s`)
+            );
+            var e = /*#__PURE__*/React.createElement("div", {
+              key: `sep-${i}`,
+              style: {
+                flex: '0 0 26px', display: 'flex', alignItems: 'center',
+                justifyContent: 'center', color: '#52525b',
+                fontFamily: '"IBM Plex Mono", monospace',
+                fontSize: 20, fontWeight: 700, letterSpacing: '0.1em', userSelect: 'none'
+              }
+            }, '···');
+            return i === arr.length - 1 ? [t] : [t, e];
+          })
+        )
         ),
       /*#__PURE__*/React.createElement("div", {
           style: {
@@ -4843,31 +4890,6 @@
             fontWeight: 600, textTransform: 'uppercase'
           }
         }, clip.pillar)
-        ),
-      /*#__PURE__*/React.createElement("div", {
-          style: {
-            padding: '12px 16px', borderTop: '1px solid #1c1c1f',
-            display: 'flex', flexDirection: 'column', gap: 6, flexShrink: 0
-          }
-        },
-        /*#__PURE__*/React.createElement("div", {
-          style: {
-            fontFamily: '"IBM Plex Mono", monospace', fontSize: 10,
-            letterSpacing: '0.16em', textTransform: 'uppercase', color: '#a1a1aa'
-          }
-        }, "Conditioned on"),
-        /*#__PURE__*/React.createElement("div", { style: { display: 'flex', flexDirection: 'column', gap: 5 } },
-          ["Player-removed background", "Per-player bounding-box motion trajectories"].map(function (label) {
-            return /*#__PURE__*/React.createElement("div", {
-              key: label,
-              style: {
-                fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 12, lineHeight: 1.35,
-                color: '#e4e4e7', background: 'rgba(255,255,255,0.04)',
-                border: '1px solid #27272a', borderRadius: 3, padding: '4px 9px'
-              }
-            }, label);
-          })
-        )
         )
         ),
     // Right: 2x2 grid — fills column height
@@ -5037,14 +5059,64 @@
           /*#__PURE__*/React.createElement("span", null, clip.context)
         )
         ),
+      // Middle: filmstrip — initial frame + final bg+bbox frame with ellipsis
       /*#__PURE__*/React.createElement("div", {
-          style: { position: 'relative', flex: 1, minHeight: 0, background: '#000', overflow: 'hidden' }
+          style: {
+            position: 'relative', flex: 1, minHeight: 0, padding: '14px 14px',
+            background: '#0c0d10', display: 'flex', flexDirection: 'column',
+            justifyContent: 'center', gap: 10
+          }
         },
-        /*#__PURE__*/React.createElement("img", {
-          src: `${baseDir}/first_frame_player_goal_bbox.png`,
-          alt: "Player-removed background with start (solid) and end (dashed) bbox",
-          style: { width: '100%', height: '100%', objectFit: 'cover', display: 'block' }
-        })
+        /*#__PURE__*/React.createElement("div", {
+          style: {
+            fontFamily: '"IBM Plex Mono", monospace', fontSize: 10,
+            letterSpacing: '0.2em', textTransform: 'uppercase', color: c.base,
+            fontWeight: 700, paddingLeft: 2
+          }
+        }, "Input"),
+        /*#__PURE__*/React.createElement("div", {
+          style: { display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 0 }
+        },
+          [
+            { file: 'seq_0_original.png', t: 0 },
+            { file: 'seq_3_bg80.png',     t: 5 }
+          ].flatMap(function (s, i, arr) {
+            var t = /*#__PURE__*/React.createElement("div", {
+              key: s.file,
+              style: {
+                flex: '0 1 280px', minWidth: 0, maxWidth: 280,
+                position: 'relative', aspectRatio: '16 / 9',
+                background: '#000', borderRadius: 3, overflow: 'hidden',
+                border: '1px solid #27272a'
+              }
+            },
+              /*#__PURE__*/React.createElement("img", {
+                src: `${baseDir}/${s.file}`,
+                alt: `t = ${s.t}s`,
+                style: { width: '100%', height: '100%', objectFit: 'cover', display: 'block' }
+              }),
+              /*#__PURE__*/React.createElement("span", {
+                style: {
+                  position: 'absolute', top: 6, right: 6,
+                  fontFamily: '"IBM Plex Mono", monospace', fontSize: 10,
+                  letterSpacing: '0.04em',
+                  background: 'rgba(10,10,12,0.78)', color: '#e4e4e7',
+                  padding: '2px 6px', borderRadius: 2, fontWeight: 600
+                }
+              }, `t = ${s.t}s`)
+            );
+            var e = /*#__PURE__*/React.createElement("div", {
+              key: `sep-${i}`,
+              style: {
+                flex: '0 0 26px', display: 'flex', alignItems: 'center',
+                justifyContent: 'center', color: '#52525b',
+                fontFamily: '"IBM Plex Mono", monospace',
+                fontSize: 20, fontWeight: 700, letterSpacing: '0.1em', userSelect: 'none'
+              }
+            }, '···');
+            return i === arr.length - 1 ? [t] : [t, e];
+          })
+        )
         ),
       /*#__PURE__*/React.createElement("div", {
           style: {
