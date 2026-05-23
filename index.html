@@ -249,7 +249,7 @@
         metric: '50.2%',
         metricLabel: 'goal accuracy',
         bestModel: 'Wan 2.1 (ft)',
-        blurb: 'Generate video that follows desired actions. the generated video hardly follow the desired actions.'
+        blurb: 'Generate video that follows desired actions. The generated video fails to match the intended action.'
       }, {
         id: 'T9',
         name: 'Cross-Corpus Agentic Reasoning',
@@ -2809,7 +2809,7 @@
         },
           /*#__PURE__*/React.createElement("div", {
             style: {
-              width: '100%', maxWidth: 720, margin: '0 auto',
+              width: '100%', maxWidth: 600, margin: '0 auto',
               flex: 1, minHeight: 0,
               display: 'flex', flexDirection: 'column', gap: 10
             }
@@ -2852,7 +2852,7 @@
                 muted: true,
                 playsInline: true,
                 preload: 'auto',
-                style: { width: '100%', height: '100%', objectFit: 'cover', display: 'block' }
+                style: { width: '100%', height: '100%', objectFit: 'contain', display: 'block', background: '#000' }
               }),
               /*#__PURE__*/React.createElement("span", { style: { ...labelChip, color: c.base } }, "Model")
             )
@@ -2973,7 +2973,7 @@
         },
           /*#__PURE__*/React.createElement("div", {
             style: {
-              width: '100%', maxWidth: 720, margin: '0 auto',
+              width: '100%', maxWidth: 600, margin: '0 auto',
               flex: 1, minHeight: 0,
               display: 'flex', flexDirection: 'column', gap: 10
             }
@@ -3040,7 +3040,7 @@
                 muted: true,
                 playsInline: true,
                 preload: 'auto',
-                style: { width: '100%', height: '100%', objectFit: 'cover', display: 'block' }
+                style: { width: '100%', height: '100%', objectFit: 'contain', display: 'block', background: '#000' }
               }),
               /*#__PURE__*/React.createElement("span", { style: { ...labelChip, color: c.base } }, "Model")
             )
