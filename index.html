@@ -2700,105 +2700,94 @@
         const labelChip = {
           position: 'absolute',
           top: 6,
-          left: 8,
+          left: 6,
           fontFamily: '"IBM Plex Mono", monospace',
           fontSize: 9,
-          letterSpacing: '0.15em',
-          color: '#e4e4e7',
+          letterSpacing: '0.14em',
           textTransform: 'uppercase',
-          background: 'rgba(0,0,0,0.65)',
+          background: 'rgba(0,0,0,0.72)',
+          color: '#e4e4e7',
           padding: '2px 6px',
           borderRadius: 2,
           zIndex: 2
         };
-        const videoBox = {
-          flex: 1,
-          minHeight: 0,
-          minWidth: 0,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center'
-        };
-        const videoFrame = {
-          position: 'relative',
-          height: '100%',
-          aspectRatio: '832 / 480',
-          maxWidth: '100%',
-          background: '#000',
-          borderRadius: 2,
-          overflow: 'hidden',
-          border: '1px solid #27272a'
-        };
-        const videoEl = {
-          width: '100%',
-          height: '100%',
-          objectFit: 'cover',
-          display: 'block'
-        };
-        const [lightboxSrc, setLightboxSrc] = useState(null);
-        const v0Ref = useRef(null);
-        const v1Ref = useRef(null);
-        const v2Ref = useRef(null);
+        const vRef = useRef(null);
         useEffect(() => {
-          const videos = [v0Ref.current, v1Ref.current, v2Ref.current].filter(Boolean);
-          if (videos.length === 0) return;
-          videos.forEach(v => { v.muted = true; v.defaultMuted = true; });
+          const v = vRef.current;
+          if (!v) return;
+          v.muted = true; v.defaultMuted = true;
           const holdMs = 1500;
           let timer = null;
           let stopped = false;
-          const startAll = () => {
+          const startOne = () => {
             if (stopped) return;
-            videos.forEach(v => { try { v.pause(); } catch (_) { } v.currentTime = 0; });
+            try { v.pause(); } catch (_) {}
+            v.currentTime = 0;
             if (timer) clearTimeout(timer);
             timer = setTimeout(() => {
               if (stopped) return;
-              videos.forEach(v => {
-                const p = v.play();
-                if (p && p.catch) p.catch(() => { });
-              });
+              const p = v.play();
+              if (p && p.catch) p.catch(() => {});
             }, holdMs);
           };
-          const checkAndStart = () => {
-            if (stopped) return;
-            if (videos.every(v => v.readyState >= 2)) startAll();
-          };
-          const readyHandlers = [];
-          videos.forEach(v => {
-            if (v.readyState < 2) {
-              v.addEventListener('loadeddata', checkAndStart, { once: true });
-              readyHandlers.push(v);
-            }
-          });
+          const checkAndStart = () => { if (!stopped && v.readyState >= 2) startOne(); };
+          if (v.readyState < 2) v.addEventListener('loadeddata', checkAndStart, { once: true });
           checkAndStart();
-          const endedSet = new Set();
-          const endedHandlers = videos.map(v => {
-            const h = () => {
-              endedSet.add(v);
-              if (endedSet.size === videos.length) {
-                endedSet.clear();
-                // Hold on the last frame for holdMs, then reset + hold first frame + play
-                if (timer) clearTimeout(timer);
-                timer = setTimeout(startAll, holdMs);
-              }
-            };
-            v.addEventListener('ended', h);
-            return { v, h };
-          });
+          const onEnded = () => {
+            if (timer) clearTimeout(timer);
+            timer = setTimeout(startOne, holdMs);
+          };
+          v.addEventListener('ended', onEnded);
           return () => {
             stopped = true;
             if (timer) clearTimeout(timer);
-            readyHandlers.forEach(v => v.removeEventListener('loadeddata', checkAndStart));
-            endedHandlers.forEach(({ v, h }) => v.removeEventListener('ended', h));
+            v.removeEventListener('loadeddata', checkAndStart);
+            v.removeEventListener('ended', onEnded);
           };
         }, []);
-        const videoProps = (file, ref) => ({
-          src: `${baseDir}/${file}`,
-          muted: true,
-          playsInline: true,
-          preload: 'auto',
-          ref: ref,
-          style: videoEl
-        });
+        const strip = [
+          { file: 'seq_0_original.png', label: 'T = 0.0s · initial' },
+          { file: 'seq_1_inp20.png',    label: 'T = 1.3s · inpainted' },
+          { file: 'seq_2_inp50.png',    label: 'T = 3.3s · inpainted' },
+          { file: 'seq_3_inp80.png',    label: 'T = 5.3s · inpainted' }
+        ];
+        const perfRow = {
+          height: 9,
+          backgroundImage: 'radial-gradient(circle, #52525b 2.5px, transparent 3px)',
+          backgroundSize: '18px 9px',
+          backgroundRepeat: 'repeat-x',
+          backgroundPosition: 'center',
+          flexShrink: 0
+        };
+        const ellipsis = (i) => /*#__PURE__*/React.createElement("div", {
+          key: `sep-${i}`,
+          style: {
+            flex: '0 0 26px',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            color: '#71717a',
+            fontFamily: '"IBM Plex Mono", monospace',
+            fontSize: 20, fontWeight: 700, letterSpacing: '0.08em',
+            userSelect: 'none'
+          }
+        }, '···');
+        const thumb = (s) => /*#__PURE__*/React.createElement("div", {
+          key: s.file,
+          style: {
+            flex: '0 1 320px', minWidth: 0, maxWidth: 320,
+            position: 'relative',
+            aspectRatio: '16 / 9',
+            background: '#000',
+            borderRadius: 2,
+            overflow: 'hidden',
+            border: '1px solid #27272a'
+          }
+        },
+          /*#__PURE__*/React.createElement("img", {
+            src: `${baseDir}/${s.file}`,
+            alt: s.label || '',
+            style: { width: '100%', height: '100%', objectFit: 'cover', display: 'block' }
+          })
+        );
         return /*#__PURE__*/React.createElement("div", {
           style: {
             position: 'absolute',
@@ -2807,73 +2796,77 @@
             left: 0,
             right: 0,
             display: 'flex',
-            gap: 8,
-            padding: '8px 8px',
+            flexDirection: 'column',
+            gap: 10,
+            padding: '8px',
             background: '#0c0d10'
           }
         },
-  // Left: stacked input (top) + generated (bottom)
-  /*#__PURE__*/React.createElement("div", {
-          style: { flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 6 }
-        },
-    /*#__PURE__*/React.createElement("div", { style: videoBox },
-      /*#__PURE__*/React.createElement("div", { style: videoFrame },
-        /*#__PURE__*/React.createElement("video", videoProps('inpainted_gt_bbox.mp4', v0Ref)),
-        /*#__PURE__*/React.createElement("span", { style: { ...labelChip, color: c.base } }, "Input")
-        )
-        ),
-    /*#__PURE__*/React.createElement("div", { style: videoBox },
-      /*#__PURE__*/React.createElement("div", { style: videoFrame },
-        /*#__PURE__*/React.createElement("video", videoProps('generated_gt_bbox.mp4', v1Ref)),
-        /*#__PURE__*/React.createElement("span", { style: { ...labelChip, color: c.base } }, "MODEL")
-        )
-        )
-        ),
-  // Right: side panel with conditioning chips
-  /*#__PURE__*/React.createElement("div", {
-          style: {
-            width: 220,
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 8,
-            background: 'rgba(10,10,12,0.85)',
-            backdropFilter: 'blur(8px)',
-            borderLeft: '1px solid #e4e4e7',
-            padding: '8px 8px'
-          }
-        },
-    /*#__PURE__*/React.createElement("div", {
-          style: {
-            fontFamily: '"IBM Plex Sans", sans-serif',
-            fontSize: 10,
-            lineHeight: 1.45,
-            color: '#d4d4d8',
-            fontWeight: 500
-          }
-        }, "Conditioned on:"),
-    /*#__PURE__*/React.createElement("div", {
-          style: { display: 'flex', flexDirection: 'column', gap: 4 }
-        },
-          ["Player-removed background", "Per-player bounding-box motion trajectories"].map(function (label) {
-            return /*#__PURE__*/React.createElement("div", {
-              key: label,
+          // Top: filmstrip — perforations top/bottom + thumb row with ellipsis dividers
+          /*#__PURE__*/React.createElement("div", {
+            style: {
+              position: 'relative',
+              flexShrink: 0,
+              background: '#18181b',
+              borderRadius: 4,
+              border: '1px solid #27272a',
+              overflow: 'hidden',
+              display: 'flex',
+              flexDirection: 'column'
+            }
+          },
+            /*#__PURE__*/React.createElement("div", { style: perfRow }),
+            /*#__PURE__*/React.createElement("div", {
+              style: { display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 0, padding: '6px 8px' }
+            },
+              strip.flatMap((s, i) => i === strip.length - 1 ? [thumb(s)] : [thumb(s), ellipsis(i)])
+            ),
+            /*#__PURE__*/React.createElement("div", { style: perfRow }),
+            /*#__PURE__*/React.createElement("span", {
               style: {
-                fontFamily: '"IBM Plex Sans", sans-serif',
-                fontSize: 10,
-                lineHeight: 1.3,
-                color: '#d4d4d8',
-                background: 'rgba(255,255,255,0.04)',
-                border: '1px solid #27272a',
-                borderRadius: 3,
-                padding: '3px 7px'
+                position: 'absolute',
+                top: 6, left: 8,
+                fontFamily: '"IBM Plex Mono", monospace',
+                fontSize: 9.5,
+                letterSpacing: '0.16em',
+                textTransform: 'uppercase',
+                background: 'rgba(10,10,12,0.85)',
+                color: c.base,
+                padding: '2px 7px',
+                borderRadius: 2,
+                fontWeight: 700,
+                zIndex: 3
               }
-            }, label);
-          })
-        )
-        ), lightboxSrc && /*#__PURE__*/React.createElement(VideoLightbox, {
-          src: lightboxSrc,
-          onClose: () => setLightboxSrc(null)
-        }));
+            }, "Input")
+          ),
+          // Bottom: generated video (full remaining height)
+          /*#__PURE__*/React.createElement("div", {
+            style: { flex: 1, minHeight: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }
+          },
+            /*#__PURE__*/React.createElement("div", {
+              style: {
+                position: 'relative',
+                height: '100%',
+                aspectRatio: '832 / 480',
+                maxWidth: '100%',
+                background: '#000',
+                borderRadius: 2,
+                overflow: 'hidden',
+                border: '1px solid #27272a'
+              }
+            },
+              /*#__PURE__*/React.createElement("video", {
+                ref: vRef,
+                src: `${baseDir}/generated_gt_bbox.mp4`,
+                muted: true,
+                playsInline: true,
+                preload: 'auto',
+                style: { width: '100%', height: '100%', objectFit: 'cover', display: 'block' }
+              }),
+              /*#__PURE__*/React.createElement("span", { style: { ...labelChip, color: c.base } }, "Model")
+            )
+          )
+        );
       }
       function T8Panel({ pillar }) {
         const c = PILLARS[pillar];
@@ -2881,105 +2874,92 @@
         const labelChip = {
           position: 'absolute',
           top: 6,
-          left: 8,
+          left: 6,
           fontFamily: '"IBM Plex Mono", monospace',
           fontSize: 9,
-          letterSpacing: '0.15em',
-          color: '#e4e4e7',
+          letterSpacing: '0.14em',
           textTransform: 'uppercase',
-          background: 'rgba(0,0,0,0.65)',
+          background: 'rgba(0,0,0,0.72)',
+          color: '#e4e4e7',
           padding: '2px 6px',
           borderRadius: 2,
           zIndex: 2
         };
-        const videoBox = {
-          flex: 1,
-          minHeight: 0,
-          minWidth: 0,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center'
-        };
-        const videoFrame = {
-          position: 'relative',
-          height: '100%',
-          aspectRatio: '832 / 480',
-          maxWidth: '100%',
-          background: '#000',
-          borderRadius: 2,
-          overflow: 'hidden',
-          border: '1px solid #27272a'
-        };
-        const videoEl = {
-          width: '100%',
-          height: '100%',
-          objectFit: 'cover',
-          display: 'block'
-        };
-        const [lightboxSrc, setLightboxSrc] = useState(null);
-        const v0Ref = useRef(null);
-        const v1Ref = useRef(null);
-        const v2Ref = useRef(null);
+        const vRef = useRef(null);
         useEffect(() => {
-          const videos = [v0Ref.current, v1Ref.current, v2Ref.current].filter(Boolean);
-          if (videos.length === 0) return;
-          videos.forEach(v => { v.muted = true; v.defaultMuted = true; });
+          const v = vRef.current;
+          if (!v) return;
+          v.muted = true; v.defaultMuted = true;
           const holdMs = 1500;
           let timer = null;
           let stopped = false;
-          const startAll = () => {
+          const startOne = () => {
             if (stopped) return;
-            videos.forEach(v => { try { v.pause(); } catch (_) { } v.currentTime = 0; });
+            try { v.pause(); } catch (_) {}
+            v.currentTime = 0;
             if (timer) clearTimeout(timer);
             timer = setTimeout(() => {
               if (stopped) return;
-              videos.forEach(v => {
-                const p = v.play();
-                if (p && p.catch) p.catch(() => { });
-              });
+              const p = v.play();
+              if (p && p.catch) p.catch(() => {});
             }, holdMs);
           };
-          const checkAndStart = () => {
-            if (stopped) return;
-            if (videos.every(v => v.readyState >= 2)) startAll();
-          };
-          const readyHandlers = [];
-          videos.forEach(v => {
-            if (v.readyState < 2) {
-              v.addEventListener('loadeddata', checkAndStart, { once: true });
-              readyHandlers.push(v);
-            }
-          });
+          const checkAndStart = () => { if (!stopped && v.readyState >= 2) startOne(); };
+          if (v.readyState < 2) v.addEventListener('loadeddata', checkAndStart, { once: true });
           checkAndStart();
-          const endedSet = new Set();
-          const endedHandlers = videos.map(v => {
-            const h = () => {
-              endedSet.add(v);
-              if (endedSet.size === videos.length) {
-                endedSet.clear();
-                // Hold on the last frame for holdMs, then reset + hold first frame + play
-                if (timer) clearTimeout(timer);
-                timer = setTimeout(startAll, holdMs);
-              }
-            };
-            v.addEventListener('ended', h);
-            return { v, h };
-          });
+          const onEnded = () => {
+            if (timer) clearTimeout(timer);
+            timer = setTimeout(startOne, holdMs);
+          };
+          v.addEventListener('ended', onEnded);
           return () => {
             stopped = true;
             if (timer) clearTimeout(timer);
-            readyHandlers.forEach(v => v.removeEventListener('loadeddata', checkAndStart));
-            endedHandlers.forEach(({ v, h }) => v.removeEventListener('ended', h));
+            v.removeEventListener('loadeddata', checkAndStart);
+            v.removeEventListener('ended', onEnded);
           };
         }, []);
-        const videoProps = (file, ref) => ({
-          src: `${baseDir}/${file}`,
-          muted: true,
-          playsInline: true,
-          preload: 'auto',
-          ref: ref,
-          style: videoEl
-        });
+        const strip = [
+          { file: 'seq_0_original.png', label: 'T = 0.0s · initial' },
+          { file: 'seq_3_bg80.png',     label: 'T = 5.3s · bg + bbox' }
+        ];
+        const perfRow = {
+          height: 9,
+          backgroundImage: 'radial-gradient(circle, #52525b 2.5px, transparent 3px)',
+          backgroundSize: '18px 9px',
+          backgroundRepeat: 'repeat-x',
+          backgroundPosition: 'center',
+          flexShrink: 0
+        };
+        const ellipsis = (i) => /*#__PURE__*/React.createElement("div", {
+          key: `sep-${i}`,
+          style: {
+            flex: '0 0 26px',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            color: '#71717a',
+            fontFamily: '"IBM Plex Mono", monospace',
+            fontSize: 20, fontWeight: 700, letterSpacing: '0.08em',
+            userSelect: 'none'
+          }
+        }, '···');
+        const thumb = (s) => /*#__PURE__*/React.createElement("div", {
+          key: s.file,
+          style: {
+            flex: '0 1 320px', minWidth: 0, maxWidth: 320,
+            position: 'relative',
+            aspectRatio: '16 / 9',
+            background: '#000',
+            borderRadius: 2,
+            overflow: 'hidden',
+            border: '1px solid #27272a'
+          }
+        },
+          /*#__PURE__*/React.createElement("img", {
+            src: `${baseDir}/${s.file}`,
+            alt: s.label || '',
+            style: { width: '100%', height: '100%', objectFit: 'cover', display: 'block' }
+          })
+        );
         return /*#__PURE__*/React.createElement("div", {
           style: {
             position: 'absolute',
@@ -2988,131 +2968,77 @@
             left: 0,
             right: 0,
             display: 'flex',
-            gap: 8,
-            padding: '8px 8px',
+            flexDirection: 'column',
+            gap: 10,
+            padding: '8px',
             background: '#0c0d10'
           }
         },
-  // Left: stacked groundtruth (top) + generated (bottom)
-  /*#__PURE__*/React.createElement("div", {
-          style: { flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 6 }
-        },
-    /*#__PURE__*/React.createElement("div", { style: videoBox },
-      /*#__PURE__*/React.createElement("div", { style: videoFrame },
-        /*#__PURE__*/React.createElement("video", videoProps('groundtruth_gt_bbox.mp4', v0Ref)),
-        /*#__PURE__*/React.createElement("span", { style: labelChip }, "GT")
-        )
-        ),
-    /*#__PURE__*/React.createElement("div", { style: videoBox },
-      /*#__PURE__*/React.createElement("div", { style: videoFrame },
-        /*#__PURE__*/React.createElement("video", videoProps('generated_gt_bbox.mp4', v1Ref)),
-        /*#__PURE__*/React.createElement("span", { style: { ...labelChip, color: c.base } }, "MODEL")
-        )
-        )
-        ),
-  // Right: side panel with goal + small background preview
-  /*#__PURE__*/React.createElement("div", {
-          style: {
-            width: 220,
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 8,
-            background: 'rgba(10,10,12,0.85)',
-            backdropFilter: 'blur(8px)',
-            borderLeft: '1px solid #e4e4e7',
-            padding: '8px 8px'
-          }
-        },
-    /*#__PURE__*/React.createElement("div", {
-          style: {
-            fontFamily: '"IBM Plex Mono", monospace',
-            fontSize: 9,
-            letterSpacing: '0.12em',
-            color: '#d4d4d8',
-            textTransform: 'uppercase'
-          }
-        }, "Input"),
-    /*#__PURE__*/React.createElement("div", {
-          onClick: () => setLightboxSrc(`${baseDir}/first_frame_player_goal_bbox.png`),
-          onMouseEnter: (e) => { e.currentTarget.style.borderColor = c.base; e.currentTarget.style.transform = 'translateY(-2px)'; },
-          onMouseLeave: (e) => { e.currentTarget.style.borderColor = '#1c1c1f'; e.currentTarget.style.transform = 'translateY(0)'; },
-          style: {
-            position: 'relative',
-            background: '#000',
-            borderRadius: 2,
-            overflow: 'hidden',
-            aspectRatio: '16 / 9',
-            border: '1px solid #27272a',
-            cursor: 'pointer',
-            transition: 'border-color 150ms, transform 150ms'
-          }
-        },
-      /*#__PURE__*/React.createElement("img", {
-          src: `${baseDir}/first_frame_player_goal_bbox.png`,
-          alt: "Player and goal bounding boxes on player-removed background",
-          style: { width: '100%', height: '100%', objectFit: 'cover', display: 'block', pointerEvents: 'none' }
-        }),
-      /*#__PURE__*/React.createElement("div", {
-          style: {
-            position: 'absolute',
-            top: 4,
-            right: 4,
-            fontFamily: '"IBM Plex Mono", monospace',
-            fontSize: 9,
-            letterSpacing: '0.1em',
-            color: '#e4e4e7',
-            background: 'rgba(10,10,12,0.7)',
-            padding: '1px 4px',
-            borderRadius: 2,
-            pointerEvents: 'none'
-          }
-        }, "↗")
-        ),
-    /*#__PURE__*/React.createElement("p", {
-          style: {
-            fontFamily: '"IBM Plex Sans", sans-serif',
-            fontSize: 10,
-            lineHeight: 1.45,
-            color: '#a1a1aa',
-            margin: 0
-          }
-        }, /*#__PURE__*/React.createElement("span", {
-          style: { color: '#d4d4d8', fontWeight: 500 }
-        }, "Goal: "),
-          "Simulate Player #35 contesting a shot in the restricted area, forcing a miss."),
-    /*#__PURE__*/React.createElement("div", {
+          // Top: filmstrip — initial frame + final bg+bbox frame, with film perforations and ellipsis divider
+          /*#__PURE__*/React.createElement("div", {
             style: {
-              fontFamily: '"IBM Plex Sans", sans-serif',
-              fontSize: 10,
-              lineHeight: 1.45,
-              color: '#d4d4d8',
-              fontWeight: 500,
-              marginTop: 2
+              position: 'relative',
+              flexShrink: 0,
+              background: '#18181b',
+              borderRadius: 4,
+              border: '1px solid #27272a',
+              overflow: 'hidden',
+              display: 'flex',
+              flexDirection: 'column'
             }
-          }, "Conditioned on:"),
-    /*#__PURE__*/React.createElement("div", {
-            style: { display: 'flex', flexDirection: 'column', gap: 4 }
           },
-            ["initial frame", "player-removed background", "spatial target", "natural-language instruction"].map(function (label) {
-              return /*#__PURE__*/React.createElement("div", {
-                key: label,
-                style: {
-                  fontFamily: '"IBM Plex Sans", sans-serif',
-                  fontSize: 10,
-                  lineHeight: 1.3,
-                  color: '#d4d4d8',
-                  background: 'rgba(255,255,255,0.04)',
-                  border: '1px solid #27272a',
-                  borderRadius: 3,
-                  padding: '3px 7px'
-                }
-              }, label);
-            })
+            /*#__PURE__*/React.createElement("div", { style: perfRow }),
+            /*#__PURE__*/React.createElement("div", {
+              style: { display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 0, padding: '6px 8px' }
+            },
+              strip.flatMap((s, i) => i === strip.length - 1 ? [thumb(s)] : [thumb(s), ellipsis(i)])
+            ),
+            /*#__PURE__*/React.createElement("div", { style: perfRow }),
+            /*#__PURE__*/React.createElement("span", {
+              style: {
+                position: 'absolute',
+                top: 6, left: 8,
+                fontFamily: '"IBM Plex Mono", monospace',
+                fontSize: 9.5,
+                letterSpacing: '0.16em',
+                textTransform: 'uppercase',
+                background: 'rgba(10,10,12,0.85)',
+                color: c.base,
+                padding: '2px 7px',
+                borderRadius: 2,
+                fontWeight: 700,
+                zIndex: 3
+              }
+            }, "Input")
+          ),
+          // Bottom: generated video (full remaining height)
+          /*#__PURE__*/React.createElement("div", {
+            style: { flex: 1, minHeight: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }
+          },
+            /*#__PURE__*/React.createElement("div", {
+              style: {
+                position: 'relative',
+                height: '100%',
+                aspectRatio: '832 / 480',
+                maxWidth: '100%',
+                background: '#000',
+                borderRadius: 2,
+                overflow: 'hidden',
+                border: '1px solid #27272a'
+              }
+            },
+              /*#__PURE__*/React.createElement("video", {
+                ref: vRef,
+                src: `${baseDir}/generated_gt_bbox.mp4`,
+                muted: true,
+                playsInline: true,
+                preload: 'auto',
+                style: { width: '100%', height: '100%', objectFit: 'cover', display: 'block' }
+              }),
+              /*#__PURE__*/React.createElement("span", { style: { ...labelChip, color: c.base } }, "Model")
+            )
           )
-        ), lightboxSrc && /*#__PURE__*/React.createElement(VideoLightbox, {
-          src: lightboxSrc,
-          onClose: () => setLightboxSrc(null)
-        }));
+        );
       }
       function CliffBroadcastViewport({
         task,
