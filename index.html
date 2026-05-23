@@ -4768,7 +4768,7 @@
             width: '100%',
             marginBottom: 24,
             display: 'grid',
-            gridTemplateColumns: '1.2fr 1fr',
+            gridTemplateColumns: '1.35fr 1fr',
             gap: 28,
             height: 620,
             minHeight: 0
@@ -5346,7 +5346,20 @@
             fontSize: 11,
             color: '#e4e4e7'
           }
-        }, "Cross-Corpus Agentic Reasoning"))) : isT8 ? /*#__PURE__*/React.createElement(T8AskPanel, {
+        }, "Cross-Corpus Agentic Reasoning"), /*#__PURE__*/React.createElement("span", {
+          style: {
+            marginLeft: 'auto',
+            fontFamily: '"IBM Plex Mono", monospace',
+            fontSize: 10,
+            color: '#0a0a0c',
+            letterSpacing: '0.12em',
+            background: PILLARS.Agency.base,
+            padding: '3px 8px',
+            borderRadius: 2,
+            fontWeight: 600,
+            textTransform: 'uppercase'
+          }
+        }, "Agency"))) : isT8 ? /*#__PURE__*/React.createElement(T8AskPanel, {
           clip: clip
         }) : isT7 ? /*#__PURE__*/React.createElement(T7AskPanel, {
           clip: clip
