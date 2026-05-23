@@ -2746,47 +2746,52 @@
           };
         }, []);
         const strip = [
-          { file: 'seq_0_original.png', label: 'T = 0.0s · initial' },
-          { file: 'seq_1_inp20.png',    label: 'T = 1.3s · inpainted' },
-          { file: 'seq_2_inp50.png',    label: 'T = 3.3s · inpainted' },
-          { file: 'seq_3_inp80.png',    label: 'T = 5.3s · inpainted' }
+          { file: 'seq_0_original.png', t: 0 },
+          { file: 'seq_2_inp50.png',    t: 3 },
+          { file: 'seq_3_inp80.png',    t: 5 }
         ];
-        const perfRow = {
-          height: 9,
-          backgroundImage: 'radial-gradient(circle, #52525b 2.5px, transparent 3px)',
-          backgroundSize: '18px 9px',
-          backgroundRepeat: 'repeat-x',
-          backgroundPosition: 'center',
-          flexShrink: 0
-        };
         const ellipsis = (i) => /*#__PURE__*/React.createElement("div", {
           key: `sep-${i}`,
           style: {
-            flex: '0 0 26px',
+            flex: '0 0 32px',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            color: '#71717a',
+            color: '#52525b',
             fontFamily: '"IBM Plex Mono", monospace',
-            fontSize: 20, fontWeight: 700, letterSpacing: '0.08em',
+            fontSize: 22, fontWeight: 700, letterSpacing: '0.1em',
             userSelect: 'none'
           }
         }, '···');
         const thumb = (s) => /*#__PURE__*/React.createElement("div", {
           key: s.file,
           style: {
-            flex: '0 1 320px', minWidth: 0, maxWidth: 320,
+            flex: '0 1 340px', minWidth: 0, maxWidth: 340,
             position: 'relative',
             aspectRatio: '16 / 9',
             background: '#000',
-            borderRadius: 2,
+            borderRadius: 3,
             overflow: 'hidden',
             border: '1px solid #27272a'
           }
         },
           /*#__PURE__*/React.createElement("img", {
             src: `${baseDir}/${s.file}`,
-            alt: s.label || '',
+            alt: `t = ${s.t}s`,
             style: { width: '100%', height: '100%', objectFit: 'cover', display: 'block' }
-          })
+          }),
+          /*#__PURE__*/React.createElement("span", {
+            style: {
+              position: 'absolute',
+              top: 6, right: 6,
+              fontFamily: '"IBM Plex Mono", monospace',
+              fontSize: 10,
+              letterSpacing: '0.04em',
+              background: 'rgba(10,10,12,0.78)',
+              color: '#e4e4e7',
+              padding: '2px 6px',
+              borderRadius: 2,
+              fontWeight: 600
+            }
+          }, `t = ${s.t}s`)
         );
         return /*#__PURE__*/React.createElement("div", {
           style: {
@@ -2802,55 +2807,41 @@
             background: '#0c0d10'
           }
         },
-          // Top: filmstrip — perforations top/bottom + thumb row with ellipsis dividers
           /*#__PURE__*/React.createElement("div", {
             style: {
-              position: 'relative',
-              flexShrink: 0,
-              background: '#18181b',
-              borderRadius: 4,
-              border: '1px solid #27272a',
-              overflow: 'hidden',
-              display: 'flex',
-              flexDirection: 'column'
+              width: '100%', maxWidth: 900, margin: '0 auto',
+              flex: 1, minHeight: 0,
+              display: 'flex', flexDirection: 'column', gap: 10
             }
           },
-            /*#__PURE__*/React.createElement("div", { style: perfRow }),
+            // Top: input strip header + sampled thumbs with ellipsis dividers
             /*#__PURE__*/React.createElement("div", {
-              style: { display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 0, padding: '6px 8px' }
+              style: { flexShrink: 0, display: 'flex', flexDirection: 'column', gap: 6 }
             },
-              strip.flatMap((s, i) => i === strip.length - 1 ? [thumb(s)] : [thumb(s), ellipsis(i)])
+              /*#__PURE__*/React.createElement("div", {
+                style: {
+                  fontFamily: '"IBM Plex Mono", monospace',
+                  fontSize: 10,
+                  letterSpacing: '0.2em',
+                  textTransform: 'uppercase',
+                  color: c.base,
+                  fontWeight: 700,
+                  paddingLeft: 2
+                }
+              }, "Input"),
+              /*#__PURE__*/React.createElement("div", {
+                style: { display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 0 }
+              },
+                strip.flatMap((s, i) => i === strip.length - 1 ? [thumb(s)] : [thumb(s), ellipsis(i)])
+              )
             ),
-            /*#__PURE__*/React.createElement("div", { style: perfRow }),
-            /*#__PURE__*/React.createElement("span", {
-              style: {
-                position: 'absolute',
-                top: 6, left: 8,
-                fontFamily: '"IBM Plex Mono", monospace',
-                fontSize: 9.5,
-                letterSpacing: '0.16em',
-                textTransform: 'uppercase',
-                background: 'rgba(10,10,12,0.85)',
-                color: c.base,
-                padding: '2px 7px',
-                borderRadius: 2,
-                fontWeight: 700,
-                zIndex: 3
-              }
-            }, "Input")
-          ),
-          // Bottom: generated video (full remaining height)
-          /*#__PURE__*/React.createElement("div", {
-            style: { flex: 1, minHeight: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }
-          },
+            // Bottom: generated video — same width as strip wrapper (full inner width)
             /*#__PURE__*/React.createElement("div", {
               style: {
                 position: 'relative',
-                height: '100%',
-                aspectRatio: '832 / 480',
-                maxWidth: '100%',
+                flex: 1, minHeight: 0, width: '100%',
                 background: '#000',
-                borderRadius: 2,
+                borderRadius: 3,
                 overflow: 'hidden',
                 border: '1px solid #27272a'
               }
@@ -2920,45 +2911,51 @@
           };
         }, []);
         const strip = [
-          { file: 'seq_0_original.png', label: 'T = 0.0s · initial' },
-          { file: 'seq_3_bg80.png',     label: 'T = 5.3s · bg + bbox' }
+          { file: 'seq_0_original.png', t: 0 },
+          { file: 'seq_3_bg80.png',     t: 5 }
         ];
-        const perfRow = {
-          height: 9,
-          backgroundImage: 'radial-gradient(circle, #52525b 2.5px, transparent 3px)',
-          backgroundSize: '18px 9px',
-          backgroundRepeat: 'repeat-x',
-          backgroundPosition: 'center',
-          flexShrink: 0
-        };
         const ellipsis = (i) => /*#__PURE__*/React.createElement("div", {
           key: `sep-${i}`,
           style: {
-            flex: '0 0 26px',
+            flex: '0 0 32px',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            color: '#71717a',
+            color: '#52525b',
             fontFamily: '"IBM Plex Mono", monospace',
-            fontSize: 20, fontWeight: 700, letterSpacing: '0.08em',
+            fontSize: 22, fontWeight: 700, letterSpacing: '0.1em',
             userSelect: 'none'
           }
         }, '···');
         const thumb = (s) => /*#__PURE__*/React.createElement("div", {
           key: s.file,
           style: {
-            flex: '0 1 320px', minWidth: 0, maxWidth: 320,
+            flex: '0 1 340px', minWidth: 0, maxWidth: 340,
             position: 'relative',
             aspectRatio: '16 / 9',
             background: '#000',
-            borderRadius: 2,
+            borderRadius: 3,
             overflow: 'hidden',
             border: '1px solid #27272a'
           }
         },
           /*#__PURE__*/React.createElement("img", {
             src: `${baseDir}/${s.file}`,
-            alt: s.label || '',
+            alt: `t = ${s.t}s`,
             style: { width: '100%', height: '100%', objectFit: 'cover', display: 'block' }
-          })
+          }),
+          /*#__PURE__*/React.createElement("span", {
+            style: {
+              position: 'absolute',
+              top: 6, right: 6,
+              fontFamily: '"IBM Plex Mono", monospace',
+              fontSize: 10,
+              letterSpacing: '0.04em',
+              background: 'rgba(10,10,12,0.78)',
+              color: '#e4e4e7',
+              padding: '2px 6px',
+              borderRadius: 2,
+              fontWeight: 600
+            }
+          }, `t = ${s.t}s`)
         );
         return /*#__PURE__*/React.createElement("div", {
           style: {
@@ -2974,55 +2971,65 @@
             background: '#0c0d10'
           }
         },
-          // Top: filmstrip — initial frame + final bg+bbox frame, with film perforations and ellipsis divider
           /*#__PURE__*/React.createElement("div", {
             style: {
-              position: 'relative',
-              flexShrink: 0,
-              background: '#18181b',
-              borderRadius: 4,
-              border: '1px solid #27272a',
-              overflow: 'hidden',
-              display: 'flex',
-              flexDirection: 'column'
+              width: '100%', maxWidth: 900, margin: '0 auto',
+              flex: 1, minHeight: 0,
+              display: 'flex', flexDirection: 'column', gap: 10
             }
           },
-            /*#__PURE__*/React.createElement("div", { style: perfRow }),
+            // Top: input strip header + goal subtitle + sampled thumbs
             /*#__PURE__*/React.createElement("div", {
-              style: { display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 0, padding: '6px 8px' }
+              style: { flexShrink: 0, display: 'flex', flexDirection: 'column', gap: 6 }
             },
-              strip.flatMap((s, i) => i === strip.length - 1 ? [thumb(s)] : [thumb(s), ellipsis(i)])
+              /*#__PURE__*/React.createElement("div", {
+                style: {
+                  display: 'flex', alignItems: 'baseline', gap: 10,
+                  paddingLeft: 2, paddingRight: 2, flexWrap: 'wrap'
+                }
+              },
+                /*#__PURE__*/React.createElement("span", {
+                  style: {
+                    fontFamily: '"IBM Plex Mono", monospace',
+                    fontSize: 10,
+                    letterSpacing: '0.2em',
+                    textTransform: 'uppercase',
+                    color: c.base,
+                    fontWeight: 700,
+                    flexShrink: 0
+                  }
+                }, "Input"),
+                /*#__PURE__*/React.createElement("span", {
+                  style: {
+                    fontFamily: '"IBM Plex Sans", sans-serif',
+                    fontSize: 12,
+                    lineHeight: 1.4,
+                    color: '#d4d4d8'
+                  }
+                },
+                  /*#__PURE__*/React.createElement("span", {
+                    style: { color: '#fafafa', fontWeight: 600, marginRight: 5 }
+                  }, "Goal:"),
+                  "simulate target player ",
+                  /*#__PURE__*/React.createElement("span", {
+                    style: { color: c.base, fontWeight: 700 }
+                  }, "#35"),
+                  " contesting a shot in the restricted area, forcing a miss."
+                )
+              ),
+              /*#__PURE__*/React.createElement("div", {
+                style: { display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 0 }
+              },
+                strip.flatMap((s, i) => i === strip.length - 1 ? [thumb(s)] : [thumb(s), ellipsis(i)])
+              )
             ),
-            /*#__PURE__*/React.createElement("div", { style: perfRow }),
-            /*#__PURE__*/React.createElement("span", {
-              style: {
-                position: 'absolute',
-                top: 6, left: 8,
-                fontFamily: '"IBM Plex Mono", monospace',
-                fontSize: 9.5,
-                letterSpacing: '0.16em',
-                textTransform: 'uppercase',
-                background: 'rgba(10,10,12,0.85)',
-                color: c.base,
-                padding: '2px 7px',
-                borderRadius: 2,
-                fontWeight: 700,
-                zIndex: 3
-              }
-            }, "Input")
-          ),
-          // Bottom: generated video (full remaining height)
-          /*#__PURE__*/React.createElement("div", {
-            style: { flex: 1, minHeight: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }
-          },
+            // Bottom: generated video — same width as strip wrapper (full inner width)
             /*#__PURE__*/React.createElement("div", {
               style: {
                 position: 'relative',
-                height: '100%',
-                aspectRatio: '832 / 480',
-                maxWidth: '100%',
+                flex: 1, minHeight: 0, width: '100%',
                 background: '#000',
-                borderRadius: 2,
+                borderRadius: 3,
                 overflow: 'hidden',
                 border: '1px solid #27272a'
               }
