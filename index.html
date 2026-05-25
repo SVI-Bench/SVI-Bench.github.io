@@ -265,9 +265,9 @@
         T1: 'assets/T1/t1_clip.mp4',
         T2: 'assets/T2/t2_clip.mp4',
         T3: 'assets/videos/cliff_placeholder.mp4',
-        T4: 'assets/T4/t4_clip.mp4',
+        T4: 'local_asset/T4/T4_update_example.mp4',
         T5: 'assets/T5/t5_clip.mp4',
-        T6: 'assets/T6/t6_clip.mp4',
+        T6: 'local_asset/T6/example_3/t6_example_3.mp4',
         T7: 'assets/videos/cliff_placeholder.mp4',
         T8: 'assets/videos/cliff_placeholder.mp4',
         T9: 'assets/videos/cliff_placeholder.mp4'
@@ -308,22 +308,20 @@
         },
         T4: {
           layout: 'caption',
-          q: "Why did the play succeed or fail?",
+          q: "What did the goalkeeper do before the penalty?",
           gt: [
-            "He ",
-            { t: "rolled his right ankle", ok: true },
-            " after accidentally ",
-            { t: "stepping on Ball State's head coach on the sideline", ok: true },
-            " while trying to get back into the play."
+            "The goalkeeper ",
+            { t: "tampered with the penalty spot by scuffing it up", ok: true },
+            ". He was ",
+            { t: "booked for it", ok: true },
+            "."
           ],
           pred: [
-            "A Bowling Green player went down in a ",
-            { t: "freak, non-contact moment", wrong: true },
-            ": his ",
-            { t: "foot/leg got tangled as he tried to change direction", wrong: true },
-            ". He appeared to have suffered an ",
-            { t: "ankle injury (appearing like a bad sprain/roll)", wrong: false },
-            "."
+            "The goalkeeper was seen ",
+            { t: "making exaggerated hand movements and gestures", wrong: true },
+            " before the penalty kick, ",
+            { t: "which may have been intended to distract the shooter", wrong: true },
+            ". He remained on his goal line."
           ]
         },
         T5: null
@@ -2111,13 +2109,13 @@
   /*#__PURE__*/React.createElement("div", {
           style: { padding: '10px 12px', background: 'rgba(20,20,26,0.5)', border: '1px solid #27272a', borderRadius: 2, fontFamily: '"IBM Plex Sans", sans-serif', fontSize: 11, lineHeight: 1.65, color: '#d4d4d8' }
         },
-          "Florida Atlantic throttled crosstown rival FIU 107\u201363 in Boca Raton, turning a tense opening into a runaway clinic built on pace, depth, and relentless rim pressure. ... A 20\u20138 scoreboard at 12:31 of the first half ... ballooned to 31\u201311 by the under-10 as FAU's bench amped the tempo ... The half closed 56\u201323. ... FAU's guards again hunted the elbows in ball screens ... pushing the lead to ",
-  /*#__PURE__*/React.createElement("span", { style: { color: '#C0392B', fontWeight: 500 } }, "66\u201326"),
-          " and later ",
-  /*#__PURE__*/React.createElement("span", { style: { color: '#C0392B', fontWeight: 500 } }, "80\u201342"),
-          " with nine and a half to play. ... ",
-  /*#__PURE__*/React.createElement("span", { style: { color: '#C0392B', fontWeight: 500 } }, "a downhill lead guard repeatedly collapsed the defense; wings ran the lanes and finished; a physical big controlled the glass"),
-          " ... FAU won every phase, and by night's end, the margin told the story."),
+          "The Flyers authored a resilient 4\u20133 overtime win in San Jose, flipping a 3\u20131 third-period deficit ... Tomas Hertl opened the scoring midway through the first ... The Flyers answered promptly\u2014",
+  /*#__PURE__*/React.createElement("span", { style: { color: '#C0392B', fontWeight: 500 } }, "Morgan Frost leveled it"),
+          " less than a minute later ... Owen Tippett cut it to 3\u20132 ... Tony DeAngelo ripped the 3\u20133 equalizer through a layered screen at 2:05 ... ",
+  /*#__PURE__*/React.createElement("span", { style: { color: '#C0392B', fontWeight: 500 } }, "Konecny\u2019s breakaway winner"),
+          " in OT. ... ",
+  /*#__PURE__*/React.createElement("span", { style: { color: '#C0392B', fontWeight: 500 } }, "Ersson (33 saves)"),
+          " steadied a rocky middle frame."),
   // Judge score
   /*#__PURE__*/React.createElement("div", {
             style: { marginTop: 'auto', padding: '8px 0', borderTop: '1px solid #e4e4e7', display: 'flex', justifyContent: 'space-between', fontFamily: '"IBM Plex Mono", monospace', fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase' }
@@ -2231,22 +2229,20 @@
       }
       function T4Panel({ pillar }) {
         const c = PILLARS[pillar];
-        const q = 'In the first half, a Bowling Green player was injured in an unusual sequence. What happened in that moment, and what specific injury did he appear to sustain?';
+        const q = 'On the penalty that gave Brentford the lead, what notable thing did the goalkeeper do before the kick, and what was the result?';
         const gt = [
-          'He ',
-          { t: 'rolled his right ankle', ok: true },
-          ' after accidentally ',
-          { t: "stepping on Ball State's head coach on the sideline", ok: true },
-          ' while trying to get back into the play.'
+          'The goalkeeper ',
+          { t: 'tampered with the penalty spot by scuffing it up', ok: true },
+          '. He was ',
+          { t: 'booked for it', ok: true },
+          '.'
         ];
         const pred = [
-          'A Bowling Green player went down in a ',
-          { t: 'freak, non-contact moment', wrong: true },
-          ': his ',
-          { t: 'foot/leg got tangled as he tried to change direction', wrong: true },
-          '. He appeared to have suffered an ',
-          { t: 'ankle injury (appearing like a bad sprain/roll)', ok: false },
-          '.'
+          'The goalkeeper, David Raya, was seen ',
+          { t: 'making exaggerated hand movements and gestures', wrong: true },
+          ' before the penalty kick, ',
+          { t: 'which may have been intended to distract the shooter', wrong: true },
+          '. He remained on his goal line, not moving early.'
         ];
         return /*#__PURE__*/React.createElement(PanelShell, null,
     /*#__PURE__*/React.createElement("div", {
@@ -2351,12 +2347,12 @@
         const greenSpan = txt => /*#__PURE__*/React.createElement("span",
           { style: { color: '#22c55e', fontWeight: 500 } }, txt);
         const salient = [
-          { text: 'Murray State defeated Indiana State 82-73.', covered: true },
-          { text: 'The game was tied 36-36 at halftime.', covered: false },
-          { text: "Rob Perry's free throw at 11:31 of the second half produced the final lead change of the game.", covered: false },
-          { text: 'Rob Perry shot 0-for-9 from three-point range.', covered: false },
-          { text: 'Rob Perry made all five of his two-point field goal attempts in the second half.', covered: false },
-          { text: 'Cameron Henry recorded 10 assists.', covered: false },
+          { text: 'The game result was 4-3 in overtime.', covered: true },
+          { text: 'Tony DeAngelo scored the overtime goal at 1:10.', covered: false },
+          { text: 'Travis Konecny scored two goals.', covered: false },
+          { text: 'Samuel Ersson made 25 saves.', covered: false },
+          { text: 'Ivan Provorov recorded seven takeaways in the third period.', covered: false },
+          { text: 'Kevin Labanc scored early in the third period.', covered: false },
           { text: '\u2026', covered: false, dim: true }
         ];
         return /*#__PURE__*/React.createElement(PanelShell, null,
@@ -2391,15 +2387,20 @@
             fontSize: 11, lineHeight: 1.5, color: '#e4e4e7'
           }
         },
-          "Murray State absorbed Indiana State\u2019s early punches, then methodically flipped the game with defense, paint touches and free throws, closing on a ",
-          greenSpan("46"),
-          redSpan("\u201331"),
-          greenSpan(" second-half surge to win 82\u201373."),
-          " Indiana State\u2019s precision start set the tone: crisp spacing, early post seals ",
-          greenSpan("and pick-and-roll pocket feeds produced a 16\u20136 lead"),
-          " and ",
-          redSpan("a 42\u201336 edge out of halftime"),
-          ". The Sycamores\u2019 frontcourt execution was clean\u2014high-low entries and short-roll decisions repeatedly created point-blank looks\u2014and their wings punished late closeouts. \u2026 Burns anchored the swing\u2014owning the glass, sealing deep, and finishing through contact\u2014to pace Murray\u2019s interior dominance. Rob Perry\u2019s late-clock shot-making and composure at the line closed the door. \u2026"
+          greenSpan("The Flyers authored a resilient 4\u20133 overtime win in San Jose"),
+          ", flipping a ",
+          greenSpan("3\u20131 third-period deficit"),
+          " with structure, special-teams poise, and timely finishing, then closing it out on ",
+          redSpan("Travis Konecny\u2019s breakaway winner"),
+          ". \u2026 ",
+          greenSpan("Tomas Hertl opened the scoring"),
+          " midway through the first \u2026 The Flyers answered promptly\u2014",
+          redSpan("Morgan Frost leveled it less than a minute later"),
+          " \u2026 Hertl\u2019s second of the night, a power-play strike ",
+          greenSpan("at 8:29"),
+          ", put the Sharks up 2\u20131. \u2026 Owen Tippett cut it to 3\u20132 \u2026 ",
+          redSpan("Ersson (33 saves)"),
+          " steadied a rocky middle frame. \u2026"
         )
         ),
         /*#__PURE__*/React.createElement("div", {
