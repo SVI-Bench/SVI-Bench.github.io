@@ -317,7 +317,9 @@
             "."
           ],
           pred: [
-            "The goalkeeper was seen ",
+            "The goalkeeper, ",
+            { t: "David Raya", wrong: true },
+            ", was seen ",
             { t: "making exaggerated hand movements and gestures", wrong: true },
             " before the penalty kick, ",
             { t: "which may have been intended to distract the shooter", wrong: true },
@@ -2238,7 +2240,9 @@
           '.'
         ];
         const pred = [
-          'The goalkeeper, David Raya, was seen ',
+          'The goalkeeper, ',
+          { t: 'David Raya', wrong: true },
+          ', was seen ',
           { t: 'making exaggerated hand movements and gestures', wrong: true },
           ' before the penalty kick, ',
           { t: 'which may have been intended to distract the shooter', wrong: true },
