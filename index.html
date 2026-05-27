@@ -3019,7 +3019,7 @@
                   /*#__PURE__*/React.createElement("span", {
                     style: { color: c.base, fontWeight: 700 }
                   }, "#6"),
-                  " securing a rebound."
+                  " driving from the wing into the restricted area, attacking the paint past his defender off the dribble, and finishing at the rim with a layup for a made 2-point shot."
                 )
               ),
               /*#__PURE__*/React.createElement("div", {
@@ -4416,6 +4416,15 @@
         }, "\u2193  find out more about the dataset"));
       }
       function VideoSection() {
+        const vRef = useRef(null);
+        const [started, setStarted] = useState(false);
+        const startPlay = () => {
+          const v = vRef.current;
+          if (!v) return;
+          setStarted(true);
+          const p = v.play();
+          if (p && p.catch) p.catch(() => {});
+        };
         return /*#__PURE__*/React.createElement("section", {
           id: "video",
           style: {
@@ -4465,53 +4474,27 @@
             height: 36,
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'space-between',
+            justifyContent: 'flex-start',
             padding: '0 16px',
             background: 'linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0) 100%)',
-            zIndex: 5
+            zIndex: 5,
+            pointerEvents: 'none'
           }
         }, /*#__PURE__*/React.createElement("div", {
           style: {
-            display: 'flex',
-            gap: 12,
-            alignItems: 'center',
             fontFamily: '"IBM Plex Mono", monospace',
             fontSize: 11,
             letterSpacing: '0.15em',
             color: '#d4d4d8',
             textTransform: 'uppercase'
           }
-        }, /*#__PURE__*/React.createElement("span", {
-          style: {
-            display: 'inline-block',
-            width: 7,
-            height: 7,
-            borderRadius: 4,
-            background: '#C0392B',
-            animation: 'recPulse 1.6s ease-in-out infinite'
-          }
-        })), /*#__PURE__*/React.createElement("div", {
-          style: {
-            fontFamily: '"IBM Plex Mono", monospace',
-            fontSize: 11,
-            letterSpacing: '0.15em',
-            color: '#d4d4d8'
-          }
-        }, "SVI-BENCH · PROMO")), /*#__PURE__*/React.createElement("div", {
-          style: {
-            position: 'absolute',
-            inset: 0,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            flexDirection: 'column',
-            gap: 18
-          }
-        }, /*#__PURE__*/React.createElement("video", {
+        }, "SVI-BENCH")), /*#__PURE__*/React.createElement("video", {
+          ref: vRef,
           src: "https://huggingface.co/datasets/MVP-Group/svi-bench-assets/resolve/main/UNC_26076_SVI_Bench_Promo_110RR.mp4",
-          controls: true,
+          controls: started,
           preload: 'metadata',
           playsInline: true,
+          onPlay: () => setStarted(true),
           style: {
             position: 'absolute',
             inset: 0,
@@ -4521,7 +4504,50 @@
             background: '#000',
             display: 'block'
           }
-        }))));
+        }), !started && /*#__PURE__*/React.createElement("div", {
+          onClick: startPlay,
+          style: {
+            position: 'absolute',
+            inset: 0,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'pointer',
+            background: 'radial-gradient(circle at center, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.35) 100%)',
+            zIndex: 4
+          }
+        }, /*#__PURE__*/React.createElement("div", {
+          style: {
+            width: 88,
+            height: 88,
+            borderRadius: '50%',
+            background: 'rgba(12,13,16,0.55)',
+            border: '1.5px solid rgba(250,250,250,0.65)',
+            backdropFilter: 'blur(4px)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            transition: 'all 200ms ease'
+          },
+          onMouseEnter: e => {
+            e.currentTarget.style.background = 'rgba(12,13,16,0.8)';
+            e.currentTarget.style.borderColor = '#fafafa';
+            e.currentTarget.style.transform = 'scale(1.06)';
+          },
+          onMouseLeave: e => {
+            e.currentTarget.style.background = 'rgba(12,13,16,0.55)';
+            e.currentTarget.style.borderColor = 'rgba(250,250,250,0.65)';
+            e.currentTarget.style.transform = 'scale(1)';
+          }
+        }, /*#__PURE__*/React.createElement("svg", {
+          viewBox: "0 0 24 24",
+          width: "30",
+          height: "30",
+          style: { marginLeft: 4 }
+        }, /*#__PURE__*/React.createElement("polygon", {
+          points: "6,4 6,20 20,12",
+          fill: "#fafafa"
+        }))))));
       }
       function CliffSection() {
         const sectionRef = useRef(null);
