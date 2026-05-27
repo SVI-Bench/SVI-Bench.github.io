@@ -6852,19 +6852,21 @@
           }
         }, [{
           l: 'Paper (arXiv)',
-          s: 'to add'
+          s: 'to add',
+          h: '#'
         }, {
           l: 'Code (GitHub)',
-          s: 'to add'
+          s: 'Texaser/SVI-Bench',
+          h: 'https://github.com/Texaser/SVI-Bench'
         }, {
           l: 'Dataset (HuggingFace)',
-          s: 'gated · to add'
-        }, {
-          l: 'Contact',
-          s: 'to add'
+          s: 'MVP-Group/SVI-Bench',
+          h: 'https://huggingface.co/datasets/MVP-Group/SVI-Bench'
         }].map(r => /*#__PURE__*/React.createElement("a", {
           key: r.l,
-          href: "#",
+          href: r.h,
+          target: r.h !== '#' ? '_blank' : undefined,
+          rel: 'noopener',
           style: {
             display: 'flex',
             justifyContent: 'space-between',
