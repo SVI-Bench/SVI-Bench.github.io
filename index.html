@@ -2866,7 +2866,7 @@
       }
       function T8Panel({ pillar }) {
         const c = PILLARS[pillar];
-        const baseDir = 'assets/qualitative_vis_basketball_task2/531247_Keenan_Fitzmorris_2-_264466774';
+        const baseDir = 'assets/qualitative_vis_basketball_task2/8810_Alessandro_Pajola_Rebound_245087411';
         const labelChip = {
           position: 'absolute',
           top: 6,
@@ -2917,7 +2917,7 @@
         }, []);
         const strip = [
           { file: 'seq_0_original.png', t: 0 },
-          { file: 'seq_3_bg80.png',     t: 5 }
+          { file: 'seq_3_bg75.png',     t: 5 }
         ];
         const ellipsis = (i) => /*#__PURE__*/React.createElement("div", {
           key: `sep-${i}`,
@@ -3018,8 +3018,8 @@
                   "simulate target player ",
                   /*#__PURE__*/React.createElement("span", {
                     style: { color: c.base, fontWeight: 700 }
-                  }, "#35"),
-                  " contesting a shot in the restricted area, forcing a miss."
+                  }, "#6"),
+                  " securing a rebound."
                 )
               ),
               /*#__PURE__*/React.createElement("div", {
@@ -4497,7 +4497,7 @@
             letterSpacing: '0.15em',
             color: '#d4d4d8'
           }
-        }, "00:00 / 02:30")), /*#__PURE__*/React.createElement("div", {
+        }, "SVI-BENCH · PROMO")), /*#__PURE__*/React.createElement("div", {
           style: {
             position: 'absolute',
             inset: 0,
@@ -4505,77 +4505,23 @@
             alignItems: 'center',
             justifyContent: 'center',
             flexDirection: 'column',
-            gap: 18,
-            background: 'radial-gradient(circle at center, rgba(74,127,181,0.08) 0%, transparent 70%)'
+            gap: 18
           }
-        }, /*#__PURE__*/React.createElement("button", {
-          style: {
-            width: 88,
-            height: 88,
-            borderRadius: '50%',
-            background: 'rgba(250,250,250,0.08)',
-            border: '1.5px solid rgba(250,250,250,0.55)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            cursor: 'pointer',
-            transition: 'all 200ms ease'
-          },
-          onMouseEnter: e => {
-            e.currentTarget.style.background = 'rgba(250,250,250,0.18)';
-            e.currentTarget.style.borderColor = '#fafafa';
-          },
-          onMouseLeave: e => {
-            e.currentTarget.style.background = 'rgba(250,250,250,0.08)';
-            e.currentTarget.style.borderColor = 'rgba(250,250,250,0.55)';
-          }
-        }, /*#__PURE__*/React.createElement("svg", {
-          viewBox: "0 0 24 24",
-          width: "28",
-          height: "28",
-          style: {
-            marginLeft: 4
-          }
-        }, /*#__PURE__*/React.createElement("polygon", {
-          points: "6,4 6,20 20,12",
-          fill: "#fafafa"
-        }))), /*#__PURE__*/React.createElement("div", {
-          style: {
-            fontFamily: '"IBM Plex Mono", monospace',
-            fontSize: 11,
-            color: '#a1a1aa',
-            letterSpacing: '0.15em',
-            textTransform: 'uppercase'
-          }
-        }, "placeholder \xB7 final cut from rewatchable goes here")), /*#__PURE__*/React.createElement("div", {
+        }, /*#__PURE__*/React.createElement("video", {
+          src: "https://huggingface.co/datasets/MVP-Group/svi-bench-assets/resolve/main/UNC_26076_SVI_Bench_Promo_110RR.mp4",
+          controls: true,
+          preload: 'metadata',
+          playsInline: true,
           style: {
             position: 'absolute',
-            bottom: 0,
-            left: 0,
-            right: 0,
-            height: 36,
-            display: 'flex',
-            alignItems: 'center',
-            gap: 16,
-            padding: '0 16px',
-            background: 'linear-gradient(0deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0) 100%)',
-            zIndex: 5
-          }
-        }, /*#__PURE__*/React.createElement("div", {
-          style: {
-            flex: 1,
-            height: 2,
-            background: '#1c1c1f',
-            borderRadius: 1,
-            overflow: 'hidden'
-          }
-        }, /*#__PURE__*/React.createElement("div", {
-          style: {
+            inset: 0,
+            width: '100%',
             height: '100%',
-            width: '0%',
-            background: '#fafafa'
+            objectFit: 'contain',
+            background: '#000',
+            display: 'block'
           }
-        })))));
+        }))));
       }
       function CliffSection() {
         const sectionRef = useRef(null);
