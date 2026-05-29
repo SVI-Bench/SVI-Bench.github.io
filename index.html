@@ -182,8 +182,8 @@
         id: 'T1',
         name: 'Structured Play Description',
         pillar: 'Perception',
-        score: 52,
-        metric: '2.59 / 5',
+        score: 43,
+        metric: '2.17 / 5',
         metricLabel: 'judge score',
         bestModel: 'LLaVA-Video-7B (ft)',
         blurb: 'Describe a 10-second play. Models name actions but mix up jersey numbers, player names.'
@@ -194,7 +194,7 @@
         score: 74,
         metric: '73.9%',
         metricLabel: 'accuracy',
-        bestModel: 'Gemini 3 Flash',
+        bestModel: 'LLaVA-Video-7B (ft)',
         blurb: 'Multiple-choice questions about video clip details. Models recognize most actions, but fail on subtle distinctions.'
       }, {
         id: 'T3',
@@ -209,10 +209,10 @@
         id: 'T4',
         name: 'Strategic Reasoning QA',
         pillar: 'Reasoning',
-        score: 40,
-        metric: '1.99 / 5',
+        score: 43,
+        metric: '2.17 / 5',
         metricLabel: 'judge score',
-        bestModel: 'GPT-5.2',
+        bestModel: 'Gemini 3.1 Pro',
         blurb: 'Why did the play succeed or fail? Models propose plausible tactics that contradict the visual evidence.'
       }, {
         id: 'T5',
@@ -221,7 +221,7 @@
         score: 45,
         metric: '44.8%',
         metricLabel: 'accuracy',
-        bestModel: 'GPT-5.2',
+        bestModel: 'Qwen3-8B-VL (FT)',
         blurb: 'Predict what happens next. The model is 92% confident about a wrong answer.'
       }, {
         id: 'T6',
@@ -396,28 +396,28 @@
         pillar: 'Perception',
         teaser: 'action misidentification',
         title: 'Fine-Grained Action QA',
-        context: 'Basketball \xB7 FIBA Champions League',
-        video: 'assets/T2/t2_ask_clip.mp4',
+        context: 'Soccer \xB7 corner kick sequence',
+        video: 'assets/T2/t2_clip_soccer.mp4',
         thumb: 'assets/T2/t2_ask_thumb.jpg',
-        question: "Outline the order of actions performed in this video clip.\n(A) 2pt Missed, Rebound, Steal\n(B) Rebound, 2pt Made, Assisting\n(C) 3pt Missed, Rebound, Foul\n(D) 3pt Missed, Rebound, Assisting\n(E) Pick'n'Roll, 3pt Made, Assisting",
+        question: "Describe the order of plays performed in this soccer footage.\n(A) pass, duel, clearance\n(B) corner, duel, shot\n(C) duel, shot, pass\n(D) touch, shot, goal kick\n(E) pass, touch, pass",
         models: [{
           name: 'GPT-5.2',
           score: '0 / 1',
           wrong: true,
-          text: "D \u2014 3 Pt Missed, Rebound, Assisting. The three-pointer doesn't fall, but the rebound leads to an assist on the next play."
+          text: 'C \u2014 duel, shot, pass. A physical duel for possession leads to a shot attempt, followed by a pass to reset play.'
         }, {
           name: 'Gemini 3 Flash',
           score: '0 / 1',
           wrong: true,
-          text: 'D \u2014 3 Pt Missed, Rebound, Assisting. The shooter misses from beyond the arc, the big collects the board, and the outlet pass sets up the next basket.'
+          text: 'E \u2014 pass, touch, pass. The sequence shows a short pass, a controlled touch, and another pass to continue the buildup play.'
         }, {
           name: 'LLaVA-Video-7B (ft)',
           score: '0 / 1',
           wrong: true,
-          text: 'B \u2014 Rebound, 2 Pt Made, Assisting. After grabbing the rebound, the player scores a 2-pointer off the put-back with an assist.'
+          text: 'E \u2014 pass, touch, pass. The player receives a pass, takes a touch to control it, and distributes with another pass.'
         }],
-        gt: "E \u2014 Pick'n'Roll, 3 Pt Made, Assisting. The pick-and-roll creates an open 3-pointer that goes in, credited as an assist.",
-        verdictHeadline: "All 3 wrong. GPT-5.2 and Gemini say the 3-pointer missed but the shot went in. LLaVA-Video misidentifies many actions and puts them in the wrong order."
+        gt: 'B \u2014 corner, duel, shot. A corner kick is delivered into the box, a duel for the header follows, and the sequence ends with a shot on goal.',
+        verdictHeadline: 'All models are wrong. They catch some actions in the clip, but miss others, including the corner kick, and fail to put them in the correct order.'
       }, {
         id: 'c3',
         taskId: 'T4',
@@ -643,7 +643,7 @@
         sport: 'Soccer',
         video: 'assets/T1/t1_failure_04.mp4',
         mode: 'temporal order reversed',
-        excerpt: 'GT: Saliba \u2192 \u00D8degaard carries forward \u2192 Martinelli. Model: Gabriel \u2192 Martinelli \u2192 Partey \u2192 \u00D8degaard. The model identifies most of the player, but the sequence is incorrect.'
+        excerpt: 'GT: Saliba \u2192 \u00D8degaard carries forward \u2192 Martinelli. Model: Gabriel \u2192 Martinelli \u2192 Partey \u2192 \u00D8degaard. The model identifies most of the players, but the sequence is incorrect.'
       }, {
         id: 'f04',
         taskId: 'T2',
