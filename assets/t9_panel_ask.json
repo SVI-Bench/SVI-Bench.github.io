@@ -626,7 +626,7 @@
     {
       "abbrev": "DQ",
       "key": "document_qa",
-      "text": "First check confirmed the top hits were wrong games. Second confirmed 1003418: Booker six threes, Phoenix 20 total, opponent Bulls."
+      "text": "First check confirmed the top hits were wrong games. Second confirmed Kevin Durant trimmed the lead from four to one early in Q3."
     },
     {
       "abbrev": "SV",
@@ -636,7 +636,7 @@
     {
       "abbrev": "VQ",
       "key": "video_qa",
-      "text": "Used scores to find the right clip (lead went from +4 to +1). Then asked 7 clips for Durant's jersey number, none could read it."
+      "text": "Used scores to find the right clip (lead went from +4 to +1). Then asked 6 different clips for Durant's jersey number, none could read it."
     },
     {
       "abbrev": "A",
