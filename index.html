@@ -194,14 +194,14 @@
         gap: 4px !important;
       }
       /* Task panel content: reduce top offset and padding */
-      #cliff [style*="position: absolute"][style*="top: 28px"][style*="padding: 11px"] {
-        top: 22px !important;
-        padding: 4px 10px !important;
-        gap: 4px !important;
+      #cliff [style*="position: absolute"][style*="top: 28px"] {
+        top: 16px !important;
+        padding: 2px 8px !important;
+        gap: 2px !important;
       }
       /* Header bar: thinner */
       #cliff [style*="height: 28px"][style*="padding: 0px 12px"] {
-        height: 20px !important;
+        height: 16px !important;
       }
 
       /* Chart: axis numbers */
@@ -467,12 +467,18 @@
         overflow: visible !important;
         line-height: 1.2 !important;
       }
+      /* Clip picker: task ID + teaser stack vertically */
+      #ask > div:last-child [style*="display: flex"][style*="gap: 6px"][style*="align-items: center"] {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 1px !important;
+      }
       /* Clip picker: reduce card gap and padding */
       #ask > div:last-child [style*="gap: 10px"] {
         gap: 4px !important;
       }
       #ask > div:last-child button {
-        gap: 3px !important;
+        gap: 2px !important;
         padding: 3px !important;
       }
       /* Ask section: content text */
@@ -5766,7 +5772,7 @@
           }
         },
         /*#__PURE__*/React.createElement("div", {
-          style: { height: 150, flexShrink: 0 }
+          style: { height: 110, flexShrink: 0 }
         }, /*#__PURE__*/React.createElement(AskBroadcastViewport, {
           clip: clip,
           playT: playT
