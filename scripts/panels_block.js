@@ -251,7 +251,17 @@ function T3Panel(_ref) {
         transition: 'opacity 150ms, box-shadow 150ms',
         boxShadow: isSelected ? "0 0 12px ".concat(edgeGlow) : 'none'
       }
-    }, /*#__PURE__*/React.createElement("video", {
+    }, window.innerWidth <= 768 ? /*#__PURE__*/React.createElement("img", {
+      src: th.video.replace('.mp4', '_thumb.jpg'),
+      alt: th.caption,
+      style: {
+        width: '100%',
+        height: '100%',
+        objectFit: 'cover',
+        display: 'block',
+        filter: isSelected ? 'none' : 'saturate(0.7)'
+      }
+    }) : /*#__PURE__*/React.createElement("video", {
       src: th.video,
       muted: true,
       playsInline: true,

@@ -513,7 +513,7 @@
   </style>
   <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-  <script src="scripts/panels_block.js?v=2"></script>
+  <script src="scripts/panels_block.js?v=3"></script>
 </head>
 
 <body>
@@ -5146,10 +5146,10 @@
         },
       /*#__PURE__*/React.createElement("video", {
           ref: ref,
-          src: `${baseDir}/${file}`,
+          src: window.innerWidth <= 768 ? `${baseDir}/${file.replace('.mp4', '_mobile.mp4')}` : `${baseDir}/${file}`,
           muted: true,
           playsInline: true,
-          preload: 'auto',
+          preload: window.innerWidth <= 768 ? 'metadata' : 'auto',
           style: { width: '100%', height: '100%', objectFit: 'cover', background: '#0c0d10', display: 'block' }
         }),
       /*#__PURE__*/React.createElement("div", {
@@ -5386,10 +5386,10 @@
         },
       /*#__PURE__*/React.createElement("video", {
           ref: ref,
-          src: `${baseDir}/${file}`,
+          src: window.innerWidth <= 768 ? `${baseDir}/${file.replace('.mp4', '_mobile.mp4')}` : `${baseDir}/${file}`,
           muted: true,
           playsInline: true,
-          preload: 'auto',
+          preload: window.innerWidth <= 768 ? 'metadata' : 'auto',
           style: {
             width: '100%',
             height: '100%',
