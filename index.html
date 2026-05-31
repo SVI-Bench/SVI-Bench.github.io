@@ -346,9 +346,10 @@
         grid-template-columns: 1fr !important;
       }
 
-      /* 2x2 grids with height:100% — give explicit height when parent collapses */
+      /* 2x2 grids with height:100% — give min-height when parent collapses */
       [style*="grid-template-rows: repeat(2, 1fr)"][style*="height: 100%"] {
-        height: 200px !important;
+        min-height: 200px !important;
+        height: auto !important;
       }
 
       /* 3/4 col grids → 2 col */
@@ -513,7 +514,7 @@
   </style>
   <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-  <script src="scripts/panels_block.js?v=3"></script>
+  <script src="scripts/panels_block.js?v=2"></script>
 </head>
 
 <body>
@@ -2119,7 +2120,6 @@
       // ============================================================
       // CLIFF: SHARED PANEL UTILITIES (for T5/T6 panels)
       // ============================================================
-      var __isMobile = window.innerWidth <= 768;
       function VideoFrame({ src }) {
         return /*#__PURE__*/React.createElement("div", {
           style: {
@@ -2130,8 +2130,7 @@
         },
     /*#__PURE__*/React.createElement("video", {
           src: src,
-          autoPlay: true, loop: true, muted: true, playsInline: true, preload: __isMobile ? 'metadata' : 'auto',
-          preload: __isMobile ? 'metadata' : 'auto',
+          autoPlay: true, loop: true, muted: true, playsInline: true,
           style: {
             position: 'absolute', inset: 0,
             width: '100%', height: '100%',
@@ -3240,10 +3239,9 @@
               /*#__PURE__*/React.createElement("video", {
                 ref: vRef,
                 src: `${baseDir}/generated_gt_bbox.mp4`,
-                poster: window.innerWidth <= 768 ? `${baseDir}/generated_gt_bbox_poster.jpg` : undefined,
                 muted: true,
                 playsInline: true,
-                preload: window.innerWidth <= 768 ? 'metadata' : 'auto',
+                preload: 'auto',
                 style: { width: '100%', height: '100%', objectFit: 'contain', display: 'block', background: '#000' }
               }),
               /*#__PURE__*/React.createElement("span", { style: { ...labelChip, color: c.base } }, "Model")
@@ -3429,10 +3427,9 @@
               /*#__PURE__*/React.createElement("video", {
                 ref: vRef,
                 src: `${baseDir}/generated_gt_bbox.mp4`,
-                poster: window.innerWidth <= 768 ? `${baseDir}/generated_gt_bbox_poster.jpg` : undefined,
                 muted: true,
                 playsInline: true,
-                preload: window.innerWidth <= 768 ? 'metadata' : 'auto',
+                preload: 'auto',
                 style: { width: '100%', height: '100%', objectFit: 'contain', display: 'block', background: '#000' }
               }),
               /*#__PURE__*/React.createElement("span", { style: { ...labelChip, color: c.base } }, "Model")
@@ -3519,7 +3516,7 @@
                               TASK_MEDIA[task.id] && !TASK_MEDIA[task.id].includes('placeholder')
                                 ? /*#__PURE__*/React.createElement("video", {
                                   src: TASK_MEDIA[task.id],
-                                  autoPlay: true, loop: true, muted: true, playsInline: true, preload: __isMobile ? 'metadata' : 'auto',
+                                  autoPlay: true, loop: true, muted: true, playsInline: true,
                                   style: { position: 'absolute', top: 0, left: 0, width: (task.id === 'T5' || task.id === 'T2') ? 'calc(100% - 220px)' : task.id === 'T6' ? 'calc(100% - 280px)' : '100%', height: '100%', objectFit: 'contain' }
                                 })
                                 : /*#__PURE__*/React.createElement("div", {
@@ -4160,7 +4157,7 @@
             ? /*#__PURE__*/React.createElement("video", {
               ref: vidRef,
               src: clip.video,
-              autoPlay: true, loop: true, muted: true, playsInline: true, preload: __isMobile ? 'metadata' : 'auto',
+              autoPlay: true, loop: true, muted: true, playsInline: true,
               onTimeUpdate: handleTimeUpdate,
               onLoadedMetadata: handleTimeUpdate,
               style: { position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'contain', background: '#0c0d10' }
@@ -5148,11 +5145,10 @@
         },
       /*#__PURE__*/React.createElement("video", {
           ref: ref,
-          src: window.innerWidth <= 768 ? `${baseDir}/${file.replace('.mp4', '_mobile.mp4')}` : `${baseDir}/${file}`,
-          poster: window.innerWidth <= 768 ? `${baseDir}/${file.replace('.mp4', '_poster.jpg')}` : undefined,
+          src: `${baseDir}/${file}`,
           muted: true,
           playsInline: true,
-          preload: window.innerWidth <= 768 ? 'metadata' : 'auto',
+          preload: 'auto',
           style: { width: '100%', height: '100%', objectFit: 'cover', background: '#0c0d10', display: 'block' }
         }),
       /*#__PURE__*/React.createElement("div", {
@@ -5389,11 +5385,10 @@
         },
       /*#__PURE__*/React.createElement("video", {
           ref: ref,
-          src: window.innerWidth <= 768 ? `${baseDir}/${file.replace('.mp4', '_mobile.mp4')}` : `${baseDir}/${file}`,
-          poster: window.innerWidth <= 768 ? `${baseDir}/${file.replace('.mp4', '_poster.jpg')}` : undefined,
+          src: `${baseDir}/${file}`,
           muted: true,
           playsInline: true,
-          preload: window.innerWidth <= 768 ? 'metadata' : 'auto',
+          preload: 'auto',
           style: {
             width: '100%',
             height: '100%',
@@ -6822,7 +6817,7 @@
           },
             failure.video ? /*#__PURE__*/React.createElement("video", {
               src: failure.video,
-              autoPlay: true, loop: true, muted: true, playsInline: true, preload: __isMobile ? 'metadata' : 'auto',
+              autoPlay: true, loop: true, muted: true, playsInline: true,
               style: { width: '25%', objectFit: 'cover', borderRight: '1px solid #1c1c1f', flexShrink: 0 }
             }) : null,
       /*#__PURE__*/React.createElement("div", {
@@ -6849,7 +6844,7 @@
           // Video: left side for wide, top for normal
           failure.video ? /*#__PURE__*/React.createElement("video", {
             src: failure.video,
-            autoPlay: true, loop: true, muted: true, playsInline: true, preload: __isMobile ? 'metadata' : 'auto',
+            autoPlay: true, loop: true, muted: true, playsInline: true,
             style: isWide
               ? { width: '50%', objectFit: 'cover', borderRight: '1px solid #1c1c1f' }
               : { width: '100%', aspectRatio: '16 / 9', objectFit: 'cover', borderBottom: '1px solid #1c1c1f' }
