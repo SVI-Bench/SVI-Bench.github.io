@@ -458,13 +458,22 @@
       #ask [style*="font-size: 18px"] {
         font-size: 8px !important;
       }
-      /* Clip picker: hide teaser text, show only task ID */
-      #ask > div:last-child [style*="white-space: nowrap"][style*="overflow: hidden"] {
-        display: none !important;
+      /* Clip picker: smaller labels, allow two lines */
+      #ask > div:last-child [style*="font-size: 11px"] {
+        font-size: 6px !important;
       }
-      /* Clip picker: smaller labels */
-      #ask > div:last-child [style*="font-size: 11px"][style*="font-weight: 600"] {
-        font-size: 9px !important;
+      #ask > div:last-child [style*="white-space: nowrap"] {
+        white-space: normal !important;
+        overflow: visible !important;
+        line-height: 1.2 !important;
+      }
+      /* Clip picker: reduce card gap and padding */
+      #ask > div:last-child [style*="gap: 10px"] {
+        gap: 4px !important;
+      }
+      #ask > div:last-child button {
+        gap: 3px !important;
+        padding: 3px !important;
       }
       /* Ask section: content text */
       #ask [style*="font-size: 15px"],
@@ -5757,14 +5766,14 @@
           }
         },
         /*#__PURE__*/React.createElement("div", {
-          style: { height: 220, flexShrink: 0 }
+          style: { height: 150, flexShrink: 0 }
         }, /*#__PURE__*/React.createElement(AskBroadcastViewport, {
           clip: clip,
           playT: playT
         })),
         /*#__PURE__*/React.createElement("div", {
           style: {
-            height: '45vh',
+            height: '52vh',
             overflowY: 'auto',
             WebkitOverflowScrolling: 'touch',
             border: '1px solid #27272a',
