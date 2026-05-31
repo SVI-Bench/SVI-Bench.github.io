@@ -203,6 +203,10 @@
       #cliff [style*="height: 28px"][style*="padding: 0px 12px"] {
         height: 16px !important;
       }
+      /* Cliff broadcast viewport: ensure min height for absolute-positioned panels (T7/T8) */
+      #cliff [style*="border-radius: 4px"][style*="overflow: hidden"][style*="position: relative"][style*="background"] {
+        min-height: 350px !important;
+      }
 
       /* Chart: axis numbers */
       #cliff > div > div:first-child [style*="font-size: 11px"],
