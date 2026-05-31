@@ -346,6 +346,12 @@
         grid-template-columns: 1fr !important;
       }
 
+      /* 2x2 grids with height:100% — give min-height when parent collapses */
+      [style*="grid-template-rows: repeat(2, 1fr)"][style*="height: 100%"] {
+        min-height: 200px !important;
+        height: auto !important;
+      }
+
       /* 3/4 col grids → 2 col */
       [style*="grid-template-columns: repeat(4"],
       [style*="grid-template-columns: repeat(3"] {
@@ -466,6 +472,8 @@
         white-space: normal !important;
         overflow: visible !important;
         line-height: 1.2 !important;
+        word-break: break-word !important;
+        hyphens: auto !important;
       }
       /* Clip picker: task ID + teaser stack vertically */
       #ask > div:last-child [style*="display: flex"][style*="gap: 6px"][style*="align-items: center"] {
